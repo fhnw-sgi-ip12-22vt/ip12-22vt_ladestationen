@@ -90,7 +90,7 @@ public class Main {
         pi4j.shutdown();
     }
 
-    private void SspeakerTest() {
+    private void speakerTest() {
         ProcessBuilder pb = new ProcessBuilder("speaker-test", "-tsin","-f 3200","-l1");
         try {
             Process p = pb.start();
