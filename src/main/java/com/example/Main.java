@@ -78,18 +78,10 @@ public class Main {
                 if(digitalStateChangeEvent.state() == DigitalState.LOW){
                     led.low();
                     console.println("button pressed");
-                    //speakerTest();
+                    speakerTest();
                 }else{
                     led.high();
                     console.println("button released");
-                }
-            }
-        });
-        button.addListener(new DigitalStateChangeListener() {
-            @Override
-            public void onDigitalStateChange(DigitalStateChangeEvent digitalStateChangeEvent) {
-                if(digitalStateChangeEvent.state() == DigitalState.LOW){
-                    speakerTest();
                 }
             }
         });
