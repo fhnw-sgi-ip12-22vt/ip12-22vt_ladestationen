@@ -21,7 +21,7 @@ import java.lang.ProcessBuilder;
 public class Main {
 
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
-    private static final int BUTTON_LED = 18;
+    private static final int PIN_BUTTON = 18;
     private static final Console console = new Console();
 
     /**
@@ -73,7 +73,7 @@ public class Main {
         var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("blue button")
-                .address(BUTTON_LED)
+                .address(PIN_BUTTON)
                 .pull(PullResistance.PULL_UP)
                 .provider("pigpio-digital-input");
 
