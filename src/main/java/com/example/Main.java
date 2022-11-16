@@ -69,7 +69,7 @@ public class Main {
                 .shutdown(DigitalState.LOW)
                 .initial(DigitalState.LOW)
                 .provider("pigpio-digital-output");
-        //Configure LED on Pin 18
+        //Configure button on Pin 18
         var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("blue button")
