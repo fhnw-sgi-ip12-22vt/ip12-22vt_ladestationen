@@ -21,9 +21,11 @@ import java.lang.ProcessBuilder;
 public class Main {
 
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
+    private static final int BUTTON_LED = 18;
     private static final Console console = new Console();
 
     /**
+     * Program entry point: get pi4j context and pass it to run()
      * @param args the command line arguments
      */
     public static void main(String[] args) throws Exception {
@@ -33,9 +35,9 @@ public class Main {
             pi4j = Pi4J.newAutoContext();
             new Main().run(pi4j);
         } catch (InvocationTargetException e) {
-            console.println("huwsrhzwejzh???Error: " + e.getTargetException().getMessage());
+            console.println("Error: " + e.getTargetException().getMessage());
         } catch (Exception e) {
-            console.println("huh???Error: " + e.getMessage());
+            console.println("Error: " + e.getMessage());
             e.printStackTrace();
         } finally {
             if (pi4j != null) {
@@ -44,6 +46,12 @@ public class Main {
         }
     }
 
+    //TODO: extract main logic from boilerplate
+    /**
+     * With a given pi4j context, run the main program logic
+     * @param pi4j The current pi4j context
+     * @throws Exception Uncaught Exceptions will be caught  by main()
+     */
     private void run(Context pi4j) throws Exception {
         Platforms platforms = pi4j.platforms();
 
@@ -53,25 +61,28 @@ public class Main {
         console.println();
         console.promptForExit();
 
+        //Configure LED on Pin 22
         var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
-                        .id("led")
-                        .name("LED Flasher")
-                        .address(PIN_LED)
-                        .shutdown(DigitalState.LOW)
-                        .initial(DigitalState.LOW)
-                        .provider("pigpio-digital-output");
+                .id("led")
+                .name("red LED")
+                .address(PIN_LED)
+                .shutdown(DigitalState.LOW)
+                .initial(DigitalState.LOW)
+                .provider("pigpio-digital-output");
+        //Configure LED on Pin 18
         var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("button")
                 .name("blue button")
-                .address(18)
+                .address(BUTTON_LED)
                 .pull(PullResistance.PULL_UP)
                 .provider("pigpio-digital-input");
 
 
         var led = pi4j.create(ledConfig);
         var button = pi4j.create(buttonConfig);
-        int counter = 0;
 
+        //Listen for button presses & releases: change LED state and when button is being pressed,
+        //make a beep with the speaker
         button.addListener(new DigitalStateChangeListener() {
             @Override
             public void onDigitalStateChange(DigitalStateChangeEvent digitalStateChangeEvent) {
@@ -86,17 +97,20 @@ public class Main {
             }
         });
 
+        //only stop the program once the user wants it to
         console.waitForExit();
         pi4j.shutdown();
     }
 
+    /**
+     *make a subprocess that does a speaker test (beep!)
+     */
     private void speakerTest() {
         ProcessBuilder pb = new ProcessBuilder("speaker-test", "-tsin","-f 3200","-l1");
         try {
             Process p = pb.start();
-            //p.waitFor();
         }catch (Exception e){
-            console.println("oh noes, speaker test fucked up: ",e.getMessage());
+            console.println("speaker test errored out: ",e.getMessage());
         }
     }
 
