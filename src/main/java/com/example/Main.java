@@ -15,8 +15,8 @@ import java.lang.Process;
 import java.lang.ProcessBuilder;
 
 /**
- *
- * @author luca
+ * Main class of the maven pi4j archetype
+ * @author luca, MNG
  */
 public class Main {
 
