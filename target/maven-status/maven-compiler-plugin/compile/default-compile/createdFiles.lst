@@ -1,3 +1,5 @@
-com\example\Main$1.class
+com\example\LEDStrip$PixelColor.class
+com\example\Component.class
 com\example\Main.class
 module-info.class
+com\example\LEDStrip.class

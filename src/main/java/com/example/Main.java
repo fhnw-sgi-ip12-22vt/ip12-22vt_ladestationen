@@ -13,6 +13,7 @@ import com.pi4j.util.Console;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
 import java.lang.ProcessBuilder;
+import com.example.LEDStrip;
 
 /**
  * Main class of the maven pi4j archetype
@@ -22,8 +23,9 @@ public class Main {
 
     private static final int PIN_LED = 22; // PIN 15 = BCM 22
     private static final int PIN_BUTTON = 18;
+    private int buttonIds = 0;
     private static final Console console = new Console();
-
+    private LEDStrip ledStrip;
     /**
      * Program entry point: get pi4j context and pass it to run()
      * @param args the command line arguments
@@ -61,41 +63,48 @@ public class Main {
         console.println();
         console.promptForExit();
 
-        //Configure LED on Pin 22
-        var ledConfig = DigitalOutput.newConfigBuilder(pi4j)
-                .id("led")
-                .name("red LED")
-                .address(PIN_LED)
-                .shutdown(DigitalState.LOW)
-                .initial(DigitalState.LOW)
-                .provider("pigpio-digital-output");
-        //Configure button on Pin 18
-        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
-                .id("button")
-                .name("blue button")
-                .address(PIN_BUTTON)
-                .pull(PullResistance.PULL_UP)
-                .provider("pigpio-digital-input");
+        //Configure LED buttons
+        var button1 = createButton(2,pi4j);
+        var button2 = createButton(3,pi4j);
+        var button3 = createButton(4,pi4j);
 
+        ledStrip = new LEDStrip(pi4j, 12, 1.0);
 
-        var led = pi4j.create(ledConfig);
-        var button = pi4j.create(buttonConfig);
+        //set them all off, so nothing is shining
+        System.out.println("Starting with setting all leds off");
+        ledStrip.allOff();
 
+        System.out.println("setting the LEDs to RED");
+        ledStrip.setStripColor(LEDStrip.PixelColor.RED);
+        ledStrip.render();
+        ledStrip.delay(3000);
+
+        System.out.println("setting the LEDs to Light Blue");
+        ledStrip.setStripColor(LEDStrip.PixelColor.LIGHT_BLUE);
+        ledStrip.render();
+        ledStrip.delay(3000);
+
+        System.out.println("setting the first led to Purple");
+        ledStrip.setPixelColor(0, LEDStrip.PixelColor.PURPLE);
+        ledStrip.render();
+        ledStrip.delay(3000);
+
+        System.out.println("setting the brightness to full and just show the first led as White");
+        ledStrip.allOff();
+        ledStrip.setBrightness(1);
+        ledStrip.setPixelColor(0, LEDStrip.PixelColor.WHITE);
+        ledStrip.render();
+        ledStrip.delay(3000);
+
+//finishing and closing
+        ledStrip.close();
+        System.out.println("closing the app");
+        System.out.println("Color "+ ledStrip.getPixelColor(0));
         //Listen for button presses & releases: change LED state and when button is being pressed,
         //make a beep with the speaker
-        button.addListener(new DigitalStateChangeListener() {
-            @Override
-            public void onDigitalStateChange(DigitalStateChangeEvent digitalStateChangeEvent) {
-                if(digitalStateChangeEvent.state() == DigitalState.LOW){
-                    led.low();
-                    console.println("button pressed");
-                    speakerTest();
-                }else{
-                    led.high();
-                    console.println("button released");
-                }
-            }
-        });
+        button1.addListener(createListener("one"));
+        button2.addListener(createListener("two"));
+        button3.addListener(createListener("three"));
 
         //only stop the program once the user wants it to
         console.waitForExit();
@@ -112,6 +121,30 @@ public class Main {
         }catch (Exception e){
             console.println("speaker test errored out: ",e.getMessage());
         }
+    }
+    private DigitalInput createButton(int pin, Context pi4j){
+        //Configure button on Pin pin
+        var buttonConfig = DigitalInput.newConfigBuilder(pi4j)
+                .id("button"+(buttonIds++))
+                .name("a button")
+                .address(pin)
+                .pull(PullResistance.PULL_UP)
+                .provider("pigpio-digital-input");
+
+        return pi4j.create(buttonConfig);
+    }
+
+    private DigitalStateChangeListener createListener(String log){
+        return digitalStateChangeEvent -> {
+            if(digitalStateChangeEvent.state() == DigitalState.LOW){
+                ledStrip.setPixelColor(5,LEDStrip.PixelColor.PURPLE);
+                ledStrip.render();
+                console.println("button " + log + " pressed");
+            }else{
+                ledStrip.allOff();
+                console.println("button " + log + " released");
+            }
+        };
     }
 
 }

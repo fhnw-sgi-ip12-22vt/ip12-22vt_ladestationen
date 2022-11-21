@@ -16,8 +16,8 @@
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <target.platform.name>raspberry</target.platform.name>
         <run.with.java.module>true</run.with.java.module>
         <!-- Use jvmargs to pass args like -Dpi4j.library.path=<Path to the libpi4j-pigpio.so library> -->
@@ -71,10 +71,11 @@
                 <version>3.8.1</version>
                 <configuration>
                     <release>${maven.compiler.source}</release>
-                    <target>${maven.compiler.target}</target>
+                    <target>16</target>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
                     <verbose>false</verbose>
+                    <source>16</source>
                 </configuration>
             </plugin>
             <plugin>
