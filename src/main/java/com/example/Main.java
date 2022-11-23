@@ -13,7 +13,8 @@ import com.pi4j.util.Console;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
 import java.lang.ProcessBuilder;
-import com.github.mbelling.ws281x.LedStrip;
+import com.github.mbelling.ws281x.Ws281xLedStrip;
+import com.github.mbelling.ws281x.LedStripType;
 import com.example.LEDStrip;
 
 /**
@@ -69,6 +70,20 @@ public class Main {
         var button2 = createButton(3,pi4j);
         var button3 = createButton(4,pi4j);
 
+        var ledStrib =  new Ws281xLedStrip(
+                            12,       // leds
+                            10,          // Using pin 10 to do SPI, which should allow non-sudo access
+                            800000,  // freq hz
+                            10,            // dma
+                            255,      // brightness
+                            0,      // pwm channel
+                            false,        // invert
+                            LedStripType.WS2811_STRIP_RGB,    // Strip type
+                            true    // clear on exit
+                        );
+        ledStrib.setStrip(255,255,40);
+        ledStrib.render();
+        /*
         ledStrip = new LEDStrip(pi4j, 12, 1.0,0);
 
         //set them all off, so nothing is shining
@@ -100,7 +115,8 @@ public class Main {
 //finishing and closing
         ledStrip.close();
         System.out.println("closing the app");
-        System.out.println("Color "+ ledStrip.getPixelColor(0));
+        System.out.println("Color "+ ledStrip.getPixelColor(0));*/
+
         //Listen for button presses & releases: change LED state and when button is being pressed,
         //make a beep with the speaker
         button1.addListener(createListener("one"));
