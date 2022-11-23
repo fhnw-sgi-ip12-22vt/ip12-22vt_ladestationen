@@ -13,6 +13,7 @@ import com.pi4j.util.Console;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
 import java.lang.ProcessBuilder;
+import com.github.mbelling.ws281x.LedStrip;
 import com.example.LEDStrip;
 
 /**
@@ -68,7 +69,7 @@ public class Main {
         var button2 = createButton(3,pi4j);
         var button3 = createButton(4,pi4j);
 
-        ledStrip = new LEDStrip(pi4j, 12, 1.0);
+        ledStrip = new LEDStrip(pi4j, 12, 1.0,0);
 
         //set them all off, so nothing is shining
         System.out.println("Starting with setting all leds off");

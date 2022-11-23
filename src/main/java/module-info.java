@@ -6,6 +6,7 @@ module com.example.remoteDebugTest {
     requires com.pi4j.plugin.pigpio;
     requires com.pi4j.library.pigpio;
     requires java.logging;
+    requires rpi.ws281x.java;
 
     uses com.pi4j.extension.Extension;
     uses com.pi4j.provider.Provider;
