@@ -754,13 +754,13 @@ public final class MCP23S17 {
     /**
      * This is the only constructor and it is private--the static factory methods must be used for object creation.
      *
-     * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
+     * @param spiChannel the that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portAInterrupt the {@linkplain DigitalInput input pin} for the port A interrupt line on the chip,
      *                       or {@code null}.
      * @param portBInterrupt the {@linkplain DigitalInput input pin} for the port B interrupt line on the chip,
      *                       or {@code null}.
-     * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     private MCP23S17(Context pi4j,
@@ -895,7 +895,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write a byte to the register pointed to by the given address.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @param registerAddress the register address.
@@ -919,7 +919,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the IODIRA byte to the IODIRA register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -931,7 +931,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the IODIRB byte to the IODIRB register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -943,7 +943,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the IPOLA byte to the IPOLA register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -955,7 +955,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the IPOLB byte to the IPOLB register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -967,7 +967,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the GPINTENA byte to the GPINTENA register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -979,7 +979,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the GPINTENB byte to the GPINTENB register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -991,7 +991,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the DEFVALA byte to the DEFVALA register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -1003,7 +1003,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the DEFVALB byte to the DEFVALB register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -1015,7 +1015,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the INTCONA byte to the INTCONA register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -1027,7 +1027,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the INTCONB byte to the INTCONB register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -1039,7 +1039,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the GPPUA byte to the GPPUA register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -1051,7 +1051,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the GPPUB byte to the GPPUB register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -1063,7 +1063,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the OLATA byte to the OLATA register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -1075,7 +1075,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and write the OLATB byte to the OLATB register.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
@@ -1087,7 +1087,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and read a byte from the register pointed to by the given address.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @param registerAddress the register address.
@@ -1113,7 +1113,7 @@ public final class MCP23S17 {
      * Initiate SPI communication with the chip and read a byte from the register pointed to by the given address. This
      * will rethrow any {@link IOException IOException}s that occur as {@link RuntimeException RuntimeException}s.
      *
-     * @implSpec This is synchronized on the {@link SpiDevice SpiDevice} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @param registerAddress the register address.
@@ -1177,7 +1177,7 @@ public final class MCP23S17 {
      * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @return a new {@code MCP23S17} object with no interrupts.
-     * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     public static MCP23S17 newWithoutInterrupts(SpiChannel spiChannel,
@@ -1198,7 +1198,7 @@ public final class MCP23S17 {
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param interrupt the interrupt {@linkplain DigitalInput input pin}.
      * @return a new {@code MCP23S17} object with the port A and port B interrupt lines "tied" together.
-     * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output or tied interrupt input is {@code null}.
      */
     public static MCP23S17 newWithTiedInterrupts(SpiChannel spiChannel,
@@ -1228,7 +1228,7 @@ public final class MCP23S17 {
      * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for port A.
      * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for port B.
      * @return a new {@code MCP23S17} object with individual port A and port B interrupt lines.
-     * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output or either of the interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithInterrupts(SpiChannel spiChannel,
@@ -1254,7 +1254,7 @@ public final class MCP23S17 {
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for port A.
      * @return a new {@code MCP23S17} object with an individual port A interrupt line, but no port B interrupt line.
-     * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output or the port A interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithPortAInterrupts(SpiChannel spiChannel,
@@ -1274,14 +1274,14 @@ public final class MCP23S17 {
     /**
      * Instantiate a new {@code MCP23S17} object with an individual port B interrupt line, but no port A interrupt line.
      *
-     * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
+     * @param int the SPI Channel that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for port B.
      * @return a new {@code MCP23S17} object with an individual port B interrupt line, but no port A interrupt line.
-     * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output or the port B interrupt inputs is {@code null}.
      */
-    public static MCP23S17 newWithPortBInterrupts(SpiChannel spiChannel,
+    public static MCP23S17 newWithPortBInterrupts(int spiChannel,
                                                   DigitalOutput chipSelect,
                                                   DigitalInput portBInterrupt)
             throws IOException {
