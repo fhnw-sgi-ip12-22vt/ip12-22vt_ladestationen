@@ -6,10 +6,13 @@
 package com.example;
 
 import com.pi4j.Pi4J;
+import com.pi4j.library.pigpio.PiGpio;
+import com.pi4j.plugin.pigpio.provider.gpio.digital.PiGpioDigitalInputProvider;
+import com.pi4j.plugin.pigpio.provider.gpio.digital.PiGpioDigitalOutputProvider;
+import com.pi4j.plugin.pigpio.provider.spi.PiGpioSpiProvider;
 import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
 import com.pi4j.platform.Platforms;
-import com.pi4j.plugin.pigpio.provider.gpio.digital.PiGpioDigitalInputProvider;
 import com.pi4j.util.Console;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
@@ -17,6 +20,7 @@ import java.lang.ProcessBuilder;
 import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.github.mbelling.ws281x.LedStripType;
 import com.example.LEDStrip;
+import com.example.MCP23S17;
 
 /**
  * Main class of the maven pi4j archetype
@@ -37,7 +41,15 @@ public class Main {
         console.box("Hello Rasbian world !");
         Context pi4j = null;
         try {
-            pi4j = Pi4J.newAutoContext();
+            var piGpio = PiGpio.newNativeInstance();
+            pi4j = Pi4J.newContextBuilder()
+                    .noAutoDetect()
+                    .add(
+                            PiGpioDigitalInputProvider.newInstance(piGpio),
+                            PiGpioDigitalOutputProvider.newInstance(piGpio),
+                            PiGpioSpiProvider.newInstance(piGpio)
+                    )
+                    .build();
             new Main().run(pi4j);
         } catch (InvocationTargetException e) {
             console.println("Error: " + e.getTargetException().getMessage());
