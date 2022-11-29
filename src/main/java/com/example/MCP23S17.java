@@ -903,7 +903,7 @@ public final class MCP23S17 {
      * @throws IOException if the SPI write procedure fails.
      */
     private void write(byte registerAddress, byte value) throws IOException {
-        // Without testing it is unclear whether the synchronization here is necessary--the documentation on SpiDevice
+        // Without testing it is unclear whether the synchronization here is necessary--the documentation on read
         // is poor.
         synchronized (spi) {
             try {
@@ -1087,7 +1087,7 @@ public final class MCP23S17 {
     /**
      * Initiate SPI communication with the chip and read a byte from the register pointed to by the given address.
      *
-     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
+     * @implSpec This is synchronized on the {@link Spi Spi} object so that two or more reads/writes cannot be
      * initiated at the same time.
      *
      * @param registerAddress the register address.
@@ -1095,18 +1095,23 @@ public final class MCP23S17 {
      * @throws IOException if the SPI read procedure fails.
      */
     private byte read(byte registerAddress) throws IOException {
-        byte data;
+        byte[] data = new byte[3];
+        // The 0x00 byte is just arbitrary filler.
+        byte[] send = {READ_OPCODE, registerAddress, (byte) 0x00};
         synchronized (spi) {
             try {
                 chipSelect.low();
-                // The 0x00 byte is just arbitrary filler.
-                data = spi.write(READ_OPCODE, registerAddress, (byte) 0x00)[2];
+                int res;
+                res = spi.transfer(send,data);
+                if(res != 0){
+                    throw  new IOException("oh noes! spi transfer result was "+res);
+                }
             } finally {
                 // Make sure the chip select line is brought high again in finally block so that failure may be recoverable.
                 chipSelect.high();
             }
         }
-        return data;
+        return data[2];
     }
 
     /**
