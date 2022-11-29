@@ -17,6 +17,8 @@ import com.pi4j.util.Console;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
 import java.lang.ProcessBuilder;
+import java.util.ArrayList;
+
 import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.github.mbelling.ws281x.LedStripType;
 import com.example.LEDStrip;
@@ -50,7 +52,7 @@ public class Main {
                             PiGpioSpiProvider.newInstance(piGpio)
                     )
                     .build();
-            new Main().run(pi4j);
+            new Main().runMCPExample(pi4j);
         } catch (InvocationTargetException e) {
             console.println("Error: " + e.getTargetException().getMessage());
         } catch (Exception e) {
@@ -62,7 +64,31 @@ public class Main {
             }
         }
     }
+    private void runMCPExample(Context pi4j) throws Exception{
+        var ChipSelectConfig = DigitalOutput.newConfigBuilder(pi4j)
+                .id("CS"+(buttonIds++))
+                .name("chip select")
+                .address(2)
+                .provider("pigpio-digital-output");
 
+        var ChipSelect = pi4j.create(ChipSelectConfig);
+
+        MCP23S17 IC = MCP23S17.newWithoutInterrupts(pi4j,0,ChipSelect);
+        var ICPinsIter = IC.getPinViewIterator();
+        var ICPins = new ArrayList<MCP23S17.PinView>(16);
+        for(var pin = ICPinsIter.next();ICPinsIter.hasNext();pin = ICPinsIter.next()){
+            pin.setAsOutput();
+            ICPins.add(pin);
+            console.println("pinview direction set")
+        }
+        for(var pin : ICPins){
+            pin.set(true);
+        }
+        IC.writeIODIRA();
+        IC.writeIODIRB();
+        IC.writeOLATA();
+        IC.writeOLATB();
+    }
     //TODO: extract main logic from boilerplate
     /**
      * With a given pi4j context, run the main program logic
