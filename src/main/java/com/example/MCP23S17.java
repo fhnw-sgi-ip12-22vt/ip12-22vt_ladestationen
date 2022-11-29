@@ -1,7 +1,6 @@
 package com.example;
 
 import com.pi4j.io.gpio.digital.*;
-import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.spi.SpiChannel;
 import com.pi4j.io.spi.SpiDevice;
 import com.pi4j.io.spi.SpiFactory;
@@ -1294,10 +1293,10 @@ public final class MCP23S17 {
      * @param callback the {@code Runnable} callback.
      */
     private static void attachInterruptOnLow(DigitalInput interrupt, Runnable callback) {
-        interrupt.addListener(new GpioPinListenerDigital() {
+        interrupt.addListener(new DigitalStateChangeListener() {
             @Override
-            public void handleGpioPinDigitalStateChangeEvent(DigitalStateChangeEvent event) {
-                if (event.getState().isLow()) {
+            public void onDigitalStateChange(DigitalStateChangeEvent event) {
+                if (event.state().isLow()) {
                     callback.run();
                 }
             }
