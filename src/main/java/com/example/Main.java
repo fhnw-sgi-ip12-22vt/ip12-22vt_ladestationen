@@ -79,15 +79,26 @@ public class Main {
         for(var pin = ICPinsIter.next();ICPinsIter.hasNext();pin = ICPinsIter.next()){
             pin.setAsOutput();
             ICPins.add(pin);
-            console.println("pinview direction set")
+            console.println("pinview direction set");
         }
         for(var pin : ICPins){
             pin.set(true);
+            console.println("huh");
         }
         IC.writeIODIRA();
         IC.writeIODIRB();
         IC.writeOLATA();
         IC.writeOLATB();
+        for(int i = 0; i < 10;++i){
+            console.println("on"+i);
+            ICPins.get(5).set(true);
+            IC.writeOLATA();
+            delay(1000);
+            console.println("off"+i);
+            ICPins.get(5).set(false);
+            IC.writeOLATA();
+            delay(1000);
+        }
     }
     //TODO: extract main logic from boilerplate
     /**
