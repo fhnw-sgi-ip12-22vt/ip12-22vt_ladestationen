@@ -14,6 +14,7 @@ public class LEDStrip extends Component {
     /**
      * Default Channel of the SPI Pins
      */
+
     protected static final int DEFAULT_SPI_CHANNEL = 0;
     /**
      * Minimum time to wait for reset to occur in nanoseconds.

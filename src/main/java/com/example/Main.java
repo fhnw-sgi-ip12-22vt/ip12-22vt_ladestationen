@@ -9,6 +9,7 @@ import com.pi4j.Pi4J;
 import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
 import com.pi4j.platform.Platforms;
+import com.pi4j.plugin.pigpio.provider.gpio.digital.PiGpioDigitalInputProvider;
 import com.pi4j.util.Console;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
@@ -70,7 +71,7 @@ public class Main {
         var button2 = createButton(3,pi4j);
         var button3 = createButton(4,pi4j);
 
-        var ledStrib =  new Ws281xLedStrip(
+        /*var ledStrib =  new Ws281xLedStrip(
                             12,       // leds
                             10,          // Using pin 10 to do SPI, which should allow non-sudo access
                             800000,  // freq hz
@@ -82,7 +83,23 @@ public class Main {
                             true    // clear on exit
                         );
         ledStrib.setStrip(255,255,40);
-        ledStrib.render();
+        ledStrib.render();*/
+        int pixels = 12;
+        ledStrip = new LEDStrip(pi4j, pixels, 0.2);
+        ledStrip.allOff();
+        int h=0;
+        while(h++ < 10000) {
+            console.println("MmmMmmmMMmm");
+            //waitForKey("Set led strip to ORANGE");
+            ledStrip.setStripColor(LEDStrip.PixelColor.YELLOW);
+            ledStrip.render();
+
+            delay(1000);
+            ledStrip.setStripColor(LEDStrip.PixelColor.GREEN);
+            ledStrip.render();
+
+            delay(1000);
+        }
         /*
         ledStrip = new LEDStrip(pi4j, 12, 1.0,0);
 
@@ -119,15 +136,21 @@ public class Main {
 
         //Listen for button presses & releases: change LED state and when button is being pressed,
         //make a beep with the speaker
-        button1.addListener(createListener("one"));
-        button2.addListener(createListener("two"));
-        button3.addListener(createListener("three"));
+        button1.addListener(createListener(()->{console.println("one");}));
+        button2.addListener(createListener(()->{console.println("two");}));
+        button3.addListener(createListener(()->{console.println("three");}));
 
         //only stop the program once the user wants it to
         console.waitForExit();
         pi4j.shutdown();
     }
-
+    static void delay(long milliseconds) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
     /**
      *make a subprocess that does a speaker test (beep!)
      */
@@ -151,15 +174,19 @@ public class Main {
         return pi4j.create(buttonConfig);
     }
 
-    private DigitalStateChangeListener createListener(String log){
+    private DigitalStateChangeListener createListener(Runnable high, Runnable low){
         return digitalStateChangeEvent -> {
             if(digitalStateChangeEvent.state() == DigitalState.LOW){
-                ledStrip.setPixelColor(5,LEDStrip.PixelColor.PURPLE);
-                ledStrip.render();
-                console.println("button " + log + " pressed");
+                low.run();
             }else{
-                ledStrip.allOff();
-                console.println("button " + log + " released");
+                high.run();
+            }
+        };
+    }
+    private DigitalStateChangeListener createListener(Runnable low){
+        return digitalStateChangeEvent -> {
+            if(digitalStateChangeEvent.state() == DigitalState.LOW){
+                low.run();
             }
         };
     }
