@@ -1,7 +1,6 @@
 package com.example;
 
-import com.pi4j.io.gpio.GpioPinDigitalInput;
-import com.pi4j.io.gpio.GpioPinDigitalOutput;
+import com.pi4j.io.gpio.digital.*;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.io.spi.SpiChannel;
@@ -30,7 +29,7 @@ import java.util.*;
  * on the {@code MCP23S17} object.
  * </p>
  * <p>
- * To setup the chip to use interrupts, the interrupt {@linkplain GpioPinDigitalInput input pins} must be passed in
+ * To setup the chip to use interrupts, the interrupt {@linkplain DigitalInput input pins} must be passed in
  * during construction at the appropriate static factory method; one static factory method is provided for each possible
  * interrupt setup. Once a chip is setup for interrupts, callbacks for both
  * {@linkplain PinView#addListener(InterruptListener) pin-specific interrupts} and
@@ -701,7 +700,7 @@ public final class MCP23S17 {
     /**
      * The output pin for the chip select line on the MCP23S17 chip.
      */
-    private final GpioPinDigitalOutput chipSelect;
+    private final DigitalOutput chipSelect;
 
     /**
      * The SPI communication interface.
@@ -723,8 +722,8 @@ public final class MCP23S17 {
     private final Collection<InterruptListener> globalListeners = new HashSet<>(0);
 
     // These are only referenced so they are not GCed.
-    private final GpioPinDigitalInput portAInterrupt;
-    private final GpioPinDigitalInput portBInterrupt;
+    private final DigitalInput portAInterrupt;
+    private final DigitalInput portBInterrupt;
 
     // The bytes representing the value of the chip's various registers.
     // They are initialized to the corresponding registers' initial value, as given in the MCP23S17 datasheet.
@@ -759,18 +758,18 @@ public final class MCP23S17 {
      * This is the only constructor and it is private--the static factory methods must be used for object creation.
      *
      * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
-     * @param chipSelect the {@linkplain GpioPinDigitalOutput output pin} controlling the chip select line on the chip.
-     * @param portAInterrupt the {@linkplain GpioPinDigitalInput input pin} for the port A interrupt line on the chip,
+     * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
+     * @param portAInterrupt the {@linkplain DigitalInput input pin} for the port A interrupt line on the chip,
      *                       or {@code null}.
-     * @param portBInterrupt the {@linkplain GpioPinDigitalInput input pin} for the port B interrupt line on the chip,
+     * @param portBInterrupt the {@linkplain DigitalInput input pin} for the port B interrupt line on the chip,
      *                       or {@code null}.
      * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     private MCP23S17(SpiChannel spiChannel,
-                     GpioPinDigitalOutput chipSelect,
-                     GpioPinDigitalInput portAInterrupt,
-                     GpioPinDigitalInput portBInterrupt)
+                     DigitalOutput chipSelect,
+                     DigitalInput portAInterrupt,
+                     DigitalInput portBInterrupt)
             throws IOException {
         this.chipSelect = Objects.requireNonNull(chipSelect, "chipSelect must be non-null");
         this.spi = SpiFactory.getInstance(
@@ -1168,13 +1167,13 @@ public final class MCP23S17 {
      * Instantiate a new {@code MCP23S17} object with no interrupts.
      *
      * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
-     * @param chipSelect the {@linkplain GpioPinDigitalOutput output pin} controlling the chip select line on the chip.
+     * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @return a new {@code MCP23S17} object with no interrupts.
      * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     public static MCP23S17 newWithoutInterrupts(SpiChannel spiChannel,
-                                                GpioPinDigitalOutput chipSelect)
+                                                DigitalOutput chipSelect)
             throws IOException {
         return new MCP23S17(
                 spiChannel,
@@ -1188,15 +1187,15 @@ public final class MCP23S17 {
      * Instantiate a new {@code MCP23S17} object with the port A and port B interrupt lines "tied" together.
      *
      * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
-     * @param chipSelect the {@linkplain GpioPinDigitalOutput output pin} controlling the chip select line on the chip.
-     * @param interrupt the interrupt {@linkplain GpioPinDigitalInput input pin}.
+     * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
+     * @param interrupt the interrupt {@linkplain DigitalInput input pin}.
      * @return a new {@code MCP23S17} object with the port A and port B interrupt lines "tied" together.
      * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
      * @throws NullPointerException if the given chip select output or tied interrupt input is {@code null}.
      */
     public static MCP23S17 newWithTiedInterrupts(SpiChannel spiChannel,
-                                                 GpioPinDigitalOutput chipSelect,
-                                                 GpioPinDigitalInput interrupt)
+                                                 DigitalOutput chipSelect,
+                                                 DigitalInput interrupt)
             throws IOException {
         MCP23S17 ioExpander = new MCP23S17(
                 spiChannel,
@@ -1217,17 +1216,17 @@ public final class MCP23S17 {
      * Instantiate a new {@code MCP23S17} object with individual port A and port B interrupt lines.
      *
      * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
-     * @param chipSelect the {@linkplain GpioPinDigitalOutput output pin} controlling the chip select line on the chip.
-     * @param portAInterrupt the interrupt {@linkplain GpioPinDigitalInput input pin} for port A.
-     * @param portBInterrupt the interrupt {@linkplain GpioPinDigitalInput input pin} for port B.
+     * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
+     * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for port A.
+     * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for port B.
      * @return a new {@code MCP23S17} object with individual port A and port B interrupt lines.
      * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
      * @throws NullPointerException if the given chip select output or either of the interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithInterrupts(SpiChannel spiChannel,
-                                             GpioPinDigitalOutput chipSelect,
-                                             GpioPinDigitalInput portAInterrupt,
-                                             GpioPinDigitalInput portBInterrupt)
+                                             DigitalOutput chipSelect,
+                                             DigitalInput portAInterrupt,
+                                             DigitalInput portBInterrupt)
             throws IOException {
         MCP23S17 ioExpander = new MCP23S17(
                 spiChannel,
@@ -1244,15 +1243,15 @@ public final class MCP23S17 {
      * Instantiate a new {@code MCP23S17} object with an individual port A interrupt line, but no port B interrupt line.
      *
      * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
-     * @param chipSelect the {@linkplain GpioPinDigitalOutput output pin} controlling the chip select line on the chip.
-     * @param portAInterrupt the interrupt {@linkplain GpioPinDigitalInput input pin} for port A.
+     * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
+     * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for port A.
      * @return a new {@code MCP23S17} object with an individual port A interrupt line, but no port B interrupt line.
      * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
      * @throws NullPointerException if the given chip select output or the port A interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithPortAInterrupts(SpiChannel spiChannel,
-                                                  GpioPinDigitalOutput chipSelect,
-                                                  GpioPinDigitalInput portAInterrupt)
+                                                  DigitalOutput chipSelect,
+                                                  DigitalInput portAInterrupt)
             throws IOException {
         MCP23S17 ioExpander = new MCP23S17(
                 spiChannel,
@@ -1268,15 +1267,15 @@ public final class MCP23S17 {
      * Instantiate a new {@code MCP23S17} object with an individual port B interrupt line, but no port A interrupt line.
      *
      * @param spiChannel the {@link SpiChannel SpiChannel} that the chip is connected to.
-     * @param chipSelect the {@linkplain GpioPinDigitalOutput output pin} controlling the chip select line on the chip.
-     * @param portBInterrupt the interrupt {@linkplain GpioPinDigitalInput input pin} for port B.
+     * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
+     * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for port B.
      * @return a new {@code MCP23S17} object with an individual port B interrupt line, but no port A interrupt line.
      * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
      * @throws NullPointerException if the given chip select output or the port B interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithPortBInterrupts(SpiChannel spiChannel,
-                                                  GpioPinDigitalOutput chipSelect,
-                                                  GpioPinDigitalInput portBInterrupt)
+                                                  DigitalOutput chipSelect,
+                                                  DigitalInput portBInterrupt)
             throws IOException {
         MCP23S17 ioExpander = new MCP23S17(
                 spiChannel,
@@ -1289,13 +1288,13 @@ public final class MCP23S17 {
     }
 
     /**
-     * Attach a {@link Runnable Runnable} callback to the given {@linkplain GpioPinDigitalInput input pin} to be invoked
+     * Attach a {@link Runnable Runnable} callback to the given {@linkplain DigitalInput input pin} to be invoked
      * whenever the pin goes low.
      *
      * @param interrupt the input pin to attach the interrupt to.
      * @param callback the {@code Runnable} callback.
      */
-    private static void attachInterruptOnLow(GpioPinDigitalInput interrupt, Runnable callback) {
+    private static void attachInterruptOnLow(DigitalInput interrupt, Runnable callback) {
         interrupt.addListener(new GpioPinListenerDigital() {
             @Override
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
