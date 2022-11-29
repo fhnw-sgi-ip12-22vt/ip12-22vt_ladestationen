@@ -52,7 +52,7 @@ public class Main {
                             PiGpioSpiProvider.newInstance(piGpio)
                     )
                     .build();
-            new Main().runMCPExample(pi4j);
+            new Main().run(pi4j);
         } catch (InvocationTargetException e) {
             console.println("Error: " + e.getTargetException().getMessage());
         } catch (Exception e) {
@@ -119,6 +119,9 @@ public class Main {
         var button1 = createButton(2,pi4j);
         var button2 = createButton(3,pi4j);
         var button3 = createButton(4,pi4j);
+        button1.addListener(createListener(()->{console.println("one");}));
+        button2.addListener(createListener(()->{console.println("two");}));
+        button3.addListener(createListener(()->{console.println("three");}));
 
         /*var ledStrib =  new Ws281xLedStrip(
                             12,       // leds
@@ -133,8 +136,10 @@ public class Main {
                         );
         ledStrib.setStrip(255,255,40);
         ledStrib.render();*/
+
+
         int pixels = 12;
-        ledStrip = new LEDStrip(pi4j, pixels, 0.2);
+        ledStrip = new LEDStrip(pi4j, pixels, 1.0,1);
         ledStrip.allOff();
         int h=0;
         while(h++ < 10000) {
@@ -184,10 +189,6 @@ public class Main {
         System.out.println("Color "+ ledStrip.getPixelColor(0));*/
 
         //Listen for button presses & releases: change LED state and when button is being pressed,
-        //make a beep with the speaker
-        button1.addListener(createListener(()->{console.println("one");}));
-        button2.addListener(createListener(()->{console.println("two");}));
-        button3.addListener(createListener(()->{console.println("three");}));
 
         //only stop the program once the user wants it to
         console.waitForExit();
