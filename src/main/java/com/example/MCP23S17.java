@@ -1,11 +1,10 @@
 package com.example;
 
+import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
-import com.pi4j.io.spi.SpiChannel;
-import com.pi4j.io.spi.SpiDevice;
-import com.pi4j.io.spi.SpiFactory;
+import com.pi4j.io.spi.Spi;
+import com.pi4j.io.spi.SpiConfig;
 import com.pi4j.io.spi.SpiMode;
-
 import java.io.IOException;
 import java.util.*;
 
@@ -703,7 +702,7 @@ public final class MCP23S17 {
     /**
      * The SPI communication interface.
      */
-    private final SpiDevice spi;
+    private final Spi spi;
 
     /**
      * The lazily-instantiated {@link PinView PinView}s. This object is synchronized on in
@@ -764,24 +763,35 @@ public final class MCP23S17 {
      * @throws IOException if the instantiation of the {@link SpiDevice SpiDevice} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
-    private MCP23S17(SpiChannel spiChannel,
+    private MCP23S17(Context pi4j,
+                     int spiChannel,
                      DigitalOutput chipSelect,
                      DigitalInput portAInterrupt,
                      DigitalInput portBInterrupt)
             throws IOException {
         this.chipSelect = Objects.requireNonNull(chipSelect, "chipSelect must be non-null");
-        this.spi = SpiFactory.getInstance(
-                Objects.requireNonNull(spiChannel, "spiChannel must be non-null"),
-                SPI_SPEED_HZ,
-                SpiMode.MODE_0
-        );
+        this.spi = pi4j.create(buildSpiConfig(pi4j, spiChannel, SPI_SPEED_HZ));
         this.portAInterrupt = portAInterrupt;
         this.portBInterrupt = portBInterrupt;
 
         // Take the CS pin high if it is not already since the CS is active low.
         chipSelect.high();
     }
-
+    /**
+     * Builds a new SPI instance for the MCP23S17 IC
+     *
+     * @param pi4j Pi4J context
+     * @return SPI instance
+     */
+    private SpiConfig buildSpiConfig(Context pi4j, int channel, int frequency) {
+        return Spi.newConfigBuilder(pi4j)
+                .id("SPI" + 1)
+                .name("LED Matrix")
+                .address(channel)
+                .mode(SpiMode.MODE_0)
+                .baud(frequency)
+                .build();
+    }
     /**
      * Get the {@link PinView PinView} corresponding to the given {@link Pin Pin}.
      *
