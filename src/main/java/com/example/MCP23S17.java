@@ -683,8 +683,10 @@ public final class MCP23S17 {
     private static final byte ADDR_OLATB = 0x15;
 
     // OPCODES--these are written before a register address in the read and write processes.
-    private static final byte WRITE_OPCODE = 0x40;
-    private static final byte READ_OPCODE = 0x41;
+    //NOTE: If ICs with different Hardware addresses get added, those addresses are stored in those opcodes.
+    //that's why they're not static.
+    private byte write_opcode = 0x40;
+    private byte read_opcode = 0x41;
 
     // These arrays are used for interrupt handling. (Interrupts are port-specific, so having separate arrays for each
     // port means we can iterate over the pins belonging to either port A or B.)
@@ -751,7 +753,7 @@ public final class MCP23S17 {
     private final Object byteWriteLock = new Object();
 
     /**
-     * This is the only constructor and it is private--the static factory methods must be used for object creation.
+     * This is the first out of two private constructors.--the static factory methods must be used for object creation.
      *
      * @param bus the SPI-Bus that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
@@ -776,6 +778,37 @@ public final class MCP23S17 {
         // Take the CS pin high if it is not already since the CS is active low.
         chipSelect.high();
     }
+
+    /**
+     * This is the second out of two private constructors.
+     * It is used for adding more ICs to the same SPI-Bus. See {@code MCP23S17.multipleNewOnSameBus()}.
+     * Note that the Address pins are disabled by default. The factory method enables them.
+     * --the static factory methods must be used for object creation
+     *
+     * @param other The MCP23S17 IC with it's Address Pins all tied to 0, thus with address 0.
+     * @param HWAddress The Hardware Adress of this very MCP23S17 IC.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
+     * @throws NullPointerException if the given chip select output is {@code null}.
+     */
+    private MCP23S17(MCP23S17 other,
+                     int HWAddress)
+            throws IOException {
+        this.chipSelect = other.chipSelect;
+        this.spi = other.spi;
+        this.portAInterrupt = null;
+        this.portBInterrupt =  null;
+        //check whether the Address is in the correct range
+        if(HWAddress > 7 || HWAddress < 0){
+            throw new IOException(  "HWAddress ["+HWAddress+"] must be between 0 and 7,"
+                    +" as there are only 3 physical Address pins on the MCP23S12 IC.");
+        }
+        //the HWAddress is the three bits before the Read/Write bit:
+        //0b0100xxx0 to write to address xxx
+        //0b0100xxx1 to read from address xxx
+        this.read_opcode  |= (((byte)HWAddress) << 1);
+        this.write_opcode |= (((byte)HWAddress) << 1);
+    }
+
     /**
      * Builds a new SPI instance for the MCP23S17 IC
      *
@@ -909,7 +942,7 @@ public final class MCP23S17 {
         synchronized (spi) {
             try {
                 chipSelect.low();
-                spi.write(WRITE_OPCODE, registerAddress, value);
+                spi.write(write_opcode, registerAddress, value);
             } finally {
                 // Make sure the chip select line is brought high again in finally block so that failure may be recoverable.
                 chipSelect.high();
@@ -1098,7 +1131,7 @@ public final class MCP23S17 {
     private byte read(byte registerAddress) throws IOException {
         byte[] data = new byte[3];
         // The 0x00 byte is just arbitrary filler.
-        byte[] send = {READ_OPCODE, registerAddress, (byte) 0x00};
+        byte[] send = {read_opcode, registerAddress, (byte) 0x00};
         synchronized (spi) {
             try {
                 chipSelect.low();
@@ -1197,6 +1230,45 @@ public final class MCP23S17 {
                 null,
                 null
         );
+    }
+    /**
+     * Instantiate a new {@code MCP23S17} object with no interrupts that is connected to the same
+     * SPI-Bus as a previously instantiated {@code MCP23S17} object, but with a different hardware Address .
+     *
+     * @param bus the SPI-Channel that the chip is connected to.
+     * @return a new {@code MCP23S17} object with no interrupts.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
+     * @throws NullPointerException if the given chip select output is {@code null}.
+     */
+    public static ArrayList<MCP23S17> multipleNewOnSameBus(Context pi4j,
+                                                SpiBus bus,
+                                                int amount)
+            throws IOException {
+        if(amount > 8 || amount < 1){
+            throw  new IOException("amount ["+amount+"] must be between 1 and 8 as there can only be 8 addresses per Bus");
+        }
+        //TODO: this is VERY arbitrary. The chipselect is already handled by the spi config,
+        //      but the code should not just init some random pin.
+        var ChipSelectConfig = DigitalOutput.newConfigBuilder(pi4j)
+                .id("CS"+2)
+                .name("dummy chip select")
+                .address(2)
+                .provider("pigpio-digital-output");
+
+        var ChipSelect = pi4j.create(ChipSelectConfig);
+         var ICList = new ArrayList<MCP23S17>(amount);
+         var firstIC = new MCP23S17(pi4j,bus,ChipSelect,null,null);
+         ICList.add(firstIC);
+
+         for(int i = 1; i < amount; ++i) {
+             ICList.add(new MCP23S17(firstIC, i));
+         }
+
+         //need to enable the hardware adress pins by sending the appropriate address write command.
+         //this enables every chip assuming they are connected to the same SPI bus and Chip select
+         firstIC.write(ADDR_IOCON,(byte)0b00001000);
+
+         return ICList;
     }
 
     /**
