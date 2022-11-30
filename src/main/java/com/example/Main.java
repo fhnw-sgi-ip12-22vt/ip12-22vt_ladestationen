@@ -66,7 +66,7 @@ public class Main {
             }
         }
     }
-    private void runMCPExample(Context pi4j) throws Exception{
+    private MCP23S17 setupMCP(Context pi4j) throws Exception{
         var ChipSelectConfig = DigitalOutput.newConfigBuilder(pi4j)
                 .id("CS"+(buttonIds++))
                 .name("chip select")
@@ -75,7 +75,9 @@ public class Main {
 
         var ChipSelect = pi4j.create(ChipSelectConfig);
 
-        MCP23S17 IC = MCP23S17.newWithoutInterrupts(pi4j,0,ChipSelect);
+        return MCP23S17.newWithoutInterrupts(pi4j,SpiBus.BUS_1,ChipSelect);
+    }
+    private ArrayList<MCP23S17.PinView> getPinsMCP(MCP23S17 IC)throws Exception{
         var ICPinsIter = IC.getPinViewIterator();
         var ICPins = new ArrayList<MCP23S17.PinView>(16);
         for(var pin = ICPinsIter.next();ICPinsIter.hasNext();pin = ICPinsIter.next()){
@@ -83,24 +85,29 @@ public class Main {
             ICPins.add(pin);
             console.println("pinview direction set");
         }
-        for(var pin : ICPins){
-            pin.set(true);
-            console.println("huh");
-        }
         IC.writeIODIRA();
         IC.writeIODIRB();
         IC.writeOLATA();
         IC.writeOLATB();
-        for(int i = 0; i < 10;++i){
-            console.println("on"+i);
-            ICPins.get(5).set(true);
-            IC.writeOLATA();
-            delay(1000);
+        return ICPins;
+    }
+    private void MCPon(MCP23S17 IC, ArrayList<MCP23S17.PinView> ICPins) throws Exception{
+
+        //for(int i = 0; i < 10;++i){
+        var i = 5;
             console.println("off"+i);
-            ICPins.get(5).set(false);
+            ICPins.get(i).set(false);
             IC.writeOLATA();
-            delay(1000);
-        }
+       // }
+    }
+    private void MCPoff(MCP23S17 IC, ArrayList<MCP23S17.PinView> ICPins) throws Exception{
+
+       // for(int i = 0; i < 10;++i){
+        var i = 5;
+            console.println("on"+i);
+            ICPins.get(i).set(true);
+            IC.writeOLATA();
+       // }
     }
     //TODO: extract main logic from boilerplate
     /**
@@ -124,6 +131,11 @@ public class Main {
         button1.addListener(createListener(()->{console.println("one");}));
         button2.addListener(createListener(()->{console.println("two");}));
         button3.addListener(createListener(()->{console.println("three");}));
+
+        //setup MCP
+        MCP23S17 IntCirc = setupMCP(pi4j);
+        var ICPins = getPinsMCP(IntCirc);
+
 
         /*var ledStrib =  new Ws281xLedStrip(
                             12,       // leds
@@ -149,11 +161,11 @@ public class Main {
             //waitForKey("Set led strip to ORANGE");
             ledStrip.setStripColor(LEDStrip.PixelColor.YELLOW);
             ledStrip.render();
-
+            MCPon(IntCirc, ICPins);
             delay(1000);
             ledStrip.setStripColor(LEDStrip.PixelColor.GREEN);
             ledStrip.render();
-
+            MCPoff(IntCirc, ICPins);
             delay(1000);
         }
         /*
