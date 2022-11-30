@@ -123,11 +123,12 @@ public class LEDStrip extends Component {
     private SpiConfig buildSpiConfig(Context pi4j, SpiBus bus, SpiChipSelect channel, int frequency) {
         return Spi.newConfigBuilder(pi4j)
                 .id("SPI" + 1)
-                .name("LED Matrix")
+                .name("LED Strip")
                 .bus(bus)
                 .chipSelect(channel)
                 .mode(SpiMode.MODE_0)
                 .baud(8 * frequency) //bitbanging from Bit to SPI-Byte
+                .provider("pigpio-spi")
                 .build();
     }
 

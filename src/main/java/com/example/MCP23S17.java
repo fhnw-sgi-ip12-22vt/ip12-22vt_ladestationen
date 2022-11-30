@@ -784,10 +784,11 @@ public final class MCP23S17 {
      */
     private SpiConfig buildSpiConfig(Context pi4j, SpiBus bus,int frequency) {
         return Spi.newConfigBuilder(pi4j)
-                .id("SPI" + 1)
-                .name("LED Matrix")
+                .id("SPI" + 2)
+                .name("GPIO-Circuit")
+                .description("SPI-Config for GPIO-Extension Integrated Circuits (MCP23S17)")
                 .bus(bus)
-                .chipSelect(SpiChipSelect.CS_0)
+                .chipSelect(SpiChipSelect.CS_2)
                 .mode(SpiMode.MODE_0)
                 .baud(frequency)
                 .build();
