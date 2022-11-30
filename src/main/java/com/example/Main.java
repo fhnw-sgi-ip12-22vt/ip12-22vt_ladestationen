@@ -85,23 +85,15 @@ public class Main {
         IC.writeOLATB();
         return ICPins;
     }
-    private void MCPon(MCP23S17 IC, ArrayList<MCP23S17.PinView> ICPins) throws Exception{
-
-        //for(int i = 0; i < 10;++i){
-        var i = 5;
-            console.println("off"+i);
-            ICPins.get(i).set(false);
+    private void MCPoff(MCP23S17 IC, MCP23S17.PinView ICPin) throws Exception{
+            console.println("off");
+            ICPin.set(false);
             IC.writeOLATA();
-       // }
     }
-    private void MCPoff(MCP23S17 IC, ArrayList<MCP23S17.PinView> ICPins) throws Exception{
-
-       // for(int i = 0; i < 10;++i){
-        var i = 5;
-            console.println("on"+i);
-            ICPins.get(i).set(true);
+    private void MCPon(MCP23S17 IC, MCP23S17.PinView ICPin) throws Exception{
+            console.println("on");
+            ICPin.set(true);
             IC.writeOLATA();
-       // }
     }
     //TODO: extract main logic from boilerplate
     /**
@@ -127,8 +119,9 @@ public class Main {
         button3.addListener(createListener(()->{console.println("three");}));
 
         //setup MCP
-        MCP23S17 IntCirc = setupMCP(pi4j);
-        var ICPins = getPinsMCP(IntCirc);
+        var ICtuple = MCP23S17.multipleNewOnSameBus(pi4j,SpiBus.BUS_1,2);
+        var ICPins0 = getPinsMCP(ICtuple.get(0));
+        var ICPins1 = getPinsMCP(ICtuple.get(1));
 
         int pixels = 12;
         ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_0);
@@ -139,11 +132,14 @@ public class Main {
             //waitForKey("Set led strip to ORANGE");
             ledStrip.setStripColor(LEDStrip.PixelColor.YELLOW);
             ledStrip.render();
-            MCPon(IntCirc, ICPins);
+            MCPon(ICtuple.get(0), ICPins0.get(5));
+            MCPon(ICtuple.get(1), ICPins1.get(7));
+
             delay(1000);
             ledStrip.setStripColor(LEDStrip.PixelColor.GREEN);
             ledStrip.render();
-            MCPoff(IntCirc, ICPins);
+            MCPoff(ICtuple.get(0), ICPins0.get(5));
+            MCPoff(ICtuple.get(1), ICPins1.get(7));
             delay(1000);
         }
         console.println("ok finished");
