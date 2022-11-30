@@ -83,7 +83,7 @@ public class LEDStrip extends Component {
      * @param channel    which channel to use
      */
     public LEDStrip(Context pi4j, int numLEDs, double brightness, int channel) {
-        if (numLEDs < 1 || brightness < 0 || brightness > 1 || channel < 0 || channel > 1) {
+        if (numLEDs < 1 || brightness < 0 || brightness > 1 || channel < 0 || channel > 6) {
             throw new IllegalArgumentException("Illegal Constructor");
         }
         logDebug("initialising a ledstrip with " + numLEDs + " leds");

@@ -139,7 +139,7 @@ public class Main {
 
 
         int pixels = 12;
-        ledStrip = new LEDStrip(pi4j, pixels, 1.0,1);
+        ledStrip = new LEDStrip(pi4j, pixels, 1.0,0);
         ledStrip.allOff();
         int h=0;
         while(h++ < 10000) {
