@@ -76,7 +76,17 @@ public class LEDStrip extends Component {
     public LEDStrip(Context pi4j, int numLEDs, double brightness) {
         this(pi4j, numLEDs, brightness, DEFAULT_SPI_BUS, DEFAULT_SPI_CHANNEL);
     }
-
+    /**
+     * Creates a new simpleLed component with a non-default SPI-Bus
+     *
+     * @param pi4j       Pi4J context
+     * @param numLEDs    How many LEDs are on this Strand
+     * @param brightness How bright the LEDs can be at max, Range 0.0 - 1.0
+     * @param bus        Which SPI-Bus to use
+     */
+    public LEDStrip(Context pi4j, int numLEDs, double brightness, SpiBus bus) {
+        this(pi4j, numLEDs, brightness, bus, DEFAULT_SPI_CHANNEL);
+    }
     /**
      * Creates a new simpleLed component with a custom BCM pin.
      *
@@ -86,7 +96,7 @@ public class LEDStrip extends Component {
      * @param channel    which channel to use
      */
     public LEDStrip(Context pi4j, int numLEDs, double brightness, SpiBus bus, SpiChipSelect channel) {
-        if (numLEDs < 1 || brightness < 0 || brightness > 1 || channel < 0 || channel > 1) {
+        if (numLEDs < 1 || brightness < 0 || brightness > 1) {
             throw new IllegalArgumentException("Illegal Constructor");
         }
         logDebug("initialising a ledstrip with " + numLEDs + " leds");
