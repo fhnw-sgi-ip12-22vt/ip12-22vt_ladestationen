@@ -141,7 +141,7 @@ public class Main {
 
 
         int pixels = 12;
-        ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_1, SpiChipSelect.CS_1);
+        ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_1);
         ledStrip.allOff();
         int h=0;
         while(h++ < 10000) {

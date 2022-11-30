@@ -2,9 +2,8 @@ package com.example;
 
 import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
-import com.pi4j.io.spi.Spi;
-import com.pi4j.io.spi.SpiConfig;
-import com.pi4j.io.spi.SpiMode;
+import com.pi4j.io.spi.*;
+
 import java.io.IOException;
 import java.util.*;
 
@@ -764,13 +763,13 @@ public final class MCP23S17 {
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     private MCP23S17(Context pi4j,
-                     int spiChannel,
+                     SpiBus bus,
                      DigitalOutput chipSelect,
                      DigitalInput portAInterrupt,
                      DigitalInput portBInterrupt)
             throws IOException {
         this.chipSelect = Objects.requireNonNull(chipSelect, "chipSelect must be non-null");
-        this.spi = pi4j.create(buildSpiConfig(pi4j, spiChannel, SPI_SPEED_HZ));
+        this.spi = pi4j.create(buildSpiConfig(pi4j, bus, SPI_SPEED_HZ));
         this.portAInterrupt = portAInterrupt;
         this.portBInterrupt = portBInterrupt;
 
@@ -783,11 +782,12 @@ public final class MCP23S17 {
      * @param pi4j Pi4J context
      * @return SPI instance
      */
-    private SpiConfig buildSpiConfig(Context pi4j, int channel, int frequency) {
+    private SpiConfig buildSpiConfig(Context pi4j, SpiBus bus,int frequency) {
         return Spi.newConfigBuilder(pi4j)
                 .id("SPI" + 1)
                 .name("LED Matrix")
-                .address(channel)
+                .bus(bus)
+                .chipSelect(SpiChipSelect.CS_0)
                 .mode(SpiMode.MODE_0)
                 .baud(frequency)
                 .build();
