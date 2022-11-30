@@ -7,7 +7,6 @@ package com.example;
 
 import com.pi4j.Pi4J;
 import com.pi4j.io.spi.SpiBus;
-import com.pi4j.io.spi.SpiChipSelect;
 import com.pi4j.library.pigpio.PiGpio;
 import com.pi4j.plugin.pigpio.provider.gpio.digital.PiGpioDigitalInputProvider;
 import com.pi4j.plugin.pigpio.provider.gpio.digital.PiGpioDigitalOutputProvider;
@@ -20,11 +19,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
 import java.lang.ProcessBuilder;
 import java.util.ArrayList;
-
-import com.github.mbelling.ws281x.Ws281xLedStrip;
-import com.github.mbelling.ws281x.LedStripType;
-import com.example.LEDStrip;
-import com.example.MCP23S17;
 
 /**
  * Main class of the maven pi4j archetype
@@ -136,27 +130,11 @@ public class Main {
         MCP23S17 IntCirc = setupMCP(pi4j);
         var ICPins = getPinsMCP(IntCirc);
 
-
-        /*var ledStrib =  new Ws281xLedStrip(
-                            12,       // leds
-                            10,          // Using pin 10 to do SPI, which should allow non-sudo access
-                            800000,  // freq hz
-                            10,            // dma
-                            255,      // brightness
-                            0,      // pwm channel
-                            false,        // invert
-                            LedStripType.WS2811_STRIP_RGB,    // Strip type
-                            true    // clear on exit
-                        );
-        ledStrib.setStrip(255,255,40);
-        ledStrib.render();*/
-
-
         int pixels = 12;
         ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_0);
         ledStrip.allOff();
         int h=0;
-        while(h++ < 10000) {
+        while(h++ < 100) {
             console.println("MmmMmmmMMmm");
             //waitForKey("Set led strip to ORANGE");
             ledStrip.setStripColor(LEDStrip.PixelColor.YELLOW);
@@ -168,43 +146,7 @@ public class Main {
             MCPoff(IntCirc, ICPins);
             delay(1000);
         }
-        /*
-        ledStrip = new LEDStrip(pi4j, 12, 1.0,0);
-
-        //set them all off, so nothing is shining
-        System.out.println("Starting with setting all leds off");
-        ledStrip.allOff();
-
-        System.out.println("setting the LEDs to RED");
-        ledStrip.setStripColor(LEDStrip.PixelColor.RED);
-        ledStrip.render();
-        ledStrip.delay(3000);
-
-        System.out.println("setting the LEDs to Light Blue");
-        ledStrip.setStripColor(LEDStrip.PixelColor.LIGHT_BLUE);
-        ledStrip.render();
-        ledStrip.delay(3000);
-
-        System.out.println("setting the first led to Purple");
-        ledStrip.setPixelColor(0, LEDStrip.PixelColor.PURPLE);
-        ledStrip.render();
-        ledStrip.delay(3000);
-
-        System.out.println("setting the brightness to full and just show the first led as White");
-        ledStrip.allOff();
-        ledStrip.setBrightness(1);
-        ledStrip.setPixelColor(0, LEDStrip.PixelColor.WHITE);
-        ledStrip.render();
-        ledStrip.delay(3000);
-
-//finishing and closing
-        ledStrip.close();
-        System.out.println("closing the app");
-        System.out.println("Color "+ ledStrip.getPixelColor(0));*/
-
-        //Listen for button presses & releases: change LED state and when button is being pressed,
-
-        //only stop the program once the user wants it to
+        console.println("ok finished");
         console.waitForExit();
         pi4j.shutdown();
     }
