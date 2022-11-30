@@ -6,6 +6,8 @@
 package com.example;
 
 import com.pi4j.Pi4J;
+import com.pi4j.io.spi.SpiBus;
+import com.pi4j.io.spi.SpiChipSelect;
 import com.pi4j.library.pigpio.PiGpio;
 import com.pi4j.plugin.pigpio.provider.gpio.digital.PiGpioDigitalInputProvider;
 import com.pi4j.plugin.pigpio.provider.gpio.digital.PiGpioDigitalOutputProvider;
@@ -139,7 +141,7 @@ public class Main {
 
 
         int pixels = 12;
-        ledStrip = new LEDStrip(pi4j, pixels, 1.0,0);
+        ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_1, SpiChipSelect.CS_1);
         ledStrip.allOff();
         int h=0;
         while(h++ < 10000) {

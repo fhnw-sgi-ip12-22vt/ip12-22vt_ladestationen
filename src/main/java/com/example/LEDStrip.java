@@ -1,9 +1,7 @@
 package com.example;
 
 import com.pi4j.context.Context;
-import com.pi4j.io.spi.Spi;
-import com.pi4j.io.spi.SpiConfig;
-import com.pi4j.io.spi.SpiMode;
+import com.pi4j.io.spi.*;
 
 import java.util.Arrays;
 //Code from https://github.com/Pi4J/pi4j-example-components/blob/main/src/main/java/com/pi4j/catalog/components/LEDStrip.java
@@ -12,10 +10,15 @@ import java.util.Arrays;
  */
 public class LEDStrip extends Component {
     /**
+     * Default SPI bus
+     */
+
+    protected static final SpiBus DEFAULT_SPI_BUS = SpiBus.BUS_0;
+    /**
      * Default Channel of the SPI Pins
      */
 
-    protected static final int DEFAULT_SPI_CHANNEL = 0;
+    protected static final SpiChipSelect DEFAULT_SPI_CHANNEL = SpiChipSelect.CS_0;
     /**
      * Minimum time to wait for reset to occur in nanoseconds.
      */
@@ -71,7 +74,7 @@ public class LEDStrip extends Component {
      * @param brightness How bright the leds can be at max, Range 0 - 255
      */
     public LEDStrip(Context pi4j, int numLEDs, double brightness) {
-        this(pi4j, numLEDs, brightness, DEFAULT_SPI_CHANNEL);
+        this(pi4j, numLEDs, brightness, DEFAULT_SPI_BUS, DEFAULT_SPI_CHANNEL);
     }
 
     /**
@@ -82,8 +85,8 @@ public class LEDStrip extends Component {
      * @param brightness How bright the leds can be at max, range 0 - 1
      * @param channel    which channel to use
      */
-    public LEDStrip(Context pi4j, int numLEDs, double brightness, int channel) {
-        if (numLEDs < 1 || brightness < 0 || brightness > 1 || channel < 0 || channel > 6) {
+    public LEDStrip(Context pi4j, int numLEDs, double brightness, SpiBus bus, SpiChipSelect channel) {
+        if (numLEDs < 1 || brightness < 0 || brightness > 1 || channel < 0 || channel > 1) {
             throw new IllegalArgumentException("Illegal Constructor");
         }
         logDebug("initialising a ledstrip with " + numLEDs + " leds");
@@ -91,7 +94,7 @@ public class LEDStrip extends Component {
         this.LEDs = new int[numLEDs];
         this.brightness = brightness;
         this.context = pi4j;
-        this.spi = pi4j.create(buildSpiConfig(pi4j, channel, frequency));
+        this.spi = pi4j.create(buildSpiConfig(pi4j, bus, channel, frequency));
 
         // The raw bytes that get sent to the ledstrip
         // 3 Color channels per led, at 8 bytes each, with 2 reset bytes
@@ -107,11 +110,12 @@ public class LEDStrip extends Component {
      * @param pi4j Pi4J context
      * @return SPI instance
      */
-    private SpiConfig buildSpiConfig(Context pi4j, int channel, int frequency) {
+    private SpiConfig buildSpiConfig(Context pi4j, SpiBus bus, SpiChipSelect channel, int frequency) {
         return Spi.newConfigBuilder(pi4j)
                 .id("SPI" + 1)
                 .name("LED Matrix")
-                .address(channel)
+                .bus(bus)
+                .chipSelect(channel)
                 .mode(SpiMode.MODE_0)
                 .baud(8 * frequency) //bitbanging from Bit to SPI-Byte
                 .build();
