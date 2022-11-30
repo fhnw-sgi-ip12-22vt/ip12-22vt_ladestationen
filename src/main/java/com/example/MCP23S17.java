@@ -753,7 +753,7 @@ public final class MCP23S17 {
     /**
      * This is the only constructor and it is private--the static factory methods must be used for object creation.
      *
-     * @param spiChannel the that the chip is connected to.
+     * @param bus the SPI-Bus that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portAInterrupt the {@linkplain DigitalInput input pin} for the port A interrupt line on the chip,
      *                       or {@code null}.
@@ -1179,19 +1179,19 @@ public final class MCP23S17 {
     /**
      * Instantiate a new {@code MCP23S17} object with no interrupts.
      *
-     * @param spiChannel the SPI-Channel that the chip is connected to.
+     * @param bus the SPI-Channel that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @return a new {@code MCP23S17} object with no interrupts.
      * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     public static MCP23S17 newWithoutInterrupts(Context pi4j,
-                                                int spiChannel,
+                                                SpiBus bus,
                                                 DigitalOutput chipSelect)
             throws IOException {
         return new MCP23S17(
                 pi4j,
-                spiChannel,
+                bus,
                 chipSelect,
                 null,
                 null
@@ -1201,7 +1201,7 @@ public final class MCP23S17 {
     /**
      * Instantiate a new {@code MCP23S17} object with the port A and port B interrupt lines "tied" together.
      *
-     * @param spiChannel the SPI-Channel that the chip is connected to.
+     * @param bus the SPI-Bus that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param interrupt the interrupt {@linkplain DigitalInput input pin}.
      * @return a new {@code MCP23S17} object with the port A and port B interrupt lines "tied" together.
@@ -1209,13 +1209,13 @@ public final class MCP23S17 {
      * @throws NullPointerException if the given chip select output or tied interrupt input is {@code null}.
      */
     public static MCP23S17 newWithTiedInterrupts(Context pi4j,
-                                                 int spiChannel,
+                                                 SpiBus bus,
                                                  DigitalOutput chipSelect,
                                                  DigitalInput interrupt)
             throws IOException {
         MCP23S17 ioExpander = new MCP23S17(
                 pi4j,
-                spiChannel,
+                bus,
                 chipSelect,
                 Objects.requireNonNull(interrupt, "interrupt must be non-null"),
                 interrupt
@@ -1232,7 +1232,7 @@ public final class MCP23S17 {
     /**
      * Instantiate a new {@code MCP23S17} object with individual port A and port B interrupt lines.
      *
-     * @param spiChannel the SPI-Channel that the chip is connected to.
+     * @param bus the SPI-Bus that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for port A.
      * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for port B.
@@ -1241,14 +1241,14 @@ public final class MCP23S17 {
      * @throws NullPointerException if the given chip select output or either of the interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithInterrupts(Context pi4j,
-                                             int spiChannel,
+                                             SpiBus bus,
                                              DigitalOutput chipSelect,
                                              DigitalInput portAInterrupt,
                                              DigitalInput portBInterrupt)
             throws IOException {
         MCP23S17 ioExpander = new MCP23S17(
                 pi4j,
-                spiChannel,
+                bus,
                 chipSelect,
                 Objects.requireNonNull(portAInterrupt, "portAInterrupt must be non-null"),
                 Objects.requireNonNull(portBInterrupt, "portBInterrupt must be non-null")
@@ -1261,7 +1261,7 @@ public final class MCP23S17 {
     /**
      * Instantiate a new {@code MCP23S17} object with an individual port A interrupt line, but no port B interrupt line.
      *
-     * @param spiChannel the SPI-Channel that the chip is connected to.
+     * @param bus the SPI-Bus that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for port A.
      * @return a new {@code MCP23S17} object with an individual port A interrupt line, but no port B interrupt line.
@@ -1269,13 +1269,13 @@ public final class MCP23S17 {
      * @throws NullPointerException if the given chip select output or the port A interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithPortAInterrupts(Context pi4j,
-                                                  int spiChannel,
+                                                  SpiBus bus,
                                                   DigitalOutput chipSelect,
                                                   DigitalInput portAInterrupt)
             throws IOException {
         MCP23S17 ioExpander = new MCP23S17(
                 pi4j,
-                spiChannel,
+                bus,
                 chipSelect,
                 Objects.requireNonNull(portAInterrupt, "portAInterrupt must be non-null"),
                 null
@@ -1287,7 +1287,7 @@ public final class MCP23S17 {
     /**
      * Instantiate a new {@code MCP23S17} object with an individual port B interrupt line, but no port A interrupt line.
      *
-     * @param spiChannel the SPI Channel that the chip is connected to.
+     * @param bus the SPI-Bus that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for port B.
      * @return a new {@code MCP23S17} object with an individual port B interrupt line, but no port A interrupt line.
@@ -1295,13 +1295,13 @@ public final class MCP23S17 {
      * @throws NullPointerException if the given chip select output or the port B interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithPortBInterrupts(Context pi4j,
-                                                  int spiChannel,
+                                                  SpiBus bus,
                                                   DigitalOutput chipSelect,
                                                   DigitalInput portBInterrupt)
             throws IOException {
         MCP23S17 ioExpander = new MCP23S17(
                 pi4j,
-                spiChannel,
+                bus,
                 chipSelect,
                 null,
                 Objects.requireNonNull(portBInterrupt, "portBInterrupt must be non-null")
