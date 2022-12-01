@@ -151,7 +151,7 @@ public final class MCP23S17 {
          * @return the bit corresponding to this pin.
          */
         private boolean getCorrespondingBit(byte b) {
-            return (b & mask) > 0;
+            return Byte.toUnsignedInt((byte)(b & mask)) > 0;
         }
 
         /**
@@ -1139,7 +1139,7 @@ public final class MCP23S17 {
      * @throws IOException if the SPI read procedure fails.
      */
     private byte read(byte registerAddress) throws IOException {
-        byte[] data = new byte[3];
+        byte[] data = new byte[4];
         // The 0x00 byte is just arbitrary filler.
         byte[] send = {read_opcode, registerAddress, (byte) 0x00};
         synchronized (spi) {
@@ -1147,7 +1147,7 @@ public final class MCP23S17 {
                 chipSelect.low();
                 int res;
                 res = spi.transfer(send,data);
-                if(res != 0){
+                if(res < 0){
                     throw  new IOException("oh noes! spi transfer result was "+res);
                 }
             } finally {
