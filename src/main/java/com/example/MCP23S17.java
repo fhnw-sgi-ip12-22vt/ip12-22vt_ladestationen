@@ -262,7 +262,13 @@ public final class MCP23S17 {
             if (isOutput()) {
                 return pin.getCorrespondingBit(pin.resolveCorrespondingByte(OLATA, OLATB));
             }
-            return pin.getCorrespondingBit(read(pin.resolveCorrespondingByte(ADDR_GPIOA, ADDR_GPIOB)));
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(GPIOA, GPIOB));
+        }
+        public boolean getFromRead() throws IOException {
+            if (isOutput()) {
+                throw new IOException("getFromRead() not supported for pins that are outputs");
+            }
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(readGPIOA(), readGPIOB()));
         }
 
         /**
@@ -743,6 +749,10 @@ public final class MCP23S17 {
     private volatile byte OLATA = (byte) 0b00000000;
     private volatile byte OLATB = (byte) 0b00000000;
 
+    private volatile byte GPIOA = (byte) 0b00000000;
+
+    private volatile byte GPIOB = (byte) 0b00000000;
+
     /**
      * This {@code Object}'s intrinsic lock is acquired whenever one of the above bytes is written to so that two
      * threads may not write to the same byte at the same time. Ideally we would have one lock per byte because, for
@@ -1147,7 +1157,32 @@ public final class MCP23S17 {
         }
         return data[2];
     }
-
+    /**
+     * Initiate SPI communication with the chip and read the GPIOA register.
+     *
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
+     * initiated at the same time.
+     *
+     * @throws IOException if the SPI write procedure fails.
+     */
+    public byte readGPIOA() throws IOException {
+        byte data = read(ADDR_GPIOA);
+        GPIOA = data;
+        return GPIOA;
+    }
+    /**
+     * Initiate SPI communication with the chip and read the GPIOB register.
+     *
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
+     * initiated at the same time.
+     *
+     * @throws IOException if the SPI write procedure fails.
+     */
+    public byte readGPIOB() throws IOException {
+        byte data = read(ADDR_GPIOB);
+        GPIOB = data;
+        return GPIOB;
+    }
     /**
      * Initiate SPI communication with the chip and read a byte from the register pointed to by the given address. This
      * will rethrow any {@link IOException IOException}s that occur as {@link RuntimeException RuntimeException}s.
