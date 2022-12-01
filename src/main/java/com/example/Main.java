@@ -179,13 +179,22 @@ public class Main {
             var s3 = ICPins[2].get(5).get();
             if(s1 != oldstateB1){
                 console.println("state 1 differs: now "+s1);
+                if(s1){
+                    toggleEdge(ledStrip,0,3);
+                }
 
             }
             if(s2 != oldstateB2){
                 console.println("state 2 differs: now "+s2);
+                if(s2){
+                    toggleEdge(ledStrip,4,7);
+                }
             }
             if(s3 != oldstateB3){
                 console.println("state 3 differs: now "+s3);
+                if(s3){
+                    toggleEdge(ledStrip,8,11);
+                }
             }
             oldstateB1 = s1;
             oldstateB2 = s2;
@@ -198,7 +207,18 @@ public class Main {
         console.waitForExit();
         pi4j.shutdown();
     }
-
+    private void toggleEdge(LEDStrip strip, int start, int end){
+        if(strip.getPixelColor(start) > 0){
+            for(int i = start; i<=end; ++i){
+                strip.setPixelColor(i,0);
+            }
+        }else{
+            for(int i = start; i<=end; ++i){
+                strip.setPixelColor(i,LEDStrip.PixelColor.PURPLE);
+            }
+        }
+        strip.render();
+    }
     private void testParallelControlCapabilities(ArrayList<MCP23S17> ICtriple, ArrayList<MCP23S17.PinView>[] ICPins) throws Exception {
         int h=0;
         while(h++ < 100) {
