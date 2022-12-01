@@ -71,18 +71,37 @@ public class Main {
 
         return MCP23S17.newWithoutInterrupts(pi4j,SpiBus.BUS_1,ChipSelect);
     }
-    private ArrayList<MCP23S17.PinView> getPinsMCP(MCP23S17 IC)throws Exception{
+    private ArrayList<MCP23S17.PinView> getOutputPinsMCP(MCP23S17 IC)throws Exception{
         var ICPinsIter = IC.getPinViewIterator();
         var ICPins = new ArrayList<MCP23S17.PinView>(16);
         for(var pin = ICPinsIter.next();ICPinsIter.hasNext();pin = ICPinsIter.next()){
             pin.setAsOutput();
             ICPins.add(pin);
-            console.println("pinview direction set");
+            console.println("pinview direction output set");
         }
         IC.writeIODIRA();
         IC.writeIODIRB();
         IC.writeOLATA();
         IC.writeOLATB();
+        return ICPins;
+    }
+    private ArrayList<MCP23S17.PinView> getInputPinsMCP(MCP23S17 IC)throws Exception{
+        var ICPinsIter = IC.getPinViewIterator();
+        var ICPins = new ArrayList<MCP23S17.PinView>(16);
+        for(var pin = ICPinsIter.next();ICPinsIter.hasNext();pin = ICPinsIter.next()){
+            pin.setAsInput();
+            pin.enablePullUp();
+            if(pin.isOutput()){
+                pin.isOutput();
+                throw new Exception("wtf dude");
+            }
+            ICPins.add(pin);
+            console.println("pinview direction input set");
+        }
+        IC.writeIODIRA();
+        IC.writeIODIRB();
+        IC.writeGPPUA();
+        IC.writeGPPUB();
         return ICPins;
     }
     private void MCPoff(MCP23S17 IC, MCP23S17.PinView ICPin) throws Exception{
@@ -143,40 +162,59 @@ public class Main {
         var ICtriple = MCP23S17.multipleNewOnSameBus(pi4j,SpiBus.BUS_1,3);
         var ICPins = (ArrayList<MCP23S17.PinView>[]) new ArrayList[3];
 
-        ICPins[0] = getPinsMCP(ICtriple.get(0));
-        ICPins[1] = getPinsMCP(ICtriple.get(1));
-        ICPins[2] = getPinsMCP(ICtriple.get(2));
+        ICPins[0] = getOutputPinsMCP(ICtriple.get(0));
+        ICPins[1] = getOutputPinsMCP(ICtriple.get(1));
+        ICPins[2] = getInputPinsMCP(ICtriple.get(2));
 
         int pixels = 12;
         ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_0);
         ledStrip.allOff();
+        int h = 0;
+        boolean oldstateB1 = true;
+        boolean oldstateB2 = true;
+        boolean oldstateB3 = true;
+        while(h++ < 1000000000){
+            var s1 = ICPins[2].get(7).getFromRead();
+            var s2 = ICPins[2].get(6).get();
+            var s3 = ICPins[2].get(5).get();
+            if(s1 != oldstateB1){
+                console.println("state 1 differs: now "+s1);
+
+            }
+            if(s2 != oldstateB2){
+                console.println("state 2 differs: now "+s2);
+            }
+            if(s3 != oldstateB3){
+                console.println("state 3 differs: now "+s3);
+            }
+            oldstateB1 = s1;
+            oldstateB2 = s2;
+            oldstateB3 = s3;
+
+            delay(10);
+        }
+        testParallelControlCapabilities(ICtriple, ICPins);
+        console.println("ok finished");
+        console.waitForExit();
+        pi4j.shutdown();
+    }
+
+    private void testParallelControlCapabilities(ArrayList<MCP23S17> ICtriple, ArrayList<MCP23S17.PinView>[] ICPins) throws Exception {
         int h=0;
         while(h++ < 100) {
             console.println("MmmMmmmMMmm");
             ledStrip.setStripColor(LEDStrip.PixelColor.YELLOW);
             ledStrip.render();
 
-            testAllOutputsMCP(ICtriple,ICPins);
-            /*ICPins[0].get(5).set(true);
-            ICtriple.get(0).writeOLATA();
-            ICPins[1].get(5).set(false);
-            ICtriple.get(1).writeOLATA();
-            delay(500);*/
+            testAllOutputsMCP(ICtriple, ICPins);
 
             ledStrip.setStripColor(LEDStrip.PixelColor.GREEN);
             ledStrip.render();
 
-            testAllOutputsMCP(ICtriple,ICPins);
-            /*ICPins[0].get(5).set(false);
-            ICtriple.get(0).writeOLATA();
-            ICPins[1].get(5).set(true);
-            ICtriple.get(1).writeOLATA();
-            delay(500);*/
+            testAllOutputsMCP(ICtriple, ICPins);
         }
-        console.println("ok finished");
-        console.waitForExit();
-        pi4j.shutdown();
     }
+
     static void delay(long milliseconds) {
         try {
             Thread.sleep(milliseconds);
