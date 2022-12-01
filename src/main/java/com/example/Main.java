@@ -95,6 +95,27 @@ public class Main {
             ICPin.set(true);
             IC.writeOLATA();
     }
+    private void testAllOutputsMCP(ArrayList<MCP23S17> ICs, ArrayList<MCP23S17.PinView>[] ICAllPins) throws Exception{
+       int cnt = 0;
+        for(int i = 0; i< ICs.size(); i++){
+            var ICPins = ICAllPins[i];
+            var IC = ICs.get(i);
+            for(var pin : ICPins){
+                //set all pins to false
+                for(var otherpin : ICPins){
+                    otherpin.set(false);
+                }
+                //...except the one we want to test this cylce
+                pin.set(true);
+                //write to the IC
+                IC.writeOLATA();
+                IC.writeOLATB();
+                delay(50);
+                cnt++;
+            }
+        }
+        console.println("tested "+cnt+" pins");
+    }
     //TODO: extract main logic from boilerplate
     /**
      * With a given pi4j context, run the main program logic
@@ -119,9 +140,12 @@ public class Main {
         button3.addListener(createListener(()->{console.println("three");}));
 
         //setup MCP
-        var ICtuple = MCP23S17.multipleNewOnSameBus(pi4j,SpiBus.BUS_1,2);
-        var ICPins0 = getPinsMCP(ICtuple.get(0));
-        var ICPins1 = getPinsMCP(ICtuple.get(1));
+        var ICtriple = MCP23S17.multipleNewOnSameBus(pi4j,SpiBus.BUS_1,3);
+        var ICPins = (ArrayList<MCP23S17.PinView>[]) new ArrayList[3];
+
+        ICPins[0] = getPinsMCP(ICtriple.get(0));
+        ICPins[1] = getPinsMCP(ICtriple.get(1));
+        ICPins[2] = getPinsMCP(ICtriple.get(2));
 
         int pixels = 12;
         ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_0);
@@ -129,18 +153,25 @@ public class Main {
         int h=0;
         while(h++ < 100) {
             console.println("MmmMmmmMMmm");
-            //waitForKey("Set led strip to ORANGE");
             ledStrip.setStripColor(LEDStrip.PixelColor.YELLOW);
             ledStrip.render();
-            MCPon(ICtuple.get(0), ICPins0.get(5));
-            MCPon(ICtuple.get(1), ICPins1.get(7));
 
-            delay(1000);
+            testAllOutputsMCP(ICtriple,ICPins);
+            /*ICPins[0].get(5).set(true);
+            ICtriple.get(0).writeOLATA();
+            ICPins[1].get(5).set(false);
+            ICtriple.get(1).writeOLATA();
+            delay(500);*/
+
             ledStrip.setStripColor(LEDStrip.PixelColor.GREEN);
             ledStrip.render();
-            MCPoff(ICtuple.get(0), ICPins0.get(5));
-            MCPoff(ICtuple.get(1), ICPins1.get(7));
-            delay(1000);
+
+            testAllOutputsMCP(ICtriple,ICPins);
+            /*ICPins[0].get(5).set(false);
+            ICtriple.get(0).writeOLATA();
+            ICPins[1].get(5).set(true);
+            ICtriple.get(1).writeOLATA();
+            delay(500);*/
         }
         console.println("ok finished");
         console.waitForExit();
