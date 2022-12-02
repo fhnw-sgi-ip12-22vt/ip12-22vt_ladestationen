@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #1E1E1E;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Circle fill="#ff7602" layoutX="7.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+        <Circle fill="#ff7602" layoutX="786.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+        <Label layoutX="102.0" layoutY="112.0" prefHeight="48.0" prefWidth="356.0" text="Label" textFill="WHITE">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Label>
+        <Label layoutX="102.0" layoutY="182.0" prefHeight="48.0" prefWidth="356.0" text="Label" textFill="WHITE">
+            <font>
+                <Font size="20.0" />
+            </font>
+        </Label>
+        <Circle fill="#ff730000" layoutX="400.0" layoutY="557.0" radius="200.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafafa00" height="244.0" layoutX="465.0" layoutY="106.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
+    </children>
+</Pane>
