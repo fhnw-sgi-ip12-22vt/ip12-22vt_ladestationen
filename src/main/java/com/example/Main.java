@@ -19,6 +19,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
 import java.lang.ProcessBuilder;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Main class of the maven pi4j archetype
@@ -170,39 +171,29 @@ public class Main {
         ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_0);
         ledStrip.allOff();
         int h = 0;
-        boolean oldstateB1 = true;
-        boolean oldstateB2 = true;
-        boolean oldstateB3 = true;
+        var oldstates = new boolean[3];
+        Arrays.fill(oldstates, true);
+
+        var pinsToCheck = new MCP23S17.PinView[3];
+        pinsToCheck[0] = ICPins[2].get(7);
+        pinsToCheck[1] = ICPins[2].get(6);
+        pinsToCheck[2] = ICPins[2].get(5);
+        //more buttons
         while(h++ < 1000000000){
-            var s1 = ICPins[2].get(7).getFromRead();
-            var s2 = ICPins[2].get(6).get();
-            var s3 = ICPins[2].get(5).get();
-            if(s1 != oldstateB1){
-                console.println("state 1 differs: now "+s1);
-                if(s1){
-                    toggleEdge(ledStrip,0,3);
+            for(var i = 0; i < pinsToCheck.length;++i){
+                boolean state = pinsToCheck[i].getFromRead();
+                if(state != oldstates[i]){
+                    console.println("state "+i+" differs: now "+state);
+                    if(state){
+                        //toggleEdge(ledStrip,0,3);
+                    }
                 }
-
+                oldstates[i] = state;
             }
-            if(s2 != oldstateB2){
-                console.println("state 2 differs: now "+s2);
-                if(s2){
-                    toggleEdge(ledStrip,4,7);
-                }
-            }
-            if(s3 != oldstateB3){
-                console.println("state 3 differs: now "+s3);
-                if(s3){
-                    toggleEdge(ledStrip,8,11);
-                }
-            }
-            oldstateB1 = s1;
-            oldstateB2 = s2;
-            oldstateB3 = s3;
-
             delay(10);
         }
-        testParallelControlCapabilities(ICtriple, ICPins);
+
+        //testParallelControlCapabilities(ICtriple, ICPins);
         console.println("ok finished");
         console.waitForExit();
         pi4j.shutdown();
