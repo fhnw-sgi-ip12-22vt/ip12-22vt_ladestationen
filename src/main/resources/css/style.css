@@ -1,0 +1,39 @@
+.root-pane {
+    -fx-padding:     10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size:   16;
+    -fx-pref-width:  350;
+    -fx-pref-height: 400;
+    -fx-background-image: url("/mvc/images/LogoConnectnCharge.PNG");
+    -fx-background-size: cover;
+}
+
+.home-pane {
+    -fx-padding:     10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size:   16;
+    -fx-pref-width:  550;
+    -fx-pref-height: 400;
+    -fx-background-color: #1E1E1E;
+    -fx-background-size: cover;
+}
+.home-pane .title-label {
+    -fx-font-size: 10;
+    -fx-text-fill: #FFFFFF;
+}
+
+.home-pane .story-label {
+    -fx-font-size: 152;
+    -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .loading-button {
+    -fx-font-family:       'FontAwesome';
+    -fx-font-size:         28;
+    -fx-min-width:         250;
+    -fx-min-height:        250;
+    -fx-background-radius: 30;
+    -fx-content-display:   text-only;
+    -fx-cursor:            hand;
+    -fx-text-fill: #f3a83b;
+}
