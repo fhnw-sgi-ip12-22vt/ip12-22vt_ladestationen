@@ -1,19 +1,22 @@
 .root-pane {
-    -fx-padding:     10;
-    -fx-font-family: 'Lato Light';
-    -fx-font-size:   16;
-    -fx-pref-width:  350;
-    -fx-pref-height: 400;
-    -fx-background-image: url("/mvc/images/LogoConnectnCharge.PNG");
+    -fx-pref-width:  800;
+    -fx-pref-height: 480;
+    -fx-background-image: url("../images/LogoConnectnCharge.PNG");
     -fx-background-size: cover;
+}
+
+.root-pane .loading-button {
+    -fx-min-width:         800;
+    -fx-min-height:        480;
+    -fx-background-color: transparent;
 }
 
 .home-pane {
     -fx-padding:     10;
     -fx-font-family: 'Lato Light';
     -fx-font-size:   16;
-    -fx-pref-width:  550;
-    -fx-pref-height: 400;
+    -fx-pref-width:  800;
+    -fx-pref-height: 480;
     -fx-background-color: #1E1E1E;
     -fx-background-size: cover;
 }
@@ -27,13 +30,3 @@
     -fx-text-fill: #FFFFFF;
 }
 
-.root-pane .loading-button {
-    -fx-font-family:       'FontAwesome';
-    -fx-font-size:         28;
-    -fx-min-width:         250;
-    -fx-min-height:        250;
-    -fx-background-radius: 30;
-    -fx-content-display:   text-only;
-    -fx-cursor:            hand;
-    -fx-text-fill: #f3a83b;
-}

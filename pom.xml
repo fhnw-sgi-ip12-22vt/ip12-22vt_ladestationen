@@ -4,13 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.home</groupId>
+    <groupId>com.home.connectncharge</groupId>
     <artifactId>ConnectnCharge</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>ConnectnCharge</name>
 
     <properties>
-        <launcher.class>com.home.connectncharge/com.home.connectncharge.Starter.java</launcher.class>
+        <launcher.class>com.home.connectncharge/com.home.connectncharge.AppStarter</launcher.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.2</junit.version>
 

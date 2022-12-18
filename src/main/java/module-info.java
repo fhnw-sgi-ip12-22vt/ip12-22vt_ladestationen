@@ -9,5 +9,4 @@ module com.home.connectncharge {
     exports com.home.connectncharge.controller;
     opens com.home.connectncharge.controller to javafx.fxml;
     exports com.home.connectncharge;
-    opens com.home.connectncharge.mvc to javafx.fxml;
 }
