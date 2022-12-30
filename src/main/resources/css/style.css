@@ -1,25 +1,26 @@
 .root-pane {
-    -fx-pref-width:  800;
+    -fx-pref-width: 800;
     -fx-pref-height: 480;
     -fx-background-image: url("../images/LogoConnectnCharge.PNG");
     -fx-background-size: cover;
 }
 
 .root-pane .loading-button {
-    -fx-min-width:         800;
-    -fx-min-height:        480;
+    -fx-min-width: 800;
+    -fx-min-height: 480;
     -fx-background-color: transparent;
 }
 
 .home-pane {
-    -fx-padding:     10;
+    -fx-padding: 10;
     -fx-font-family: 'Lato Light';
-    -fx-font-size:   16;
-    -fx-pref-width:  800;
+    -fx-font-size: 16;
+    -fx-pref-width: 800;
     -fx-pref-height: 480;
     -fx-background-color: #1E1E1E;
     -fx-background-size: cover;
 }
+
 .home-pane .title-label {
     -fx-font-size: 10;
     -fx-text-fill: #FFFFFF;
@@ -28,5 +29,14 @@
 .home-pane .story-label {
     -fx-font-size: 152;
     -fx-text-fill: #FFFFFF;
+}
+
+.home-pane .button {
+    -fx-background-radius: 5em;
+    -fx-min-width: 400px;
+    -fx-min-height: 400px;
+    -fx-max-width: 400px;
+    -fx-max-height: 400px;
+    -fx-background-color: transparent;
 }
 
