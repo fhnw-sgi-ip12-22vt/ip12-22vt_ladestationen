@@ -31,7 +31,7 @@ public class Main {
     private static final int PIN_BUTTON = 18;
     private int buttonIds = 0;
     private static final Console console = new Console();
-    private LEDStrip ledStrip;
+    private static LEDStrip ledStrip;
     /**
      * Program entry point: get pi4j context and pass it to run()
      * @param args the command line arguments
@@ -56,6 +56,9 @@ public class Main {
             console.println("Error: " + e.getMessage());
             e.printStackTrace();
         } finally {
+            if(ledStrip != null){
+                ledStrip.allOff();
+            }
             if (pi4j != null) {
                 pi4j.shutdown();
             }
@@ -89,7 +92,8 @@ public class Main {
     private ArrayList<MCP23S17.PinView> getInputPinsMCP(MCP23S17 IC)throws Exception{
         var ICPinsIter = IC.getPinViewIterator();
         var ICPins = new ArrayList<MCP23S17.PinView>(16);
-        for(var pin = ICPinsIter.next();ICPinsIter.hasNext();pin = ICPinsIter.next()){
+        while(ICPinsIter.hasNext()){
+            var pin = ICPinsIter.next();
             pin.setAsInput();
             pin.enablePullUp();
             if(pin.isOutput()){
@@ -99,6 +103,7 @@ public class Main {
             ICPins.add(pin);
             console.println("pinview direction input set");
         }
+
         IC.writeIODIRA();
         IC.writeIODIRB();
         IC.writeGPPUA();
@@ -160,24 +165,28 @@ public class Main {
         button3.addListener(createListener(()->{console.println("three");}));
 
         //setup MCP
-        var ICtriple = MCP23S17.multipleNewOnSameBus(pi4j,SpiBus.BUS_1,3);
-        var ICPins = (ArrayList<MCP23S17.PinView>[]) new ArrayList[3];
+        var ICtriple = MCP23S17.multipleNewOnSameBus(pi4j,SpiBus.BUS_1,2);
+        var ICPins = (ArrayList<MCP23S17.PinView>[]) new ArrayList[2];
 
-        ICPins[0] = getOutputPinsMCP(ICtriple.get(0));
-        ICPins[1] = getOutputPinsMCP(ICtriple.get(1));
-        ICPins[2] = getInputPinsMCP(ICtriple.get(2));
+        ICPins[0] = getInputPinsMCP(ICtriple.get(0));
+        ICPins[1] = getInputPinsMCP(ICtriple.get(1));
 
-        int pixels = 12;
+        int pixels = 74;
         ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_0);
         ledStrip.allOff();
+        //ledStrip.setStripColor(LEDStrip.PixelColor.ORANGE);
+        ledStrip.render();
         int h = 0;
-        var oldstates = new boolean[3];
+        var oldstates = new boolean[32];
         Arrays.fill(oldstates, true);
 
-        var pinsToCheck = new MCP23S17.PinView[3];
-        pinsToCheck[0] = ICPins[2].get(7);
-        pinsToCheck[1] = ICPins[2].get(6);
-        pinsToCheck[2] = ICPins[2].get(5);
+        var pinsToCheck = new MCP23S17.PinView[32];
+        for(int i = 0; i<16;++i){
+            pinsToCheck[i] = ICPins[0].get(i);
+        }
+        for(int i = 0; i<16;++i){
+            pinsToCheck[i+16] = ICPins[1].get(i);
+        }
         //more buttons
         while(h++ < 1000000000){
             for(var i = 0; i < pinsToCheck.length;++i){
@@ -185,8 +194,11 @@ public class Main {
                 if(state != oldstates[i]){
                     console.println("state "+i+" differs: now "+state);
                     if(state){
-                        //toggleEdge(ledStrip,0,3);
+                        ledStrip.setStripColor(LEDStrip.PixelColor.ORANGE);
+                    }else{
+                        ledStrip.setStripColor((LEDStrip.PixelColor.PURPLE));
                     }
+                    ledStrip.render();
                 }
                 oldstates[i] = state;
             }
