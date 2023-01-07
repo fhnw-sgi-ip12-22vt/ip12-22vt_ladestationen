@@ -56,9 +56,6 @@ public class Main {
             console.println("Error: " + e.getMessage());
             e.printStackTrace();
         } finally {
-            if(ledStrip != null){
-                ledStrip.allOff();
-            }
             if (pi4j != null) {
                 pi4j.shutdown();
             }
@@ -156,14 +153,16 @@ public class Main {
         console.println();
         console.promptForExit();
 
-        //Configure LED buttons
-        var button1 = createButton(2,pi4j);
-        var button2 = createButton(3,pi4j);
-        var button3 = createButton(4,pi4j);
-        button1.addListener(createListener(()->{console.println("one");}));
-        button2.addListener(createListener(()->{console.println("two");}));
-        button3.addListener(createListener(()->{console.println("three");}));
 
+
+
+        //testMultipleMCPsOnSameBus(pi4j);
+        console.println("ok finished");
+        console.waitForExit();
+        pi4j.shutdown();
+    }
+
+    private void testMultipleMCPsOnSameBus(Context pi4j) throws Exception {
         //setup MCP
         var ICtriple = MCP23S17.multipleNewOnSameBus(pi4j,SpiBus.BUS_1,2);
         var ICPins = (ArrayList<MCP23S17.PinView>[]) new ArrayList[2];
@@ -204,12 +203,8 @@ public class Main {
             }
             delay(10);
         }
-
-        //testParallelControlCapabilities(ICtriple, ICPins);
-        console.println("ok finished");
-        console.waitForExit();
-        pi4j.shutdown();
     }
+
     private void toggleEdge(LEDStrip strip, int start, int end){
         if(strip.getPixelColor(start) > 0){
             for(int i = start; i<=end; ++i){

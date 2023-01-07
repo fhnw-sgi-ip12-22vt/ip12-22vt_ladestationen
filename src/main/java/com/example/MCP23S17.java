@@ -691,6 +691,7 @@ public final class MCP23S17 {
     // OPCODES--these are written before a register address in the read and write processes.
     //NOTE: If ICs with different Hardware addresses get added, those addresses are stored in those opcodes.
     //that's why they're not static.
+    //TODO: probably best to store the HW addresses in a separate byte and or them in the write function
     private byte write_opcode = 0x40;
     private byte read_opcode = 0x41;
 
@@ -1267,8 +1268,7 @@ public final class MCP23S17 {
         );
     }
     /**
-     * Instantiate a new {@code MCP23S17} object with no interrupts that is connected to the same
-     * SPI-Bus as a previously instantiated {@code MCP23S17} object, but with a different hardware Address .
+     * Instantiate a number of {@code MCP23S17} objects on the same bus with consecutive adresses.
      *
      * @param bus the SPI-Channel that the chip is connected to.
      * @return a new {@code MCP23S17} object with no interrupts.
