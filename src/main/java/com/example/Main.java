@@ -15,6 +15,8 @@ import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
 import com.pi4j.platform.Platforms;
 import com.pi4j.util.Console;
+
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.Process;
 import java.lang.ProcessBuilder;
@@ -152,16 +154,68 @@ public class Main {
         platforms.describe().print(System.out);
         console.println();
         console.promptForExit();
+        var interruptPinConfig = DigitalInput.newConfigBuilder(pi4j)
+                .id("interruptB")
+                .name("a MCP interrupt")
+                .address(22) //BCM22 PORTB
+                .pull(PullResistance.PULL_UP)
+                .provider("pigpio-digital-input");
 
+        var dummyCSConfig = DigitalOutput.newConfigBuilder(pi4j)
+                .id("dummyCS")
+                .name("dummy CS")
+                .address(4)
+                .provider("pigpio-digital-output");
 
+        var IruptPortB = pi4j.create(interruptPinConfig);
+        var IruptPortA = pi4j.create(interruptPinConfig.address(23).id("interruptA"));
+        var dummyCSPin = pi4j.create(dummyCSConfig);
 
+        IruptPortB.addListener(stateChange -> {console.println("rupt B: "+stateChange.state());});
+        //IruptPortA.addListener(stateChange -> {console.println("rupt A: "+stateChange.state());});
 
+        var interruptChip = MCP23S17.newWithInterrupts(
+                pi4j,
+                SpiBus.BUS_1,
+                dummyCSPin,
+                IruptPortA,
+                IruptPortB);
+
+        attachInterruptsToAllPins(interruptChip);
+        int ms = 40000;
+        console.println("going into deep sleep for "+ms/1000+" secs");
+        delay(ms);
+        console.waitForExit();
         //testMultipleMCPsOnSameBus(pi4j);
         console.println("ok finished");
-        console.waitForExit();
         pi4j.shutdown();
     }
 
+    private void attachInterruptsToAllPins(MCP23S17 chip){
+        var iter = chip.getPinViewIterator();
+        int i = 0;
+        while(iter.hasNext()){
+            var pv = iter.next();
+            pv.setAsInput();
+            pv.enablePullUp();
+            pv.enableInterrupt();
+            pv.toInterruptChangeMode();
+            pv.addListener((boolean val, MCP23S17.Pin pin)->{console.println("statechange on pin "+ pin.name() +":"+val);});
+            i++;
+        }
+        try {
+            chip.writeIODIRA();
+            chip.writeIODIRB();
+            chip.writeGPPUA();
+            chip.writeGPPUB();
+            chip.writeGPINTENA();
+            chip.writeGPINTENB();
+            chip.writeINTCONA();
+            chip.writeINTCONB();
+        }catch (IOException ex){
+            console.println("oh noes error on interrupt pin setup: "+ex.getMessage());
+        }
+    }
     private void testMultipleMCPsOnSameBus(Context pi4j) throws Exception {
         //setup MCP
         var ICtriple = MCP23S17.multipleNewOnSameBus(pi4j,SpiBus.BUS_1,2);

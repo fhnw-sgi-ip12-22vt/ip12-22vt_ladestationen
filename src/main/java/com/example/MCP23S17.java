@@ -1241,7 +1241,7 @@ public final class MCP23S17 {
                 // This can in rare cases where the IO expander is already configured create a PinView object before the
                 // user indirectly creates it lazily...
                 getPinView(pin).relayInterruptToListeners(capturedValue);
-                break;
+                //break; //it can't break? what if there are multiple interrupts pending
             }
         }
     }
