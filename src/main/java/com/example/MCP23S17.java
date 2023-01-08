@@ -1140,7 +1140,7 @@ public final class MCP23S17 {
      * @throws IOException if the SPI read procedure fails.
      */
     private byte read(byte registerAddress) throws IOException {
-        byte[] data = new byte[4];
+        byte[] data = new byte[3];
         // The 0x00 byte is just arbitrary filler.
         byte[] send = {read_opcode, registerAddress, (byte) 0x00};
         synchronized (spi) {
