@@ -1187,6 +1187,39 @@ public final class MCP23S17 {
         return GPIOB;
     }
     /**
+     * Initiate SPI communication with the chip and read the GPINTENA register.
+     *
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
+     * initiated at the same time.
+     *
+     * @throws IOException if the SPI write procedure fails.
+     */
+    public byte readGPINTENA() throws IOException {
+        return read(ADDR_GPINTENA);
+    }
+    /**
+     * Initiate SPI communication with the chip and read the GPINTENB register.
+     *
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
+     * initiated at the same time.
+     *
+     * @throws IOException if the SPI write procedure fails.
+     */
+    public byte readGPINTENB() throws IOException {
+        return read(ADDR_GPINTENB);
+    }
+    /**
+     * Initiate SPI communication with the chip and read the IOCON register.
+     *
+     * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
+     * initiated at the same time.
+     *
+     * @throws IOException if the SPI write procedure fails.
+     */
+    public byte readIOCON() throws IOException {
+        return read(ADDR_IOCON);
+    }
+    /**
      * Initiate SPI communication with the chip and read a byte from the register pointed to by the given address. This
      * will rethrow any {@link IOException IOException}s that occur as {@link RuntimeException RuntimeException}s.
      *
