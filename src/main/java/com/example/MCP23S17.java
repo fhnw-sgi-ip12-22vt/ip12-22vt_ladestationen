@@ -802,16 +802,18 @@ public final class MCP23S17 {
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     private MCP23S17(MCP23S17 other,
-                     int HWAddress)
+                     int HWAddress,
+                     DigitalInput portAInterrupt,
+                     DigitalInput portBInterrupt)
             throws IOException {
         this.chipSelect = other.chipSelect;
         this.spi = other.spi;
-        this.portAInterrupt = null;
-        this.portBInterrupt =  null;
+        this.portAInterrupt = portAInterrupt;
+        this.portBInterrupt =  portBInterrupt;
         //check whether the Address is in the correct range
         if(HWAddress > 7 || HWAddress < 0){
             throw new IOException(  "HWAddress ["+HWAddress+"] must be between 0 and 7,"
-                    +" as there are only 3 physical Address pins on the MCP23S12 IC.");
+                    +" as there are only 3 physical address pins on the MCP23S12 IC.");
         }
         //the HWAddress is the three bits before the Read/Write bit:
         //0b0100xxx0 to write to address xxx
@@ -828,7 +830,7 @@ public final class MCP23S17 {
      */
     private SpiConfig buildSpiConfig(Context pi4j, SpiBus bus,int frequency) {
         return Spi.newConfigBuilder(pi4j)
-                .id("SPI" + 2)
+                .id("MCPSPI")
                 .name("GPIO-Circuit")
                 .description("SPI-Config for GPIO-Extension Integrated Circuits (MCP23S17)")
                 .bus(bus)
@@ -1271,16 +1273,19 @@ public final class MCP23S17 {
      * Instantiate a number of {@code MCP23S17} objects on the same bus with consecutive adresses.
      *
      * @param bus the SPI-Channel that the chip is connected to.
-     * @return a new {@code MCP23S17} object with no interrupts.
+     * @param pi4j the {@link Context} object
+     * @param amount the amount of chips on the bus. must be between 1 and 8
+     * @return an {@link ArrayList} of {@code MCP23S17} objects with no interrupts.
      * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
+     * @throws IllegalArgumentException if there are too few/many chips on the bus ({@code amount} not in range 1-8)
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     public static ArrayList<MCP23S17> multipleNewOnSameBus(Context pi4j,
                                                 SpiBus bus,
                                                 int amount)
-            throws IOException {
+            throws IOException, IllegalArgumentException {
         if(amount > 8 || amount < 1){
-            throw  new IOException("amount ["+amount+"] must be between 1 and 8 as there can only be 8 addresses per Bus");
+            throw  new IllegalArgumentException("amount ["+amount+"] must be between 1 and 8 as there can only be 8 addresses per Bus");
         }
         //TODO: this is VERY arbitrary. The chipselect is already handled by the spi config,
         //      but the code should not just init some random pin.
@@ -1296,7 +1301,7 @@ public final class MCP23S17 {
          ICList.add(firstIC);
 
          for(int i = 1; i < amount; ++i) {
-             ICList.add(new MCP23S17(firstIC, i));
+             ICList.add(new MCP23S17(firstIC, i,null,null));
          }
 
          //need to enable the hardware adress pins by sending the appropriate address write command.
@@ -1306,6 +1311,77 @@ public final class MCP23S17 {
          return ICList;
     }
 
+    /**
+     * Instantiate multiple new {@code MCP23S17} objects on the same SPI-bus with their hardware address pins enabled
+     * and with their port A and port B interrupt lines "tied" together.
+     *
+     * @param pi4j the pi4j {@link  Context} object
+     * @param bus the {@link  SpiBus} with which to communicatee with the chips
+     * @param interrupts an array of {@link DigitalInput}s to listen for interrupts from the chips
+     * @param amount the amount of ICs on the bus
+     * @throws IllegalArgumentException if the amount isn't in the range 1-8 or {@code interrupts.length} is smaller than amount
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
+     * @throws NullPointerException if the {@code interrupts} array contains null.
+     */
+    public static ArrayList<MCP23S17> multipleNewOnSameBusWithTiedInterrupts( Context pi4j,
+                                                                              SpiBus bus,
+                                                                              DigitalInput[] interrupts,
+                                                                              int amount)
+            throws IllegalArgumentException, IOException {
+
+        if(amount > 8 || amount < 1){
+            throw  new IllegalArgumentException("amount ["+amount+"] must be between 1 and 8 as there can only be 8 addresses per Bus");
+        }
+        if(interrupts.length < amount){
+            throw new IllegalArgumentException("amount ["+amount+"] must be smaller than or equal to the amount of provided interrupts ["+interrupts.length+"]");
+        }
+        //TODO: this is VERY arbitrary. The chipselect is already handled by the spi config,
+        //      but the code should not just init some random pin.
+        var chipSelectConfig = DigitalOutput.newConfigBuilder(pi4j)
+                .id("CS"+2)
+                .name("dummy chip select")
+                .address(2)
+                .provider("pigpio-digital-output");
+
+        var chipSelect = pi4j.create(chipSelectConfig);
+
+        var ICList = new ArrayList<MCP23S17>(amount);
+        var firstIC = new MCP23S17( pi4j,
+                                    bus,
+                                    chipSelect,
+                                    Objects.requireNonNull(interrupts[0],"interrupts must be non-null"),
+                                    interrupts[0]);
+        ICList.add(firstIC);
+        attachInterruptOnLow(interrupts[0], () -> {
+            firstIC.handlePortAInterrupt();
+            firstIC.handlePortBInterrupt();
+        });
+
+        for(int i = 1; i < amount; ++i) {
+            var currentIC = new MCP23S17(firstIC,
+                                         i,
+                                         Objects.requireNonNull(interrupts[i],"interrupts must be non-null"),
+                                         interrupts[i]);
+            ICList.add(currentIC);
+
+            attachInterruptOnLow(interrupts[i], () -> {
+                currentIC.handlePortAInterrupt();
+                currentIC.handlePortBInterrupt();
+            });
+        }
+
+
+        // Set the IOCON.MIRROR bit to OR the INTA and INTB lines together.
+        // should address ALL chips as the address pins aren't enabled yet
+        firstIC.write(ADDR_IOCON, (byte) 0x40);
+
+
+        //need to enable the hardware address pins by sending the appropriate address write command.
+        //this enables every chip assuming they are connected to the same SPI bus and Chip select
+        firstIC.write(ADDR_IOCON,(byte)0b00001000);
+
+        return ICList;
+    }
     /**
      * Instantiate a new {@code MCP23S17} object with the port A and port B interrupt lines "tied" together.
      *
