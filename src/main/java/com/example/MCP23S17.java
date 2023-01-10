@@ -44,7 +44,7 @@ import java.util.*;
 //       the chip; if the changes were aborted/an error occurred/whatever happens before the lock is released, all the
 //       changes would simply be forgotten without (as is currently the case) local state potentially becoming
 //       out-of-sync with the actual values in the registers on the chip. Maybe this is over-engineering it though...
-public final class MCP23S17 {
+public final class MCP23S17 extends Component{
 
     /**
      * <p>
@@ -1440,7 +1440,6 @@ public final class MCP23S17 {
      * @param interrupts an array of {@link DigitalInput}s to listen for interrupts from the chips
      * @param amount the amount of ICs on the bus
      * @param readGPIO true if on interrupt the GPIO registers should be read instead of the INTCAP registers
-     * @param console a pi4j {@link Console} object for logging purposes
      * @throws IllegalArgumentException if the amount isn't in the range 1-8 or {@code interrupts.length} is smaller than amount
      * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the {@code interrupts} array contains null.
@@ -1449,8 +1448,7 @@ public final class MCP23S17 {
                                                                              SpiBus bus,
                                                                              DigitalInput[] interrupts,
                                                                              int amount,
-                                                                             boolean readGPIO,
-                                                                             Console console)
+                                                                             boolean readGPIO)
             throws IllegalArgumentException, IOException {
 
         if(amount > 8 || amount < 1){
@@ -1482,14 +1480,10 @@ public final class MCP23S17 {
             do {
                 firstIC.handlePortAInterrupt();
                 firstIC.handlePortBInterrupt();
-                try {
-                    Thread.sleep(10);
-                }catch(InterruptedException ex){
-                    console.println("sleep got interrupted: "+ex.getMessage());
-                }
+                firstIC.delay(10);
                 ++i;
             }while(interrupts[0].state().isLow());
-            console.println("hooray only "+i+" times");
+            firstIC.logInfo("read "+i+" times to clear interrupt.");
         });
 
         for(int i = 1; i < amount; ++i) {
@@ -1502,18 +1496,14 @@ public final class MCP23S17 {
 
             DigitalInput interrupt = interrupts[i];
             attachInterruptOnLow(interrupt, () -> {
-                int ii = 0;
+                int j = 0;
                 do {
-                currentIC.handlePortAInterrupt();
-                currentIC.handlePortBInterrupt();
-                try {
-                    Thread.sleep(10);
-                }catch(InterruptedException ex){
-                    console.println("sleep got interrupted: "+ex.getMessage());
-                }
-                ++ii;
-            }while(interrupt.state().isLow());
-                console.println("hooray only "+ii+" times");
+                    currentIC.handlePortAInterrupt();
+                    currentIC.handlePortBInterrupt();
+                    currentIC.delay(10);
+                    ++j;
+                }while(interrupt.state().isLow());
+                currentIC.logInfo("read "+j+" times to clear interrupt.");
             });
         }
 
