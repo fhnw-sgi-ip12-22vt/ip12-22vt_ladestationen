@@ -1406,12 +1406,12 @@ public final class MCP23S17 {
 
         // Set the IOCON.MIRROR bit to OR the INTA and INTB lines together.
         // should address ALL chips as the address pins aren't enabled yet
-        firstIC.write(ADDR_IOCON, (byte) 0x40);
-
-
+        byte mirrorAndHAEN = 0x40;
         //need to enable the hardware address pins by sending the appropriate address write command.
         //this enables every chip assuming they are connected to the same SPI bus and Chip select
-        firstIC.write(ADDR_IOCON,(byte)0b00001000);
+        mirrorAndHAEN |= 0b00001000;
+
+        firstIC.write(ADDR_IOCON, (byte) mirrorAndHAEN);
 
         return ICList;
     }
