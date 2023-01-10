@@ -1411,7 +1411,7 @@ public final class MCP23S17 {
         //this enables every chip assuming they are connected to the same SPI bus and Chip select
         mirrorAndHAEN |= 0b00001000;
 
-        firstIC.write(ADDR_IOCON, (byte) mirrorAndHAEN);
+        firstIC.write(ADDR_IOCON, mirrorAndHAEN);
 
         return ICList;
     }

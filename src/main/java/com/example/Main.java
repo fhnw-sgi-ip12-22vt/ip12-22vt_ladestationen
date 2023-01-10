@@ -155,43 +155,40 @@ public class Main {
         console.println();
         console.promptForExit();
         var interruptPinConfig = DigitalInput.newConfigBuilder(pi4j)
-                .id("interruptB")
+                .id("interrupt1")
                 .name("a MCP interrupt")
-                .address(22) //BCM22 PORTB
+                .address(23) //BCM23 CHIP 1
                 .pull(PullResistance.PULL_UP)
                 .provider("pigpio-digital-input");
 
-        var dummyCSConfig = DigitalOutput.newConfigBuilder(pi4j)
-                .id("dummyCS")
-                .name("dummy CS")
-                .address(4)
-                .provider("pigpio-digital-output");
+        var IruptChip1 = pi4j.create(interruptPinConfig);
+        var IruptChip2 = pi4j.create(interruptPinConfig.address(24).id("interrupt2"));
 
-        var IruptPortB = pi4j.create(interruptPinConfig);
-        var IruptPortA = pi4j.create(interruptPinConfig.address(23).id("interruptA"));
-        var dummyCSPin = pi4j.create(dummyCSConfig);
+        IruptChip1.addListener(stateChange -> console.println("rupt chip one: "+stateChange.state()));
+        IruptChip2.addListener(stateChange -> console.println("rupt chip two: "+stateChange.state()));
+        DigitalInput[] irupts = {IruptChip1,IruptChip2};
 
-        IruptPortB.addListener(stateChange -> {console.println("rupt B: "+stateChange.state());});
-        //IruptPortA.addListener(stateChange -> {console.println("rupt A: "+stateChange.state());});
-
-        var interruptChip = MCP23S17.newWithInterrupts(
+        var interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
                 pi4j,
                 SpiBus.BUS_1,
-                dummyCSPin,
-                IruptPortA,
-                IruptPortB);
+                irupts,
+                2);
 
-        attachInterruptsToAllPins(interruptChip);
-        int ms = 40000;
-        console.println("going into deep sleep for "+ms/1000+" secs");
-        delay(ms);
+        attachInterruptsToAllPins(interruptChips.get(0),"CHIP ONE");
+        attachInterruptsToAllPins(interruptChips.get(1),"CHIP TWO");
+
         console.waitForExit();
-        //testMultipleMCPsOnSameBus(pi4j);
         console.println("ok finished");
         pi4j.shutdown();
     }
-
-    private void attachInterruptsToAllPins(MCP23S17 chip){
+    private void displayRegisters(String identifier, byte portA, byte portB, byte portAChip2, byte portBChip2){
+        console.println(identifier);
+        console.println("CHIP 1 port A:"+Integer.toBinaryString(portA));
+        console.println("CHIP 1 port B:"+Integer.toBinaryString(portB));
+        console.println("CHIP 2 port A:"+Integer.toBinaryString(portAChip2));
+        console.println("CHIP 2 port B:"+Integer.toBinaryString(portBChip2));
+    }
+    private void attachInterruptsToAllPins(MCP23S17 chip, String msg){
         var iter = chip.getPinViewIterator();
         int i = 0;
         while(iter.hasNext()){
@@ -199,8 +196,8 @@ public class Main {
             pv.setAsInput();
             pv.enablePullUp();
             pv.enableInterrupt();
-            pv.toInterruptChangeMode();
-            pv.addListener((boolean val, MCP23S17.Pin pin)->{console.println("statechange on pin "+ pin.name() +":"+val);});
+            //pv.toInterruptChangeMode(); //default according to datasheet
+            pv.addListener((boolean val, MCP23S17.Pin pin)->console.println(msg+": statechange "+ pin.name() +":"+val));
             i++;
         }
         try {
@@ -210,8 +207,11 @@ public class Main {
             chip.writeGPPUB();
             chip.writeGPINTENA();
             chip.writeGPINTENB();
-            chip.writeINTCONA();
-            chip.writeINTCONB();
+            //chip.writeINTCONA();
+            //chip.writeINTCONB();
+            //read the GPIO register to clear first pending interrupt
+            chip.readGPIOA();
+            chip.readGPIOB();
         }catch (IOException ex){
             console.println("oh noes error on interrupt pin setup: "+ex.getMessage());
         }
@@ -300,7 +300,7 @@ public class Main {
     private void speakerTest() {
         ProcessBuilder pb = new ProcessBuilder("speaker-test", "-tsin","-f 3200","-l1");
         try {
-            Process p = pb.start();
+            pb.start();
         }catch (Exception e){
             console.println("speaker test errored out: ",e.getMessage());
         }
