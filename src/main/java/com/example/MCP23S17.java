@@ -936,6 +936,35 @@ public final class MCP23S17 {
     }
 
     /**
+     * preconfigures all 16 pins of the MCP23S17 to pulled-up interrupt-inputs
+     * The correct values are also being written to the corresponding registers and the
+     * GPIO registers are read once to clear any pending interrupts on startup.
+     *
+     * @return an {@link ArrayList} of 16 {@linkplain PinView} objects that are all configured to be inpputs, pulled up and interrupt-on-change enabled.
+     * @throws IOException when any read or write operation fails.
+     */
+    public ArrayList<PinView> getAllPinsAsPulledUpInterruptInput() throws IOException{
+        var pinList = new ArrayList<PinView>(16);
+        var iterator = getPinViewIterator();
+        while(iterator.hasNext()){
+            var pv = iterator.next();
+            pv.setAsInput();
+            pv.enablePullUp();
+            pv.enableInterrupt();
+            pinList.add(pv);
+        }
+            writeIODIRA();
+            writeIODIRB();
+            writeGPPUA();
+            writeGPPUB();
+            writeGPINTENA();
+            writeGPINTENB();
+            //read the GPIO register to clear first pending interrupt
+            readGPIOA();
+            readGPIOB();
+            return  pinList;
+    }
+    /**
      * <p>
      * Add a global {@linkplain InterruptListener interrupt listener}.
      * </p>
@@ -1335,7 +1364,6 @@ public final class MCP23S17 {
                 // This can in rare cases where the IO expander is already configured create a PinView object before the
                 // user indirectly creates it lazily...
                 getPinView(pin).relayInterruptToListeners(capturedValue);
-                //break; //it can't break? what if there are multiple interrupts pending
             }
         }
     }
