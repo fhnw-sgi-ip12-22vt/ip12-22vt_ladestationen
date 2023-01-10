@@ -1,6 +1,6 @@
 package com.example;
 
-public class Edge extends Component{
+public class Edge extends Component {
     /**
      * The ledstrip this edge is part of.
      */
@@ -37,13 +37,15 @@ public class Edge extends Component{
      * prevent multiple threads writing cooldown at the same time
      */
     private final Object cooldownWriteLock = new Object();
+
     /**
      * Basic constructor for the {@code Edge} class
-     * @param strip the strip of which this edge is a part.
+     *
+     * @param strip      the strip of which this edge is a part.
      * @param startIndex the start pixel of the edge.
-     * @param endIndex the end pixel of the edge
+     * @param endIndex   the end pixel of the edge
      */
-    public Edge(LEDStrip strip, int startIndex, int endIndex){
+    public Edge(LEDStrip strip, int startIndex, int endIndex) {
         this.strip = strip;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
@@ -53,23 +55,23 @@ public class Edge extends Component{
      * Constructor for the {@code Edge} class that expects one or multiple interrupt enabled input pins
      * that can be used to toggle the edge.
      *
-     * @param strip the strip of which this edge is a part.
+     * @param strip         the strip of which this edge is a part.
      * @param interruptPins the pin(s) on which to attach toggle on interrupt
-     * @param startIndex the start pixel of the edge.
-     * @param endIndex the end pixel of the edge
+     * @param startIndex    the start pixel of the edge.
+     * @param endIndex      the end pixel of the edge
      */
-    public Edge(LEDStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex){
-        for(int i = 0; i < interruptPins.length; ++i){
-            interruptPins[i].addListener((boolean capturedValue, MCP23S17.Pin pin)->{
-                if(!capturedValue || inCooldown) {
+    public Edge(LEDStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex) {
+        for (MCP23S17.PinView interruptPin : interruptPins) {
+            interruptPin.addListener((boolean capturedValue, MCP23S17.Pin pin) -> {
+                if (!capturedValue || inCooldown) {
                     return;
                 }
                 toggle();
-                synchronized (cooldownWriteLock){
+                synchronized (cooldownWriteLock) {
                     inCooldown = true;
                 }
                 delay(COOLDOWN_MS);
-                synchronized (cooldownWriteLock){
+                synchronized (cooldownWriteLock) {
                     inCooldown = false;
                 }
             });
@@ -82,30 +84,32 @@ public class Edge extends Component{
     /**
      * same constructor as the previous one but with only one interrupt pin.
      *
-     *@param strip the strip of which this edge is a part.
-     *@param interruptPin the pin on which to attach toggle on interrupt
-     *@param startIndex the start pixel of the edge.
-     *@param endIndex the end pixel of the edge
+     * @param strip        the strip of which this edge is a part.
+     * @param interruptPin the pin on which to attach toggle on interrupt
+     * @param startIndex   the start pixel of the edge.
+     * @param endIndex     the end pixel of the edge
      */
-    public Edge(LEDStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex){
-        this(strip, new MCP23S17.PinView[] {interruptPin}, startIndex, endIndex);
+    public Edge(LEDStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex) {
+        this(strip, new MCP23S17.PinView[]{interruptPin}, startIndex, endIndex);
     }
+
     /**
      * same constructor as the basic constructor, but with a color for the segment
      *
-     *@param strip the strip of which this edge is a part.
-     *@param color the segment's color of type {@link com.example.LEDStrip.PixelColor}
-     *@param startIndex the start pixel of the edge.
-     *@param endIndex the end pixel of the edge
+     * @param strip      the strip of which this edge is a part.
+     * @param color      the segment's color of type {@link com.example.LEDStrip.PixelColor}
+     * @param startIndex the start pixel of the edge.
+     * @param endIndex   the end pixel of the edge
      */
-    public Edge(LEDStrip strip, int color, int startIndex, int endIndex){
+    public Edge(LEDStrip strip, int color, int startIndex, int endIndex) {
         this(strip, startIndex, endIndex);
         this.color = color;
     }
+
     /**
      * Toggle this edge's state. Synchronized on strip for thread safety.
      */
-    public void toggle(){
+    public void toggle() {
         synchronized (strip) {
             if (isOn) {
                 for (int i = startIndex; i <= endIndex; ++i) {
@@ -116,7 +120,7 @@ public class Edge extends Component{
                     strip.setPixelColor(i, color);
                 }
             }
-            isOn = ! isOn;
+            isOn = !isOn;
         }
 
     }

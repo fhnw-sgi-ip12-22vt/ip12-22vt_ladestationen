@@ -4,7 +4,6 @@ import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
 import com.pi4j.io.spi.*;
 
-import com.pi4j.util.Console;
 import java.io.IOException;
 import java.util.*;
 
@@ -179,46 +178,28 @@ public final class MCP23S17 extends Component{
          * @throws IllegalArgumentException if the given pin number is invalid (i.e. less than 0 or greater than 15).
          */
         public static Pin fromPinNumber(int pinNumber) {
-            switch (pinNumber) {
+            return switch (pinNumber) {
                 // Port A
-                case 0:
-                    return PIN0;
-                case 1:
-                    return PIN1;
-                case 2:
-                    return PIN2;
-                case 3:
-                    return PIN3;
-                case 4:
-                    return PIN4;
-                case 5:
-                    return PIN5;
-                case 6:
-                    return PIN6;
-                case 7:
-                    return PIN7;
+                case 0 -> PIN0;
+                case 1 -> PIN1;
+                case 2 -> PIN2;
+                case 3 -> PIN3;
+                case 4 -> PIN4;
+                case 5 -> PIN5;
+                case 6 -> PIN6;
+                case 7 -> PIN7;
 
                 // Port B
-                case 8:
-                    return PIN8;
-                case 9:
-                    return PIN9;
-                case 10:
-                    return PIN10;
-                case 11:
-                    return PIN11;
-                case 12:
-                    return PIN12;
-                case 13:
-                    return PIN13;
-                case 14:
-                    return PIN14;
-                case 15:
-                    return PIN15;
-
-                default:
-                    throw new IllegalArgumentException("illegal pin number");
-            }
+                case 8 -> PIN8;
+                case 9 -> PIN9;
+                case 10 -> PIN10;
+                case 11 -> PIN11;
+                case 12 -> PIN12;
+                case 13 -> PIN13;
+                case 14 -> PIN14;
+                case 15 -> PIN15;
+                default -> throw new IllegalArgumentException("illegal pin number");
+            };
         }
     }
 
@@ -257,9 +238,8 @@ public final class MCP23S17 extends Component{
          * value at the pin is read and returned.
          *
          * @return the state of the pin.
-         * @throws IOException if the pin is input and SPI communication with the MCP23S17 chip failed.
          */
-        public boolean get() throws IOException {
+        public boolean get() {
             if (isOutput()) {
                 return pin.getCorrespondingBit(pin.resolveCorrespondingByte(OLATA, OLATB));
             }
@@ -780,7 +760,6 @@ public final class MCP23S17 extends Component{
      * @param portBInterrupt the {@linkplain DigitalInput input pin} for the port B interrupt line on the chip,
      *                       or {@code null}.
      * @param  readGPIO whether to read from the GPIO registers or the INTCAP registers on interrupt.
-     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     private MCP23S17(Context pi4j,
@@ -788,8 +767,7 @@ public final class MCP23S17 extends Component{
                      DigitalOutput chipSelect,
                      DigitalInput portAInterrupt,
                      DigitalInput portBInterrupt,
-                     boolean readGPIO)
-            throws IOException {
+                     boolean readGPIO) {
         this.chipSelect = Objects.requireNonNull(chipSelect, "chipSelect must be non-null");
         this.readGPIORegisterOnInterrupt = readGPIO;
         this.spi = pi4j.create(buildSpiConfig(pi4j, bus, SPI_SPEED_HZ));
@@ -809,15 +787,13 @@ public final class MCP23S17 extends Component{
      *                       or {@code null}.
      * @param portBInterrupt the {@linkplain DigitalInput input pin} for the port B interrupt line on the chip,
      *                       or {@code null}.
-     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     private MCP23S17(Context pi4j,
                      SpiBus bus,
                      DigitalOutput chipSelect,
                      DigitalInput portAInterrupt,
-                     DigitalInput portBInterrupt)
-            throws IOException {
+                     DigitalInput portBInterrupt) {
         this(pi4j,
              bus,
              chipSelect,
@@ -1017,9 +993,8 @@ public final class MCP23S17 extends Component{
      *
      * @param registerAddress the register address.
      * @param value the value to write to the register.
-     * @throws IOException if the SPI write procedure fails.
      */
-    private void write(byte registerAddress, byte value) throws IOException {
+    private void write(byte registerAddress, byte value) {
         // Without testing it is unclear whether the synchronization here is necessary--the documentation on read
         // is poor.
         synchronized (spi) {
@@ -1038,10 +1013,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeIODIRA() throws IOException {
+    public void writeIODIRA() {
         write(ADDR_IODIRA, IODIRA);
     }
 
@@ -1050,10 +1023,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeIODIRB() throws IOException {
+    public void writeIODIRB() {
         write(ADDR_IODIRB, IODIRB);
     }
 
@@ -1062,10 +1033,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeIPOLA() throws IOException {
+    public void writeIPOLA(){
         write(ADDR_IPOLA, IPOLA);
     }
 
@@ -1074,10 +1043,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeIPOLB() throws IOException {
+    public void writeIPOLB() {
         write(ADDR_IPOLB, IPOLB);
     }
 
@@ -1086,10 +1053,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeGPINTENA() throws IOException {
+    public void writeGPINTENA() {
         write(ADDR_GPINTENA, GPINTENA);
     }
 
@@ -1098,10 +1063,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeGPINTENB() throws IOException {
+    public void writeGPINTENB() {
         write(ADDR_GPINTENB, GPINTENB);
     }
 
@@ -1110,10 +1073,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeDEFVALA() throws IOException {
+    public void writeDEFVALA() {
         write(ADDR_DEFVALA, DEFVALA);
     }
 
@@ -1122,10 +1083,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeDEFVALB() throws IOException {
+    public void writeDEFVALB() {
         write(ADDR_DEFVALB, DEFVALB);
     }
 
@@ -1134,10 +1093,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeINTCONA() throws IOException {
+    public void writeINTCONA() {
         write(ADDR_INTCONA, INTCONA);
     }
 
@@ -1146,10 +1103,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeINTCONB() throws IOException {
+    public void writeINTCONB() {
         write(ADDR_INTCONB, INTCONB);
     }
 
@@ -1158,10 +1113,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeGPPUA() throws IOException {
+    public void writeGPPUA() {
         write(ADDR_GPPUA, GPPUA);
     }
 
@@ -1170,10 +1123,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeGPPUB() throws IOException {
+    public void writeGPPUB() {
         write(ADDR_GPPUB, GPPUB);
     }
 
@@ -1182,10 +1133,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeOLATA() throws IOException {
+    public void writeOLATA() {
         write(ADDR_OLATA, OLATA);
     }
 
@@ -1194,10 +1143,8 @@ public final class MCP23S17 extends Component{
      *
      * @implSpec This is synchronized on the {@link Spi Spi} so that two or more reads/writes cannot be
      * initiated at the same time.
-     *
-     * @throws IOException if the SPI write procedure fails.
      */
-    public void writeOLATB() throws IOException {
+    public void writeOLATB() {
         write(ADDR_OLATB, OLATB);
     }
 
@@ -1239,8 +1186,7 @@ public final class MCP23S17 extends Component{
      * @throws IOException if the SPI write procedure fails.
      */
     public byte readGPIOA() throws IOException {
-        byte data = read(ADDR_GPIOA);
-        GPIOA = data;
+        GPIOA = read(ADDR_GPIOA);
         return GPIOA;
     }
     /**
@@ -1252,8 +1198,7 @@ public final class MCP23S17 extends Component{
      * @throws IOException if the SPI write procedure fails.
      */
     public byte readGPIOB() throws IOException {
-        byte data = read(ADDR_GPIOB);
-        GPIOB = data;
+        GPIOB = read(ADDR_GPIOB);
         return GPIOB;
     }
     /**
@@ -1374,13 +1319,11 @@ public final class MCP23S17 extends Component{
      * @param bus the SPI-Channel that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @return a new {@code MCP23S17} object with no interrupts.
-     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     public static MCP23S17 newWithoutInterrupts(Context pi4j,
                                                 SpiBus bus,
-                                                DigitalOutput chipSelect)
-            throws IOException {
+                                                DigitalOutput chipSelect){
         return new MCP23S17(
                 pi4j,
                 bus,
@@ -1526,14 +1469,12 @@ public final class MCP23S17 extends Component{
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param interrupt the interrupt {@linkplain DigitalInput input pin}.
      * @return a new {@code MCP23S17} object with the port A and port B interrupt lines "tied" together.
-     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output or tied interrupt input is {@code null}.
      */
     public static MCP23S17 newWithTiedInterrupts(Context pi4j,
                                                  SpiBus bus,
                                                  DigitalOutput chipSelect,
-                                                 DigitalInput interrupt)
-            throws IOException {
+                                                 DigitalInput interrupt){
         MCP23S17 ioExpander = new MCP23S17(
                 pi4j,
                 bus,
@@ -1558,15 +1499,13 @@ public final class MCP23S17 extends Component{
      * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for port A.
      * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for port B.
      * @return a new {@code MCP23S17} object with individual port A and port B interrupt lines.
-     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output or either of the interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithInterrupts(Context pi4j,
                                              SpiBus bus,
                                              DigitalOutput chipSelect,
                                              DigitalInput portAInterrupt,
-                                             DigitalInput portBInterrupt)
-            throws IOException {
+                                             DigitalInput portBInterrupt) {
         MCP23S17 ioExpander = new MCP23S17(
                 pi4j,
                 bus,
@@ -1586,14 +1525,12 @@ public final class MCP23S17 extends Component{
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for port A.
      * @return a new {@code MCP23S17} object with an individual port A interrupt line, but no port B interrupt line.
-     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output or the port A interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithPortAInterrupts(Context pi4j,
                                                   SpiBus bus,
                                                   DigitalOutput chipSelect,
-                                                  DigitalInput portAInterrupt)
-            throws IOException {
+                                                  DigitalInput portAInterrupt) {
         MCP23S17 ioExpander = new MCP23S17(
                 pi4j,
                 bus,
@@ -1612,14 +1549,12 @@ public final class MCP23S17 extends Component{
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
      * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for port B.
      * @return a new {@code MCP23S17} object with an individual port B interrupt line, but no port A interrupt line.
-     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output or the port B interrupt inputs is {@code null}.
      */
     public static MCP23S17 newWithPortBInterrupts(Context pi4j,
                                                   SpiBus bus,
                                                   DigitalOutput chipSelect,
-                                                  DigitalInput portBInterrupt)
-            throws IOException {
+                                                  DigitalInput portBInterrupt) {
         MCP23S17 ioExpander = new MCP23S17(
                 pi4j,
                 bus,
@@ -1639,12 +1574,9 @@ public final class MCP23S17 extends Component{
      * @param callback the {@code Runnable} callback.
      */
     private static void attachInterruptOnLow(DigitalInput interrupt, Runnable callback) {
-        interrupt.addListener(new DigitalStateChangeListener() {
-            @Override
-            public void onDigitalStateChange(DigitalStateChangeEvent event) {
-                if (event.state().isLow()) {
-                    callback.run();
-                }
+        interrupt.addListener(event -> {
+            if (event.state().isLow()) {
+                callback.run();
             }
         });
     }

@@ -5,6 +5,7 @@ import com.pi4j.io.spi.*;
 
 import java.util.Arrays;
 //Code from https://github.com/Pi4J/pi4j-example-components/blob/main/src/main/java/com/pi4j/catalog/components/LEDStrip.java
+
 /**
  * Creates an SPI Control for a Neopixel LED Strip
  */
@@ -76,6 +77,7 @@ public class LEDStrip extends Component {
     public LEDStrip(Context pi4j, int numLEDs, double brightness) {
         this(pi4j, numLEDs, brightness, DEFAULT_SPI_BUS, DEFAULT_SPI_CHANNEL);
     }
+
     /**
      * Creates a new simpleLed component with a non-default SPI-Bus
      *
@@ -87,6 +89,7 @@ public class LEDStrip extends Component {
     public LEDStrip(Context pi4j, int numLEDs, double brightness, SpiBus bus) {
         this(pi4j, numLEDs, brightness, bus, DEFAULT_SPI_CHANNEL);
     }
+
     /**
      * Creates a new simpleLed component with a custom BCM pin.
      *
@@ -391,7 +394,7 @@ public class LEDStrip extends Component {
             hue = hue % 360.0f;
             hue /= 360f;
 
-            float q = 0;
+            float q;
 
             if (luminance < 0.5)
                 q = luminance * (1 + saturation);
@@ -414,9 +417,9 @@ public class LEDStrip extends Component {
         /**
          * Calculating the RGB Value of a HUE color
          *
-         * @param p
-         * @param q
-         * @param h
+         * @param p hue param
+         * @param q hue param
+         * @param h hue
          * @return the corresponding RGB color
          */
         private static float HueToRGB(float p, float q, float h) {
