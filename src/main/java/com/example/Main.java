@@ -154,33 +154,73 @@ public class Main {
         platforms.describe().print(System.out);
         console.println();
         console.promptForExit();
+
         var interruptPinConfig = DigitalInput.newConfigBuilder(pi4j)
-                .id("interrupt1")
+                .id("interrupt0")
                 .name("a MCP interrupt")
-                .address(23) //BCM23 CHIP 1
+                .address(23) //BCM23 CHIP 0
                 .pull(PullResistance.PULL_UP)
                 .provider("pigpio-digital-input");
 
-        var IruptChip1 = pi4j.create(interruptPinConfig);
-        var IruptChip2 = pi4j.create(interruptPinConfig.address(24).id("interrupt2"));
+        var interruptPinChip0 = pi4j.create(interruptPinConfig);
+        var interruptPinChip1 = pi4j.create(interruptPinConfig.address(24).id("interrupt1"));
 
-        IruptChip1.addListener(stateChange -> console.println("rupt chip one: "+stateChange.state()));
-        IruptChip2.addListener(stateChange -> console.println("rupt chip two: "+stateChange.state()));
-        DigitalInput[] irupts = {IruptChip1,IruptChip2};
+        interruptPinChip0.addListener(stateChange -> console.println("chip zero interrupt: "+stateChange.state()));
+        interruptPinChip1.addListener(stateChange -> console.println("chip one interrupt: "+stateChange.state()));
+        DigitalInput[] interruptPins = {interruptPinChip0,interruptPinChip1};
 
         var interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
                 pi4j,
                 SpiBus.BUS_1,
-                irupts,
+                interruptPins,
                 2,
-                true,
-                console);
+                true);
 
-        attachInterruptsToAllPins(interruptChips.get(0),"CHIP ONE");
-        attachInterruptsToAllPins(interruptChips.get(1),"CHIP TWO");
+        var pinsIC0 = interruptChips.get(0).getAllPinsAsPulledUpInterruptInput();
+        var pinsIC1 = interruptChips.get(1).getAllPinsAsPulledUpInterruptInput();
 
-        console.waitForExit();
+        int pixels = 99;
+        ledStrip = new LEDStrip(pi4j, pixels, 1.0, SpiBus.BUS_0);
+        ledStrip.allOff();
+
+        var edges = new ArrayList<Edge>();
+        var nodes = new ArrayList<Edge>();
+
+        nodes.add(new Edge(ledStrip,LEDStrip.PixelColor.BLUE,0,0));
+        edges.add(new Edge(ledStrip,pinsIC1.get(8),1,7));
+        nodes.add(new Edge(ledStrip,LEDStrip.PixelColor.BLUE,8,8));
+        edges.add(new Edge(ledStrip,pinsIC0.get(11),9,14));
+        edges.add(new Edge(ledStrip,pinsIC0.get(10),15,26));
+        nodes.add(new Edge(ledStrip,LEDStrip.PixelColor.BLUE,27,27));
+        edges.add(new Edge(ledStrip,pinsIC0.get(9),28,30));
+        nodes.add(new Edge(ledStrip,LEDStrip.PixelColor.BLUE,31,31));
+        edges.add(new Edge(ledStrip,pinsIC1.get(9),32,44));
+        nodes.add(new Edge(ledStrip,LEDStrip.PixelColor.BLUE,45,45));
+        edges.add(new Edge(ledStrip,pinsIC0.get(8),46,57));
+        nodes.add(new Edge(ledStrip,LEDStrip.PixelColor.BLUE,58,58));
+        edges.add(new Edge(ledStrip,pinsIC1.get(1),59,62));
+        nodes.add(new Edge(ledStrip,LEDStrip.PixelColor.BLUE,63,63));
+        edges.add(new Edge(ledStrip,pinsIC1.get(0),64,73));
+        edges.add(new Edge(
+                ledStrip,
+                new MCP23S17.PinView[]{pinsIC0.get(0),pinsIC0.get(1)},
+                74,
+                98));
+
+
+        nodes.get(2).toggle();
+        nodes.get(4).toggle();
+        nodes.get(5).toggle();
+        nodes.get(6).toggle();
+
+        while(console.isRunning()) {
+            synchronized (ledStrip){
+                ledStrip.render();
+            }
+            delay(16);
+        }
         console.println("ok finished");
+        ledStrip.allOff();
         pi4j.shutdown();
     }
     private void displayRegisters(String identifier, byte portA, byte portB, byte portAChip2, byte portBChip2){
@@ -189,34 +229,6 @@ public class Main {
         console.println("CHIP 1 port B:"+Integer.toBinaryString(portB));
         console.println("CHIP 2 port A:"+Integer.toBinaryString(portAChip2));
         console.println("CHIP 2 port B:"+Integer.toBinaryString(portBChip2));
-    }
-    private void attachInterruptsToAllPins(MCP23S17 chip, String msg){
-        var iter = chip.getPinViewIterator();
-        int i = 0;
-        while(iter.hasNext()){
-            var pv = iter.next();
-            pv.setAsInput();
-            pv.enablePullUp();
-            pv.enableInterrupt();
-            //pv.toInterruptChangeMode(); //default according to datasheet
-            pv.addListener((boolean val, MCP23S17.Pin pin)->console.println(msg+": statechange "+ pin.name() +":"+val));
-            i++;
-        }
-        try {
-            chip.writeIODIRA();
-            chip.writeIODIRB();
-            chip.writeGPPUA();
-            chip.writeGPPUB();
-            chip.writeGPINTENA();
-            chip.writeGPINTENB();
-            //chip.writeINTCONA();
-            //chip.writeINTCONB();
-            //read the GPIO register to clear first pending interrupt
-            chip.readGPIOA();
-            chip.readGPIOB();
-        }catch (IOException ex){
-            console.println("oh noes error on interrupt pin setup: "+ex.getMessage());
-        }
     }
     private void testMultipleMCPsOnSameBus(Context pi4j) throws Exception {
         //setup MCP
@@ -276,7 +288,6 @@ public class Main {
     private void testParallelControlCapabilities(ArrayList<MCP23S17> ICtriple, ArrayList<MCP23S17.PinView>[] ICPins) throws Exception {
         int h=0;
         while(h++ < 100) {
-            console.println("MmmMmmmMMmm");
             ledStrip.setStripColor(LEDStrip.PixelColor.YELLOW);
             ledStrip.render();
 
