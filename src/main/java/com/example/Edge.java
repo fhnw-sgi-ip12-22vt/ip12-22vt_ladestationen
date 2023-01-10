@@ -61,6 +61,20 @@ public class Edge extends Component {
      * @param endIndex      the end pixel of the edge
      */
     public Edge(LEDStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex) {
+        addInterruptPins(interruptPins);
+        this.strip = strip;
+        this.startIndex = startIndex;
+        this.endIndex = endIndex;
+    }
+
+    /**
+     * Adds one or more {@link com.example.MCP23S17.PinView} objects that are expected to be
+     * interrupt-enabled, pulled-up input pins.
+     * The method will attach state-change listeners to those pins that toggle the edge.
+     *
+     * @param interruptPins the {@link com.example.MCP23S17.PinView} objects to which state-change listeners will be attached
+     */
+    private void addInterruptPins(MCP23S17.PinView[] interruptPins) {
         for (MCP23S17.PinView interruptPin : interruptPins) {
             interruptPin.addListener((boolean capturedValue, MCP23S17.Pin pin) -> {
                 if (!capturedValue || inCooldown) {
@@ -76,9 +90,6 @@ public class Edge extends Component {
                 }
             });
         }
-        this.strip = strip;
-        this.startIndex = startIndex;
-        this.endIndex = endIndex;
     }
 
     /**
