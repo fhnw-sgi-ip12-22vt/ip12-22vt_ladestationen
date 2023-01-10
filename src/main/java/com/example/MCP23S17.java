@@ -4,6 +4,7 @@ import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
 import com.pi4j.io.spi.*;
 
+import com.pi4j.util.Console;
 import java.io.IOException;
 import java.util.*;
 
@@ -1356,10 +1357,11 @@ public final class MCP23S17 {
      * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the {@code interrupts} array contains null.
      */
-    public static ArrayList<MCP23S17> multipleNewOnSameBusWithTiedInterrupts( Context pi4j,
-                                                                              SpiBus bus,
-                                                                              DigitalInput[] interrupts,
-                                                                              int amount)
+    public static ArrayList<MCP23S17> multipleNewOnSameBusWithTiedInterrupts(Context pi4j,
+                                                                             SpiBus bus,
+                                                                             DigitalInput[] interrupts,
+                                                                             int amount,
+                                                                             Console console)
             throws IllegalArgumentException, IOException {
 
         if(amount > 8 || amount < 1){
@@ -1386,8 +1388,18 @@ public final class MCP23S17 {
                                     interrupts[0]);
         ICList.add(firstIC);
         attachInterruptOnLow(interrupts[0], () -> {
-            firstIC.handlePortAInterrupt();
-            firstIC.handlePortBInterrupt();
+            int i = 0;
+            do {
+                firstIC.handlePortAInterrupt();
+                firstIC.handlePortBInterrupt();
+                try {
+                    Thread.sleep(10);
+                }catch(InterruptedException ex){
+                    console.println("sleep got interrupted: "+ex.getMessage());
+                }
+                ++i;
+            }while(interrupts[0].state().isLow());
+            console.println("hooray only "+i+" times");
         });
 
         for(int i = 1; i < amount; ++i) {
@@ -1396,10 +1408,20 @@ public final class MCP23S17 {
                                          Objects.requireNonNull(interrupts[i],"interrupts must be non-null"),
                                          interrupts[i]);
             ICList.add(currentIC);
-
-            attachInterruptOnLow(interrupts[i], () -> {
+            DigitalInput interrupt = interrupts[i];
+            attachInterruptOnLow(interrupt, () -> {
+                int ii = 0;
+                do {
                 currentIC.handlePortAInterrupt();
                 currentIC.handlePortBInterrupt();
+                try {
+                    Thread.sleep(10);
+                }catch(InterruptedException ex){
+                    console.println("sleep got interrupted: "+ex.getMessage());
+                }
+                ++ii;
+            }while(interrupt.state().isLow());
+            console.println("hooray only "+ii+" times");
             });
         }
 
