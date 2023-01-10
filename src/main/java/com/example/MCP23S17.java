@@ -714,6 +714,12 @@ public final class MCP23S17 {
     private final Spi spi;
 
     /**
+     * Stores whether this chip will read the GPIO registers to check for state change on the pins
+     * or the INTCAP registers.
+     */
+    private final boolean readGPIORegisterOnInterrupt;
+
+    /**
      * The lazily-instantiated {@link PinView PinView}s. This object is synchronized on in
      * {@link MCP23S17#getPinView(Pin) getPinView} as {@code PinView}s are accessed in the
      * {@linkplain MCP23S17#callInterruptListeners(byte, byte, Pin[]) interrupt handling routine} (which is invoked in a
@@ -773,6 +779,36 @@ public final class MCP23S17 {
      *                       or {@code null}.
      * @param portBInterrupt the {@linkplain DigitalInput input pin} for the port B interrupt line on the chip,
      *                       or {@code null}.
+     * @param  readGPIO whether to read from the GPIO registers or the INTCAP registers on interrupt.
+     * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
+     * @throws NullPointerException if the given chip select output is {@code null}.
+     */
+    private MCP23S17(Context pi4j,
+                     SpiBus bus,
+                     DigitalOutput chipSelect,
+                     DigitalInput portAInterrupt,
+                     DigitalInput portBInterrupt,
+                     boolean readGPIO)
+            throws IOException {
+        this.chipSelect = Objects.requireNonNull(chipSelect, "chipSelect must be non-null");
+        this.readGPIORegisterOnInterrupt = readGPIO;
+        this.spi = pi4j.create(buildSpiConfig(pi4j, bus, SPI_SPEED_HZ));
+        this.portAInterrupt = portAInterrupt;
+        this.portBInterrupt = portBInterrupt;
+
+        // Take the CS pin high if it is not already since the CS is active low.
+        chipSelect.high();
+    }
+
+    /**
+     * This is the same as the first out of the two private constructors, it is just a helper to emulate default parameters via overloading.
+     *
+     * @param bus the SPI-Bus that the chip is connected to.
+     * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the chip select line on the chip.
+     * @param portAInterrupt the {@linkplain DigitalInput input pin} for the port A interrupt line on the chip,
+     *                       or {@code null}.
+     * @param portBInterrupt the {@linkplain DigitalInput input pin} for the port B interrupt line on the chip,
+     *                       or {@code null}.
      * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
@@ -782,13 +818,12 @@ public final class MCP23S17 {
                      DigitalInput portAInterrupt,
                      DigitalInput portBInterrupt)
             throws IOException {
-        this.chipSelect = Objects.requireNonNull(chipSelect, "chipSelect must be non-null");
-        this.spi = pi4j.create(buildSpiConfig(pi4j, bus, SPI_SPEED_HZ));
-        this.portAInterrupt = portAInterrupt;
-        this.portBInterrupt = portBInterrupt;
-
-        // Take the CS pin high if it is not already since the CS is active low.
-        chipSelect.high();
+        this(pi4j,
+             bus,
+             chipSelect,
+             portAInterrupt,
+             portBInterrupt,
+              false);
     }
 
     /**
@@ -799,15 +834,20 @@ public final class MCP23S17 {
      *
      * @param other The MCP23S17 IC with it's Address Pins all tied to 0, thus with address 0.
      * @param HWAddress The Hardware Adress of this very MCP23S17 IC.
+     * @param portAInterrupt the pin where INTA is connected
+     * @param portBInterrupt the pin where INTB is connected
+     * @param readGPIO whether to read from GPIO registers instead of INTCAP registers on interrupt.
      * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     private MCP23S17(MCP23S17 other,
                      int HWAddress,
                      DigitalInput portAInterrupt,
-                     DigitalInput portBInterrupt)
+                     DigitalInput portBInterrupt,
+                     boolean readGPIO)
             throws IOException {
         this.chipSelect = other.chipSelect;
+        this.readGPIORegisterOnInterrupt = readGPIO;
         this.spi = other.spi;
         this.portAInterrupt = portAInterrupt;
         this.portBInterrupt =  portBInterrupt;
@@ -1240,19 +1280,27 @@ public final class MCP23S17 {
     }
 
     /**
-     * This is the callback for when port A interrupts occur. Read the INTFA and INTCAPA registers and alert all the
+     * This is the callback for when port A interrupts occur. Read the INTFA and INTCAPA or GPIOA registers
+     * depending on {@code readGPIORegisterOnInterrupt} and alert all the
      * appropriate {@linkplain InterruptListener interrupt listeners} of the interrupt.
      */
     private void handlePortAInterrupt() {
-        callInterruptListeners(uncheckedRead(ADDR_INTFA), uncheckedRead(ADDR_INTCAPA), PORT_A_PINS);
+        callInterruptListeners(
+                uncheckedRead(ADDR_INTFA),
+                uncheckedRead(readGPIORegisterOnInterrupt ? ADDR_GPIOA : ADDR_INTCAPA),
+                PORT_A_PINS);
     }
 
     /**
-     * This is the callback for when port B interrupts occur. Read the INTFB and INTCAPB registers and alert all the
+     * This is the callback for when port B interrupts occur. Read the INTFB and INTCAPB or GPIOB registers
+     * depending on {@code readGPIORegisterOnInterrupt} and alert all the
      * appropriate {@linkplain InterruptListener interrupt listeners} of the interrupt.
      */
     private void handlePortBInterrupt() {
-        callInterruptListeners(uncheckedRead(ADDR_INTFB), uncheckedRead(ADDR_INTCAPB), PORT_B_PINS);
+        callInterruptListeners(
+                uncheckedRead(ADDR_INTFB),
+                uncheckedRead(readGPIORegisterOnInterrupt ? ADDR_GPIOB : ADDR_INTCAPB),
+                PORT_B_PINS);
     }
 
     /**
@@ -1335,7 +1383,7 @@ public final class MCP23S17 {
          ICList.add(firstIC);
 
          for(int i = 1; i < amount; ++i) {
-             ICList.add(new MCP23S17(firstIC, i,null,null));
+             ICList.add(new MCP23S17(firstIC, i,null,null,false));
          }
 
          //need to enable the hardware adress pins by sending the appropriate address write command.
@@ -1353,6 +1401,8 @@ public final class MCP23S17 {
      * @param bus the {@link  SpiBus} with which to communicatee with the chips
      * @param interrupts an array of {@link DigitalInput}s to listen for interrupts from the chips
      * @param amount the amount of ICs on the bus
+     * @param readGPIO true if on interrupt the GPIO registers should be read instead of the INTCAP registers
+     * @param console a pi4j {@link Console} object for logging purposes
      * @throws IllegalArgumentException if the amount isn't in the range 1-8 or {@code interrupts.length} is smaller than amount
      * @throws IOException if the instantiation of the {@link Spi Spi} object fails.
      * @throws NullPointerException if the {@code interrupts} array contains null.
@@ -1361,6 +1411,7 @@ public final class MCP23S17 {
                                                                              SpiBus bus,
                                                                              DigitalInput[] interrupts,
                                                                              int amount,
+                                                                             boolean readGPIO,
                                                                              Console console)
             throws IllegalArgumentException, IOException {
 
@@ -1385,7 +1436,8 @@ public final class MCP23S17 {
                                     bus,
                                     chipSelect,
                                     Objects.requireNonNull(interrupts[0],"interrupts must be non-null"),
-                                    interrupts[0]);
+                                    interrupts[0],
+                                    readGPIO);
         ICList.add(firstIC);
         attachInterruptOnLow(interrupts[0], () -> {
             int i = 0;
@@ -1406,8 +1458,10 @@ public final class MCP23S17 {
             var currentIC = new MCP23S17(firstIC,
                                          i,
                                          Objects.requireNonNull(interrupts[i],"interrupts must be non-null"),
-                                         interrupts[i]);
+                                         interrupts[i],
+                                         readGPIO);
             ICList.add(currentIC);
+
             DigitalInput interrupt = interrupts[i];
             attachInterruptOnLow(interrupt, () -> {
                 int ii = 0;
@@ -1421,7 +1475,7 @@ public final class MCP23S17 {
                 }
                 ++ii;
             }while(interrupt.state().isLow());
-            console.println("hooray only "+ii+" times");
+                console.println("hooray only "+ii+" times");
             });
         }
 
