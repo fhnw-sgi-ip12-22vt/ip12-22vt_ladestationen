@@ -1285,10 +1285,15 @@ public final class MCP23S17 {
      * appropriate {@linkplain InterruptListener interrupt listeners} of the interrupt.
      */
     private void handlePortAInterrupt() {
-        callInterruptListeners(
-                uncheckedRead(ADDR_INTFA),
-                uncheckedRead(readGPIORegisterOnInterrupt ? ADDR_GPIOA : ADDR_INTCAPA),
-                PORT_A_PINS);
+        byte interruptMask = uncheckedRead(ADDR_INTFA);
+        byte interruptCapture = uncheckedRead(ADDR_INTCAPA);
+
+        if(readGPIORegisterOnInterrupt){
+            byte currentCapture = uncheckedRead(ADDR_GPIOA);
+            //if GPIO already changed from INTCAP then ignore.
+            interruptMask &= ~(interruptCapture ^ currentCapture);
+        }
+        callInterruptListeners(interruptMask,interruptCapture, PORT_A_PINS);
     }
 
     /**
@@ -1297,10 +1302,15 @@ public final class MCP23S17 {
      * appropriate {@linkplain InterruptListener interrupt listeners} of the interrupt.
      */
     private void handlePortBInterrupt() {
-        callInterruptListeners(
-                uncheckedRead(ADDR_INTFB),
-                uncheckedRead(readGPIORegisterOnInterrupt ? ADDR_GPIOB : ADDR_INTCAPB),
-                PORT_B_PINS);
+        byte interruptMask = uncheckedRead(ADDR_INTFB);
+        byte interruptCapture = uncheckedRead(ADDR_INTCAPB);
+
+        if(readGPIORegisterOnInterrupt){
+            byte currentCapture = uncheckedRead(ADDR_GPIOB);
+            //if GPIO already changed from INTCAP then ignore.
+            interruptMask &= ~(interruptCapture ^ currentCapture);
+        }
+        callInterruptListeners(interruptMask,interruptCapture, PORT_B_PINS);
     }
 
     /**

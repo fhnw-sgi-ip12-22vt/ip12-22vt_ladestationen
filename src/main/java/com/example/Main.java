@@ -172,7 +172,9 @@ public class Main {
                 pi4j,
                 SpiBus.BUS_1,
                 irupts,
-                2,console);
+                2,
+                true,
+                console);
 
         attachInterruptsToAllPins(interruptChips.get(0),"CHIP ONE");
         attachInterruptsToAllPins(interruptChips.get(1),"CHIP TWO");
