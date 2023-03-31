@@ -12,8 +12,7 @@ and error-free.
 ## Getting started
 
 ```
-cd existing_repo
-git remote add origin https://gitlab.fhnw.ch/ip12-22vt/ip12-22vt_ladestationen/ip12-connectncharge.git
+git clone https://gitlab.fhnw.ch/ip12-22vt/ip12-22vt_ladestationen/ip12-connectncharge.git
 git branch -M development
 git push -uf origin development
 ```
