@@ -15,7 +15,7 @@
         <junit.version>5.8.2</junit.version>
 
         <pi.username>pi</pi.username>
-        <pi.password>crowpi</pi.password>
+        <pi.password>Ladestation</pi.password>
         <pi.ipnumber/>
         <pi.port>22</pi.port>
         <pi.deploydirectory>/home/pi/deploy</pi.deploydirectory>
