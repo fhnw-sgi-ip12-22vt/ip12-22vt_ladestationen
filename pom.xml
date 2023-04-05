@@ -19,7 +19,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <target.platform.name>raspberry</target.platform.name>
-        <run.with.java.module>true</run.with.java.module>
+        <run.with.java.module>false</run.with.java.module>
         <!-- Use jvmargs to pass args like -Dpi4j.library.path=<Path to the libpi4j-pigpio.so library> -->
         <!--<jvmargs.run>-Dpi4j.library.path=/lib/aarch64-linux-gnu</jvmargs.run>-->
         <jvmargs.run></jvmargs.run>
@@ -69,9 +69,9 @@
     </dependencies>
         
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${project.artifactId}-1.0-SNAPSHOT-shaded</finalName>
         <plugins>
-           <!-- <plugin>
+           <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.4.1</version>
@@ -87,10 +87,20 @@
                                     <mainClass>com.example.Main</mainClass>
                                 </transformer>
                             </transformers>
+                            <relocations>
+                                    <relocation>
+                                        <pattern>org.apache.logging.log4j</pattern>
+                                        <shadedPattern>shaded.org.apache.logging.log4j</shadedPattern>
+                                    </relocation>
+                                    <relocation>
+                                        <pattern>com.pi4j</pattern>
+                                        <shadedPattern>shaded.com.pi4j</shadedPattern>
+                                    </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

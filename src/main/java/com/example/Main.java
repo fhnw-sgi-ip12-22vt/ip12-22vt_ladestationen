@@ -5,6 +5,10 @@
  */
 package com.example;
 
+import com.github.mbelling.ws281x.Color;
+import com.github.mbelling.ws281x.LedStrip;
+import com.github.mbelling.ws281x.LedStripType;
+import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.pi4j.Pi4J;
 import com.pi4j.io.spi.SpiBus;
 import com.pi4j.library.pigpio.PiGpio;
@@ -97,10 +101,39 @@ public class Main {
         console.println();
         console.promptForExit();
 
-        runPrototypeExample(pi4j);
+        //runPrototypeExample(pi4j);
+        runNewLibraryTest(pi4j);
 
         console.println("ok finished");
         pi4j.shutdown();
+    }
+
+    private void runNewLibraryTest(Context pi4j) throws InterruptedException {
+        var LEDStripC = new Ws281xLedStrip(
+                845,
+                10,
+                800000,
+                10,
+                255,
+                0,
+                false,
+                LedStripType.WS2811_STRIP_GRB,
+                true
+                );
+        for (int i = 0; i < 845; i++) {
+            LEDStripC.setPixel(i,Color.CYAN);
+            LEDStripC.render();
+        }
+        delay(2000);
+        LEDStripC.setStrip(Color.RED);
+        LEDStripC.render();
+        delay(1000);
+        LEDStripC.setStrip(Color.GREEN);
+        LEDStripC.render();
+        delay(1000);
+        LEDStripC.setStrip(Color.BLUE);
+        LEDStripC.render();
+        delay(3000);
     }
 
     /**
