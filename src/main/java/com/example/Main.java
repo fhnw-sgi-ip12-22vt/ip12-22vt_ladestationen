@@ -5,6 +5,9 @@
  */
 package com.example;
 
+import com.github.mbelling.ws281x.Color;
+import com.github.mbelling.ws281x.LedStripType;
+import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.pi4j.Pi4J;
 import com.pi4j.io.spi.SpiBus;
 import com.pi4j.library.pigpio.PiGpio;
@@ -15,6 +18,7 @@ import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
 import com.pi4j.platform.Platforms;
 import com.pi4j.util.Console;
+import com.github.mbelling.ws281x.LedStrip;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -97,10 +101,57 @@ public class Main {
         console.println();
         console.promptForExit();
 
-        runPrototypeExample(pi4j);
+        //runLedTestNewLibrary(pi4j);
+        runButtonTestScaledUp(pi4j);
 
         console.println("ok finished");
         pi4j.shutdown();
+    }
+
+    private void runButtonTestScaledUp(Context pi4j) throws InterruptedException, IOException {
+        var pins = setupGPIOExtensionICs(pi4j);
+        var pinsnormalized = new ArrayList<MCP23S17.PinView>();
+        for(var list : pins){
+            pinsnormalized.addAll(list);
+        }
+        for(var pin : pinsnormalized){
+            pin.addListener((boolean capturedValue, MCP23S17.Pin pinn) -> {
+                    console.println("change detedted: "+capturedValue+ " on pin "+pinn.name());
+                });
+        }
+        console.println("connection stuff done");
+        console.waitForExit();
+    }
+
+    private void runLedTestNewLibrary(Context pi4j) {
+        var ledStrip = new Ws281xLedStrip(100,
+                10,
+                800000,
+                10,
+                255,
+                0,
+                false,
+                LedStripType.WS2811_STRIP_RGB,
+                true);
+        ledStrip.setStrip(Color.RED);
+        ledStrip.render();
+        delay(2500);
+    }
+
+    private void runLedTest(Context pi4j) {
+        LEDStrip ledStrip = new LEDStrip(pi4j, 845, 1.0, SpiBus.BUS_0);
+        ledStrip.allOff();
+
+        for (int i = 0; i < 845; i++) {
+            ledStrip.setPixelColor(i,LEDStrip.PixelColor.BLUE);
+            ledStrip.render();
+            delay(11);
+        }
+        var lol = new Ws281xLedStrip();
+        //ledStrip.setStripColor(LEDStrip.PixelColor.BLUE);
+        //ledStrip.render();
+        delay(10000);
+       ledStrip.allOff();
     }
 
     /**
@@ -124,8 +175,12 @@ public class Main {
         nodes.get(4).toggle();
         nodes.get(5).toggle();
         nodes.get(6).toggle();
+        for(var edg : edges){
+            edg.toggle();
+        }
 
         //loop while application is running
+        int i = 0;
         while (console.isRunning()) {
             synchronized (ledStrip) {
                 ledStrip.render();
@@ -190,27 +245,40 @@ public class Main {
         var interruptPinConfig = DigitalInput.newConfigBuilder(pi4j)
                 .id("interrupt0")
                 .name("a MCP interrupt")
-                .address(BCM_IC_0_INTERRUPT_PIN)
+                .address(22)
                 .pull(PullResistance.PULL_UP)
                 .provider("pigpio-digital-input");
 
         var interruptPinChip0 = pi4j.create(interruptPinConfig);
-        var interruptPinChip1 = pi4j.create(interruptPinConfig.address(BCM_IC_1_INTERRUPT_PIN).id("interrupt1"));
+        var interruptPinChip1 = pi4j.create(interruptPinConfig.address(23).id("interrupt1"));
+        var interruptPinChip2 = pi4j.create(interruptPinConfig.address(24).id("interrupt2"));
+        var interruptPinChip3 = pi4j.create(interruptPinConfig.address(25).id("interrupt3"));
+        var interruptPinChip4 = pi4j.create(interruptPinConfig.address(27).id("interrupt4"));
 
         interruptPinChip0.addListener(stateChange -> console.println("chip zero interrupt: " + stateChange.state()));
         interruptPinChip1.addListener(stateChange -> console.println("chip one interrupt: " + stateChange.state()));
-        DigitalInput[] interruptPins = {interruptPinChip0, interruptPinChip1};
+        interruptPinChip2.addListener(stateChange -> console.println("chip two interrupt: " + stateChange.state()));
+        interruptPinChip3.addListener(stateChange -> console.println("chip three interrupt: " + stateChange.state()));
+        interruptPinChip4.addListener(stateChange -> console.println("chip four interrupt: " + stateChange.state()));
+        DigitalInput[] interruptPins = {interruptPinChip0,
+                                        interruptPinChip1,
+                                        interruptPinChip2,
+                                        interruptPinChip3,
+                                        interruptPinChip4};
 
         var interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
                 pi4j,
                 SpiBus.BUS_1,
                 interruptPins,
-                2,
+                5,
                 true);
 
-        var pins = new ArrayList<ArrayList<MCP23S17.PinView>>(2);
+        var pins = new ArrayList<ArrayList<MCP23S17.PinView>>(5);
         pins.add(interruptChips.get(0).getAllPinsAsPulledUpInterruptInput());
         pins.add(interruptChips.get(1).getAllPinsAsPulledUpInterruptInput());
+        pins.add(interruptChips.get(2).getAllPinsAsPulledUpInterruptInput());
+        pins.add(interruptChips.get(3).getAllPinsAsPulledUpInterruptInput());
+        pins.add(interruptChips.get(4).getAllPinsAsPulledUpInterruptInput());
 
         return pins;
     }

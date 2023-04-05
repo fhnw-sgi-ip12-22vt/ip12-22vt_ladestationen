@@ -851,7 +851,7 @@ public final class MCP23S17 extends Component{
                 .name("GPIO-Circuit")
                 .description("SPI-Config for GPIO-Extension Integrated Circuits (MCP23S17)")
                 .bus(bus)
-                .chipSelect(SpiChipSelect.CS_2)
+                .chipSelect(SpiChipSelect.CS_0)
                 .mode(SpiMode.MODE_0)
                 .baud(frequency)
                 .build();
