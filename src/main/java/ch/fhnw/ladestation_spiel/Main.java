@@ -6,6 +6,7 @@
 package ch.fhnw.ladestation_spiel;
 
 import com.github.mbelling.ws281x.Color;
+import com.github.mbelling.ws281x.LedStrip;
 import com.github.mbelling.ws281x.LedStripType;
 import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.pi4j.Pi4J;
@@ -22,6 +23,7 @@ import com.pi4j.util.Console;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main class of the maven pi4j archetype
@@ -147,7 +149,7 @@ public class Main {
         var pinsIC0 = pins.get(0);
         var pinsIC1 = pins.get(1);
 
-        LEDStrip ledStrip = setupLEDStrip(pi4j);
+        LedStrip ledStrip = setupLEDStrip(pi4j);
 
         assignEdgesToLEDStripSegmentsAndPins(pinsIC0, pinsIC1, ledStrip);
 
@@ -164,18 +166,26 @@ public class Main {
             }
             delay(16);
         }
-        ledStrip.allOff();
     }
 
     /**
      * Will setup and initialise the LED-Strip
      *
      * @param pi4j the pi4j {@link Context}
-     * @return the {@link LEDStrip} object
+     * @return the {@link LedStrip} object
      */
-    private static LEDStrip setupLEDStrip(Context pi4j) {
-        LEDStrip ledStrip = new LEDStrip(pi4j, PIXEL_AMT, 1.0, SpiBus.BUS_0);
-        ledStrip.allOff();
+    private static LedStrip setupLEDStrip(Context pi4j) {
+        LedStrip ledStrip = new Ws281xLedStrip(
+                845,
+                10,
+                800000,
+                10,
+                255,
+                0,
+                false,
+                LedStripType.WS2811_STRIP_GRB,
+                true
+        );
         return ledStrip;
     }
 
@@ -186,27 +196,8 @@ public class Main {
      * @param pinsIC1  the {@link MCP23S17.PinView}s of the second MCP23S17 IC
      * @param ledStrip the LED-Strip that displays the terminals and edges
      */
-    private static void assignEdgesToLEDStripSegmentsAndPins(ArrayList<MCP23S17.PinView> pinsIC0, ArrayList<MCP23S17.PinView> pinsIC1, LEDStrip ledStrip) {
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 0, 0));
-        edges.add(new Edge(ledStrip, pinsIC1.get(8), 1, 7));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 8, 8));
-        edges.add(new Edge(ledStrip, pinsIC0.get(11), 9, 14));
-        edges.add(new Edge(ledStrip, pinsIC0.get(10), 15, 26));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 27, 27));
-        edges.add(new Edge(ledStrip, pinsIC0.get(9), 28, 30));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 31, 31));
-        edges.add(new Edge(ledStrip, pinsIC1.get(9), 32, 44));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 45, 45));
-        edges.add(new Edge(ledStrip, pinsIC0.get(8), 46, 57));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 58, 58));
-        edges.add(new Edge(ledStrip, pinsIC1.get(1), 59, 62));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 63, 63));
-        edges.add(new Edge(ledStrip, pinsIC1.get(0), 64, 73));
-        edges.add(new Edge(
-                ledStrip,
-                new MCP23S17.PinView[]{pinsIC0.get(0), pinsIC0.get(1)},
-                74,
-                98));
+    static void assignEdgesToLEDStripSegmentsAndPins(List<MCP23S17.PinView> pinsIC0, List<MCP23S17.PinView> pinsIC1, LedStrip ledStrip){
+        //TODO
     }
 
     /**
