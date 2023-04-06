@@ -1,4 +1,4 @@
-package com.example;
+package ch.fhnw.ladestation_spiel;
 
 public class Edge extends Component {
     /**
@@ -68,11 +68,11 @@ public class Edge extends Component {
     }
 
     /**
-     * Adds one or more {@link com.example.MCP23S17.PinView} objects that are expected to be
+     * Adds one or more {@link MCP23S17.PinView} objects that are expected to be
      * interrupt-enabled, pulled-up input pins.
      * The method will attach state-change listeners to those pins that toggle the edge.
      *
-     * @param interruptPins the {@link com.example.MCP23S17.PinView} objects to which state-change listeners will be attached
+     * @param interruptPins the {@link MCP23S17.PinView} objects to which state-change listeners will be attached
      */
     private void addInterruptPins(MCP23S17.PinView[] interruptPins) {
         for (MCP23S17.PinView interruptPin : interruptPins) {
@@ -108,7 +108,7 @@ public class Edge extends Component {
      * same constructor as the basic constructor, but with a color for the segment
      *
      * @param strip      the strip of which this edge is a part.
-     * @param color      the segment's color of type {@link com.example.LEDStrip.PixelColor}
+     * @param color      the segment's color of type {@link LEDStrip.PixelColor}
      * @param startIndex the start pixel of the edge.
      * @param endIndex   the end pixel of the edge
      */

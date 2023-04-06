@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example;
+package ch.fhnw.ladestation_spiel;
 
 import com.github.mbelling.ws281x.Color;
-import com.github.mbelling.ws281x.LedStrip;
 import com.github.mbelling.ws281x.LedStripType;
 import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.pi4j.Pi4J;
@@ -183,8 +182,8 @@ public class Main {
     /**
      * Assigns every node and edge to its segment of the LED-Strip and its GPIO-Extension pin
      *
-     * @param pinsIC0  the {@link com.example.MCP23S17.PinView}s of the first MCP23S17 IC
-     * @param pinsIC1  the {@link com.example.MCP23S17.PinView}s of the second MCP23S17 IC
+     * @param pinsIC0  the {@link MCP23S17.PinView}s of the first MCP23S17 IC
+     * @param pinsIC1  the {@link MCP23S17.PinView}s of the second MCP23S17 IC
      * @param ledStrip the LED-Strip that displays the terminals and edges
      */
     private static void assignEdgesToLEDStripSegmentsAndPins(ArrayList<MCP23S17.PinView> pinsIC0, ArrayList<MCP23S17.PinView> pinsIC1, LEDStrip ledStrip) {
@@ -214,10 +213,10 @@ public class Main {
      * Will setup and initialise the MCP23S17 GPIO-Extension ICs
      *
      * @param pi4j the pi4j {@link Context} object
-     * @return two fully configured lists of {@link com.example.MCP23S17.PinView} objects.
+     * @return two fully configured lists of {@link MCP23S17.PinView} objects.
      * that means 2 * 16 extra GPIO Pins set as input, pulled up and interrupt enabled
      * @throws IOException when the creation of the {@link MCP23S17} objects or
-     *                     gathering of the {@link com.example.MCP23S17.PinView} objects fail
+     *                     gathering of the {@link MCP23S17.PinView} objects fail
      */
     private static ArrayList<ArrayList<MCP23S17.PinView>> setupGPIOExtensionICs(Context pi4j) throws IOException {
         var interruptPinConfig = DigitalInput.newConfigBuilder(pi4j)

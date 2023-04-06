@@ -1,4 +1,4 @@
-package com.example;
+package ch.fhnw.ladestation_spiel;
 
 import com.pi4j.context.Context;
 import com.pi4j.io.spi.*;
