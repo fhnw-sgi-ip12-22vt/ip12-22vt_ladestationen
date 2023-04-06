@@ -11,8 +11,8 @@
           <option name="jreName" value="17" />
           <option name="mavenProperties">
             <map>
-              <entry key="pi.ipnumber" value="10.175.31.113" />
-              <entry key="pi.password" value="crowpi" />
+              <entry key="pi.ipnumber" value="192.168.43.161" />
+              <entry key="pi.password" value="Ladestation" />
               <entry key="pi.username" value="pi" />
             </map>
           </option>
