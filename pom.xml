@@ -35,6 +35,15 @@
         <maven-antrun-plugin.version>3.0.0</maven-antrun-plugin.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/repo</url>
+        </repository>
+    </repositories>
+
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
