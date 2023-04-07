@@ -1,0 +1,34 @@
+variables:
+  MAVEN_CLI_OPTS: >-
+    --batch-mode
+    --errors
+    --fail-at-end
+    --show-version
+    --no-transfer-progress
+
+image: maven:latest
+
+cache:
+  paths:
+    - .m2/repository
+
+stages:
+  - build
+  - test
+
+build-job:
+  stage: build
+  script:
+    - mvn $MAVEN_CLI_OPTS package
+  artifacts:
+    paths:
+      - "target/*.jar"
+    reports:
+      junit: "target/surefire-reports/*.xml"
+
+test:
+  stage: test
+  script:
+    - mvn test
+    # When the test files are available
+    #- mvn test -Dtest=ch.ladestation.connectncharge.controller.*,ch.ladestation.connectncharge.model.*
