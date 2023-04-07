@@ -1,6 +1,6 @@
-package com.home.connectncharge.controller;
+package ch.ladestation.connectncharge.controller;
 
-import com.home.connectncharge.AppStarter;
+import ch.ladestation.connectncharge.AppStarter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

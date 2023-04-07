@@ -5,8 +5,8 @@ module com.home.connectncharge {
     requires org.controlsfx.controls;
     requires org.kordamp.bootstrapfx.core;
 
-    opens com.home.connectncharge to javafx.fxml;
-    exports com.home.connectncharge.controller;
-    opens com.home.connectncharge.controller to javafx.fxml;
-    exports com.home.connectncharge;
+    opens ch.ladestation.connectncharge to javafx.fxml;
+    exports ch.ladestation.connectncharge.controller;
+    opens ch.ladestation.connectncharge.controller to javafx.fxml;
+    exports ch.ladestation.connectncharge;
 }

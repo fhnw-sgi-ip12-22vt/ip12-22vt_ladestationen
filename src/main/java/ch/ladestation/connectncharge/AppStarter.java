@@ -1,4 +1,4 @@
-package com.home.connectncharge;
+package ch.ladestation.connectncharge;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

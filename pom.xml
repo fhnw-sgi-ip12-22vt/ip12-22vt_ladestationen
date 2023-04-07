@@ -10,7 +10,7 @@
     <name>ConnectnCharge</name>
 
     <properties>
-        <launcher.class>com.home.connectncharge/com.home.connectncharge.AppStarter</launcher.class>
+        <launcher.class>com.home.connectncharge/ch.ladestation.connectncharge.AppStarter</launcher.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.8.2</junit.version>
 
