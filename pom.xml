@@ -29,7 +29,7 @@
         <!-- Project Dependency Versions-->
         <javafx.version>17.0.2</javafx.version>
         <pi4j.version>2.2.0</pi4j.version>
-
+        <slf4j.version>1.7.30</slf4j.version>
         <junit.version>5.9.0</junit.version>
 
         <!-- Plugin Versions-->
@@ -70,6 +70,7 @@
     </properties>
 
     <dependencies>
+
         <!-- JavaFX  -->
         <dependency>
             <groupId>org.openjfx</groupId>
@@ -90,6 +91,18 @@
             <groupId>org.kordamp.bootstrapfx</groupId>
             <artifactId>bootstrapfx-core</artifactId>
             <version>0.4.0</version>
+        </dependency>
+
+        <!-- slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
 
         <!-- Pi4J  -->
