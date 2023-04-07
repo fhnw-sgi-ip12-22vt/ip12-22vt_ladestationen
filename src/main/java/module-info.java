@@ -1,4 +1,4 @@
-module com.home.connectncharge {
+module ch.ladestation.connectncharge {
     requires javafx.controls;
     requires javafx.fxml;
 

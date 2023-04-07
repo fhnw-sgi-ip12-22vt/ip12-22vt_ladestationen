@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.home.connectncharge</groupId>
@@ -65,6 +64,9 @@
         <mac.signing.user.name/>
         <bundle.version/>
         <bundle.short.version/>
+
+        <!-- Checkstyle version -->
+        <maven-checkstyle.version>3.2.1</maven-checkstyle.version>
     </properties>
 
     <dependencies>
@@ -135,7 +137,11 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.puppycrawl.tools</groupId>
+            <artifactId>checkstyle</artifactId>
+            <version>10.3.4</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -158,7 +164,9 @@
                 <artifactId>gluonfx-maven-plugin</artifactId>
                 <version>${gluonfx.plugin.version}</version>
                 <configuration>
-                    <target><gluonfx.target>host</gluonfx.target></target>
+                    <target>
+                        <gluonfx.target>host</gluonfx.target>
+                    </target>
                     <mainClass>${launcher.class}</mainClass>
                     <releaseConfiguration>
                         <vendor>Pi4J</vendor>
@@ -257,6 +265,32 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>${maven-checkstyle.version}</version>
+                <executions>
+                    <execution>
+                        <id>verify-style</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <configLocation>src/main/config/connectncharge_checks.xml</configLocation>
+                    <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                    <violationSeverity>warning</violationSeverity>
+                    <excludes>**/module-info.java</excludes>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.puppycrawl.tools</groupId>
+                        <artifactId>checkstyle</artifactId>
+                        <version>10.3.4</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -298,6 +332,26 @@
             </plugins>
         </pluginManagement>
     </build>
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.2.1</version>
+                <configuration>
+                    <configLocation>src/main/config/connectncharge_checks.xml</configLocation>
+                    <linkXRef>false</linkXRef>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
     <profiles>
         <profile>
             <id>jfx-remote-run-kiosk</id>
@@ -316,31 +370,21 @@
                                 <configuration>
                                     <target>
                                         <!-- Ensure target directory exists on RaspPi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}"
-                                                 username="${pi.username}" password="${pi.password}"
-                                                 trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
 
                                         <!-- Transfer distribution folder to RaspPi via SCP -->
-                                        <scp trust="true"
-                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
-                                             port="${pi.port}">
+                                        <scp trust="true" todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}" port="${pi.port}">
                                             <fileset dir="${project.build.directory}/distribution">
-                                                <exclude name="javafx*.jar"/>/>
+                                                <exclude name="javafx*.jar"/>
+/>
                                             </fileset>
                                         </scp>
 
                                         <!-- Stop all running Java processes -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}"
-                                                 username="${pi.username}" password="${pi.password}" trust="true"
-                                                 failonerror="false" usepty="true" useSystemIn="true"
-                                                 suppresssystemerr="true" suppresssystemout="true"
-                                                 command="sudo killall -9 java"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" suppresssystemerr="true" suppresssystemout="true" command="sudo killall -9 java"/>
 
                                         <!-- Run JFX application on Raspberry Pi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}"
-                                                 username="${pi.username}" password="${pi.password}" trust="true"
-                                                 failonerror="false" usepty="true" useSystemIn="true"
-                                                 command="sudo  java-kiosk  ${pi.remote.jvmOptions} -Xmx1G --module-path ${pi.deploydirectory} --module ${launcher.class} -Dmonocle.cursor.enabled=${pi.drm.enable.cursor}"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" command="sudo  java-kiosk  ${pi.remote.jvmOptions} -Xmx1G --module-path ${pi.deploydirectory} --module ${launcher.class} -Dmonocle.cursor.enabled=${pi.drm.enable.cursor}"/>
                                     </target>
                                 </configuration>
                             </execution>
@@ -374,31 +418,21 @@
                                 <configuration>
                                     <target>
                                         <!-- Ensure target directory exists on RaspPi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}"
-                                                 username="${pi.username}" password="${pi.password}"
-                                                 trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
 
                                         <!-- Transfer distribution folder to RaspPi via SCP -->
-                                        <scp trust="true"
-                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
-                                             port="${pi.port}">
+                                        <scp trust="true" todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}" port="${pi.port}">
                                             <fileset dir="${project.build.directory}/distribution">
-                                                <exclude name="javafx*.jar"/>/>
+                                                <exclude name="javafx*.jar"/>
+/>
                                             </fileset>
                                         </scp>
 
                                         <!-- Stop all running Java processes -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}"
-                                                 username="${pi.username}" password="${pi.password}" trust="true"
-                                                 failonerror="false" usepty="true" useSystemIn="true"
-                                                 suppresssystemerr="true" suppresssystemout="true"
-                                                 command="sudo killall -9 java"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" suppresssystemerr="true" suppresssystemout="true" command="sudo killall -9 java"/>
 
                                         <!-- Run JFX application on Raspberry Pi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}"
-                                                 username="${pi.username}" password="${pi.password}" trust="true"
-                                                 failonerror="false" usepty="true" useSystemIn="true"
-                                                 command="DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority sudo -E java ${pi.remote.jvmOptions} --module-path /opt/javafx-sdk/lib:${pi.deploydirectory} --add-modules javafx.controls -Dglass.platform=gtk --module ${launcher.class}"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" command="DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority sudo -E java ${pi.remote.jvmOptions} --module-path /opt/javafx-sdk/lib:${pi.deploydirectory} --add-modules javafx.controls -Dglass.platform=gtk --module ${launcher.class}"/>
                                     </target>
                                 </configuration>
                             </execution>
@@ -418,8 +452,7 @@
         <profile>
             <id>debug</id>
             <properties>
-                <pi.remote.jvmOptions>
-                    -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
+                <pi.remote.jvmOptions> -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
                 </pi.remote.jvmOptions>
             </properties>
         </profile>
