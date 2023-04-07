@@ -10,8 +10,9 @@ import java.io.IOException;
 public class AppStarter extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(AppStarter.class.getResource("loadingscreen.fxml"));
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    AppStarter.class.getResource("/ch/ladestation/connectncharge/loadingscreen.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().add("src/main/resources/css/style.css");
             stage.setTitle("Connect 'n Charger");
@@ -20,7 +21,7 @@ public class AppStarter extends Application {
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
