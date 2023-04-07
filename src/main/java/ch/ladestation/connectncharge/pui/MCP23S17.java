@@ -50,11 +50,13 @@ import java.util.*;
  *
  * @author Robert Russell, updated to pi4j V2 by MNG
  */
-// TODO: that writeXXX must be called after a PinView setter method is extremely
+// todo: that writeXXX must be called after a PinView setter method is
+// extremely.
 // awkward. The same support for batch
 // writes might be facilitated (in a future version) by some
 // locking/synchronization mechanism where a lock is
-// acquired, the changes are made, and then the lock is released, upon which the
+// acquired, the changes are mSSade, and then the lock is released, upon which
+// the
 // changes are actually written to
 // the chip; if the changes were aborted/an error occurred/whatever happens
 // before the lock is released, all the
@@ -272,9 +274,9 @@ public final class MCP23S17 extends Component {
          */
         public boolean get() {
             if (isOutput()) {
-                return pin.getCorrespondingBit(pin.resolveCorrespondingByte(OLATA, OLATB));
+                return pin.getCorrespondingBit(pin.resolveCorrespondingByte(olata, olatb));
             }
-            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(GPIOA, GPIOB));
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(gpioa, piiob));
         }
 
         public boolean getFromRead() throws IOException {
@@ -295,10 +297,10 @@ public final class MCP23S17 extends Component {
         public void set(boolean value) {
             synchronized (byteWriteLock) {
                 if (pin.isPortA()) {
-                    OLATA = pin.setCorrespondingBit(OLATA, value);
+                    olata = pin.setCorrespondingBit(olata, value);
                     // write(ADDR_OLATA, OLATA);
                 } else { // portB
-                    OLATB = pin.setCorrespondingBit(OLATB, value);
+                    olatb = pin.setCorrespondingBit(olatb, value);
                     // write(ADDR_OLATB, OLATB);
                 }
             }
@@ -331,7 +333,7 @@ public final class MCP23S17 extends Component {
          * @return whether or not this pin is input.
          */
         public boolean isInput() {
-            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(IODIRA, IODIRB));
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(iodira, iodirb));
         }
 
         /**
@@ -358,10 +360,10 @@ public final class MCP23S17 extends Component {
         public void setDirection(boolean input) {
             synchronized (byteWriteLock) {
                 if (pin.isPortA()) {
-                    IODIRA = pin.setCorrespondingBit(IODIRA, input);
+                    iodira = pin.setCorrespondingBit(iodira, input);
                     // write(ADDR_IODIRA, IODIRA);
                 } else { // portB
-                    IODIRB = pin.setCorrespondingBit(IODIRB, input);
+                    iodirb = pin.setCorrespondingBit(iodirb, input);
                     // write(ADDR_IODIRB, IODIRB);
                 }
             }
@@ -394,7 +396,7 @@ public final class MCP23S17 extends Component {
          * @return whether or not this pin's input os inverted.
          */
         public boolean isInputInverted() {
-            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(IPOLA, IPOLB));
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(ipola, ipolb));
         }
 
         /**
@@ -406,14 +408,14 @@ public final class MCP23S17 extends Component {
          *
          * @param inverted whether or not the pin's input is to be inverted.
          */
-        // TODO: this name is misleading and inconsistent; should be "isInputInverted"
+        // todo: this name is misleading and inconsistent; should be "isInputInverted"
         public void setInverted(boolean inverted) {
             synchronized (byteWriteLock) {
                 if (pin.isPortA()) {
-                    IPOLA = pin.setCorrespondingBit(IPOLA, inverted);
+                    ipola = pin.setCorrespondingBit(ipola, inverted);
                     // write(ADDR_IPOLA, IPOLA);
                 } else { // portB
-                    IPOLB = pin.setCorrespondingBit(IPOLB, inverted);
+                    ipolb = pin.setCorrespondingBit(ipolb, inverted);
                     // write(ADDR_IPOLB, IPOLB);
                 }
             }
@@ -447,7 +449,7 @@ public final class MCP23S17 extends Component {
          * @return whether or not this pin's interrupt is enabled.
          */
         public boolean isInterruptEnabled() {
-            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(GPINTENA, GPINTENB));
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(gpintena, gpintenb));
         }
 
         /**
@@ -462,10 +464,10 @@ public final class MCP23S17 extends Component {
         public void setInterruptEnabled(boolean interruptEnabled) {
             synchronized (byteWriteLock) {
                 if (pin.isPortA()) {
-                    GPINTENA = pin.setCorrespondingBit(GPINTENA, interruptEnabled);
+                    gpintena = pin.setCorrespondingBit(gpintena, interruptEnabled);
                     // write(ADDR_GPINTENA, GPINTENA);
                 } else { // portB
-                    GPINTENB = pin.setCorrespondingBit(GPINTENB, interruptEnabled);
+                    gpintenb = pin.setCorrespondingBit(gpintenb, interruptEnabled);
                     // write(ADDR_GPINTENB, GPINTENB);
                 }
             }
@@ -501,7 +503,7 @@ public final class MCP23S17 extends Component {
          *         pin.
          */
         public boolean getDefaultComparisonValue() {
-            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(DEFVALA, DEFVALB));
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(defvala, defvalb));
         }
 
         /**
@@ -517,10 +519,10 @@ public final class MCP23S17 extends Component {
         public void setDefaultComparisonValue(boolean value) {
             synchronized (byteWriteLock) {
                 if (pin.isPortA()) {
-                    DEFVALA = pin.setCorrespondingBit(DEFVALA, value);
+                    defvala = pin.setCorrespondingBit(defvala, value);
                     // write(ADDR_DEFVALA, DEFVALA);
                 } else { // portB
-                    DEFVALB = pin.setCorrespondingBit(DEFVALB, value);
+                    defvalb = pin.setCorrespondingBit(defvalb, value);
                     // write(ADDR_DEFVALB, DEFVALB);
                 }
             }
@@ -536,7 +538,7 @@ public final class MCP23S17 extends Component {
          * @return whether or not this pin is in interrupt comparison mode.
          */
         public boolean isInterruptComparisonMode() {
-            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(INTCONA, INTCONB));
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(intcona, intconb));
         }
 
         /**
@@ -564,10 +566,10 @@ public final class MCP23S17 extends Component {
         public void setInterruptMode(boolean comparison) {
             synchronized (byteWriteLock) {
                 if (pin.isPortA()) {
-                    INTCONA = pin.setCorrespondingBit(INTCONA, comparison);
+                    intcona = pin.setCorrespondingBit(intcona, comparison);
                     // write(ADDR_INTCONA, INTCONA);
                 } else { // portB
-                    INTCONB = pin.setCorrespondingBit(INTCONB, comparison);
+                    intconb = pin.setCorrespondingBit(intconb, comparison);
                     // write(ADDR_INTCONB, INTCONB);
                 }
             }
@@ -602,7 +604,7 @@ public final class MCP23S17 extends Component {
          * @return whether or not this pin has a pull-up resistor enabled.
          */
         public boolean isPulledUp() {
-            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(GPPUA, GPPUB));
+            return pin.getCorrespondingBit(pin.resolveCorrespondingByte(gppua, gppub));
         }
 
         /**
@@ -618,10 +620,10 @@ public final class MCP23S17 extends Component {
         public void setPulledUp(boolean pulledUp) {
             synchronized (byteWriteLock) {
                 if (pin.isPortA()) {
-                    GPPUA = pin.setCorrespondingBit(GPPUA, pulledUp);
+                    gppua = pin.setCorrespondingBit(gppua, pulledUp);
                     // write(ADDR_GPPUA, GPPUA);
                 } else { // portB
-                    GPPUB = pin.setCorrespondingBit(GPPUB, pulledUp);
+                    gppub = pin.setCorrespondingBit(gppub, pulledUp);
                     // write(ADDR_GPPUB, GPPUB);
                 }
             }
@@ -736,7 +738,7 @@ public final class MCP23S17 extends Component {
         void onInterrupt(boolean capturedValue, Pin pin);
     }
 
-    // TODO: this should be settable by the user
+    // todo: this should be settable by the user
     private static final int SPI_SPEED_HZ = 1000000; // 1 MHz; Max 10 MHz
 
     // Register addresses for IOCON.BANK = 0
@@ -767,18 +769,19 @@ public final class MCP23S17 extends Component {
     // NOTE: If ICs with different Hardware addresses get added, those addresses are
     // stored in those opcodes.
     // that's why they're not static.
-    // TODO: probably best to store the HW addresses in a separate byte and or them
+    // todo: probably best to store the HW addresses in a separate byte and or them
     // in the write function
-    private byte write_opcode = 0x40;
-    private byte read_opcode = 0x41;
+    private byte writeOpcode = 0x40;
+    private byte readOpcode = 0x41;
 
     // These arrays are used for interrupt handling. (Interrupts are port-specific,
     // so having separate arrays for each
     // port means we can iterate over the pins belonging to either port A or B.)
-    private static final Pin[] PORT_A_PINS = { Pin.PIN0, Pin.PIN1, Pin.PIN2, Pin.PIN3, Pin.PIN4, Pin.PIN5, Pin.PIN6,
-            Pin.PIN7 };
-    private static final Pin[] PORT_B_PINS = { Pin.PIN8, Pin.PIN9, Pin.PIN10, Pin.PIN11, Pin.PIN12, Pin.PIN13,
-            Pin.PIN14, Pin.PIN15 };
+    private static final Pin[] PORT_A_PINS = {Pin.PIN0, Pin.PIN1, Pin.PIN2, Pin.PIN3, Pin.PIN4, Pin.PIN5, Pin.PIN6,
+        Pin.PIN7};
+
+    private static final Pin[] PORT_B_PINS = {Pin.PIN8, Pin.PIN9, Pin.PIN10, Pin.PIN11, Pin.PIN12, Pin.PIN13,
+        Pin.PIN14, Pin.PIN15};
 
     /**
      * The output pin for the chip select line on the MCP23S17 chip.
@@ -826,25 +829,26 @@ public final class MCP23S17 extends Component {
     // Note that these bytes do not necessarily represent the actual value in the
     // corresponding register (i.e. they may
     // be out of sync with the registers).
-    private volatile byte IODIRA = (byte) 0b11111111;
-    private volatile byte IODIRB = (byte) 0b11111111;
-    private volatile byte IPOLA = (byte) 0b00000000;
-    private volatile byte IPOLB = (byte) 0b00000000;
-    private volatile byte GPINTENA = (byte) 0b00000000;
-    private volatile byte GPINTENB = (byte) 0b00000000;
-    private volatile byte DEFVALA = (byte) 0b00000000;
-    private volatile byte DEFVALB = (byte) 0b00000000;
-    private volatile byte INTCONA = (byte) 0b00000000;
-    private volatile byte INTCONB = (byte) 0b00000000;
+
+    private volatile byte iodira = (byte) 0b11111111;
+    private volatile byte iodirb = (byte) 0b11111111;
+    private volatile byte ipola = (byte) 0b00000000;
+    private volatile byte ipolb = (byte) 0b00000000;
+    private volatile byte gpintena = (byte) 0b00000000;
+    private volatile byte gpintenb = (byte) 0b00000000;
+    private volatile byte defvala = (byte) 0b00000000;
+    private volatile byte defvalb = (byte) 0b00000000;
+    private volatile byte intcona = (byte) 0b00000000;
+    private volatile byte intconb = (byte) 0b00000000;
     // private volatile byte IOCON = (byte) 0b00000000; // Unused
-    private volatile byte GPPUA = (byte) 0b00000000;
-    private volatile byte GPPUB = (byte) 0b00000000;
-    private volatile byte OLATA = (byte) 0b00000000;
-    private volatile byte OLATB = (byte) 0b00000000;
+    private volatile byte gppua = (byte) 0b00000000;
+    private volatile byte gppub = (byte) 0b00000000;
+    private volatile byte olata = (byte) 0b00000000;
+    private volatile byte olatb = (byte) 0b00000000;
 
-    private volatile byte GPIOA = (byte) 0b00000000;
+    private volatile byte gpioa = (byte) 0b00000000;
 
-    private volatile byte GPIOB = (byte) 0b00000000;
+    private volatile byte piiob = (byte) 0b00000000;
 
     /**
      * This {@code Object}'s intrinsic lock is acquired whenever one of the above
@@ -930,7 +934,7 @@ public final class MCP23S17 extends Component {
      *
      * @param other          The MCP23S17 IC with it's Address Pins all tied to 0,
      *                       thus with address 0.
-     * @param HWAddress      The Hardware Adress of this very MCP23S17 IC.
+     * @param hWAddress      The Hardware Adress of this very MCP23S17 IC.
      * @param portAInterrupt the pin where INTA is connected
      * @param portBInterrupt the pin where INTB is connected
      * @param readGPIO       whether to read from GPIO registers instead of INTCAP
@@ -940,7 +944,7 @@ public final class MCP23S17 extends Component {
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
     private MCP23S17(MCP23S17 other,
-            int HWAddress,
+            int hWAddress,
             DigitalInput portAInterrupt,
             DigitalInput portBInterrupt,
             boolean readGPIO)
@@ -951,15 +955,15 @@ public final class MCP23S17 extends Component {
         this.portAInterrupt = portAInterrupt;
         this.portBInterrupt = portBInterrupt;
         // check whether the Address is in the correct range
-        if (HWAddress > 7 || HWAddress < 0) {
-            throw new IOException("HWAddress [" + HWAddress + "] must be between 0 and 7,"
+        if (hWAddress > 7 || hWAddress < 0) {
+            throw new IOException("HWAddress [" + hWAddress + "] must be between 0 and 7,"
                     + " as there are only 3 physical address pins on the MCP23S12 IC.");
         }
         // the HWAddress is the three bits before the Read/Write bit:
         // 0b0100xxx0 to write to address xxx
         // 0b0100xxx1 to read from address xxx
-        this.read_opcode |= (((byte) HWAddress) << 1);
-        this.write_opcode |= (((byte) HWAddress) << 1);
+        this.readOpcode |= (((byte) hWAddress) << 1);
+        this.writeOpcode |= (((byte) hWAddress) << 1);
     }
 
     /**
@@ -1142,7 +1146,7 @@ public final class MCP23S17 extends Component {
         synchronized (spi) {
             try {
                 chipSelect.low();
-                spi.write(write_opcode, registerAddress, value);
+                spi.write(writeOpcode, registerAddress, value);
             } finally {
                 // Make sure the chip select line is brought high again in finally block so that
                 // failure may be recoverable.
@@ -1160,7 +1164,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeIODIRA() {
-        write(ADDR_IODIRA, IODIRA);
+        write(ADDR_IODIRA, iodira);
     }
 
     /**
@@ -1172,7 +1176,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeIODIRB() {
-        write(ADDR_IODIRB, IODIRB);
+        write(ADDR_IODIRB, iodirb);
     }
 
     /**
@@ -1184,7 +1188,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeIPOLA() {
-        write(ADDR_IPOLA, IPOLA);
+        write(ADDR_IPOLA, ipola);
     }
 
     /**
@@ -1196,7 +1200,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeIPOLB() {
-        write(ADDR_IPOLB, IPOLB);
+        write(ADDR_IPOLB, ipolb);
     }
 
     /**
@@ -1208,7 +1212,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeGPINTENA() {
-        write(ADDR_GPINTENA, GPINTENA);
+        write(ADDR_GPINTENA, gpintena);
     }
 
     /**
@@ -1220,7 +1224,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeGPINTENB() {
-        write(ADDR_GPINTENB, GPINTENB);
+        write(ADDR_GPINTENB, gpintenb);
     }
 
     /**
@@ -1232,7 +1236,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeDEFVALA() {
-        write(ADDR_DEFVALA, DEFVALA);
+        write(ADDR_DEFVALA, defvala);
     }
 
     /**
@@ -1244,7 +1248,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeDEFVALB() {
-        write(ADDR_DEFVALB, DEFVALB);
+        write(ADDR_DEFVALB, defvalb);
     }
 
     /**
@@ -1256,7 +1260,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeINTCONA() {
-        write(ADDR_INTCONA, INTCONA);
+        write(ADDR_INTCONA, intcona);
     }
 
     /**
@@ -1268,7 +1272,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeINTCONB() {
-        write(ADDR_INTCONB, INTCONB);
+        write(ADDR_INTCONB, intconb);
     }
 
     /**
@@ -1280,7 +1284,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeGPPUA() {
-        write(ADDR_GPPUA, GPPUA);
+        write(ADDR_GPPUA, gppua);
     }
 
     /**
@@ -1292,7 +1296,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeGPPUB() {
-        write(ADDR_GPPUB, GPPUB);
+        write(ADDR_GPPUB, gppub);
     }
 
     /**
@@ -1304,7 +1308,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeOLATA() {
-        write(ADDR_OLATA, OLATA);
+        write(ADDR_OLATA, olata);
     }
 
     /**
@@ -1316,7 +1320,7 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      */
     public void writeOLATB() {
-        write(ADDR_OLATB, OLATB);
+        write(ADDR_OLATB, olatb);
     }
 
     /**
@@ -1334,7 +1338,7 @@ public final class MCP23S17 extends Component {
     private byte read(byte registerAddress) throws IOException {
         byte[] data = new byte[3];
         // The 0x00 byte is just arbitrary filler.
-        byte[] send = { read_opcode, registerAddress, (byte) 0x00 };
+        byte[] send = {readOpcode, registerAddress, (byte) 0x00};
         synchronized (spi) {
             try {
                 chipSelect.low();
@@ -1360,10 +1364,12 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
+     * 
+     * @return GPIOA
      */
     public byte readGPIOA() throws IOException {
-        GPIOA = read(ADDR_GPIOA);
-        return GPIOA;
+        gpioa = read(ADDR_GPIOA);
+        return gpioa;
     }
 
     /**
@@ -1374,10 +1380,12 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
+     * 
+     * @return PIIOB
      */
     public byte readGPIOB() throws IOException {
-        GPIOB = read(ADDR_GPIOB);
-        return GPIOB;
+        piiob = read(ADDR_GPIOB);
+        return piiob;
     }
 
     /**
@@ -1388,6 +1396,8 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
+     * 
+     * @return GPIOA
      */
     public byte readGPINTENA() throws IOException {
         return read(ADDR_GPINTENA);
@@ -1401,6 +1411,8 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
+     * 
+     * @return todo
      */
     public byte readGPINTENB() throws IOException {
         return read(ADDR_GPINTENB);
@@ -1414,6 +1426,8 @@ public final class MCP23S17 extends Component {
      *           initiated at the same time.
      *
      * @throws IOException if the SPI write procedure fails.
+     * 
+     * @return todo
      */
     public byte readIOCON() throws IOException {
         return read(ADDR_IOCON);
@@ -1517,6 +1531,7 @@ public final class MCP23S17 extends Component {
      * @param bus        the SPI-Channel that the chip is connected to.
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the
      *                   chip select line on the chip.
+     * @param pi4j todo
      * @return a new {@code MCP23S17} object with no interrupts.
      * @throws NullPointerException if the given chip select output is {@code null}.
      */
@@ -1554,22 +1569,22 @@ public final class MCP23S17 extends Component {
             throw new IllegalArgumentException(
                     "amount [" + amount + "] must be between 1 and 8 as there can only be 8 addresses per Bus");
         }
-        // TODO: this is VERY arbitrary. The chipselect is already handled by the spi
+        // todo: this is VERY arbitrary. The chipselect is already handled by the spi
         // config,
         // but the code should not just init some random pin.
-        var ChipSelectConfig = DigitalOutput.newConfigBuilder(pi4j)
+        var chipSelectConfig = DigitalOutput.newConfigBuilder(pi4j)
                 .id("CS" + 2)
                 .name("dummy chip select")
                 .address(2)
                 .provider("pigpio-digital-output");
 
-        var ChipSelect = pi4j.create(ChipSelectConfig);
-        var ICList = new ArrayList<MCP23S17>(amount);
-        var firstIC = new MCP23S17(pi4j, bus, ChipSelect, null, null);
-        ICList.add(firstIC);
+        var chipSelect = pi4j.create(chipSelectConfig);
+        var iCList = new ArrayList<MCP23S17>(amount);
+        var firstIC = new MCP23S17(pi4j, bus, chipSelect, null, null);
+        iCList.add(firstIC);
 
         for (int i = 1; i < amount; ++i) {
-            ICList.add(new MCP23S17(firstIC, i, null, null, false));
+            iCList.add(new MCP23S17(firstIC, i, null, null, false));
         }
 
         // need to enable the hardware adress pins by sending the appropriate address
@@ -1578,7 +1593,7 @@ public final class MCP23S17 extends Component {
         // Chip select
         firstIC.write(ADDR_IOCON, (byte) 0b00001000);
 
-        return ICList;
+        return iCList;
     }
 
     /**
@@ -1601,6 +1616,8 @@ public final class MCP23S17 extends Component {
      *                                  object fails.
      * @throws NullPointerException     if the {@code interrupts} array contains
      *                                  null.
+     * 
+     * @return todo
      */
     public static ArrayList<MCP23S17> multipleNewOnSameBusWithTiedInterrupts(Context pi4j,
             SpiBus bus,
@@ -1618,7 +1635,7 @@ public final class MCP23S17 extends Component {
                     "amount [" + amount + "] must be smaller than or equal to the amount of provided interrupts ["
                             + interrupts.length + "]");
         }
-        // TODO: this is VERY arbitrary. The chipselect is already handled by the spi
+        // todo: this is VERY arbitrary. The chipselect is already handled by the spi
         // config,
         // but the code should not just init some random pin.
         var chipSelectConfig = DigitalOutput.newConfigBuilder(pi4j)
@@ -1629,14 +1646,14 @@ public final class MCP23S17 extends Component {
 
         var chipSelect = pi4j.create(chipSelectConfig);
 
-        var ICList = new ArrayList<MCP23S17>(amount);
+        var iCList = new ArrayList<MCP23S17>(amount);
         var firstIC = new MCP23S17(pi4j,
                 bus,
                 chipSelect,
                 Objects.requireNonNull(interrupts[0], "interrupts must be non-null"),
                 interrupts[0],
                 readGPIO);
-        ICList.add(firstIC);
+        iCList.add(firstIC);
         attachInterruptOnLow(interrupts[0], () -> {
             int i = 0;
             do {
@@ -1654,7 +1671,7 @@ public final class MCP23S17 extends Component {
                     Objects.requireNonNull(interrupts[i], "interrupts must be non-null"),
                     interrupts[i],
                     readGPIO);
-            ICList.add(currentIC);
+            iCList.add(currentIC);
 
             DigitalInput interrupt = interrupts[i];
             attachInterruptOnLow(interrupt, () -> {
@@ -1680,7 +1697,7 @@ public final class MCP23S17 extends Component {
 
         firstIC.write(ADDR_IOCON, mirrorAndHAEN);
 
-        return ICList;
+        return iCList;
     }
 
     /**
@@ -1691,6 +1708,8 @@ public final class MCP23S17 extends Component {
      * @param chipSelect the {@linkplain DigitalOutput output pin} controlling the
      *                   chip select line on the chip.
      * @param interrupt  the interrupt {@linkplain DigitalInput input pin}.
+     * 
+     * @param pi4j todo
      * @return a new {@code MCP23S17} object with the port A and port B interrupt
      *         lines "tied" together.
      * @throws NullPointerException if the given chip select output or tied
@@ -1726,6 +1745,7 @@ public final class MCP23S17 extends Component {
      *                       port A.
      * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for
      *                       port B.
+     * @param pi4j todo
      * @return a new {@code MCP23S17} object with individual port A and port B
      *         interrupt lines.
      * @throws NullPointerException if the given chip select output or either of the
@@ -1756,6 +1776,7 @@ public final class MCP23S17 extends Component {
      *                       the chip select line on the chip.
      * @param portAInterrupt the interrupt {@linkplain DigitalInput input pin} for
      *                       port A.
+     * @param pi4j todo
      * @return a new {@code MCP23S17} object with an individual port A interrupt
      *         line, but no port B interrupt line.
      * @throws NullPointerException if the given chip select output or the port A
@@ -1784,6 +1805,7 @@ public final class MCP23S17 extends Component {
      *                       the chip select line on the chip.
      * @param portBInterrupt the interrupt {@linkplain DigitalInput input pin} for
      *                       port B.
+     * @param pi4j todo
      * @return a new {@code MCP23S17} object with an individual port B interrupt
      *         line, but no port A interrupt line.
      * @throws NullPointerException if the given chip select output or the port B
