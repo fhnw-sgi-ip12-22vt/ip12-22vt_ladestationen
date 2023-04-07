@@ -19,7 +19,7 @@ public class LoadingScreenController {
     @FXML
     public void loadHomePage(ActionEvent event) throws IOException {
         try {
-            root = FXMLLoader.load(AppStarter.class.getResource("homepage.fxml"));
+            root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/homepage.fxml"));
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             scene.getStylesheets().add("src/main/resources/css/style.css");
