@@ -23,7 +23,7 @@ public class LoadingScreenController {
             stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             scene = new Scene(root);
             scene.getStylesheets().add("src/main/resources/css/style.css");
-            stage.setTitle("Connect 'n Charger");
+            stage.setTitle("Connect 'n Charge");
             stage.setMaximized(true);
             stage.setFullScreen(true);
             stage.setResizable(false);

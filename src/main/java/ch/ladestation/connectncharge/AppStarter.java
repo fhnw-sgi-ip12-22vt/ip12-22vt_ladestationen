@@ -15,7 +15,7 @@ public class AppStarter extends Application {
                     AppStarter.class.getResource("/ch/ladestation/connectncharge/loadingscreen.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().add("src/main/resources/css/style.css");
-            stage.setTitle("Connect 'n Charger");
+            stage.setTitle("Connect 'n Charge");
             stage.setMaximized(true);
             stage.setFullScreen(true);
             stage.setResizable(false);
