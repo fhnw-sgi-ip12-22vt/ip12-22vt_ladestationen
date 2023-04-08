@@ -2,8 +2,15 @@ package ch.fhnw.ladestation_spiel;
 
 import com.github.mbelling.ws281x.Color;
 import com.github.mbelling.ws281x.LedStrip;
+import com.pi4j.util.Console;
 
-public class Edge extends Component {
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Segment extends Component {
     /**
      * The ledstrip this edge is part of.
      */
@@ -11,7 +18,7 @@ public class Edge extends Component {
     /**
      * The color this segment should display
      */
-    private Color color = Color.PINK;
+    private Color color = Color.BLUE;
 
     /**
      * The start pixel of this edge
@@ -48,7 +55,7 @@ public class Edge extends Component {
      * @param startIndex the start pixel of the edge.
      * @param endIndex   the end pixel of the edge
      */
-    public Edge(LedStrip strip, int startIndex, int endIndex) {
+    public Segment(LedStrip strip, int startIndex, int endIndex) {
         this.strip = strip;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
@@ -63,7 +70,7 @@ public class Edge extends Component {
      * @param startIndex    the start pixel of the edge.
      * @param endIndex      the end pixel of the edge
      */
-    public Edge(LedStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex) {
+    public Segment(LedStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex) {
         addInterruptPins(interruptPins);
         this.strip = strip;
         this.startIndex = startIndex;
@@ -80,17 +87,11 @@ public class Edge extends Component {
     private void addInterruptPins(MCP23S17.PinView[] interruptPins) {
         for (MCP23S17.PinView interruptPin : interruptPins) {
             interruptPin.addListener((boolean capturedValue, MCP23S17.Pin pin) -> {
-                if (!capturedValue || inCooldown) {
+                if (!capturedValue) {
                     return;
                 }
                 toggle();
-                synchronized (cooldownWriteLock) {
-                    inCooldown = true;
-                }
-                delay(COOLDOWN_MS);
-                synchronized (cooldownWriteLock) {
-                    inCooldown = false;
-                }
+                logInfo("toggled pin "+pin.name());
             });
         }
     }
@@ -103,7 +104,7 @@ public class Edge extends Component {
      * @param startIndex   the start pixel of the edge.
      * @param endIndex     the end pixel of the edge
      */
-    public Edge(LedStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex) {
+    public Segment(LedStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex) {
         this(strip, new MCP23S17.PinView[]{interruptPin}, startIndex, endIndex);
     }
 
@@ -115,7 +116,7 @@ public class Edge extends Component {
      * @param startIndex the start pixel of the edge.
      * @param endIndex   the end pixel of the edge
      */
-    public Edge(LedStrip strip, Color color, int startIndex, int endIndex) {
+    public Segment(LedStrip strip, Color color, int startIndex, int endIndex) {
         this(strip, startIndex, endIndex);
         this.color = color;
     }
@@ -135,8 +136,43 @@ public class Edge extends Component {
                 }
             }
             isOn = !isOn;
+            strip.render();
+        }
+    }
+
+    public static List<Segment> createSegemntsAccordingToCSV(Console console, LedStrip strip, ArrayList<ArrayList<MCP23S17.PinView>> pins, InputStream file) {
+        var SEMICOLON_DELIMITER = ";";
+
+        List<List<String>> records = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(file, StandardCharsets.UTF_8))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(SEMICOLON_DELIMITER);
+                records.add(Arrays.asList(values));
+            }
+        } catch (IOException e){
+            console.println("Exception when reading CSV: "+e.getMessage());
         }
 
+        int runningTotal = 0;
+        var retSegments = new ArrayList<Segment>();
+        for (int i = 1; i < records.size(); i++) {
+            var record = records.get(i);
+            int startIndex = runningTotal;
+            runningTotal += Integer.parseInt(record.get(1));
+            int endIndex = runningTotal-1;
+
+            Segment segment;
+            if(record.get(2).equals("H")) {
+                segment = new Segment(strip, Color.WHITE, startIndex, endIndex);
+            }else{
+                int chip = Integer.parseInt(record.get(2));
+                int pin = Integer.parseInt(record.get(3));
+                segment = new Segment(strip, pins.get(chip).get(pin), startIndex, endIndex);
+            }
+            retSegments.add(segment);
+        }
+        return retSegments;
     }
 
 }

@@ -20,8 +20,9 @@ import com.pi4j.io.gpio.digital.*;
 import com.pi4j.platform.Platforms;
 import com.pi4j.util.Console;
 
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,11 +43,11 @@ public class Main {
     /**
      * The nodes of the game, they are a segment of the LED-Strip, some of them are terminals
      */
-    private static final ArrayList<Edge> nodes = new ArrayList<>();
+    private static final ArrayList<Segment> nodes = new ArrayList<>();
     /**
      * The edges of the game, they are a segment of the LED-Strip
      */
-    private static final ArrayList<Edge> edges = new ArrayList<>();
+    private static final ArrayList<Segment> SEGMENTS = new ArrayList<>();
     /**
      * The BCM Pin-Address for the RaspberryPi where the first MCP23S17's interrupt line is connected
      */
@@ -102,126 +103,38 @@ public class Main {
         console.println();
         console.promptForExit();
 
-        //runLedTestNewLibrary(pi4j);
         runButtonTestScaledUp(pi4j);
-        //runPrototypeExample(pi4j);
-        runNewLibraryTest(pi4j);
 
         console.println("ok finished");
         pi4j.shutdown();
     }
 
+    /**
+     * Logs every the chipnumber and pin to the console when a button is pressed.
+     *
+     * @param pi4j the pi4j context
+     * @throws InterruptedException when the user presses Ctrl+C
+     * @throws IOException when the SPI-init for the MCP23S17 fails
+     */
     private void runButtonTestScaledUp(Context pi4j) throws InterruptedException, IOException {
         var pins = setupGPIOExtensionICs(pi4j);
-        var pinsnormalized = new ArrayList<MCP23S17.PinView>();
-        for(var list : pins){
-            pinsnormalized.addAll(list);
-        }
-        for(var pin : pinsnormalized){
-            pin.addListener((boolean capturedValue, MCP23S17.Pin pinn) -> {
-                    console.println("change detedted: "+capturedValue+ " on pin "+pinn.name());
-                });
-        }
+        var Strip = setupLEDStrip(pi4j);
+
+        InputStream csv = getClass().getResourceAsStream("/LEDSegments.csv");
+
+        var segments = Segment.createSegemntsAccordingToCSV(console,Strip,pins,csv);
+
+        segments.get(2).toggle();
+        segments.get(5).toggle();
+        segments.get(10).toggle();
+        segments.get(15).toggle();
+
         console.println("connection stuff done");
         console.waitForExit();
     }
 
-    private void runLedTestNewLibrary(Context pi4j) {
-        var ledStrip = new Ws281xLedStrip(100,
-                10,
-                800000,
-                10,
-                255,
-                0,
-                false,
-                LedStripType.WS2811_STRIP_RGB,
-                true);
-        ledStrip.setStrip(Color.RED);
-        ledStrip.render();
-        delay(2500);
-    }
-
-    private void runLedTest(Context pi4j) {
-        LEDStrip ledStrip = new LEDStrip(pi4j, 845, 1.0, SpiBus.BUS_0);
-        ledStrip.allOff();
-
-        for (int i = 0; i < 845; i++) {
-            ledStrip.setPixelColor(i,LEDStrip.PixelColor.BLUE);
-            ledStrip.render();
-            delay(11);
-        }
-        var lol = new Ws281xLedStrip();
-        //ledStrip.setStripColor(LEDStrip.PixelColor.BLUE);
-        //ledStrip.render();
-        delay(10000);
-       ledStrip.allOff();
-    }
-
-    private void runNewLibraryTest(Context pi4j) throws InterruptedException {
-        var LEDStripC = new Ws281xLedStrip(
-                845,
-                10,
-                800000,
-                10,
-                255,
-                0,
-                false,
-                LedStripType.WS2811_STRIP_GRB,
-                true
-                );
-        for (int i = 0; i < 845; i++) {
-            LEDStripC.setPixel(i,Color.CYAN);
-            LEDStripC.render();
-        }
-        delay(2000);
-        LEDStripC.setStrip(Color.RED);
-        LEDStripC.render();
-        delay(1000);
-        LEDStripC.setStrip(Color.GREEN);
-        LEDStripC.render();
-        delay(1000);
-        LEDStripC.setStrip(Color.BLUE);
-        LEDStripC.render();
-        delay(3000);
-    }
-
     /**
-     * Runs the tech-prototype of the game
-     *
-     * @param pi4j the pi4j {@link Context}
-     * @throws IOException when GPIO-extension setup fails
-     */
-
-    private static void runPrototypeExample(Context pi4j) throws IOException {
-        var pins = setupGPIOExtensionICs(pi4j);
-        var pinsIC0 = pins.get(0);
-        var pinsIC1 = pins.get(1);
-
-        LedStrip ledStrip = setupLEDStrip(pi4j);
-
-        assignEdgesToLEDStripSegmentsAndPins(pinsIC0, pinsIC1, ledStrip);
-
-        //light up some of the terminals
-        nodes.get(2).toggle();
-        nodes.get(4).toggle();
-        nodes.get(5).toggle();
-        nodes.get(6).toggle();
-        for(var edg : edges){
-            edg.toggle();
-        }
-
-        //loop while application is running
-        int i = 0;
-        while (console.isRunning()) {
-            synchronized (ledStrip) {
-                ledStrip.render();
-            }
-            delay(16);
-        }
-    }
-
-    /**
-     * Will setup and initialise the LED-Strip
+     * Will set up and initialise the LED-Strip
      *
      * @param pi4j the pi4j {@link Context}
      * @return the {@link LedStrip} object
@@ -242,18 +155,7 @@ public class Main {
     }
 
     /**
-     * Assigns every node and edge to its segment of the LED-Strip and its GPIO-Extension pin
-     *
-     * @param pinsIC0  the {@link MCP23S17.PinView}s of the first MCP23S17 IC
-     * @param pinsIC1  the {@link MCP23S17.PinView}s of the second MCP23S17 IC
-     * @param ledStrip the LED-Strip that displays the terminals and edges
-     */
-    static void assignEdgesToLEDStripSegmentsAndPins(List<MCP23S17.PinView> pinsIC0, List<MCP23S17.PinView> pinsIC1, LedStrip ledStrip){
-        //TODO
-    }
-
-    /**
-     * Will setup and initialise the MCP23S17 GPIO-Extension ICs
+     * Will set up and initialise the MCP23S17 GPIO-Extension ICs
      *
      * @param pi4j the pi4j {@link Context} object
      * @return two fully configured lists of {@link MCP23S17.PinView} objects.
@@ -275,11 +177,11 @@ public class Main {
         var interruptPinChip3 = pi4j.create(interruptPinConfig.address(25).id("interrupt3"));
         var interruptPinChip4 = pi4j.create(interruptPinConfig.address(27).id("interrupt4"));
 
-        interruptPinChip0.addListener(stateChange -> console.println("chip zero interrupt: " + stateChange.state()));
-        interruptPinChip1.addListener(stateChange -> console.println("chip one interrupt: " + stateChange.state()));
-        interruptPinChip2.addListener(stateChange -> console.println("chip two interrupt: " + stateChange.state()));
-        interruptPinChip3.addListener(stateChange -> console.println("chip three interrupt: " + stateChange.state()));
-        interruptPinChip4.addListener(stateChange -> console.println("chip four interrupt: " + stateChange.state()));
+        interruptPinChip0.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 0 interrupt: ");}});
+        interruptPinChip1.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 1 interrupt: ");}});
+        interruptPinChip2.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 2 interrupt: ");}});
+        interruptPinChip3.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 3 interrupt: ");}});
+        interruptPinChip4.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 4 interrupt: ");}});
         DigitalInput[] interruptPins = {interruptPinChip0,
                                         interruptPinChip1,
                                         interruptPinChip2,
