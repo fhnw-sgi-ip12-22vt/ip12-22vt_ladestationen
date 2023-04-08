@@ -672,6 +672,7 @@ public final class MCP23S17 extends Component{
     // OPCODES--these are written before a register address in the read and write processes.
     //NOTE: If ICs with different Hardware addresses get added, those addresses are stored in those opcodes.
     //that's why they're not static.
+
     //TODO: probably best to store the HW addresses in a separate byte and or them in the write function
     private byte write_opcode = 0x40;
     private byte read_opcode = 0x41;
@@ -1426,7 +1427,10 @@ public final class MCP23S17 extends Component{
                 firstIC.delay(10);
                 ++i;
             }while(interrupts[0].state().isLow());
-            firstIC.logInfo("read "+i+" times to clear interrupt.");
+
+            if(i > 1) {
+                firstIC.logInfo("read " + i + " times to clear interrupt.");
+            }
         });
 
         for(int i = 1; i < amount; ++i) {
@@ -1446,7 +1450,9 @@ public final class MCP23S17 extends Component{
                     currentIC.delay(10);
                     ++j;
                 }while(interrupt.state().isLow());
-                currentIC.logInfo("read "+j+" times to clear interrupt.");
+                if(j > 1) {
+                    currentIC.logInfo("read " + j + " times to clear interrupt.");
+                }
             });
         }
 
@@ -1457,8 +1463,12 @@ public final class MCP23S17 extends Component{
         //need to enable the hardware address pins by sending the appropriate address write command.
         //this enables every chip assuming they are connected to the same SPI bus and Chip select
         mirrorAndHAEN |= 0b00001000;
-
         firstIC.write(ADDR_IOCON, mirrorAndHAEN);
+        //last chip somehow doesn't tie its interrupt together. Maybe capacitance because it is
+        //the last one on the bus? makes little sense.
+        //anyway, writing to the last one specifically and telling it to tie its interrupts
+        //together works
+        ICList.get(ICList.size()-1).write(ADDR_IOCON,mirrorAndHAEN);
 
         return ICList;
     }
