@@ -1,5 +1,6 @@
 package ch.ladestation.connectncharge;
 
+import ch.ladestation.connectncharge.pui.Main;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,6 +28,7 @@ public class AppStarter extends Application {
     }
 
     public static void main(String[] args) {
+        Main.main(new String[]{});
         launch();
     }
 }
