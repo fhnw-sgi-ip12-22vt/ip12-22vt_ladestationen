@@ -15,7 +15,6 @@ cache:
 stages:
   - build
   - test
-  - start_app
 
 build-job:
   stage: build
@@ -33,10 +32,4 @@ test:
     - mvn test
     # When the test files are available
     #- mvn test -Dtest=ch.ladestation.connectncharge.controller.*,ch.ladestation.connectncharge.model.*
-
-start_app:
-  stage: start_app
-  script:
-    - mvn exec:java -Dexec.mainClass="ch.ladestation.connectncharge.AppStarter"
-    - if [ "$?" -ne 0 ]; then echo "Failed to start AppStarter"; exit 1; fi
 
