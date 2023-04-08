@@ -1,14 +1,17 @@
-package com.example;
+package ch.fhnw.ladestation_spiel;
+
+import com.github.mbelling.ws281x.Color;
+import com.github.mbelling.ws281x.LedStrip;
 
 public class Edge extends Component {
     /**
      * The ledstrip this edge is part of.
      */
-    private final LEDStrip strip;
+    private final LedStrip strip;
     /**
      * The color this segment should display
      */
-    private int color = LEDStrip.PixelColor.PURPLE;
+    private Color color = Color.PINK;
 
     /**
      * The start pixel of this edge
@@ -45,7 +48,7 @@ public class Edge extends Component {
      * @param startIndex the start pixel of the edge.
      * @param endIndex   the end pixel of the edge
      */
-    public Edge(LEDStrip strip, int startIndex, int endIndex) {
+    public Edge(LedStrip strip, int startIndex, int endIndex) {
         this.strip = strip;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
@@ -60,7 +63,7 @@ public class Edge extends Component {
      * @param startIndex    the start pixel of the edge.
      * @param endIndex      the end pixel of the edge
      */
-    public Edge(LEDStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex) {
+    public Edge(LedStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex) {
         addInterruptPins(interruptPins);
         this.strip = strip;
         this.startIndex = startIndex;
@@ -68,11 +71,11 @@ public class Edge extends Component {
     }
 
     /**
-     * Adds one or more {@link com.example.MCP23S17.PinView} objects that are expected to be
+     * Adds one or more {@link MCP23S17.PinView} objects that are expected to be
      * interrupt-enabled, pulled-up input pins.
      * The method will attach state-change listeners to those pins that toggle the edge.
      *
-     * @param interruptPins the {@link com.example.MCP23S17.PinView} objects to which state-change listeners will be attached
+     * @param interruptPins the {@link MCP23S17.PinView} objects to which state-change listeners will be attached
      */
     private void addInterruptPins(MCP23S17.PinView[] interruptPins) {
         for (MCP23S17.PinView interruptPin : interruptPins) {
@@ -100,7 +103,7 @@ public class Edge extends Component {
      * @param startIndex   the start pixel of the edge.
      * @param endIndex     the end pixel of the edge
      */
-    public Edge(LEDStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex) {
+    public Edge(LedStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex) {
         this(strip, new MCP23S17.PinView[]{interruptPin}, startIndex, endIndex);
     }
 
@@ -108,11 +111,11 @@ public class Edge extends Component {
      * same constructor as the basic constructor, but with a color for the segment
      *
      * @param strip      the strip of which this edge is a part.
-     * @param color      the segment's color of type {@link com.example.LEDStrip.PixelColor}
+     * @param color      the segment's color of type {@link Color}
      * @param startIndex the start pixel of the edge.
      * @param endIndex   the end pixel of the edge
      */
-    public Edge(LEDStrip strip, int color, int startIndex, int endIndex) {
+    public Edge(LedStrip strip, Color color, int startIndex, int endIndex) {
         this(strip, startIndex, endIndex);
         this.color = color;
     }
@@ -124,11 +127,11 @@ public class Edge extends Component {
         synchronized (strip) {
             if (isOn) {
                 for (int i = startIndex; i <= endIndex; ++i) {
-                    strip.setPixelColor(i, 0);
+                    strip.setPixel(i, 0,0,0);
                 }
             } else {
                 for (int i = startIndex; i <= endIndex; ++i) {
-                    strip.setPixelColor(i, color);
+                    strip.setPixel(i, color);
                 }
             }
             isOn = !isOn;

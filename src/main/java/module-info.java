@@ -6,12 +6,13 @@ module com.example.remoteDebugTest {
     requires com.pi4j.plugin.pigpio;
     requires com.pi4j.library.pigpio;
     requires java.logging;
+    requires rpi.ws281x.java;
 
     uses com.pi4j.extension.Extension;
     uses com.pi4j.provider.Provider;
 
     // allow access to classes in the following namespaces for Pi4J annotation processing
-    opens com.example to com.pi4j;
+    opens ch.fhnw.ladestation_spiel to com.pi4j;
 
     //exports com.example;
 }

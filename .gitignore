@@ -1,0 +1,6 @@
+target/
+dependency-reduced-pom.xml
+.idea/
+remoteDebugTest.iml
+ladestation.iml
+nbactions-template.xml

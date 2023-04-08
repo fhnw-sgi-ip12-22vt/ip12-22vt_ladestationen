@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>com.github.mbelling</groupId>
+  <artifactId>rpi-ws281x-java</artifactId>
+  <versioning>
+    <latest>2.0.0-SNAPSHOT</latest>
+    <versions>
+      <version>2.0.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20230405181127</lastUpdated>
+  </versioning>
+</metadata>

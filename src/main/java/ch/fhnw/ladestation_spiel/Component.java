@@ -1,4 +1,4 @@
-package com.example;
+package ch.fhnw.ladestation_spiel;
 
 import java.util.logging.Logger;
 

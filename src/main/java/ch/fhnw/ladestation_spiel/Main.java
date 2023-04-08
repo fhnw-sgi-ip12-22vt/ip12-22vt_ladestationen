@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.example;
+package ch.fhnw.ladestation_spiel;
 
 import com.github.mbelling.ws281x.Color;
+import com.github.mbelling.ws281x.LedStrip;
 import com.github.mbelling.ws281x.LedStripType;
 import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.pi4j.Pi4J;
@@ -18,11 +19,11 @@ import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.*;
 import com.pi4j.platform.Platforms;
 import com.pi4j.util.Console;
-import com.github.mbelling.ws281x.LedStrip;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Main class of the maven pi4j archetype
@@ -103,6 +104,8 @@ public class Main {
 
         //runLedTestNewLibrary(pi4j);
         runButtonTestScaledUp(pi4j);
+        //runPrototypeExample(pi4j);
+        runNewLibraryTest(pi4j);
 
         console.println("ok finished");
         pi4j.shutdown();
@@ -154,6 +157,34 @@ public class Main {
        ledStrip.allOff();
     }
 
+    private void runNewLibraryTest(Context pi4j) throws InterruptedException {
+        var LEDStripC = new Ws281xLedStrip(
+                845,
+                10,
+                800000,
+                10,
+                255,
+                0,
+                false,
+                LedStripType.WS2811_STRIP_GRB,
+                true
+                );
+        for (int i = 0; i < 845; i++) {
+            LEDStripC.setPixel(i,Color.CYAN);
+            LEDStripC.render();
+        }
+        delay(2000);
+        LEDStripC.setStrip(Color.RED);
+        LEDStripC.render();
+        delay(1000);
+        LEDStripC.setStrip(Color.GREEN);
+        LEDStripC.render();
+        delay(1000);
+        LEDStripC.setStrip(Color.BLUE);
+        LEDStripC.render();
+        delay(3000);
+    }
+
     /**
      * Runs the tech-prototype of the game
      *
@@ -166,7 +197,7 @@ public class Main {
         var pinsIC0 = pins.get(0);
         var pinsIC1 = pins.get(1);
 
-        LEDStrip ledStrip = setupLEDStrip(pi4j);
+        LedStrip ledStrip = setupLEDStrip(pi4j);
 
         assignEdgesToLEDStripSegmentsAndPins(pinsIC0, pinsIC1, ledStrip);
 
@@ -187,59 +218,48 @@ public class Main {
             }
             delay(16);
         }
-        ledStrip.allOff();
     }
 
     /**
      * Will setup and initialise the LED-Strip
      *
      * @param pi4j the pi4j {@link Context}
-     * @return the {@link LEDStrip} object
+     * @return the {@link LedStrip} object
      */
-    private static LEDStrip setupLEDStrip(Context pi4j) {
-        LEDStrip ledStrip = new LEDStrip(pi4j, PIXEL_AMT, 1.0, SpiBus.BUS_0);
-        ledStrip.allOff();
+    private static LedStrip setupLEDStrip(Context pi4j) {
+        LedStrip ledStrip = new Ws281xLedStrip(
+                845,
+                10,
+                800000,
+                10,
+                255,
+                0,
+                false,
+                LedStripType.WS2811_STRIP_GRB,
+                true
+        );
         return ledStrip;
     }
 
     /**
      * Assigns every node and edge to its segment of the LED-Strip and its GPIO-Extension pin
      *
-     * @param pinsIC0  the {@link com.example.MCP23S17.PinView}s of the first MCP23S17 IC
-     * @param pinsIC1  the {@link com.example.MCP23S17.PinView}s of the second MCP23S17 IC
+     * @param pinsIC0  the {@link MCP23S17.PinView}s of the first MCP23S17 IC
+     * @param pinsIC1  the {@link MCP23S17.PinView}s of the second MCP23S17 IC
      * @param ledStrip the LED-Strip that displays the terminals and edges
      */
-    private static void assignEdgesToLEDStripSegmentsAndPins(ArrayList<MCP23S17.PinView> pinsIC0, ArrayList<MCP23S17.PinView> pinsIC1, LEDStrip ledStrip) {
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 0, 0));
-        edges.add(new Edge(ledStrip, pinsIC1.get(8), 1, 7));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 8, 8));
-        edges.add(new Edge(ledStrip, pinsIC0.get(11), 9, 14));
-        edges.add(new Edge(ledStrip, pinsIC0.get(10), 15, 26));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 27, 27));
-        edges.add(new Edge(ledStrip, pinsIC0.get(9), 28, 30));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 31, 31));
-        edges.add(new Edge(ledStrip, pinsIC1.get(9), 32, 44));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 45, 45));
-        edges.add(new Edge(ledStrip, pinsIC0.get(8), 46, 57));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 58, 58));
-        edges.add(new Edge(ledStrip, pinsIC1.get(1), 59, 62));
-        nodes.add(new Edge(ledStrip, LEDStrip.PixelColor.BLUE, 63, 63));
-        edges.add(new Edge(ledStrip, pinsIC1.get(0), 64, 73));
-        edges.add(new Edge(
-                ledStrip,
-                new MCP23S17.PinView[]{pinsIC0.get(0), pinsIC0.get(1)},
-                74,
-                98));
+    static void assignEdgesToLEDStripSegmentsAndPins(List<MCP23S17.PinView> pinsIC0, List<MCP23S17.PinView> pinsIC1, LedStrip ledStrip){
+        //TODO
     }
 
     /**
      * Will setup and initialise the MCP23S17 GPIO-Extension ICs
      *
      * @param pi4j the pi4j {@link Context} object
-     * @return two fully configured lists of {@link com.example.MCP23S17.PinView} objects.
+     * @return two fully configured lists of {@link MCP23S17.PinView} objects.
      * that means 2 * 16 extra GPIO Pins set as input, pulled up and interrupt enabled
      * @throws IOException when the creation of the {@link MCP23S17} objects or
-     *                     gathering of the {@link com.example.MCP23S17.PinView} objects fail
+     *                     gathering of the {@link MCP23S17.PinView} objects fail
      */
     private static ArrayList<ArrayList<MCP23S17.PinView>> setupGPIOExtensionICs(Context pi4j) throws IOException {
         var interruptPinConfig = DigitalInput.newConfigBuilder(pi4j)
