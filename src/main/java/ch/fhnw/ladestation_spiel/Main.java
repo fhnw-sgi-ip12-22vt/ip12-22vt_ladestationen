@@ -56,6 +56,7 @@ public class Main {
      * The BCM Pin-Address for the RaspberryPi where the second MCP23S17's interrupt line is connected
      */
     public static final int BCM_IC_1_INTERRUPT_PIN = 24;
+    private int totalCostsATM;
 
     /**
      * Program entry point: get pi4j context and pass it to run()
@@ -114,7 +115,7 @@ public class Main {
      *
      * @param pi4j the pi4j context
      * @throws InterruptedException when the user presses Ctrl+C
-     * @throws IOException when the SPI-init for the MCP23S17 fails
+     * @throws IOException          when the SPI-init for the MCP23S17 fails
      */
     private void runButtonTestScaledUp(Context pi4j) throws InterruptedException, IOException {
         var pins = setupGPIOExtensionICs(pi4j);
@@ -122,12 +123,31 @@ public class Main {
 
         InputStream csv = getClass().getResourceAsStream("/LEDSegments.csv");
 
-        var segments = Segment.createSegemntsAccordingToCSV(console,Strip,pins,csv);
+        totalCostsATM = 0;
+        Segment.SegmentStateChange callback = deltaCost -> {
+            totalCostsATM += deltaCost;
+            console.println("Kosten: " + totalCostsATM);
+        };
+        var segments = Segment.createSegemntsAccordingToCSV(console, Strip, pins, csv, callback);
 
-        segments.get(2).toggle();
-        segments.get(5).toggle();
-        segments.get(10).toggle();
-        segments.get(15).toggle();
+        int[] terms = {
+                83,
+                81,
+                97,
+                87,
+                47,
+                11,
+                6,
+                18,
+                67,
+                91,
+                93,
+                65,
+                85};
+
+        for (int terminal: terms) {
+            segments.get(terminal-1).toggle();
+        }
 
         console.println("connection stuff done");
         console.waitForExit();
@@ -177,16 +197,16 @@ public class Main {
         var interruptPinChip3 = pi4j.create(interruptPinConfig.address(25).id("interrupt3"));
         var interruptPinChip4 = pi4j.create(interruptPinConfig.address(27).id("interrupt4"));
 
-        interruptPinChip0.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 0 interrupt: ");}});
-        interruptPinChip1.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 1 interrupt: ");}});
-        interruptPinChip2.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 2 interrupt: ");}});
-        interruptPinChip3.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 3 interrupt: ");}});
-        interruptPinChip4.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 4 interrupt: ");}});
+        //interruptPinChip0.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 0 interrupt: ");}});
+        //interruptPinChip1.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 1 interrupt: ");}});
+        //interruptPinChip2.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 2 interrupt: ");}});
+        //interruptPinChip3.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 3 interrupt: ");}});
+        //interruptPinChip4.addListener(stateChange -> {if(stateChange.state().isHigh()){console.print("chip 4 interrupt: ");}});
         DigitalInput[] interruptPins = {interruptPinChip0,
-                                        interruptPinChip1,
-                                        interruptPinChip2,
-                                        interruptPinChip3,
-                                        interruptPinChip4};
+                interruptPinChip1,
+                interruptPinChip2,
+                interruptPinChip3,
+                interruptPinChip4};
 
         var interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
                 pi4j,

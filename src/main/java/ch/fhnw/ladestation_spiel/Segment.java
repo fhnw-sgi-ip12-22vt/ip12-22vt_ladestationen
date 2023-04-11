@@ -11,6 +11,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Segment extends Component {
+
+    public interface SegmentStateChange {
+        void onStateChange(int deltaCost);
+    }
+    /**
+     * the callback if this edge changed state
+     */
+    private SegmentStateChange change;
     /**
      * The ledstrip this edge is part of.
      */
@@ -29,7 +37,10 @@ public class Segment extends Component {
      * The end pixel of this edge
      */
     private final int endIndex;
-
+    /**
+     * Cost, if this segment is an edge, 0 otherwise
+     */
+    private int cost;
     /**
      * Whether this edge is shining
      */
@@ -70,11 +81,12 @@ public class Segment extends Component {
      * @param startIndex    the start pixel of the edge.
      * @param endIndex      the end pixel of the edge
      */
-    public Segment(LedStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex) {
+    public Segment(LedStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex, int cost) {
         addInterruptPins(interruptPins);
         this.strip = strip;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
+        this.cost = cost;
     }
 
     /**
@@ -102,10 +114,13 @@ public class Segment extends Component {
      * @param strip        the strip of which this edge is a part.
      * @param interruptPin the pin on which to attach toggle on interrupt
      * @param startIndex   the start pixel of the edge.
+     * @param cost         the cost if this segment represents an edge
+     * @param callback     the callback to update total cost.
      * @param endIndex     the end pixel of the edge
      */
-    public Segment(LedStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex) {
-        this(strip, new MCP23S17.PinView[]{interruptPin}, startIndex, endIndex);
+    public Segment(LedStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex, int cost, SegmentStateChange callback) {
+        this(strip, new MCP23S17.PinView[]{interruptPin}, startIndex, endIndex, cost);
+        this.change = callback;
     }
 
     /**
@@ -136,11 +151,15 @@ public class Segment extends Component {
                 }
             }
             isOn = !isOn;
+            if(this.change != null){
+                int cost = (isOn ? 1 : -1) * this.cost;
+                this.change.onStateChange(cost);
+            }
             strip.render();
         }
     }
 
-    public static List<Segment> createSegemntsAccordingToCSV(Console console, LedStrip strip, ArrayList<ArrayList<MCP23S17.PinView>> pins, InputStream file) {
+    public static List<Segment> createSegemntsAccordingToCSV(Console console, LedStrip strip, ArrayList<ArrayList<MCP23S17.PinView>> pins, InputStream file, SegmentStateChange changeCallBack) {
         var SEMICOLON_DELIMITER = ";";
 
         List<List<String>> records = new ArrayList<>();
@@ -168,7 +187,8 @@ public class Segment extends Component {
             }else{
                 int chip = Integer.parseInt(record.get(2));
                 int pin = Integer.parseInt(record.get(3));
-                segment = new Segment(strip, pins.get(chip).get(pin), startIndex, endIndex);
+                int cost = Integer.parseInt(record.get(4));
+                segment = new Segment(strip, pins.get(chip).get(pin), startIndex, endIndex, cost, changeCallBack);
             }
             retSegments.add(segment);
         }
