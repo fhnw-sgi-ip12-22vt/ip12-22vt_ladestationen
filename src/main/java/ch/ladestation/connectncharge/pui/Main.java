@@ -34,6 +34,14 @@ public class Main {
      */
     public static final int PIXEL_AMT = 99;
     /**
+     * The BCM Pin-Address for the RaspberryPi where the first MCP23S17's interrupt line is connected
+     */
+    public static final int BCM_IC_0_INTERRUPT_PIN = 23;
+    /**
+     * The BCM Pin-Address for the RaspberryPi where the second MCP23S17's interrupt line is connected
+     */
+    public static final int BCM_IC_1_INTERRUPT_PIN = 24;
+    /**
      * Console for logging
      */
     private static final Console CONSOLE = new Console();
@@ -45,14 +53,7 @@ public class Main {
      * The edges of the game, they are a segment of the LED-Strip
      */
     private static final ArrayList<Segment> SEGMENTS = new ArrayList<>();
-    /**
-     * The BCM Pin-Address for the RaspberryPi where the first MCP23S17's interrupt line is connected
-     */
-    public static final int BCM_IC_0_INTERRUPT_PIN = 23;
-    /**
-     * The BCM Pin-Address for the RaspberryPi where the second MCP23S17's interrupt line is connected
-     */
-    public static final int BCM_IC_1_INTERRUPT_PIN = 24;
+    private int totalCostsATM;
 
     /**
      * Program entry point: get pi4j context and pass it to run()
@@ -83,51 +84,6 @@ public class Main {
                 pi4j.shutdown();
             }
         }
-    }
-
-    /**
-     * With a given pi4j context, run the main program logic
-     *
-     * @param pi4j The current pi4j context
-     * @throws Exception Uncaught Exceptions will be caught  by main()
-     */
-    private void run(Context pi4j) throws Exception {
-        Platforms platforms = pi4j.platforms();
-
-        CONSOLE.box("Pi4J PLATFORMS");
-        CONSOLE.println();
-        platforms.describe().print(System.out);
-        CONSOLE.println();
-        CONSOLE.promptForExit();
-
-        runButtonTestScaledUp(pi4j);
-
-        CONSOLE.println("ok finished");
-        pi4j.shutdown();
-    }
-
-    /**
-     * Logs every the chipnumber and pin to the console when a button is pressed.
-     *
-     * @param pi4j the pi4j context
-     * @throws InterruptedException when the user presses Ctrl+C
-     * @throws IOException          when the SPI-init for the MCP23S17 fails
-     */
-    private void runButtonTestScaledUp(Context pi4j) throws InterruptedException, IOException {
-        var pins = setupGPIOExtensionICs(pi4j);
-        var strip = setupLEDStrip(pi4j);
-
-        InputStream csv = getClass().getResourceAsStream("/LEDSegments.csv");
-
-        var segments = Segment.createSegemntsAccordingToCSV(CONSOLE, strip, pins, csv);
-
-        segments.get(2).toggle();
-        segments.get(5).toggle();
-        segments.get(10).toggle();
-        segments.get(15).toggle();
-
-        CONSOLE.println("connection stuff done");
-        CONSOLE.waitForExit();
     }
 
     /**
@@ -172,31 +128,6 @@ public class Main {
         var interruptPinChip3 = pi4j.create(interruptPinConfig.address(25).id("interrupt3"));
         var interruptPinChip4 = pi4j.create(interruptPinConfig.address(27).id("interrupt4"));
 
-        interruptPinChip0.addListener(stateChange -> {
-            if (stateChange.state().isHigh()) {
-                CONSOLE.print("chip 0 interrupt: ");
-            }
-        });
-        interruptPinChip1.addListener(stateChange -> {
-            if (stateChange.state().isHigh()) {
-                CONSOLE.print("chip 1 interrupt: ");
-            }
-        });
-        interruptPinChip2.addListener(stateChange -> {
-            if (stateChange.state().isHigh()) {
-                CONSOLE.print("chip 2 interrupt: ");
-            }
-        });
-        interruptPinChip3.addListener(stateChange -> {
-            if (stateChange.state().isHigh()) {
-                CONSOLE.print("chip 3 interrupt: ");
-            }
-        });
-        interruptPinChip4.addListener(stateChange -> {
-            if (stateChange.state().isHigh()) {
-                CONSOLE.print("chip 4 interrupt: ");
-            }
-        });
         DigitalInput[] interruptPins = {interruptPinChip0,
             interruptPinChip1,
             interruptPinChip2,
@@ -231,6 +162,70 @@ public class Main {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    /**
+     * With a given pi4j context, run the main program logic
+     *
+     * @param pi4j The current pi4j context
+     * @throws Exception Uncaught Exceptions will be caught  by main()
+     */
+    private void run(Context pi4j) throws Exception {
+        Platforms platforms = pi4j.platforms();
+
+        CONSOLE.box("Pi4J PLATFORMS");
+        CONSOLE.println();
+        platforms.describe().print(System.out);
+        CONSOLE.println();
+        CONSOLE.promptForExit();
+
+        runButtonTestScaledUp(pi4j);
+
+        CONSOLE.println("ok finished");
+        pi4j.shutdown();
+    }
+
+    /**
+     * Logs every the chipnumber and pin to the console when a button is pressed.
+     *
+     * @param pi4j the pi4j context
+     * @throws InterruptedException when the user presses Ctrl+C
+     * @throws IOException          when the SPI-init for the MCP23S17 fails
+     */
+    private void runButtonTestScaledUp(Context pi4j) throws InterruptedException, IOException {
+        var pins = setupGPIOExtensionICs(pi4j);
+        var strip = setupLEDStrip(pi4j);
+
+        InputStream csv = getClass().getResourceAsStream("/LEDSegments.csv");
+
+        totalCostsATM = 0;
+        Segment.SegmentStateChange callback = deltaCost -> {
+            totalCostsATM += deltaCost;
+            CONSOLE.println("Kosten: " + totalCostsATM);
+        };
+        var segments = Segment.createSegemntsAccordingToCSV(CONSOLE, strip, pins, csv, callback);
+
+        int[] terms = {
+            81,
+            27,
+            11,
+            31,
+            52,
+            47,
+            33,
+            62,
+            77,
+            16,
+            95,
+            18,
+            67};
+
+        for (int terminal : terms) {
+            segments.get(terminal - 1).toggle();
+        }
+
+        CONSOLE.println("connection stuff done");
+        CONSOLE.waitForExit();
     }
 
 }
