@@ -10,7 +10,7 @@ image: maven:latest
 
 cache:
   paths:
-    - .m2/repository
+    - ".m2/repository/*"
 
 stages:
   - build
