@@ -68,26 +68,30 @@
 
         <!-- Checkstyle version -->
         <maven-checkstyle.version>3.2.1</maven-checkstyle.version>
-        <log4j1.version>1.2.17</log4j1.version>
         <checkstyle.version>10.3.4</checkstyle.version>
         <mockito-core.version>3.12.4</mockito-core.version>
         <controlsfx.version>11.1.1</controlsfx.version>
         <bootstrapfx-core.version>0.4.0</bootstrapfx-core.version>
-        <log4j-1.2-api.version>2.17.1</log4j-1.2-api.version>
         <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
         <javafx-maven-plugin.version>0.0.8</javafx-maven-plugin.version>
         <maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
         <maven-project-info-reports-plugin.version>3.4.2</maven-project-info-reports-plugin.version>
         <maven-site-plugin.version>4.0.0-M6</maven-site-plugin.version>
+        <maven-checkstyle-plugin.excludes>
+            **/module-info.java,**/jni/*.java
+        </maven-checkstyle-plugin.excludes>
+        <log4j-core.version>2.20.0</log4j-core.version>
+        <maven-javadoc-plugin.excludePackageNames>ch.ladestation.connectncharge.pui.ws281x.jni,org.openjfx
+        </maven-javadoc-plugin.excludePackageNames>
     </properties>
-    <!-- local repo for the ws_28x library-->
+    <!-- local repo for the ws_28x library
     <repositories>
         <repository>
             <id>project.local</id>
             <name>project</name>
             <url>file:${project.basedir}/repo</url>
         </repository>
-    </repositories>
+    </repositories>-->
 
     <dependencies>
 
@@ -160,13 +164,23 @@
         </dependency>
 
         <!-- include wrapped c library to interface LED-Strips-->
-        <dependency>
+        <!--<dependency>
             <groupId>com.github.mbelling</groupId>
             <artifactId>rpi-ws281x-java</artifactId>
             <version>${rpi-ws281x-java.version}</version>
-            <!--<classifier>shaded</classifier>-->
+        </dependency>-->
+        <!-- since shading the dependency with gradle seems impossible as of right now,
+        the transient dependency of the ws281x library is instead included here-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j-core.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j-core.version}</version>
+        </dependency>
         <!-- JUnit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -180,6 +194,7 @@
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
@@ -344,6 +359,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven-checkstyle.version}</version>
@@ -360,7 +376,7 @@
                     <configLocation>src/main/config/connectncharge_checks.xml</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <violationSeverity>warning</violationSeverity>
-                    <excludes>**/module-info.java</excludes>
+                    <excludes>${maven-checkstyle-plugin.excludes}</excludes>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -431,6 +447,9 @@
                         <additionalOption>-tag</additionalOption>
                         <additionalOption>"implSpec:a:Implementation Requirements:"</additionalOption>
                     </additionalOptions>
+                    <bottom>Copyright © 2023 Team Ladestation</bottom>
+                    <doctitle>${project.name}</doctitle>
+                    <excludePackageNames>${maven-javadoc-plugin.excludePackageNames}</excludePackageNames>
                     <additionalDependencies>
                         <!-- JavaFX  -->
                         <dependency>
@@ -471,7 +490,7 @@
                 <configuration>
                     <configLocation>src/main/config/connectncharge_checks.xml</configLocation>
                     <linkXRef>false</linkXRef>
-                    <excludes>**/module-info.java</excludes>
+                    <excludes>${maven-checkstyle-plugin.excludes}</excludes>
                 </configuration>
                 <reportSets>
                     <reportSet>
