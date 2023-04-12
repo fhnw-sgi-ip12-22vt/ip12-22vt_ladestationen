@@ -19,6 +19,7 @@ module ch.ladestation.connectncharge {
 
     opens ch.ladestation.connectncharge to javafx.fxml;
     exports ch.ladestation.connectncharge.controller;
+    exports ch.ladestation.connectncharge.pui;
     opens ch.ladestation.connectncharge.controller to javafx.fxml;
     exports ch.ladestation.connectncharge;
 }
