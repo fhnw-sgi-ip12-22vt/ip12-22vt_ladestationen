@@ -11,7 +11,6 @@
         The game ${project.name} was developed by a team of 8 students at the
         University of Applied Sciences Northwestern Switzerland.
         It was part of the IP12-Project 2022 / 2023.
-        {the team, images/team.jpg}
     </description>
 
     <organization>
