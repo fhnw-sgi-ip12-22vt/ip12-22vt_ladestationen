@@ -17,7 +17,7 @@ stages:
   - build
   - test
 
-page:
+pages:
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS package
