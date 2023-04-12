@@ -11,7 +11,9 @@
         The game ${project.name} was developed by a team of 8 students at the
         University of Applied Sciences Northwestern Switzerland.
         It was part of the IP12-Project 2022 / 2023.
+        {the team, images/team.jpg}
     </description>
+
     <organization>
         <name>FHNW | University of Applied Sciences Northwestern Switzerland</name>
         <url>https://www.fhnw.ch/en/startseite</url>
@@ -183,7 +185,8 @@
             **/module-info.java,**/jni/*.java
         </maven-checkstyle-plugin.excludes>
         <log4j-core.version>2.20.0</log4j-core.version>
-        <maven-javadoc-plugin.excludePackageNames>ch.ladestation.connectncharge.pui.ws281x.jni,org.openjfx
+        <maven-javadoc-plugin.excludePackageNames>
+            ch.ladestation.connectncharge.pui.ws281x.jni,org.openjfx
         </maven-javadoc-plugin.excludePackageNames>
     </properties>
     <!-- local repo for the ws_28x library
@@ -537,6 +540,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>${maven-project-info-reports-plugin.version}</version>
+                <configuration>
+                    <goal>index</goal>
+                    <customBundle>${project.basedir}/src/site/custom/index.properties</customBundle>
+                </configuration>
             </plugin>
 
             <!-- Javadoc -->
