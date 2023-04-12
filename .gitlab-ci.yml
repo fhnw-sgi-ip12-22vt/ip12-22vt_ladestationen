@@ -15,6 +15,7 @@ cache:
 stages:
   - build
   - test
+  - site
 
 build-job:
   stage: build
@@ -32,3 +33,14 @@ test:
     - mvn test
     # When the test files are available
     #- mvn test -Dtest=ch.ladestation.connectncharge.controller.*,ch.ladestation.connectncharge.model.*
+
+pages:
+  stage: site
+  script:
+    - mvn install site
+    - mv target/site public
+  rules:
+    - when: always
+  artifacts:
+    paths:
+      - public
