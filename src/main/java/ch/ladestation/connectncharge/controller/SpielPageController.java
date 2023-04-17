@@ -1,18 +1,25 @@
 package ch.ladestation.connectncharge.controller;
 
+import ch.ladestation.connectncharge.AppStarter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.TouchEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
 
 import java.net.URL;
 import java.time.LocalTime;
@@ -32,6 +39,35 @@ public class SpielPageController implements Initializable {
     private Button addTimeButton;
 
     private int additionalTime = 15;
+
+    private Parent root;
+    private Stage stage;
+    private Scene scene;
+
+    //
+
+        private void showHomePage(ActionEvent event) {
+            try {
+                root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/homepage.fxml"));
+                stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                scene = new Scene(root);
+                scene.getStylesheets().add("src/main/resources/css/style.css");
+                stage.setTitle("Connect 'n Charge");
+                stage.setMaximized(true);
+                stage.setFullScreen(true);
+                stage.setResizable(false);
+                stage.setScene(scene);
+                stage.show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        //
+
+
+
 
     // Burger-Menü-Button Touch-Event-Handler
     @FXML
@@ -70,6 +106,7 @@ public class SpielPageController implements Initializable {
         additionalTime += 15;
         addTimeButton.setText("Tipp +" + additionalTime + "sec");
     }
+
     @FXML
     private void handleEndGameButton(ActionEvent event) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -81,10 +118,12 @@ public class SpielPageController implements Initializable {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             // Führen Sie die Aktionen aus, die beim Beenden des Spiels erforderlich sind.
             System.out.println("Spiel beendet");
+            showHomePage(event); // Rufen Sie die showHomePage-Methode auf
         } else {
             // Schließen Sie das Popup, wenn der Benutzer "Nein" auswählt.
             System.out.println("Spiel fortgesetzt");
         }
     }
+
 }
 
