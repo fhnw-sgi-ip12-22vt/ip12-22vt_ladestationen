@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -34,6 +35,13 @@ public class SpielPageController implements Initializable {
     private Button endGameButton;
     @FXML
     private AnchorPane popupPane; // updated data type to AnchorPane
+
+    @FXML
+    private Button stackMenu;
+    @FXML
+    private AnchorPane menuPane;
+    @FXML
+    private Button menuCloseButton;
     @FXML
     private int additionalTime = 15;
     @FXML
@@ -60,7 +68,11 @@ public class SpielPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startTimer();
+        stackMenu.setVisible(true);
+        stackMenu.setOpacity(1);
     }
+
+
 
     private void startTimer() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
@@ -99,5 +111,16 @@ public class SpielPageController implements Initializable {
         // Schließen Sie das Popup und lassen Sie das Spiel weiterlaufen.
         popupPane.setOpacity(0);
         popupPane.setVisible(false);
+    }
+
+    @FXML
+    private void handleStackMenuClick(ActionEvent event) {
+        menuPane.setVisible(true);
+        menuPane.setOpacity(1);
+    }
+    @FXML
+    private void handleMenuCloseButton(ActionEvent event) {
+        menuPane.setVisible(false);
+        menuPane.setOpacity(0);
     }
 }
