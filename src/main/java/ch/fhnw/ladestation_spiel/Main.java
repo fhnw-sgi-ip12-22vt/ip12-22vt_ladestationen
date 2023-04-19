@@ -131,19 +131,19 @@ public class Main {
         var segments = Segment.createSegemntsAccordingToCSV(console, Strip, pins, csv, callback);
 
         int[] terms = {
-                83,
                 81,
-                97,
-                87,
-                47,
+                27,
                 11,
-                6,
+                31,
+                52,
+                47,
+                33,
+                62,
+                77,
+                16,
+                95,
                 18,
-                67,
-                91,
-                93,
-                65,
-                85};
+                67};
 
         for (int terminal: terms) {
             segments.get(terminal-1).toggle();
