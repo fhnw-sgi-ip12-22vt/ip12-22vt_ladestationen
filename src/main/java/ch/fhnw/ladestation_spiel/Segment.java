@@ -26,7 +26,7 @@ public class Segment extends Component {
     /**
      * The color this segment should display
      */
-    private Color color = Color.BLUE;
+    private Color color = Color.GREEN;
 
     /**
      * The start pixel of this edge
@@ -183,7 +183,7 @@ public class Segment extends Component {
 
             Segment segment;
             if(record.get(2).equals("H")) {
-                segment = new Segment(strip, Color.WHITE, startIndex, endIndex);
+                segment = new Segment(strip, Color.BLUE, startIndex, endIndex);
             }else{
                 int chip = Integer.parseInt(record.get(2));
                 int pin = Integer.parseInt(record.get(3));
