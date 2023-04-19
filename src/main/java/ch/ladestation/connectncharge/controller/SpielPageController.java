@@ -37,6 +37,8 @@ public class SpielPageController implements Initializable {
 
     @FXML
     private Button stackMenu;
+
+    private Timeline timeline;
     @FXML
     private AnchorPane menuPane;
     @FXML
@@ -80,21 +82,52 @@ public class SpielPageController implements Initializable {
 
     private void startTimer() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             startTime = startTime.plusSeconds(1);
-            timerLabel.setText("Zeit: " + startTime.format(formatter));
+
+            // Überprüfe, ob die Zeit gleich oder größer als 1 Stunde ist
+            if (startTime.isAfter(LocalTime.of(0, 59, 59))) {
+                timeline.stop(); // Stoppe den Timer
+                endGame(); // Rufe die endGame-Methode auf, wenn die maximale Zeit erreicht ist
+                startTime = LocalTime.of(1, 0); // Setze die Zeit auf genau 1 Stunde
+            }
+
+            // Aktualisiere den Text der Anzeige
+            if (startTime.equals(LocalTime.of(1, 0))) {
+                timerLabel.setText("Zeit: 60:00");
+            } else {
+                timerLabel.setText("Zeit: " + startTime.format(formatter));
+            }
         }));
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
 
+
+
+
+
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
-        startTime = startTime.plusSeconds(additionalTime);
-        timerLabel.setText("Zeit: " + startTime.format(DateTimeFormatter.ofPattern("mm:ss")));
+        // Füge die zusätzliche Zeit nur hinzu, wenn die aktuelle Zeit kleiner als 60 Minuten ist
+        if (!startTime.equals(LocalTime.of(1, 0))) {
+            // Prüfe, ob die zusätzliche Zeit die 60 Minuten überschreiten würde
+            LocalTime newTime = startTime.plusSeconds(additionalTime);
+            if (newTime.isAfter(LocalTime.of(1, 0))) {
+                startTime = LocalTime.of(1, 0); // Setze die Zeit auf genau 1 Stunde
+            } else {
+                startTime = newTime;
+            }
+
+            timerLabel.setText("Zeit: " + startTime.format(DateTimeFormatter.ofPattern("mm:ss")));
+        }
+
         additionalTime += 15;
         addTimeButton.setText("Tipp +" + additionalTime + "sec");
     }
+
+
+
 
     @FXML
     private void handleEndGameButton(ActionEvent event) {
