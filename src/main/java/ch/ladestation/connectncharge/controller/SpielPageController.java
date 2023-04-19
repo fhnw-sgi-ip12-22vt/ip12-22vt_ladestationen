@@ -14,7 +14,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -44,6 +43,11 @@ public class SpielPageController implements Initializable {
     private Button menuCloseButton;
     @FXML
     private int additionalTime = 15;
+
+    public LocalTime publicEndTime;
+
+    @FXML
+    public Label costs;
     @FXML
     private Parent root;
     @FXML
@@ -122,5 +126,17 @@ public class SpielPageController implements Initializable {
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
+    }
+    private void saveEndTime() {
+        publicEndTime = startTime;
+    }
+
+    private void endGame() {
+        saveEndTime(); // Rufe die saveEndTime-Methode auf
+        // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
+    }
+    @FXML
+    public  void showCost(){
+
     }
 }

@@ -46,9 +46,9 @@
       </Label>
       <StackPane layoutX="724.0" layoutY="17.0" prefHeight="38.0" prefWidth="76.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="8.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="40.0" y="10.0" StackPane.alignment="TOP_CENTER" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="8.0" layoutX="5.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="40.0" StackPane.alignment="BOTTOM_CENTER" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="8.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" layoutY="10.0" stroke="BLACK" strokeType="INSIDE" width="40.0" y="10.0" StackPane.alignment="TOP_CENTER" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" layoutX="5.0" layoutY="5.0" stroke="BLACK" strokeType="INSIDE" width="40.0" StackPane.alignment="BOTTOM_CENTER" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="5.0" stroke="BLACK" strokeType="INSIDE" width="40.0" />
             <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" style="-fx-background-color: transparent; -fx-border-color: transparent;" styleClass="menu-button" textFill="TRANSPARENT" />
          </children>
       </StackPane>
