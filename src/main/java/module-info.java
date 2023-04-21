@@ -12,13 +12,16 @@ module ch.ladestation.connectncharge {
     requires com.pi4j.plugin.pigpio;
     requires com.pi4j.library.pigpio;
     requires java.logging;
-    requires rpi.ws281x.java;
+    requires org.apache.logging.log4j;
 
     uses com.pi4j.extension.Extension;
     uses com.pi4j.provider.Provider;
 
     opens ch.ladestation.connectncharge to javafx.fxml;
-    exports ch.ladestation.connectncharge.controller;
     opens ch.ladestation.connectncharge.controller to javafx.fxml;
+
     exports ch.ladestation.connectncharge;
+    exports ch.ladestation.connectncharge.controller;
+    exports ch.ladestation.connectncharge.pui;
+    exports ch.ladestation.connectncharge.pui.ws281x;
 }
