@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * FXML-Class for the loading screen
+ */
 public class LoadingScreenController {
     private Scene scene;
     private Stage stage;

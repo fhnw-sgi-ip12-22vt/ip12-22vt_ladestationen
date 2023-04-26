@@ -10,7 +10,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Abstraction of a section of the LED-Strip and its button(s)
+ *
+ * Can be used for both Edges and nodes and is only intended to provide an
+ * abstract API to the hardware.
+ */
 public class Segment extends Component {
+    /**
+     * The flag that is used in the CSV file to indicated that a row corresponds to a house
+     */
     public static final String HOUSE_FLAG = "H";
     /**
      * The ledstrip this edge is part of.
@@ -141,6 +150,16 @@ public class Segment extends Component {
         }
     }
 
+    /**
+     * Factory method to arbitrarily assign button pins and Strip segments to one another
+     * based on a CSV file
+     *
+     * @param console for logging
+     * @param strip for controlling the LED-Strip
+     * @param pins All the buttons that will be assigned
+     * @param file the file that stored the assignments
+     * @return a list of all the correctly created segments
+     */
     public static List<Segment> createSegemntsAccordingToCSV(Console console, LedStrip strip,
                                                              ArrayList<ArrayList<MCP23S17.PinView>> pins,
                                                              InputStream file) {

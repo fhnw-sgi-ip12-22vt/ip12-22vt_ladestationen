@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * FXML-Class for the home scene.
+ */
 public class HomePageController {
     private Scene scene;
     private Stage stage;
