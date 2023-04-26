@@ -3,10 +3,6 @@ package ch.ladestation.connectncharge.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javafx.scene.paint.Color;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 public class EdgeTest {
 
     // private Edge edge;
