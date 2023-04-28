@@ -5,9 +5,9 @@
  */
 package ch.ladestation.connectncharge.pui;
 
-import ch.ladestation.connectncharge.pui.ws281x.LedStrip;
-import ch.ladestation.connectncharge.pui.ws281x.LedStripType;
-import ch.ladestation.connectncharge.pui.ws281x.Ws281xLedStrip;
+import com.github.mbelling.ws281x.LedStrip;
+import com.github.mbelling.ws281x.LedStripType;
+import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.pi4j.Pi4J;
 import com.pi4j.io.spi.SpiBus;
 import com.pi4j.library.pigpio.PiGpio;

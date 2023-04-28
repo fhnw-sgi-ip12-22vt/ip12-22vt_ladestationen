@@ -185,7 +185,7 @@
         </maven-checkstyle-plugin.excludes>
         <log4j-core.version>2.20.0</log4j-core.version>
         <maven-javadoc-plugin.excludePackageNames>
-            ch.ladestation.connectncharge.pui.ws281x.jni,org.openjfx
+            com.github.mbelling.ws281x.jni,org.openjfx
         </maven-javadoc-plugin.excludePackageNames>
     </properties>
     <!-- local repo for the ws_28x library

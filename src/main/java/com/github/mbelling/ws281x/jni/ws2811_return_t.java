@@ -6,7 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package ch.ladestation.connectncharge.pui.ws281x.jni;
+package com.github.mbelling.ws281x.jni;
 
 public final class ws2811_return_t {
     public final static ws2811_return_t WS2811_SUCCESS =

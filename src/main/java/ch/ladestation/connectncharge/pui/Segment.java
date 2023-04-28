@@ -1,7 +1,7 @@
 package ch.ladestation.connectncharge.pui;
 
-import ch.ladestation.connectncharge.pui.ws281x.Color;
-import ch.ladestation.connectncharge.pui.ws281x.LedStrip;
+import com.github.mbelling.ws281x.Color;
+import com.github.mbelling.ws281x.LedStrip;
 import com.pi4j.util.Console;
 
 import java.io.*;

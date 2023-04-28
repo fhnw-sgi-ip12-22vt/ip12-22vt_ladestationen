@@ -1,4 +1,4 @@
-package ch.ladestation.connectncharge.pui.ws281x;
+package com.github.mbelling.ws281x;
 
 /**
  * Dependent on constants defined in original rpi_ws281x repository (https://github.com/jgarff/rpi_ws281x).

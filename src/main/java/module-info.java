@@ -23,5 +23,6 @@ module ch.ladestation.connectncharge {
     exports ch.ladestation.connectncharge;
     exports ch.ladestation.connectncharge.controller;
     exports ch.ladestation.connectncharge.pui;
-    exports ch.ladestation.connectncharge.pui.ws281x;
+    //exports ch.ladestation.connectncharge.pui.ws281x;
+    exports com.github.mbelling.ws281x;
 }
