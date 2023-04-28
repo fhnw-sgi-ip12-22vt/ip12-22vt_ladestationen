@@ -28,7 +28,9 @@ public class AppStarter extends Application {
     }
 
     public static void main(String[] args) {
+        new Thread(() -> {
+            launch();
+        }).start();
         Main.main(new String[]{});
-        launch();
     }
 }
