@@ -41,13 +41,34 @@ public class PUIController {
      */
     private List<List<Edge>> chipToEdgeLUT;
 
-    PUIController() {
+    public PUIController() {
         this.contextPi4j = setupPi4j();
         this.ledStrip = setupLEDStrip();
         this.chips = setupGPIOExtensionICs();
         addInterruptsToPinViews();
-        this.gameInstance = new Game(); //////////////////TEMPPPPPPPPPPPP
+        this.gameInstance = new Game();
         this.gameInstance.instanceSegments();
+
+/////////////////////TMMMMMMMMMMMMMP
+        int[] terms = {
+            81,
+            27,
+            11,
+            31,
+            52,
+            47,
+            33,
+            62,
+            77,
+            16,
+            95,
+            18,
+            67};
+
+        for (int terminal : terms) {
+            toggleSegment(gameInstance.lookUpSegmentIdToSegment(terminal));
+        }
+        //////////////////TMPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
     }
 
     /**
@@ -129,10 +150,11 @@ public class PUIController {
                     ledStrip.setPixel(i, 0, 0, 0);
                 }
             } else {
-                for (var i = from; i < to; ++i) {
+                for (var i = from; i <= to; ++i) {
                     ledStrip.setPixel(i, segment.getColor());
                 }
             }
+            segment.setOn(!segment.isOn());
             ledStrip.render();
         }
     }
