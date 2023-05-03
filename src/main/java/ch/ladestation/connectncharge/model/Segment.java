@@ -1,8 +1,11 @@
-package ch.ladestation.connectncharge.pui;
+package ch.ladestation.connectncharge.model;
 
 import com.github.mbelling.ws281x.Color;
 import com.github.mbelling.ws281x.LedStrip;
 import com.pi4j.util.Console;
+
+import ch.ladestation.connectncharge.pui.Component;
+import ch.ladestation.connectncharge.pui.MCP23S17;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -10,9 +13,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Segment extends Component {
+public abstract class Segment extends Component {
 
     public static final String HOUSE_FLAG = "H";
+
+    private final int index;
+
     /**
      * The ledstrip this edge is part of.
      */
@@ -57,11 +63,13 @@ public class Segment extends Component {
     /**
      * Basic constructor for the {@code Edge} class
      *
+     * @param index
      * @param strip      the strip of which this edge is a part.
      * @param startIndex the start pixel of the edge.
      * @param endIndex   the end pixel of the edge
      */
-    public Segment(LedStrip strip, int startIndex, int endIndex) {
+    public Segment(int index, LedStrip strip, int startIndex, int endIndex) {
+        this.index = index;
         this.strip = strip;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
@@ -71,13 +79,16 @@ public class Segment extends Component {
      * Constructor for the {@code Edge} class that expects one or multiple interrupt enabled input pins
      * that can be used to toggle the edge.
      *
+     * @param index
      * @param strip         the strip of which this edge is a part.
      * @param interruptPins the pin(s) on which to attach toggle on interrupt
      * @param startIndex    the start pixel of the edge.
      * @param endIndex      the end pixel of the edge
      * @param cost          the cost of this particular segment (if applicable. If this is a house segment, it's N/A)
      */
-    public Segment(LedStrip strip, MCP23S17.PinView[] interruptPins, int startIndex, int endIndex, int cost) {
+    public Segment(int index, LedStrip strip, MCP23S17.PinView[] interruptPins, 
+            int startIndex, int endIndex, int cost) {
+        this.index = index;
         addInterruptPins(interruptPins);
         this.strip = strip;
         this.startIndex = startIndex;
@@ -88,6 +99,7 @@ public class Segment extends Component {
     /**
      * same constructor as the previous one but with only one interrupt pin.
      *
+     * @param index
      * @param strip        the strip of which this edge is a part.
      * @param interruptPin the pin on which to attach toggle on interrupt
      * @param startIndex   the start pixel of the edge.
@@ -95,22 +107,23 @@ public class Segment extends Component {
      * @param callback     the callback to update total cost.
      * @param endIndex     the end pixel of the edge
      */
-    public Segment(LedStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex, int cost,
+    public Segment(int index, LedStrip strip, MCP23S17.PinView interruptPin, int startIndex, int endIndex, int cost,
                    SegmentStateChange callback) {
-        this(strip, new MCP23S17.PinView[] {interruptPin}, startIndex, endIndex, cost);
+        this(index, strip, new MCP23S17.PinView[] {interruptPin}, startIndex, endIndex, cost);
         this.change = callback;
     }
 
     /**
      * same constructor as the basic constructor, but with a color for the segment
      *
+     * @param index
      * @param strip      the strip of which this edge is a part.
      * @param color      the segment's color of type {@link Color}
      * @param startIndex the start pixel of the edge.
      * @param endIndex   the end pixel of the edge
      */
-    public Segment(LedStrip strip, Color color, int startIndex, int endIndex) {
-        this(strip, startIndex, endIndex);
+    public Segment(int index, LedStrip strip, Color color, int startIndex, int endIndex) {
+        this(index, strip, startIndex, endIndex);
         this.color = color;
     }
 
@@ -140,12 +153,13 @@ public class Segment extends Component {
 
             Segment segment;
             if (record.get(2).equals(HOUSE_FLAG)) {
-                segment = new Segment(strip, Color.BLUE, startIndex, endIndex);
+                segment = new Node(Integer.parseInt(record.get(0)), strip, Color.BLUE, startIndex, endIndex);
             } else {
                 int chip = Integer.parseInt(record.get(2));
                 int pin = Integer.parseInt(record.get(3));
                 int cost = Integer.parseInt(record.get(4));
-                segment = new Segment(strip, pins.get(chip).get(pin), startIndex, endIndex, cost, changeCallBack);
+                segment = new Edge(Integer.parseInt(record.get(0)), strip, pins.get(chip).get(pin), startIndex, 
+                endIndex, cost, changeCallBack);
             }
             retSegments.add(segment);
         }
@@ -186,12 +200,18 @@ public class Segment extends Component {
                 }
             }
             isOn = !isOn;
+
             if (this.change != null) {
                 int cost = (isOn ? 1 : -1) * this.cost;
                 this.change.onStateChange(cost);
             }
+            
             strip.render();
         }
+    }
+
+    public void log(String msg) {
+        logInfo(msg);
     }
 
     public interface SegmentStateChange {
