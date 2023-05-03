@@ -1,14 +1,14 @@
 package ch.ladestation.connectncharge.model;
 
-import com.github.mbelling.ws281x.LedStrip;
-
-import ch.ladestation.connectncharge.pui.MCP23S17.PinView;
+import com.github.mbelling.ws281x.Color;
 
 public class Edge extends Segment {
 
-    public Edge(int index, LedStrip strip, PinView pinView, int startIndex, int endIndex, int cost,
-            SegmentStateChange changeCallBack) {
-        super(index, strip, pinView, startIndex, endIndex, cost, changeCallBack);
+    private int cost;
+
+    public Edge(int index, int startIndex, int endIndex, int cost) {
+        super(index, startIndex, endIndex, Color.GREEN);
+        this.cost = cost;
     }
 
 }
