@@ -1,21 +1,17 @@
 package ch.ladestation.connectncharge;
 
-import ch.ladestation.connectncharge.pui.Main;
+import ch.ladestation.connectncharge.controller.PUIController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class AppStarter extends Application {
     public static void main(String[] args) {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        executorService.submit(() -> Main.main(new String[] {}));
+        PUIController pc = new PUIController();
         launch();
-        executorService.shutdownNow();
     }
 
     @Override
