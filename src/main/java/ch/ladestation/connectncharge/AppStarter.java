@@ -7,13 +7,22 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AppStarter extends Application {
+    public static void main(String[] args) {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> Main.main(new String[] {}));
+        launch();
+        executorService.shutdownNow();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
-                    AppStarter.class.getResource("/ch/ladestation/connectncharge/loadingscreen.fxml"));
+                AppStarter.class.getResource("/ch/ladestation/connectncharge/loadingscreen.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             scene.getStylesheets().add("src/main/resources/css/style.css");
             stage.setTitle("Connect 'n Charge");
@@ -25,12 +34,5 @@ public class AppStarter extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        new Thread(() -> {
-            launch();
-        }).start();
-        Main.main(new String[]{});
     }
 }
