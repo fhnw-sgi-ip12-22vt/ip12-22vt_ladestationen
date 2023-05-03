@@ -71,4 +71,8 @@ public abstract class Segment extends Component {
     public interface SegmentStateChange {
         void onStateChange(int deltaCost);
     }
+
+    public void setOn(boolean on) {
+        isOn = on;
+    }
 }
