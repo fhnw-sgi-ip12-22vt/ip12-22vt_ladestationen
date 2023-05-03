@@ -36,13 +36,22 @@ public class Game {
                 int cost = Integer.parseInt(record.get(4));
                 int fromNode = Integer.parseInt(record.get(5));
                 int toNode = Integer.parseInt(record.get(6));
-                var segment = new Edge(segmentId, startIndex, endIndex, cost);
+                var segment = new Edge(segmentId, startIndex, endIndex, cost, fromNode, toNode);
                 edges.add(segment);
                 segmentIdLUT.put(segmentId, segment);
 
                 populateLUT(chip, pin, segment);
 
             }
+        }
+
+        //linkNodeReferencesInAllEdges();
+    }
+
+    private void linkNodeReferencesInAllEdges() {
+        for (var edge : edges) {
+            edge.setFromNode((Node) lookUpSegmentIdToSegment(edge.getFromNodeId()));
+            edge.setToNode((Node) lookUpSegmentIdToSegment(edge.getToNodeId()));
         }
     }
 

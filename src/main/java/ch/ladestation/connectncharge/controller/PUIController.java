@@ -131,9 +131,10 @@ public class PUIController {
      */
     private void handleEdgePressed(Edge edge) {
         toggleSegment(edge);
-        /*
-        handle game logic here
-         */
+        logger.info("edge " + edge.getSegmentIndex() + " between "
+            + edge.getFromNodeId()
+            + " & "
+            + edge.getToNodeId() + " was pressed");
     }
 
     /**
@@ -146,7 +147,7 @@ public class PUIController {
             var from = segment.getStartIndex();
             var to = segment.getEndIndex();
             if (segment.isOn()) {
-                for (var i = from; i < to; ++i) {
+                for (var i = from; i <= to; ++i) {
                     ledStrip.setPixel(i, 0, 0, 0);
                 }
             } else {
