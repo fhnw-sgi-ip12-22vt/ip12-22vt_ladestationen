@@ -6,7 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package ch.ladestation.connectncharge.pui.ws281x.jni;
+package com.github.mbelling.ws281x.jni;
 
 public class rpi_ws281x implements rpi_ws281xConstants {
     public static ws2811_return_t ws2811_init(ws2811_t ws2811) {

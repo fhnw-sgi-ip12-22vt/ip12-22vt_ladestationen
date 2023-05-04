@@ -1,6 +1,6 @@
-package ch.ladestation.connectncharge.pui.ws281x;
+package com.github.mbelling.ws281x;
 
-import ch.ladestation.connectncharge.pui.ws281x.jni.*;
+import com.github.mbelling.ws281x.jni.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -10,7 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static ch.ladestation.connectncharge.pui.ws281x.Color.buildColour;
+import static com.github.mbelling.ws281x.Color.buildColour;
 
 /**
  * Basic class to interface with the rpi_ws281x native library

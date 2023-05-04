@@ -1,4 +1,4 @@
-package ch.ladestation.connectncharge.pui.ws281x;
+package com.github.mbelling.ws281x;
 
 public interface LedStrip {
 

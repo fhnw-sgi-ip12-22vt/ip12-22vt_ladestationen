@@ -6,7 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package ch.ladestation.connectncharge.pui.ws281x.jni;
+package com.github.mbelling.ws281x.jni;
 
 public class ws2811_channel_t {
     private transient long swigCPtr;

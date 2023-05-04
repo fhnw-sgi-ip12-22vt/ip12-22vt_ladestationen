@@ -6,7 +6,7 @@ module ch.ladestation.connectncharge {
     requires org.kordamp.bootstrapfx.core;
 
     requires org.slf4j;             //slf4j-api-2.0.0-alpha1.jar
-    requires org.slf4j.simple;      //slf4j-simple-2.0.0-alpha1.jar & simplelogger.properties
+    //requires org.slf4j.simple;      //slf4j-simple-2.0.0-alpha1.jar & simplelogger.properties
     requires com.pi4j;
     requires com.pi4j.plugin.raspberrypi;
     requires com.pi4j.plugin.pigpio;
@@ -23,5 +23,6 @@ module ch.ladestation.connectncharge {
     exports ch.ladestation.connectncharge;
     exports ch.ladestation.connectncharge.controller;
     exports ch.ladestation.connectncharge.pui;
-    exports ch.ladestation.connectncharge.pui.ws281x;
+    //exports ch.ladestation.connectncharge.pui.ws281x;
+    exports com.github.mbelling.ws281x;
 }

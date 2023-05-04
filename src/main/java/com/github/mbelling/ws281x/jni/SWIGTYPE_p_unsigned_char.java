@@ -6,20 +6,20 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package ch.ladestation.connectncharge.pui.ws281x.jni;
+package com.github.mbelling.ws281x.jni;
 
-public class SWIGTYPE_p_rpi_hw_t {
+public class SWIGTYPE_p_unsigned_char {
     private transient long swigCPtr;
 
-    protected SWIGTYPE_p_rpi_hw_t(long cPtr, @SuppressWarnings("unused") boolean futureUse) {
+    protected SWIGTYPE_p_unsigned_char(long cPtr, @SuppressWarnings("unused") boolean futureUse) {
         swigCPtr = cPtr;
     }
 
-    protected SWIGTYPE_p_rpi_hw_t() {
+    protected SWIGTYPE_p_unsigned_char() {
         swigCPtr = 0;
     }
 
-    protected static long getCPtr(SWIGTYPE_p_rpi_hw_t obj) {
+    protected static long getCPtr(SWIGTYPE_p_unsigned_char obj) {
         return (obj == null) ? 0 : obj.swigCPtr;
     }
 }

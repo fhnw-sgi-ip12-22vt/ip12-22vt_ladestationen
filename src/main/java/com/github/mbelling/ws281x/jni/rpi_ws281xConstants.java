@@ -6,7 +6,7 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package ch.ladestation.connectncharge.pui.ws281x.jni;
+package com.github.mbelling.ws281x.jni;
 
 public interface rpi_ws281xConstants {
     public final static int WS2811_TARGET_FREQ = rpi_ws281xJNI.WS2811_TARGET_FREQ_get();
