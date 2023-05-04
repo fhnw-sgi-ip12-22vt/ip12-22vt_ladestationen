@@ -20,8 +20,10 @@ target/
 .settings
 .springBeans
 .sts4-cache
-/bin/
 ./site/
+.idea/
+.mvn/
+/bin/
 
 ### NetBeans ###
 /nbproject/private/
@@ -37,4 +39,4 @@ build/
 .vscode/
 
 ### Mac OS ###
-.DS_Store./bin/
+.DS_Store
