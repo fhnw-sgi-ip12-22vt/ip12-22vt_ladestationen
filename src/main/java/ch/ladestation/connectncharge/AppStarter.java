@@ -18,8 +18,9 @@ public class AppStarter extends Application {
     public void start(Stage stage) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
-                AppStarter.class.getResource("/ch/ladestation/connectncharge/loadingscreen.fxml"));
+                    AppStarter.class.getResource("/ch/ladestation/connectncharge/spielpage.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
+
             scene.getStylesheets().add("src/main/resources/css/style.css");
             stage.setTitle("Connect 'n Charge");
             stage.setMaximized(true);
