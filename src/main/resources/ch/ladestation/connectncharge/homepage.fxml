@@ -3,10 +3,11 @@
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -20,27 +21,67 @@
             </font>
         </Label>
         <Circle fill="#ff730000" layoutX="400.0" layoutY="557.0" radius="200.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafafa" height="244.0" layoutX="465.0" layoutY="106.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
-      <Button layoutX="200.0" layoutY="357.0" minHeight="131.0" minWidth="517.0" mnemonicParsing="false" onAction="#showEdgePresser" prefHeight="131.0" prefWidth="517.0" stylesheets="@../../../css/style.css">
-         <styleClass>
-            <String fx:value="loading-button" />
-            <String fx:value="home-pane" />
-         </styleClass>
-      </Button>
-      <Text fill="WHITE" layoutX="102.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="story-label" text="In meiner Feriensiedlung gibt es 30 Ferienhäuser, von denen ich 13 mit einer modernen E-Ladestation ausstatten möchte. Doch dafür müssen diese 13 Ferienhäuser mit einem zusätzliches Stromkabel verbunden werden, um ein umweltfreundliches Urlaubserlebnis zu schaffen!" wrappingWidth="356.0000000000001">
-         <font>
-            <Font size="15.0" />
-         </font>
-      </Text>
-      <StackPane layoutX="729.0" layoutY="22.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
+        <Text fill="WHITE" layoutX="102.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="story-label" text="In meiner Feriensiedlung gibt es 30 Ferienhäuser, von denen ich 13 mit einer modernen E-Ladestation ausstatten möchte. Doch dafür müssen diese 13 Ferienhäuser mit einem zusätzliches Stromkabel verbunden werden, um ein umweltfreundliches Urlaubserlebnis zu schaffen!" wrappingWidth="356.0000000000001">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Text>
+        <StackPane layoutX="729.0" layoutY="22.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
+            <children>
+                <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleShowEdgePresser" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+            </children>
+        </StackPane>
+        <StackPane layoutX="21.0" layoutY="15.0" maxHeight="60.0" maxWidth="53.0" prefHeight="43.0" prefWidth="43.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css">
+            <children>
+                <Button fx:id="helpIconButton" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="54.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="60.0" prefWidth="54.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+            </children>
+        </StackPane>
+      <ImageView fitHeight="220.0" fitWidth="234.0" layoutX="517.0" layoutY="112.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/engineer.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="menuPane" layoutX="10.0" layoutY="10.0" opacity="0.0" prefHeight="242.0" prefWidth="480.0" style="-fx-background-color: #f4e158;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
          <children>
-            <Button fx:id="stackMenu" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+            <Button layoutX="14.0" layoutY="124.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Bonus Spiel">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+            </Button>
+            <Button layoutX="14.0" layoutY="176.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Rangliste">
+               <font>
+                  <Font name="Arial Bold" size="18.0" />
+               </font>
+               <graphic>
+                  <Button fx:id="menuCloseButton" minWidth="30.0" mnemonicParsing="false" onAction="#handleMenuCloseButton" prefHeight="38.0" prefWidth="60.0" text="X">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+               </graphic>
+            </Button>
+            <Button layoutX="14.0" layoutY="427.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Admin">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Button>
+            <Label layoutX="19.0" prefHeight="60.0" prefWidth="158.0" text="Menü">
+               <font>
+                  <Font name="System Bold" size="32.0" />
+               </font>
+            </Label>
          </children>
-      </StackPane>
-      <Label layoutX="353.0" layoutY="399.0" prefHeight="43.0" prefWidth="94.0" text="Start" textFill="WHITE">
-         <font>
-            <Font size="40.0" />
-         </font>
-      </Label>
+      </AnchorPane>
+        <Label layoutX="357.0" layoutY="395.0" prefHeight="46.0" prefWidth="86.0" text="Start" textFill="WHITE">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Label>
+        <Button layoutX="200.0" layoutY="357.0" minHeight="131.0" minWidth="517.0" mnemonicParsing="false" onAction="#handleShowEdgePresser" prefHeight="131.0" prefWidth="517.0" stylesheets="@../../../css/style.css">
+            <styleClass>
+                <String fx:value="loading-button" />
+                <String fx:value="home-pane" />
+            </styleClass>
+        </Button>
     </children>
 </AnchorPane>

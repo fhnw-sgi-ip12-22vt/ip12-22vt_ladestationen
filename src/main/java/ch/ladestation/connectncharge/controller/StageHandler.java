@@ -10,6 +10,8 @@ import java.io.IOException;
 
 public final class StageHandler {
 
+    private static String lastFxmlPath;
+
     private StageHandler() {
         throw new AssertionError();
     }
@@ -31,5 +33,13 @@ public final class StageHandler {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static void setLastFxmlPath(String lastFxmlPathParam) {
+        lastFxmlPath = lastFxmlPathParam;
+    }
+
+    public static String getLastFxmlPath() {
+        return lastFxmlPath;
     }
 }

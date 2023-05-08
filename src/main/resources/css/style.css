@@ -1,7 +1,7 @@
 .loading-pane {
     -fx-pref-width: 800;
     -fx-pref-height: 480;
-    -fx-background-image: url(".././images/LogoConnectnCharge.PNG");
+    -fx-background-image: url(".././images/LogoConnectnCharge.png");
     -fx-background-size: cover;
 }
 
@@ -125,6 +125,15 @@
     -fx-pref-height: 265;
     -fx-background-color: #FFFFFF;
     -fx-background-size: cover;
+}
+
+.menu-pane {
+    -fx-pref-width: 650px;
+    -fx-pref-height: 480px;
+    -fx-background-color: #f4e158;
+    -fx-background-size: cover;
+    -fx-layoutX: 0;
+    -fx-layoutY: 0;
 }
 
 

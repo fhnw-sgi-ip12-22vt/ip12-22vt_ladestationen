@@ -27,11 +27,11 @@
         </Button>
         <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
         <Circle fx:id="r" fill="#f4e158" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-      <StackPane layoutX="21.0" layoutY="15.0" maxHeight="60.0" maxWidth="53.0" prefHeight="43.0" prefWidth="43.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css">
-         <children>
-            <Button fx:id="helpIconButton" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="54.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="60.0" prefWidth="54.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
-         </children>
-      </StackPane>
+        <StackPane layoutX="21.0" layoutY="15.0" maxHeight="60.0" maxWidth="53.0" prefHeight="43.0" prefWidth="43.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css">
+            <children>
+                <Button fx:id="helpIconButton" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="54.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="60.0" prefWidth="54.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+            </children>
+        </StackPane>
         <Label alignment="CENTER" layoutX="237.0" layoutY="139.0" prefHeight="130.0" prefWidth="310.0" text="0" textAlignment="JUSTIFY" textFill="WHITE">
             <font>
                 <Font size="96.0" />
@@ -43,11 +43,11 @@
             </font>
         </Label>
         <StackPane layoutX="741.0" layoutY="15.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
-         <children>
+            <children>
                 <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
-         </children>
+            </children>
         </StackPane>
-        <AnchorPane fx:id="menuPane" layoutX="557.0" opacity="0.0" prefHeight="480.0" prefWidth="242.0" style="-fx-background-color: #f4e158;" visible="false">
+        <AnchorPane fx:id="menuPane" layoutX="548.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="632.0" prefWidth="339.0" style="-fx-background-color: #f4e158;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
             <children>
                 <Button layoutX="14.0" layoutY="124.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Bonus Spiel">
                     <font>

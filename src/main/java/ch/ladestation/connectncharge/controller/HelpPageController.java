@@ -11,8 +11,8 @@ public class HelpPageController {
     private String fxmlFileName;
 
     @FXML
-    private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css",
+    private void handleXCloseButton(ActionEvent event) throws IOException {
+        StageHandler.openStage(StageHandler.getLastFxmlPath(), "/css/style.css",
             (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 }
