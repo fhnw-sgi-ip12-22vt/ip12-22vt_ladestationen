@@ -76,6 +76,14 @@ public abstract class Segment extends Component {
         isOn = on;
     }
 
+    public void on(){
+        setOn(true);
+    }
+
+    public void off(){
+        setOn(false);
+    }
+
     public int getSegmentIndex() {
         return segmentIndex;
     }
