@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class AppStarter extends Application {
     public static void main(String[] args) {
-       // PUIController pc = new PUIController();
+        PUIController pc = new PUIController();
         launch();
     }
 
@@ -18,7 +18,7 @@ public class AppStarter extends Application {
     public void start(Stage stage) throws IOException {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
-                    AppStarter.class.getResource("/ch/ladestation/connectncharge/endscreen.fxml"));
+                    AppStarter.class.getResource("/ch/ladestation/connectncharge/spielpage.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
 
             scene.getStylesheets().add("src/main/resources/css/style.css");

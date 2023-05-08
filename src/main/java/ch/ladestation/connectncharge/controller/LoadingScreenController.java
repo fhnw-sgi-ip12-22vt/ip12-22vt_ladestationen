@@ -1,9 +1,7 @@
 package ch.ladestation.connectncharge.controller;
 
-import ch.ladestation.connectncharge.AppStarter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,19 +16,7 @@ public class LoadingScreenController {
 
     @FXML
     public void loadHomePage(ActionEvent event) throws IOException {
-        try {
-            root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/homepage.fxml"));
-            stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            scene = new Scene(root);
-            scene.getStylesheets().add("src/main/resources/css/style.css");
-            stage.setTitle("Connect 'n Charge");
-            stage.setMaximized(true);
-            stage.setFullScreen(true);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
+            (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 }

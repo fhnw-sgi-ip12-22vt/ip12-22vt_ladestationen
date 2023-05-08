@@ -4,31 +4,43 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="home-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.HomePageController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.HomePageController">
     <children>
-        <Circle fill="#ff7602" layoutX="7.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-        <Circle fill="#ff7602" layoutX="786.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+        <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
+        <Circle fx:id="r" fill="#f4e158" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
         <Label layoutX="102.0" layoutY="112.0" prefHeight="48.0" prefWidth="356.0" text="Label" textFill="WHITE">
             <font>
                 <Font size="40.0" />
             </font>
         </Label>
-        <Label layoutX="102.0" layoutY="182.0" prefHeight="48.0" prefWidth="356.0" text="Label" textFill="WHITE">
-            <font>
-                <Font size="20.0" />
-            </font>
-        </Label>
         <Circle fill="#ff730000" layoutX="400.0" layoutY="557.0" radius="200.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafafa00" height="244.0" layoutX="465.0" layoutY="106.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#fafafa" height="244.0" layoutX="465.0" layoutY="106.0" stroke="BLACK" strokeType="INSIDE" width="229.0" />
       <Button layoutX="200.0" layoutY="357.0" minHeight="131.0" minWidth="517.0" mnemonicParsing="false" onAction="#showEdgePresser" prefHeight="131.0" prefWidth="517.0" stylesheets="@../../../css/style.css">
          <styleClass>
             <String fx:value="loading-button" />
             <String fx:value="home-pane" />
          </styleClass>
       </Button>
+      <Text fill="WHITE" layoutX="102.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="story-label" text="In meiner Feriensiedlung gibt es 30 Ferienhäuser, von denen ich 13 mit einer modernen E-Ladestation ausstatten möchte. Doch dafür müssen diese 13 Ferienhäuser mit einem zusätzliches Stromkabel verbunden werden, um ein umweltfreundliches Urlaubserlebnis zu schaffen!" wrappingWidth="356.0000000000001">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <StackPane layoutX="729.0" layoutY="22.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
+         <children>
+            <Button fx:id="stackMenu" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+         </children>
+      </StackPane>
+      <Label layoutX="353.0" layoutY="399.0" prefHeight="43.0" prefWidth="94.0" text="Start" textFill="WHITE">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

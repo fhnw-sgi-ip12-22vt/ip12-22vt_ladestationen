@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.HelpPageController">
+    <children>
+        <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
+        <Circle fx:id="r" fill="#f4e158" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+        <Label layoutX="359.0" layoutY="94.0" prefHeight="58.0" prefWidth="82.0" text="Hilfe" textFill="WHITE">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Label>
+      <Text fill="WHITE" layoutX="102.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="story-label" text="In meiner Feriensiedlung gibt es 30 Ferienhäuser, von denen ich 13 mit einer modernen E-Ladestation ausstatten möchte. Doch dafür müssen diese 13 Ferienhäuser mit einem zusätzliches Stromkabel verbunden werden, um ein umweltfreundliches Urlaubserlebnis zu schaffen!" wrappingWidth="627.2000427246095">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <StackPane layoutX="729.0" layoutY="22.0" maxHeight="423.0" maxWidth="318.0" prefHeight="423.0" prefWidth="318.0" styleClass="standard-xclose-button" stylesheets="@../../../css/style.css">
+         <children>
+            <Button maxHeight="394.0" maxWidth="278.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="394.0" prefWidth="278.0" styleClass="standard-xclose-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" fx:id="x_close" />
+         </children>
+      </StackPane>
+    </children>
+</AnchorPane>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>ch.ladestation.connectncharge</groupId>
@@ -75,7 +76,9 @@
             <name>Gabriele Ferrali</name>
             <email>gabriele.ferrali@students.fhnw.ch</email>
             <properties>
-                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/thumbnails/73107778/Gabriele%20%282021_08_30%2016_18_54%20UTC%29.jpg?version=1&amp;modificationDate=1665229403492&amp;api=v2</picUrl>
+                <picUrl>
+                    https://www.cs.technik.fhnw.ch/confluence20/download/thumbnails/73107778/Gabriele%20%282021_08_30%2016_18_54%20UTC%29.jpg?version=1&amp;modificationDate=1665229403492&amp;api=v2
+                </picUrl>
             </properties>
         </developer>
         <developer>
@@ -621,21 +624,31 @@
                                 <configuration>
                                     <target>
                                         <!-- Ensure target directory exists on RaspPi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true"
+                                                 command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
 
                                         <!-- Transfer distribution folder to RaspPi via SCP -->
-                                        <scp trust="true" todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}" port="${pi.port}">
+                                        <scp trust="true"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
+                                             port="${pi.port}">
                                             <fileset dir="${project.build.directory}/distribution">
                                                 <exclude name="javafx*.jar"/>
-/>
+                                                />
                                             </fileset>
                                         </scp>
 
                                         <!-- Stop all running Java processes -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" suppresssystemerr="true" suppresssystemout="true" command="sudo killall -9 java"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true" failonerror="false"
+                                                 usepty="true" useSystemIn="true" suppresssystemerr="true"
+                                                 suppresssystemout="true" command="sudo killall -9 java"/>
 
                                         <!-- Run JFX application on Raspberry Pi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" command="sudo  java-kiosk  ${pi.remote.jvmOptions} -Xmx1G --module-path ${pi.deploydirectory} --module ${launcher.class} -Dmonocle.cursor.enabled=${pi.drm.enable.cursor}"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true" failonerror="false"
+                                                 usepty="true" useSystemIn="true"
+                                                 command="sudo  java-kiosk  ${pi.remote.jvmOptions} -Xmx1G --module-path ${pi.deploydirectory} --module ${launcher.class} -Dmonocle.cursor.enabled=${pi.drm.enable.cursor}"/>
                                     </target>
                                 </configuration>
                             </execution>
@@ -669,21 +682,31 @@
                                 <configuration>
                                     <target>
                                         <!-- Ensure target directory exists on RaspPi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true"
+                                                 command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
 
                                         <!-- Transfer distribution folder to RaspPi via SCP -->
-                                        <scp trust="true" todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}" port="${pi.port}">
+                                        <scp trust="true"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
+                                             port="${pi.port}">
                                             <fileset dir="${project.build.directory}/distribution">
                                                 <exclude name="javafx*.jar"/>
-/>
+                                                />
                                             </fileset>
                                         </scp>
 
                                         <!-- Stop all running Java processes -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" suppresssystemerr="true" suppresssystemout="true" command="sudo killall -9 java"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true" failonerror="false"
+                                                 usepty="true" useSystemIn="true" suppresssystemerr="true"
+                                                 suppresssystemout="true" command="sudo killall -9 java"/>
 
                                         <!-- Run JFX application on Raspberry Pi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" command="DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority sudo -E java ${pi.remote.jvmOptions} --module-path /opt/javafx-sdk/lib:${pi.deploydirectory} --add-modules javafx.controls -Dglass.platform=gtk --module ${launcher.class}"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true" failonerror="false"
+                                                 usepty="true" useSystemIn="true"
+                                                 command="DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority sudo -E java ${pi.remote.jvmOptions} --module-path /opt/javafx-sdk/lib:${pi.deploydirectory} --add-modules javafx.controls -Dglass.platform=gtk --module ${launcher.class}"/>
                                     </target>
                                 </configuration>
                             </execution>
@@ -703,7 +726,7 @@
         <profile>
             <id>debug</id>
             <properties>
-                <pi.remote.jvmOptions> -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
+                <pi.remote.jvmOptions>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
                 </pi.remote.jvmOptions>
             </properties>
         </profile>
