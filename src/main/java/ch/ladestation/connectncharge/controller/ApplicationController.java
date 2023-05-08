@@ -20,7 +20,7 @@ public class ApplicationController extends ControllerBase<Game> {
         if (!segment.isOn()) {
             segment.on();
             Segment[] oldValues = model.activatedEdges.getValues();
-            Segment[] newValues = new Edge[oldValues.length + 1];
+            Segment[] newValues = new Segment[oldValues.length + 1];
             System.arraycopy(oldValues, 0, newValues, 0, oldValues.length);
             newValues[newValues.length - 1] = segment;
             setValues(model.activatedEdges, newValues);

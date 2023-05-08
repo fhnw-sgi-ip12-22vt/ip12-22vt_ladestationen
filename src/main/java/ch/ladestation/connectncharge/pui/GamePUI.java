@@ -32,8 +32,8 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
 
     private List<Edge> edges;
     private List<Node> nodes;
-    private Map<Integer, Map<Integer, Edge>> pinToEdgeLUT = new HashMap<>();
-    private Map<Integer, Segment> segmentIdLUT = new HashMap<>();
+    private Map<Integer, Map<Integer, Edge>> pinToEdgeLUT;
+    private Map<Integer, Segment> segmentIdLUT;
 
     public GamePUI(ApplicationController controller, Context pi4J) {
         super(controller, pi4J);
@@ -53,25 +53,32 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     public void initializeParts() {
         this.ledStrip = setupLEDStrip();
         this.chips = setupGPIOExtensionICs(pi4J);
+        this.edges = new ArrayList<>();
+        this.nodes = new ArrayList<>();
+        this.segmentIdLUT = new HashMap<>();
+        this.pinToEdgeLUT = new HashMap<>();
+        instanceSegments();
     }
 
     @Override
     public void setupUiToActionBindings(ApplicationController controller) {
-        addInterruptsToPinViews();
+        addInterruptsToPinViews(controller);
     }
 
     @Override
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
-            ledStrip.setStrip(0, 0, 0);
-            for (var seg : newValue) {
-                int from = seg.getStartIndex();
-                int to = seg.getEndIndex();
-                for (var i = from; i < to; ++i) {
-                    ledStrip.setPixel(i, seg.getColor());
+            synchronized (ledStrip) {
+                ledStrip.setStrip(0, 0, 0);
+                for (var seg : newValue) {
+                    int from = seg.getStartIndex();
+                    int to = seg.getEndIndex();
+                    for (var i = from; i < to; ++i) {
+                        ledStrip.setPixel(i, seg.getColor());
+                    }
                 }
+                ledStrip.render();
             }
-            ledStrip.render();
         }));
     }
 
@@ -80,12 +87,12 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
      * adds a listener to every single one of them that calls
      * handleEdgePressed with the correct chip no. & pin no.
      */
-    private void addInterruptsToPinViews() {
+    private void addInterruptsToPinViews(ApplicationController controller) {
         try {
             for (int i = 0; i < chips.size(); i++) {
                 var pinViews = chips.get(i).getAllPinsAsPulledUpInterruptInput();
                 for (var pinView : pinViews) {
-                    addEdgePressListenerToPinView(i, pinView);
+                    addEdgePressListenerToPinView(i, pinView, controller);
                 }
             }
         } catch (IOException e) {
@@ -101,10 +108,12 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
      *                  that the {@link MCP23S17.PinView} argument belongs to is stored.
      * @param pinView   the {@link MCP23S17.PinView} object the interrupt originated from.
      */
-    private void addEdgePressListenerToPinView(int indexOfIC, MCP23S17.PinView pinView) {
+    private void addEdgePressListenerToPinView(int indexOfIC,
+                                               MCP23S17.PinView pinView,
+                                               ApplicationController controller) {
         pinView.addListener((state, pin) -> {
             if (!state) {
-                handleEdgePressed(lookUpChipAndPinNumberToEdge(indexOfIC, pin.getPinNumber()));
+                handleEdgePressed(lookUpChipAndPinNumberToEdge(indexOfIC, pin.getPinNumber()), controller);
             }
         });
     }
@@ -115,7 +124,8 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
      *
      * @param edge the instance that represents the pressed edge
      */
-    private void handleEdgePressed(Edge edge) {
+    private void handleEdgePressed(Edge edge, ApplicationController controller) {
+        controller.edgePressed(edge);
         logger.info("edge "
                 + edge.getSegmentIndex() + " between "
                 + edge.getFromNodeId() + " & "
