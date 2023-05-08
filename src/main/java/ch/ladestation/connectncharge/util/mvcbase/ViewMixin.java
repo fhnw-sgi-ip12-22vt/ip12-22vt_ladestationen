@@ -41,7 +41,7 @@ public interface ViewMixin<M, C extends ControllerBase<M>> extends Projector<M, 
     }
 
     /**
-     * just a convenience method to load additional fonts
+     * @param fonts just a convenience method to load additional fonts
      */
     default void loadFonts(String... fonts) {
         for (String f : fonts) {
@@ -55,7 +55,9 @@ public interface ViewMixin<M, C extends ControllerBase<M>> extends Projector<M, 
      * Starting point for registering an observer.
      *
      * @param observableValue the value that needs to be observed
-     * @return a 'Converter' to specify a function converting the type of 'ObservableValue' into the type of the 'Property'
+     * @param <V>
+     * @return a 'Converter' to specify a function converting the type of 'ObservableValue'
+     * into the type of the 'Property'
      */
     default <V> Converter<V> onChangeOf(ObservableValue<V> observableValue) {
         return new Converter<>(observableValue);
@@ -69,6 +71,7 @@ public interface ViewMixin<M, C extends ControllerBase<M>> extends Projector<M, 
         /**
          * Second (optional) step for registering an observer to specify a converter-function
          *
+         * @param <R>
          * @param converter the function converting the type of 'ObservableValue' into the type of the 'Property'
          * @return an Updater to specify the 'GUI-Property' that needs to be updated if 'ObservableValue' changes
          */
@@ -99,7 +102,8 @@ public interface ViewMixin<M, C extends ControllerBase<M>> extends Projector<M, 
     record Updater<V, P>(ObservableValue<V> observableValue, Function<V, P> converter) {
 
         /**
-         * Registers an observer that will keep observableValue and GUI-Property in sync by applying the specified converter.
+         * Registers an observer that will keep observableValue and GUI-Property
+         * in sync by applying the specified converter.
          *
          * @param property GUI-Property that will be updated when observableValue changes
          */

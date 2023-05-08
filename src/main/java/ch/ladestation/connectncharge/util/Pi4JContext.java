@@ -31,7 +31,7 @@ import com.pi4j.plugin.raspberrypi.platform.RaspberryPiPlatform;
  * <p>
  * In desktop environment the Pi4J MockPlatform is used, on Raspberry Pi the Pi4J RaspberryPiPlatform.
  */
-public class Pi4JContext {
+public final class Pi4JContext {
 
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
@@ -62,8 +62,7 @@ public class Pi4JContext {
 
         List<String> piArchs = List.of("aarch64", "arm");
 
-        return "Raspbian".equals(vendor) ||
-            ("Linux".equals(osName) && piArchs.contains(osArch));
+        return "Raspbian".equals(vendor) || ("Linux".equals(osName) && piArchs.contains(osArch));
     }
 
     /**
@@ -72,17 +71,11 @@ public class Pi4JContext {
      * @return Context that will be used by this app
      */
     public static Context createMockContext() {
-        return Pi4J.newContextBuilder()
-            .add(new MockPlatform())
-            .add(MockAnalogInputProvider.newInstance(),
-                MockAnalogOutputProvider.newInstance(),
-                MockSpiProvider.newInstance(),
-                MockPwmProvider.newInstance(),
-                MockSerialProvider.newInstance(),
-                MockI2CProvider.newInstance(),
-                MockDigitalInputProvider.newInstance(),
-                MockDigitalOutputProvider.newInstance())
-            .build();
+        return Pi4J.newContextBuilder().add(new MockPlatform())
+            .add(MockAnalogInputProvider.newInstance(), MockAnalogOutputProvider.newInstance(),
+                MockSpiProvider.newInstance(), MockPwmProvider.newInstance(), MockSerialProvider.newInstance(),
+                MockI2CProvider.newInstance(), MockDigitalInputProvider.newInstance(),
+                MockDigitalOutputProvider.newInstance()).build();
     }
 
     /**
@@ -95,22 +88,14 @@ public class Pi4JContext {
         final PiGpio piGpio = PiGpio.newNativeInstance();
 
         // Build Pi4J context with this platform and PiGPIO providers
-        return Pi4J.newContextBuilder()
-            .noAutoDetect()
-            .add(new RaspberryPiPlatform() {
-                @Override
-                protected String[] getProviders() {
-                    return new String[] {};
-                }
-            })
-            .add(PiGpioDigitalInputProvider.newInstance(piGpio),
-                PiGpioDigitalOutputProvider.newInstance(piGpio),
-                PiGpioPwmProvider.newInstance(piGpio),
-                PiGpioSerialProvider.newInstance(piGpio),
-                PiGpioSpiProvider.newInstance(piGpio),
-                LinuxFsI2CProvider.newInstance()
-            )
-            .build();
+        return Pi4J.newContextBuilder().noAutoDetect().add(new RaspberryPiPlatform() {
+            @Override
+            protected String[] getProviders() {
+                return new String[] {};
+            }
+        }).add(PiGpioDigitalInputProvider.newInstance(piGpio), PiGpioDigitalOutputProvider.newInstance(piGpio),
+            PiGpioPwmProvider.newInstance(piGpio), PiGpioSerialProvider.newInstance(piGpio),
+            PiGpioSpiProvider.newInstance(piGpio), LinuxFsI2CProvider.newInstance()).build();
     }
 
 }

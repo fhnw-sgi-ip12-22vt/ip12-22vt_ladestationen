@@ -25,7 +25,7 @@ public abstract class ControllerBase<M> {
     private ConcurrentTaskQueue<M> actionQueue;
 
     // the model managed by this Controller. Only subclasses have direct access
-    protected final M model;
+    private final M model;
 
     /**
      * Controller needs a Model.
@@ -69,14 +69,14 @@ public abstract class ControllerBase<M> {
      */
     protected void async(Runnable todo) {
         async(() -> {
-                todo.run();
-                return model;
-            },
-            m -> {
-            });
+            todo.run();
+            return model;
+        }, m -> {
+        });
     }
 
     /**
+     * @param action
      * Schedule the given action after all the actions already scheduled have finished.
      */
     public void runLater(Consumer<M> action) {
@@ -254,7 +254,7 @@ public abstract class ControllerBase<M> {
         return new ArraySetter<>(observableArray, values);
     }
 
-    protected static class Setter<V> {
+    protected static final class Setter<V> {
         private final ObservableValue<V> observableValue;
 
         // supplier is used here to get the value at execution time and not at registration time
@@ -270,7 +270,7 @@ public abstract class ControllerBase<M> {
         }
     }
 
-    protected static class ArraySetter<V> {
+    protected static final class ArraySetter<V> {
         private final ObservableArray<V> observableArray;
         private final V[] values;
 

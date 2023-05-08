@@ -89,7 +89,7 @@ public final class ConcurrentTaskQueue<R> {
         private final Supplier<T> todo;    // the return type of to-do ..
         private final Consumer<T> onDone;  // .. must match the input type of onDone
 
-        public Task(Supplier<T> todo, Consumer<T> onDone) {
+        Task(Supplier<T> todo, Consumer<T> onDone) {
             this.todo = todo;
             this.onDone = onDone;
         }

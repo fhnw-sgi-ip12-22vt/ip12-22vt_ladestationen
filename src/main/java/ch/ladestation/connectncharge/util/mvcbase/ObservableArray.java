@@ -93,7 +93,7 @@ public final class ObservableArray<V> {
 
     /**
      * It's ok to make this public.
-     *
+     * @param position
      * @return the value managed by this ObservableValue
      */
     public V getValue(int position) {

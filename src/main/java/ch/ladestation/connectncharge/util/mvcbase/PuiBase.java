@@ -20,14 +20,15 @@ import com.pi4j.context.Context;
  * <p>
  * For JavaFX-based GUIs that's already available (the JavaFX Application Thread).
  * <p>
- * For PUIs we need to do that ourselves. It's implemented as a provider/consumer-pattern (see {@link ConcurrentTaskQueue}.
+ * For PUIs we need to do that ourselves. It's implemented as a provider/consumer-pattern
+ * (see {@link ConcurrentTaskQueue}.
  */
 public abstract class PuiBase<M, C extends ControllerBase<M>> implements Projector<M, C> {
 
     // all PUI actions should be done asynchronously (to avoid UI freezing)
     private final ConcurrentTaskQueue<Void> queue = new ConcurrentTaskQueue<>();
 
-    protected final Context pi4J;
+    private final Context pi4J;
 
     public PuiBase(C controller, Context pi4J) {
         Objects.requireNonNull(pi4J);
@@ -61,11 +62,10 @@ public abstract class PuiBase<M, C extends ControllerBase<M>> implements Project
         final ExecutorService waitForFinishedService = Executors.newFixedThreadPool(1);
         // would be nice if this could just be a method reference
         async(() -> {
-                waitForFinishedService.shutdown();
-                return null;
-            },
-            unused -> {
-            });
+            waitForFinishedService.shutdown();
+            return null;
+        }, unused -> {
+        });
         try {
             //noinspection ResultOfMethodCallIgnored
             waitForFinishedService.awaitTermination(5, TimeUnit.SECONDS);

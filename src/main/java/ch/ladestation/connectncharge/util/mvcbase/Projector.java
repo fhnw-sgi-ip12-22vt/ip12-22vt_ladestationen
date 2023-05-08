@@ -29,7 +29,8 @@ interface Projector<M, C extends ControllerBase<M>> {
     }
 
     /**
-     * completely initialize all necessary UI-elements (like buttons, text-fields, etc. on GUI or distance sensors on PUI )
+     * completely initialize all necessary UI-elements
+     * (like buttons, text-fields, etc. on GUI or distance sensors on PUI )
      */
     void initializeParts();
 
