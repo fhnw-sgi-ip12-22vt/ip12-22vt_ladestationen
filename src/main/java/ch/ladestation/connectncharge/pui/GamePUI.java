@@ -1,0 +1,235 @@
+package ch.ladestation.connectncharge.pui;
+
+import ch.ladestation.connectncharge.controller.ApplicationControler;
+import ch.ladestation.connectncharge.model.*;
+import ch.ladestation.connectncharge.services.file.CSVReader;
+import ch.ladestation.connectncharge.util.mvcbase.PuiBase;
+import com.github.mbelling.ws281x.LedStrip;
+import com.github.mbelling.ws281x.LedStripType;
+import com.github.mbelling.ws281x.Ws281xLedStrip;
+import com.pi4j.context.Context;
+import com.pi4j.io.gpio.digital.DigitalInput;
+import com.pi4j.io.gpio.digital.PullResistance;
+import com.pi4j.io.spi.SpiBus;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+
+public class GamePUI extends PuiBase<Game, ApplicationControler> {
+
+    /**
+     * Logger instance
+     */
+    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final String HOUSE_FLAG = "H";
+
+    private List<MCP23S17> chips;
+    private LedStrip ledStrip;
+
+    private List<Edge> edges;
+    private List<Node> nodes;
+
+    public GamePUI(ApplicationControler controller, Context pi4J) {
+        super(controller, pi4J);
+    }
+
+    @Override
+    public void initializeParts() {
+        this.ledStrip = setupLEDStrip();
+        this.chips = setupGPIOExtensionICs(pi4J);
+    }
+
+    @Override
+    public void setupUiToActionBindings(ApplicationControler controller) {
+        addInterruptsToPinViews();
+    }
+
+    @Override
+    public void setupModelToUiBindings(Game model) {
+        onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
+            ledStrip.setStrip(0,0,0);
+            for(var seg : newValue){
+                int from = seg.getStartIndex();
+                int to = seg.getEndIndex();
+                for(var i = from; i < to; ++i)
+                    ledStrip.setPixel(i,seg.getColor());
+            }
+            ledStrip.render();
+        }));
+    }
+
+    /**
+     * Configures pins of the MCP23S17 ICs to listen for interrupts and
+     * adds a listener to every single one of them that calls
+     * handleEdgePressed with the correct chip no. & pin no.
+     */
+    private void addInterruptsToPinViews() {
+        try {
+            for (int i = 0; i < chips.size(); i++) {
+                var pinViews = chips.get(i).getAllPinsAsPulledUpInterruptInput();
+                for (var pinView : pinViews) {
+                    addEdgePressListenerToPinView(i, pinView);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("Error when trying to configure MCP23S17 pins: " + e.getMessage());
+        }
+    }
+
+    /**
+     * given a chip index and a {@link MCP23S17.PinView} object, this method will add a listener to the latter
+     * that calls the {@link GamePUI#handleEdgePressed} method with the corresponding {@link Edge} instance.
+     *
+     * @param indexOfIC the index into the {@link GamePUI#chips} list where the {@link MCP23S17} instance
+     *                  that the {@link MCP23S17.PinView} argument belongs to is stored.
+     * @param pinView   the {@link MCP23S17.PinView} object the interrupt originated from.
+     */
+    private void addEdgePressListenerToPinView(int indexOfIC, MCP23S17.PinView pinView) {
+        pinView.addListener((state, pin) -> {
+            if (!state) {
+                handleEdgePressed(lookUpChipAndPinNumberToEdge(indexOfIC, pin.getPinNumber()));
+            }
+        });
+    }
+
+    /**
+     * method that gets called every time someone tries to toggle an edge by pushing it down.
+     * NOTE: it is only called on release of the edge.
+     *
+     * @param edge the instance that represents the pressed edge
+     */
+    private void handleEdgePressed(Edge edge) {
+        logger.info("edge " + edge.getSegmentIndex() + " between "
+                + edge.getFromNodeId()
+                + " & "
+                + edge.getToNodeId() + " was pressed");
+    }
+
+    /**
+     * Will set up and initialise the LED-Strip
+     *
+     * @return the {@link LedStrip} object
+     */
+    private static LedStrip setupLEDStrip() {
+        LedStrip ledStrip = new Ws281xLedStrip(
+                845,
+                10,
+                800000,
+                10,
+                false,
+                LedStripType.WS2811_STRIP_GRB,
+                true
+        );
+        return ledStrip;
+    }
+    /**
+     * Will set up and initialise the MCP23S17 GPIO-Extension ICs
+     *
+     * @return two fully configured lists of {@link MCP23S17.PinView} objects.
+     * that means 2 * 16 extra GPIO Pins set as input, pulled up and interrupt enabled
+     * @throws IOException when the creation of the {@link MCP23S17} objects or
+     *                     gathering of the {@link MCP23S17.PinView} objects fail
+     */
+    private List<MCP23S17> setupGPIOExtensionICs(Context pi4J) {
+        var interruptPinConfig = DigitalInput.newConfigBuilder(pi4J)
+                .id("interrupt0")
+                .name("a MCP interrupt")
+                .address(22)
+                .pull(PullResistance.PULL_UP)
+                .provider("pigpio-digital-input");
+
+        var interruptPinChip0 = pi4J.create(interruptPinConfig);
+        var interruptPinChip1 = pi4J.create(interruptPinConfig.address(23).id("interrupt1"));
+        var interruptPinChip2 = pi4J.create(interruptPinConfig.address(24).id("interrupt2"));
+        var interruptPinChip3 = pi4J.create(interruptPinConfig.address(25).id("interrupt3"));
+        var interruptPinChip4 = pi4J.create(interruptPinConfig.address(27).id("interrupt4"));
+
+        DigitalInput[] interruptPins = {interruptPinChip0,
+                interruptPinChip1,
+                interruptPinChip2,
+                interruptPinChip3,
+                interruptPinChip4
+        };
+        List<MCP23S17> interruptChips;
+        try {
+            interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
+                    pi4J,
+                    SpiBus.BUS_1,
+                    interruptPins,
+                    5,
+                    true);
+        } catch (IOException e) {
+            throw new RuntimeException("Fatal error when instantiating MCP23S17 chips: " + e.getMessage());
+        }
+        return interruptChips;
+    }
+
+    private Map<Integer, Map<Integer, Edge>> pinToEdgeLUT = new HashMap<>();
+
+    private Map<Integer, Segment> segmentIdLUT = new HashMap<>();
+
+    public void instanceSegments() {
+        var records = CSVReader.readCSV();
+
+        int runningTotal = 0;
+        var retSegments = new ArrayList<Segment>();
+        for (int i = 1; i < records.size(); i++) {
+            var record = records.get(i);
+            int startIndex = runningTotal;
+            runningTotal += Integer.parseInt(record.get(1));
+            int endIndex = runningTotal - 1;
+
+
+            if (record.get(2).equals(HOUSE_FLAG)) {
+                int segmentId = Integer.parseInt(record.get(0));
+                var segment = new Node(segmentId, startIndex, endIndex);
+                nodes.add(segment);
+                segmentIdLUT.put(segmentId, segment);
+            } else {
+                int segmentId = Integer.parseInt(record.get(0));
+                int chip = Integer.parseInt(record.get(2));
+                int pin = Integer.parseInt(record.get(3));
+                int cost = Integer.parseInt(record.get(4));
+                int fromNode = Integer.parseInt(record.get(5));
+                int toNode = Integer.parseInt(record.get(6));
+                var segment = new Edge(segmentId, startIndex, endIndex, cost, fromNode, toNode);
+                edges.add(segment);
+
+                segmentIdLUT.put(segmentId, segment);
+
+                populateLUT(chip, pin, segment);
+
+            }
+        }
+
+        //linkNodeReferencesInAllEdges();
+    }
+
+    private void linkNodeReferencesInAllEdges() {
+        for (var edge : edges) {
+            edge.setFromNode((Node) lookUpSegmentIdToSegment(edge.getFromNodeId()));
+            edge.setToNode((Node) lookUpSegmentIdToSegment(edge.getToNodeId()));
+        }
+    }
+
+    private void populateLUT(int chip, int pin, Edge segment) {
+        pinToEdgeLUT.putIfAbsent(chip, new HashMap<>());
+        pinToEdgeLUT.computeIfPresent(chip, (key, oldValue) -> {
+            oldValue.put(pin, segment);
+            return oldValue;
+        });
+    }
+
+    public Edge lookUpChipAndPinNumberToEdge(int chipNo, int pinNo) {
+        return pinToEdgeLUT.get(chipNo).get(pinNo);
+    }
+
+    public Segment lookUpSegmentIdToSegment(int segmentId) {
+        return segmentIdLUT.get(segmentId);
+    }
+}
+
