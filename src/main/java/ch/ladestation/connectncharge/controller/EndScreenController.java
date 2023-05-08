@@ -22,11 +22,16 @@ public class EndScreenController {
 
     @FXML
     public void showEndPage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/endscreen.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css",
+                (Stage) ((Node) event.getSource()).getScene().getWindow());
+    }
+
+    public void goToGameScreen(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/gamepage.fxml"));
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add("/css/style.css");
-        stage.setTitle("Connect 'n Charge");
+        stage.setTitle("");
         stage.setMaximized(true);
         stage.setFullScreen(true);
         stage.setResizable(false);
@@ -34,4 +39,16 @@ public class EndScreenController {
         stage.show();
     }
 
+    public void goToNameInputScreen(ActionEvent actionEvent) throws IOException {
+        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/nameinput.fxml"));
+        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        scene.getStylesheets().add("/css/style.css");
+        stage.setTitle("Name Eingeben");
+        stage.setMaximized(true);
+        stage.setFullScreen(true);
+        stage.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+    }
 }
