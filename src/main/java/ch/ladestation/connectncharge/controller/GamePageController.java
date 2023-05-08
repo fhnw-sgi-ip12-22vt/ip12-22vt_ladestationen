@@ -1,12 +1,10 @@
 package ch.ladestation.connectncharge.controller;
 
-import ch.ladestation.connectncharge.AppStarter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -14,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -24,7 +21,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class SpielPageController implements Initializable {
+public class GamePageController implements Initializable {
 
     private LocalTime startTime = LocalTime.of(0, 0);
     @FXML
@@ -35,7 +32,6 @@ public class SpielPageController implements Initializable {
     private Button endGameButton;
     @FXML
     private AnchorPane popupPane; // updated data type to AnchorPane
-
     @FXML
     private Button stackMenu;
     @FXML
@@ -53,16 +49,8 @@ public class SpielPageController implements Initializable {
 
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/homepage.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add("/css/style.css");
-        stage.setTitle("Connect 'n Charge");
-        stage.setMaximized(true);
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
+            (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     @Override
@@ -70,18 +58,6 @@ public class SpielPageController implements Initializable {
         startTimer();
         stackMenu.setVisible(true);
         stackMenu.setOpacity(1);
-    }
-
-
-
-    private void startTimer() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            startTime = startTime.plusSeconds(1);
-            timerLabel.setText("Zeit: " + startTime.format(formatter));
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
     }
 
     @FXML
@@ -118,9 +94,32 @@ public class SpielPageController implements Initializable {
         menuPane.setVisible(true);
         menuPane.setOpacity(1);
     }
+
     @FXML
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
+    }
+
+    @FXML
+    private void handleHelpButton(ActionEvent event) throws IOException {
+        showHelpPage(event);
+        popupPane.setOpacity(0);
+        popupPane.setVisible(false);
+    }
+
+    private void showHelpPage(ActionEvent event) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css",
+            (Stage) ((Node) event.getSource()).getScene().getWindow());
+    }
+
+    private void startTimer() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            startTime = startTime.plusSeconds(1);
+            timerLabel.setText("Zeit: " + startTime.format(formatter));
+        }));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 }

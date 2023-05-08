@@ -1,17 +1,17 @@
-.root-pane {
+.loading-pane {
     -fx-pref-width: 800;
     -fx-pref-height: 480;
-    -fx-background-image: url("../images/LogoConnectnCharge.PNG");
+    -fx-background-image: url(".././images/LogoConnectnCharge.PNG");
     -fx-background-size: cover;
 }
 
-.root-pane .loading-button {
+.loading-pane .loading-button {
     -fx-min-width: 800;
     -fx-min-height: 480;
     -fx-background-color: transparent;
 }
 
-.home-pane {
+.root-pane {
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
     -fx-font-size: 16;
@@ -21,17 +21,20 @@
     -fx-background-size: cover;
 }
 
-.home-pane .title-label {
-    -fx-font-size: 10;
+.root-pane .title-label {
+    -fx-font-size: 152px;
     -fx-text-fill: #FFFFFF;
 }
 
-.home-pane .story-label {
-    -fx-font-size: 152;
-    -fx-text-fill: #FFFFFF;
+.root-pane .story-label {
+    -fx-text-fill: #000000;
+    -fx-background-color: transparent;
+    -fx-font-size: 15;
+    -fx-wrap-text: true;
+    -fx-wrap-width: 355.99999999999994;
 }
 
-.home-pane .button {
+.root-pane .button {
     -fx-background-radius: 5em;
     -fx-min-width: 400px;
     -fx-min-height: 400px;
@@ -39,4 +42,91 @@
     -fx-max-height: 400px;
     -fx-background-color: transparent;
 }
+
+.root-pane .standard-first-button {
+    -fx-background-color: #f4e158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 211px;
+    -fx-min-height: 52px;
+    -fx-max-width: 211px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 16;
+}
+
+.root-pane .standard-second-button {
+    -fx-background-color: #1E1E1E;
+    -fx-min-width: 211px;
+    -fx-min-height: 52px;
+    -fx-max-width: 211px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 16;
+    -fx-border-color: #3C3C3C;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .standard-menu-button {
+    -fx-layoutX: 741;
+    -fx-layoutY: 15;
+    -fx-min-width: 43px;
+    -fx-min-height: 43px;
+    -fx-max-width: 43px;
+    -fx-max-height: 43px;
+    -fx-background-image: url(".././images/HbMenue.png");
+}
+
+.root-pane .standard-help-button {
+    -fx-layoutX: 50;
+    -fx-layoutY: 15;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-background-image: url(".././images/HelpIcon.png");
+}
+
+.root-pane .standard-xclose-button {
+    -fx-layoutX: 741;
+    -fx-layoutY: 15;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-background-image: url(".././images/XClose.png");
+}
+
+.root-pane .right-circle {
+    -fx-layoutX: 793;
+    -fx-layoutY: 0;
+    -fx-min-width: 98px;
+    -fx-min-height: 98px;
+    -fx-max-width: 98px;
+    -fx-max-height: 98px;
+    -fx-background-color: #FFFFFF;
+}
+
+.root-pane .left-circle {
+    -fx-layoutX: 50;
+    -fx-layoutY: 0;
+    -fx-min-width: 98px;
+    -fx-min-height: 98px;
+    -fx-max-width: 98px;
+    -fx-max-height: 98px;
+    -fx-background-color: #FFFFFF;
+}
+
+.popup-pane {
+    -fx-pref-width: 515;
+    -fx-pref-height: 265;
+    -fx-background-color: #FFFFFF;
+    -fx-background-size: cover;
+}
+
+
+
 
