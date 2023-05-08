@@ -1,6 +1,6 @@
 package ch.ladestation.connectncharge.pui;
 
-import ch.ladestation.connectncharge.controller.ApplicationControler;
+import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.model.*;
 import ch.ladestation.connectncharge.services.file.CSVReader;
 import ch.ladestation.connectncharge.util.mvcbase.PuiBase;
@@ -19,22 +19,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-public class GamePUI extends PuiBase<Game, ApplicationControler> {
+public class GamePUI extends PuiBase<Game, ApplicationController> {
 
     /**
      * Logger instance
      */
     private final Logger logger = Logger.getLogger(getClass().getName());
-    private final String HOUSE_FLAG = "H";
+    private final String hOUSEFLAG = "H";
 
     private List<MCP23S17> chips;
     private LedStrip ledStrip;
 
     private List<Edge> edges;
     private List<Node> nodes;
+    private Map<Integer, Map<Integer, Edge>> pinToEdgeLUT = new HashMap<>();
+    private Map<Integer, Segment> segmentIdLUT = new HashMap<>();
 
-    public GamePUI(ApplicationControler controller, Context pi4J) {
+    public GamePUI(ApplicationController controller, Context pi4J) {
         super(controller, pi4J);
+    }
+
+    /**
+     * Will set up and initialise the LED-Strip
+     *
+     * @return the {@link LedStrip} object
+     */
+    private static LedStrip setupLEDStrip() {
+        LedStrip ledStrip = new Ws281xLedStrip(845, 10, 800000, 10, false, LedStripType.WS2811_STRIP_GRB, true);
+        return ledStrip;
     }
 
     @Override
@@ -44,19 +56,20 @@ public class GamePUI extends PuiBase<Game, ApplicationControler> {
     }
 
     @Override
-    public void setupUiToActionBindings(ApplicationControler controller) {
+    public void setupUiToActionBindings(ApplicationController controller) {
         addInterruptsToPinViews();
     }
 
     @Override
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
-            ledStrip.setStrip(0,0,0);
-            for(var seg : newValue){
+            ledStrip.setStrip(0, 0, 0);
+            for (var seg : newValue) {
                 int from = seg.getStartIndex();
                 int to = seg.getEndIndex();
-                for(var i = from; i < to; ++i)
-                    ledStrip.setPixel(i,seg.getColor());
+                for (var i = from; i < to; ++i) {
+                    ledStrip.setPixel(i, seg.getColor());
+                }
             }
             ledStrip.render();
         }));
@@ -103,29 +116,12 @@ public class GamePUI extends PuiBase<Game, ApplicationControler> {
      * @param edge the instance that represents the pressed edge
      */
     private void handleEdgePressed(Edge edge) {
-        logger.info("edge " + edge.getSegmentIndex() + " between "
-                + edge.getFromNodeId()
-                + " & "
+        logger.info("edge "
+                + edge.getSegmentIndex() + " between "
+                + edge.getFromNodeId() + " & "
                 + edge.getToNodeId() + " was pressed");
     }
 
-    /**
-     * Will set up and initialise the LED-Strip
-     *
-     * @return the {@link LedStrip} object
-     */
-    private static LedStrip setupLEDStrip() {
-        LedStrip ledStrip = new Ws281xLedStrip(
-                845,
-                10,
-                800000,
-                10,
-                false,
-                LedStripType.WS2811_STRIP_GRB,
-                true
-        );
-        return ledStrip;
-    }
     /**
      * Will set up and initialise the MCP23S17 GPIO-Extension ICs
      *
@@ -149,14 +145,14 @@ public class GamePUI extends PuiBase<Game, ApplicationControler> {
         var interruptPinChip4 = pi4J.create(interruptPinConfig.address(27).id("interrupt4"));
 
         DigitalInput[] interruptPins = {interruptPinChip0,
-                interruptPinChip1,
-                interruptPinChip2,
-                interruptPinChip3,
-                interruptPinChip4
-        };
+            interruptPinChip1,
+            interruptPinChip2,
+            interruptPinChip3,
+            interruptPinChip4};
         List<MCP23S17> interruptChips;
         try {
             interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
+
                     pi4J,
                     SpiBus.BUS_1,
                     interruptPins,
@@ -167,10 +163,6 @@ public class GamePUI extends PuiBase<Game, ApplicationControler> {
         }
         return interruptChips;
     }
-
-    private Map<Integer, Map<Integer, Edge>> pinToEdgeLUT = new HashMap<>();
-
-    private Map<Integer, Segment> segmentIdLUT = new HashMap<>();
 
     public void instanceSegments() {
         var records = CSVReader.readCSV();
@@ -184,7 +176,7 @@ public class GamePUI extends PuiBase<Game, ApplicationControler> {
             int endIndex = runningTotal - 1;
 
 
-            if (record.get(2).equals(HOUSE_FLAG)) {
+            if (record.get(2).equals(hOUSEFLAG)) {
                 int segmentId = Integer.parseInt(record.get(0));
                 var segment = new Node(segmentId, startIndex, endIndex);
                 nodes.add(segment);

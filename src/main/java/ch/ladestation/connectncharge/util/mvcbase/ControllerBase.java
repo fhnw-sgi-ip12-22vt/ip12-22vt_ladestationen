@@ -25,7 +25,7 @@ public abstract class ControllerBase<M> {
     private ConcurrentTaskQueue<M> actionQueue;
 
     // the model managed by this Controller. Only subclasses have direct access
-    private final M model;
+    protected final M model;
 
     /**
      * Controller needs a Model.

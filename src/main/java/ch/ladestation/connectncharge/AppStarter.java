@@ -1,6 +1,6 @@
 package ch.ladestation.connectncharge;
 
-import ch.ladestation.connectncharge.controller.ApplicationControler;
+import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.util.Pi4JContext;
@@ -15,29 +15,30 @@ import java.io.IOException;
 
 public class AppStarter extends Application {
     private static final MvcLogger LOGGER = new MvcLogger();
+
     public static void main(String[] args) {
         Context pi4J = Pi4JContext.createContext();
 
-        ApplicationControler controller = new ApplicationControler(new Game());
+        ApplicationController controller = new ApplicationController(new Game());
         var gPUI = new GamePUI(controller, pi4J);
 
         LOGGER.logInfo("App started");
 
         /////////////////////TMMMMMMMMMMMMMP
         int[] terms = {
-                81,
-                27,
-                11,
-                31,
-                52,
-                47,
-                33,
-                62,
-                77,
-                16,
-                95,
-                18,
-                67};
+            81,
+            27,
+            11,
+            31,
+            52,
+            47,
+            33,
+            62,
+            77,
+            16,
+            95,
+            18,
+            67};
 
         for (int terminal : terms) {
             controller.segmentToggled(gPUI.lookUpSegmentIdToSegment(terminal));

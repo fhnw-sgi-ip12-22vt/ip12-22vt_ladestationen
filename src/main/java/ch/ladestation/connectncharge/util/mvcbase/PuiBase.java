@@ -28,7 +28,7 @@ public abstract class PuiBase<M, C extends ControllerBase<M>> implements Project
     // all PUI actions should be done asynchronously (to avoid UI freezing)
     private final ConcurrentTaskQueue<Void> queue = new ConcurrentTaskQueue<>();
 
-    private final Context pi4J;
+    protected final Context pi4J;
 
     public PuiBase(C controller, Context pi4J) {
         Objects.requireNonNull(pi4J);
