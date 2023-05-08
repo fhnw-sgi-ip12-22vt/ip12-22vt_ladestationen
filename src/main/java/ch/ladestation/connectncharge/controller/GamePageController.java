@@ -1,12 +1,10 @@
 package ch.ladestation.connectncharge.controller;
 
-import ch.ladestation.connectncharge.AppStarter;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -23,7 +21,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
-public class SpielPageController implements Initializable {
+public class GamePageController implements Initializable {
 
     private LocalTime startTime = LocalTime.of(0, 0);
     private LocalTime publicEndTime;
@@ -35,7 +33,6 @@ public class SpielPageController implements Initializable {
     private Button endGameButton;
     @FXML
     private AnchorPane popupPane; // updated data type to AnchorPane
-
     @FXML
     private Button stackMenu;
 
@@ -58,16 +55,8 @@ public class SpielPageController implements Initializable {
 
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/homepage.fxml"));
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add("/css/style.css");
-        stage.setTitle("Connect 'n Charge");
-        stage.setMaximized(true);
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
+                (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
     @Override
@@ -173,5 +162,17 @@ public class SpielPageController implements Initializable {
 
     public Label getCosts() {
         return costs;
+    }
+
+    @FXML
+    private void handleHelpButton(ActionEvent event) throws IOException {
+        showHelpPage(event);
+        popupPane.setOpacity(0);
+        popupPane.setVisible(false);
+    }
+
+    private void showHelpPage(ActionEvent event) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css",
+                (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 }
