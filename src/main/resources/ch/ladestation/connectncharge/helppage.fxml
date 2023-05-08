@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="515.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.HelpPageController">
+   <children>
+      <Label layoutX="214.0" layoutY="-1.0" prefHeight="59.0" prefWidth="86.0" text="Hilfe" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="37.0" />
+         </font>
+      </Label>
+      <Circle fill="#f4e158" layoutX="509.0" layoutY="-6.0" radius="57.0" stroke="BLACK" strokeType="INSIDE" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="58.0" prefHeight="198.0" prefWidth="510.0" vbarPolicy="ALWAYS" vmax="50.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

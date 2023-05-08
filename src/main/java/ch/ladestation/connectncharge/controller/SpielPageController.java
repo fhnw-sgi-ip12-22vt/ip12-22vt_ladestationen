@@ -85,14 +85,14 @@ public class SpielPageController implements Initializable {
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             startTime = startTime.plusSeconds(1);
 
-            // Überprüfe, ob die Zeit gleich oder größer als 1 Stunde ist
+            // Überprüfegi, ist die  Zeit gleich oder größer als 1 Stunde ist
             if (startTime.isAfter(LocalTime.of(0, 59, 59))) {
                 timeline.stop(); // Stoppe den Timer
                 endGame(); // Rufe die endGame-Methode auf, wenn die maximale Zeit erreicht ist
-                startTime = LocalTime.of(1, 0); // Setze die Zeit auf genau 1 Stunde
+                startTime = LocalTime.of(1, 0); // set time on 1h
             }
 
-            // Aktualisiere den Text der Anzeige
+            // update
             if (startTime.equals(LocalTime.of(1, 0))) {
                 timerLabel.setText("Zeit: 60:00");
             } else {
@@ -109,12 +109,12 @@ public class SpielPageController implements Initializable {
 
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
-        // Füge die zusätzliche Zeit nur hinzu, wenn die aktuelle Zeit kleiner als 60 Minuten ist
+        //Add the new time only if the current Time is less 60min.
         if (!startTime.equals(LocalTime.of(1, 0))) {
-            // Prüfe, ob die zusätzliche Zeit die 60 Minuten überschreiten würde
+            // check if the 60min is over the limit.
             LocalTime newTime = startTime.plusSeconds(additionalTime);
             if (newTime.isAfter(LocalTime.of(1, 0))) {
-                startTime = LocalTime.of(1, 0); // Setze die Zeit auf genau 1 Stunde
+                startTime = LocalTime.of(1, 0); // Set the timer at 1 hour.
             } else {
                 startTime = newTime;
             }
@@ -145,7 +145,7 @@ public class SpielPageController implements Initializable {
 
     @FXML
     private void handleCancelEndGameButton(ActionEvent event) {
-        // Schließen Sie das Popup und lassen Sie das Spiel weiterlaufen.
+        // close the pop up and let the game still run.
         popupPane.setOpacity(0);
         popupPane.setVisible(false);
     }
@@ -165,8 +165,8 @@ public class SpielPageController implements Initializable {
     }
 
     private void endGame() {
-        saveEndTime(); // Rufe die saveEndTime-Methode auf
-        // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
+        saveEndTime(); // call saveEndTime method.
+        // endGame() have to get called for end the game.
     }
     @FXML
     public  void showCost(){
