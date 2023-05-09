@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 public class SpielPageController implements Initializable {
 
     private LocalTime startTime = LocalTime.of(0, 0);
+    private LocalTime publicEndTime;
     @FXML
     private Label timerLabel;
     @FXML
@@ -46,10 +47,8 @@ public class SpielPageController implements Initializable {
     @FXML
     private int additionalTime = 15;
 
-    public LocalTime publicEndTime;
-
     @FXML
-    public Label costs;
+    private Label costs;
     @FXML
     private Parent root;
     @FXML
@@ -78,8 +77,6 @@ public class SpielPageController implements Initializable {
         stackMenu.setOpacity(1);
     }
 
-
-
     private void startTimer() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
@@ -103,10 +100,6 @@ public class SpielPageController implements Initializable {
         timeline.play();
     }
 
-
-
-
-
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
         //Add the new time only if the current Time is less 60min.
@@ -125,9 +118,6 @@ public class SpielPageController implements Initializable {
         additionalTime += 15;
         addTimeButton.setText("Tipp +" + additionalTime + "sec");
     }
-
-
-
 
     @FXML
     private void handleEndGameButton(ActionEvent event) {
@@ -155,11 +145,13 @@ public class SpielPageController implements Initializable {
         menuPane.setVisible(true);
         menuPane.setOpacity(1);
     }
+
     @FXML
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
     }
+
     private void saveEndTime() {
         publicEndTime = startTime;
     }
@@ -168,8 +160,17 @@ public class SpielPageController implements Initializable {
         saveEndTime(); // call saveEndTime method.
         // endGame() have to get called for end the game.
     }
-    @FXML
-    public  void showCost(){
 
+    @FXML
+    public void showCost() {
+
+    }
+
+    public LocalTime getPublicEndTime() {
+        return publicEndTime;
+    }
+
+    public Label getCosts() {
+        return costs;
     }
 }

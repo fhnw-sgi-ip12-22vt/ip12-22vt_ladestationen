@@ -1,6 +1,6 @@
 package ch.ladestation.connectncharge;
 
-import ch.ladestation.connectncharge.pui.Main;
+import ch.ladestation.connectncharge.controller.PUIController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -9,6 +9,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class AppStarter extends Application {
+    public static void main(String[] args) {
+        PUIController pc = new PUIController();
+        launch();
+    }
+
     @Override
     public void start(Stage stage) throws IOException {
         try {
@@ -26,10 +31,5 @@ public class AppStarter extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        Main.main(new String[]{});
-        launch();
     }
 }
