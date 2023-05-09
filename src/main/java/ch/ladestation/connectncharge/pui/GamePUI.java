@@ -70,7 +70,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
             synchronized (ledStrip) {
-                ledStrip.setStrip(0, 0, 0);
+                changeLEDSegmentState(oldValue, false);
                 changeLEDSegmentState(newValue, true);
                 ledStrip.render();
             }
