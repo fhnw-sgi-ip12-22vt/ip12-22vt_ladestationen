@@ -70,6 +70,11 @@
     -fx-text-fill: #FFFFFF;
 }
 
+.root-pane .name-input-textfield {
+    -fx-text-fill: #919191;
+    -fx-padding-left: 5;
+}
+
 .root-pane .end-screen-label {
     -fx-font-size: 35px;
     -fx-text-fill: #ffffff;
