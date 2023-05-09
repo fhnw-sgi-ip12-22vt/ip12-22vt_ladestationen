@@ -15,8 +15,8 @@ public class EdgePresserController {
     private AnchorPane menuPane;
 
     @FXML
-    public void showEdgePresser(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css",
+    public void handleNextButton(ActionEvent event) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml", "/css/style.css",
             (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 

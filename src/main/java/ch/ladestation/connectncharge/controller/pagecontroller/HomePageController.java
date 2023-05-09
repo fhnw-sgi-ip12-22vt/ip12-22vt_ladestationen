@@ -19,7 +19,7 @@ public class HomePageController {
 
     @FXML
     public void handleShowEdgePresser(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml", "/css/style.css",
+        StageHandler.openStage("/ch/ladestation/connectncharge/edgepresserpage.fxml", "/css/style.css",
             (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
@@ -37,6 +37,7 @@ public class HomePageController {
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
+        menuPane.getScene().getRoot();
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/homepage.fxml");
         StageHandler.openStage(HELP_FXML_PATH, CSS_PATH, (Stage) ((Node) event.getSource()).getScene().getWindow());
     }

@@ -121,20 +121,46 @@
     -fx-background-color: #FFFFFF;
 }
 
+
+.root-pane .help-text-area {
+    -fx-wrap-text: true;
+    -fx-min-width: 589px;
+    -fx-min-height: 200px;
+    -fx-max-width: 589px;
+    -fx-max-height: 200px;
+    -fx-control-inner-background: #1E1E1E;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: transparent;
+}
+
 .popup-pane {
-    -fx-pref-width: 515;
-    -fx-pref-height: 265;
+    -fx-min-width: 515px;
+    -fx-min-height: 265px;
+    -fx-max-width: 515px;
+    -fx-max-height: 265px;
     -fx-background-color: #FFFFFF;
     -fx-background-size: cover;
 }
 
 .menu-pane {
-    -fx-pref-width: 650px;
-    -fx-pref-height: 480px;
+    -fx-min-width: 300 pxpx;
+    -fx-min-height: 480px;
+    -fx-max-width: 300 pxpx;
+    -fx-max-height: 480px;
     -fx-background-color: #f4e158;
     -fx-background-size: cover;
+    -fx-background-radius: 25px;
     -fx-layoutX: 0;
     -fx-layoutY: 0;
+
+}
+
+.menu-pane .info-text {
+    -fx-min-width: 165px;
+    -fx-min-height: 43px;
+    -fx-max-width: 165px;
+    -fx-max-height: 43px;
+    -fx-alignment: left;
 }
 
 

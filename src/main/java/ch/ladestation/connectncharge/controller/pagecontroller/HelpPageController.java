@@ -9,11 +9,12 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class HelpPageController {
-    private String fxmlFileName;
+    private static final String DEFAUL_FXML_PATH = "/ch/ladestation/connectncharge/homepage.fxml";
 
     @FXML
     private void handleXCloseButton(ActionEvent event) throws IOException {
-        StageHandler.openStage(StageHandler.getLastFxmlPath(), "/css/style.css",
+        String fxmlPath = StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() : DEFAUL_FXML_PATH;
+        StageHandler.openStage(fxmlPath, "/css/style.css",
             (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 }

@@ -11,49 +11,21 @@
     <children>
         <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
         <Circle fx:id="r" fill="#f4e158" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-        <Label layoutX="101.0" layoutY="123.0" prefHeight="66.0" prefWidth="517.0" text="Drücke die leuchtende Kante, um das Spiel zu starten" textFill="WHITE" wrapText="true">
+        <Label layoutX="141.0" layoutY="122.0" prefHeight="66.0" prefWidth="517.0" text="Drücke die leuchtende Kante, um das Spiel zu starten" textFill="WHITE" wrapText="true">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-      <StackPane layoutX="31.0" layoutY="25.0" maxHeight="60.0" maxWidth="53.0" prefHeight="43.0" prefWidth="43.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css">
-         <children>
-            <Button fx:id="helpIconButton" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="54.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="60.0" prefWidth="54.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
-         </children>
-      </StackPane>
-      <StackPane layoutX="731.0" layoutY="26.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
-         <children>
-            <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
-         </children>
-      </StackPane>
-      <AnchorPane fx:id="menuPane" layoutX="10.0" layoutY="10.0" opacity="0.0" prefHeight="242.0" prefWidth="480.0" style="-fx-background-color: #f4e158;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
-         <children>
-            <Button layoutX="14.0" layoutY="124.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Bonus Spiel">
-               <font>
-                  <Font name="Arial Bold" size="18.0" />
-               </font>
-            </Button>
-            <Button layoutX="14.0" layoutY="176.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Rangliste">
-               <font>
-                  <Font name="Arial Bold" size="18.0" />
-               </font>
-            </Button>
-            <Button layoutX="14.0" layoutY="427.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Admin">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
-            <Label layoutX="19.0" prefHeight="60.0" prefWidth="158.0" text="Menü">
-               <font>
-                  <Font name="System Bold" size="32.0" />
-               </font>
-            </Label>
-            <Button fx:id="menuCloseButton" layoutX="176.0" layoutY="11.0" minWidth="30.0" mnemonicParsing="false" onAction="#handleMenuCloseButton" prefHeight="38.0" prefWidth="60.0" text="X">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Button>
-         </children>
-      </AnchorPane>
+        <StackPane layoutX="20.0" layoutY="14.0" maxHeight="60.0" maxWidth="53.0" prefHeight="43.0" prefWidth="43.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css">
+            <children>
+                <Button fx:id="helpIconButton" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="54.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="60.0" prefWidth="54.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+            </children>
+        </StackPane>
+        <StackPane layoutX="731.0" layoutY="26.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
+            <children>
+                <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+            </children>
+        </StackPane>
+        <Button layoutX="200.0" layoutY="40.0" maxHeight="415.0" maxWidth="492.0" minHeight="302.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="415.0" prefWidth="492.0" styleClass="loading-button" stylesheets="@../../../css/style.css" />
     </children>
 </AnchorPane>

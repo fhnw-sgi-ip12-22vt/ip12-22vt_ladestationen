@@ -175,6 +175,7 @@ public class GamePageController implements Initializable {
     }
 
     private void showHelpPage(ActionEvent event) throws IOException {
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
         StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css",
                 (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
