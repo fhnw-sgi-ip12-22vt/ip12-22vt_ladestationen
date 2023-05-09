@@ -10,6 +10,9 @@ import java.util.Arrays;
 public class ApplicationController extends ControllerBase<Game> {
     public ApplicationController(Game model) {
         super(model);
+        model.activatedEdges.onChange((oldValue, newValue) -> {
+            updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+        });
     }
 
     public void edgePressed(Edge edge) {
@@ -23,12 +26,16 @@ public class ApplicationController extends ControllerBase<Game> {
         } else {
             edge.off();
             Edge[] oldValues = model.activatedEdges.getValues();
-            Edge[] newValues =
-                    Arrays.stream(oldValues)
-                            .filter(curr -> curr != edge)
-                            .toArray(Edge[]::new);
+            Edge[] newValues = Arrays.stream(oldValues).filter(curr -> curr != edge).toArray(Edge[]::new);
             setValues(model.activatedEdges, newValues);
         }
+
+
+    }
+
+
+    public void updateScore(int score) {
+        setValue(model.currentScore, score);
     }
 
     public void setTerminals(Node[] terms) {

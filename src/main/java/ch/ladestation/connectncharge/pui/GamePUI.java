@@ -14,10 +14,7 @@ import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.io.spi.SpiBus;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class GamePUI extends PuiBase<Game, ApplicationController> {
@@ -125,7 +122,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
                                                MCP23S17.PinView pinView,
                                                ApplicationController controller) {
         pinView.addListener((state, pin) -> {
-            if (!state) {
+            if (state) {
                 handleEdgePressed(lookUpChipAndPinNumberToEdge(indexOfIC, pin.getPinNumber()), controller);
             }
         });
@@ -139,6 +136,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
      */
     private void handleEdgePressed(Edge edge, ApplicationController controller) {
         controller.edgePressed(edge);
+        //controller.updateScore();
         logger.info("edge "
                 + edge.getSegmentIndex() + " between "
                 + edge.getFromNodeId() + " & "
