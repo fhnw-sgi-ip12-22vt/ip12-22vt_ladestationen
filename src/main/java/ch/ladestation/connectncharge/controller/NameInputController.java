@@ -8,6 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -15,6 +16,8 @@ import java.io.IOException;
 
 public class NameInputController {
 
+    @FXML
+    public TextField txtNameInput;
     @FXML
     private Parent root;
     @FXML
@@ -43,11 +46,11 @@ public class NameInputController {
     }
 
     public void handleInputName(ActionEvent actionEvent) {
-        //TODO: Input Name
+        String name = txtNameInput.getText();
     }
 
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/nameinput.fxml"));
+        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/highscore.fxml"));
         stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add("/css/style.css");

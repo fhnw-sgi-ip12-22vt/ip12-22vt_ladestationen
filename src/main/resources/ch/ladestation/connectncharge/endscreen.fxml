@@ -17,7 +17,7 @@
             <Font name="System Bold" size="35.0" />
          </font>
       </Text>
-      <Button fx:id="btnPlayAgain" layoutX="211.0" layoutY="267.0" mnemonicParsing="false" onAction="#handlePlayAgainButton" prefHeight="43.0" prefWidth="175.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen:">
+      <Button fx:id="btnPlayAgain" layoutX="194.0" layoutY="267.0" mnemonicParsing="false" onAction="#handlePlayAgainButton" prefHeight="43.0" prefWidth="175.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen:">
          <font>
             <Font size="19.0" />
          </font>
@@ -30,7 +30,7 @@
             <Image url="@../../../images/trophy.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnHighscore" layoutX="435.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleNameInputButton" prefHeight="43.0" prefWidth="175.0" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Rangliste" textFill="WHITE">
+      <Button fx:id="btnHighscore" layoutX="423.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleNameInputButton" prefHeight="43.0" prefWidth="175.0" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Rangliste" textFill="WHITE">
          <font>
             <Font size="19.0" />
          </font>
@@ -38,12 +38,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Label fx:id="lblTime" layoutX="398.0" layoutY="211.0" prefHeight="17.0" prefWidth="270.0" textFill="WHITE">
+      <Label fx:id="lblTime" layoutX="398.0" layoutY="209.0" prefHeight="17.0" prefWidth="270.0" textFill="WHITE">
          <font>
             <Font size="35.0" />
          </font>
       </Label>
-      <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
-      <Button fx:id="btnMenu" layoutX="575.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleMenuClick" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" />
+      <Circle fill="#f4e158" layoutX="779.0" layoutY="14.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
+      <Button fx:id="btnMenu" layoutX="726.0" layoutY="24.0" mnemonicParsing="false" onAction="#handleMenuClick" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" />
    </children>
 </AnchorPane>

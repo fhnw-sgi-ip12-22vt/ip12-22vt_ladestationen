@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 public class GamePageController implements Initializable {
 
     private LocalTime startTime = LocalTime.of(0, 0);
-    private LocalTime publicEndTime;
+    public LocalTime publicEndTime;
     @FXML
     private Label timerLabel;
     @FXML
@@ -149,6 +149,13 @@ public class GamePageController implements Initializable {
     private void endGame() {
         saveEndTime(); // Rufe die saveEndTime-Methode auf
         // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
+        try {
+            StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css",
+                    (Stage) timerLabel.getScene().getWindow());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML
