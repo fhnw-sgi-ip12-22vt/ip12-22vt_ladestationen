@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
+import javafx.event.ActionEvent;
 import java.io.IOException;
 
 public class AdminController {
@@ -36,13 +36,13 @@ public class AdminController {
     private GridPane keypadGridPane;
 
     @FXML
-    public AnchorPane codeBackground;
+    private AnchorPane codeBackground;
 
     @FXML
-    public Button deleteButton;
+    private Button deleteButton;
 
     @FXML
-    public Button stopButton;
+    private Button stopButton;
 
     @FXML
     private Label errorMessage;
@@ -50,7 +50,7 @@ public class AdminController {
     private TextField[] textFields;
 
     public void initialize() {
-        textFields = new TextField[]{textField1, textField2, textField3, textField4, textField5, textField6};
+        textFields = new TextField[] {textField1, textField2, textField3, textField4, textField5, textField6};
         keypadGridPane.setVisible(false);
         errorMessage.setVisible(false);
     }
@@ -66,7 +66,7 @@ public class AdminController {
     }
 
     @FXML
-    private void onKeyPressed(MouseEvent event) throws IOException {
+    private void onKeyPressed(MouseEvent event) {
         Button pressedButton = (Button) event.getSource();
         String inputNumber = pressedButton.getText();
 
@@ -102,12 +102,17 @@ public class AdminController {
         return true;
     }
 
-    private void checkCode(MouseEvent event) throws IOException {
-        String enteredCode = String.join("", textField1.getText(), textField2.getText(), textField3.getText(), textField4.getText(), textField5.getText(), textField6.getText());
+    private void checkCode(MouseEvent event) {
+        String enteredCode = String.join("", textField1.getText(), textField2.getText(), textField3.getText(),
+            textField4.getText(), textField5.getText(), textField6.getText());
 
         if (enteredCode.equals("123456")) {
-            StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
-                (Stage) ((Node) event.getSource()).getScene().getWindow());
+            try {
+                StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
+                    (Stage) ((Node) event.getSource()).getScene().getWindow());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         } else {
             errorMessage.setText("Falscher Code");
             errorMessage.setVisible(true);
@@ -117,9 +122,14 @@ public class AdminController {
         }
     }
 
+
     @FXML
-    private void onStopButtonClicked(MouseEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
-            (Stage) ((Node) event.getSource()).getScene().getWindow());
+    private void onStopButtonClicked(ActionEvent event) {
+        try {
+            StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
+                (Stage) ((Node) event.getSource()).getScene().getWindow());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
