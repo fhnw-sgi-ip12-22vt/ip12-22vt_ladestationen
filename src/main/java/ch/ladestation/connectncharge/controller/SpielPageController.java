@@ -1,6 +1,9 @@
 package ch.ladestation.connectncharge.controller;
 
 import ch.ladestation.connectncharge.AppStarter;
+import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
+import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -21,9 +24,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class SpielPageController implements Initializable {
+public class SpielPageController implements ViewMixin<Game, ControllerBase<Game>>, Initializable {
 
     private LocalTime startTime = LocalTime.of(0, 0);
     private LocalTime publicEndTime;
@@ -58,7 +62,9 @@ public class SpielPageController implements Initializable {
 
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/homepage.fxml"));
+        FXMLLoader loader =
+            new FXMLLoader(AppStarter.class.getResource("/ch/ladestation/connectncharge/homepage.fxml"));
+        root = loader.load();
         stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         scene.getStylesheets().add("/css/style.css");
@@ -75,6 +81,10 @@ public class SpielPageController implements Initializable {
         startTimer();
         stackMenu.setVisible(true);
         stackMenu.setOpacity(1);
+    }
+
+    public void setController(ApplicationController controller) {
+        init(controller);
     }
 
     private void startTimer() {
@@ -173,5 +183,24 @@ public class SpielPageController implements Initializable {
 
     public Label getCosts() {
         return costs;
+    }
+
+    @Override
+    public void setupModelToUiBindings(Game model) {
+        onChangeOf(model.currentScore).convertedBy(String::valueOf).update(costs.textProperty());
+    }
+
+    @Override
+    public void initializeParts() {
+    }
+
+    @Override
+    public void layoutParts() {
+
+    }
+
+    @Override
+    public List<String> getStylesheets() {
+        return null;
     }
 }
