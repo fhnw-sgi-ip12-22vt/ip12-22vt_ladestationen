@@ -1,14 +1,10 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
-import ch.ladestation.connectncharge.AppStarter;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -36,11 +32,65 @@ public class NameInputController implements Initializable {
     @FXML
     public AnchorPane anchorPane;
     @FXML
-    private Parent root;
+    public Button q;
     @FXML
-    private Stage stage;
+    public Button w;
     @FXML
-    private Scene scene;
+    public Button e;
+    @FXML
+    public Button r;
+    @FXML
+    public Button t;
+    @FXML
+    public Button z;
+    @FXML
+    public Button u;
+    @FXML
+    public Button i;
+    @FXML
+    public Button o;
+    @FXML
+    public Button p;
+    @FXML
+    public Button ü;
+    @FXML
+    public Button a;
+    @FXML
+    public Button s;
+    @FXML
+    public Button d;
+    @FXML
+    public Button f;
+    @FXML
+    public Button g;
+    @FXML
+    public Button h;
+    @FXML
+    public Button j;
+    @FXML
+    public Button k;
+    @FXML
+    public Button l;
+    @FXML
+    public Button ö;
+    @FXML
+    public Button ä;
+    @FXML
+    public Button y;
+    @FXML
+    public Button x;
+    @FXML
+    public Button c;
+    @FXML
+    public Button v;
+    @FXML
+    public Button b;
+    @FXML
+    public Button n;
+    @FXML
+    public Button m;
+    @FXML
+    public Label lblWarning;
 
     private boolean capsLockOn = false;
 
@@ -53,7 +103,6 @@ public class NameInputController implements Initializable {
     public void goBackToEndScreen(MouseEvent mouseEvent) throws IOException {
         StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css",
                 (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow());
-
     }
 
     @Override
@@ -63,6 +112,16 @@ public class NameInputController implements Initializable {
                 showKeyboard();
             }
         });
+
+        txtNameInput.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.length() > 10) {
+                txtNameInput.setText(oldValue);
+                lblWarning.setText("Zu lang");
+            } else {
+                lblWarning.setText("");
+            }
+        });
+
         anchorPane.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
                 hideKeyboard();
@@ -90,6 +149,35 @@ public class NameInputController implements Initializable {
         if (capsLockOn) {
             capsLockOn = false;
             btnCaps.setStyle("-fx-background-color: #ffffff");
+            q.setText("q");
+            w.setText("w");
+            e.setText("e");
+            r.setText("r");
+            t.setText("t");
+            z.setText("z");
+            u.setText("u");
+            i.setText("i");
+            o.setText("o");
+            p.setText("p");
+            ü.setText("ü");
+            a.setText("a");
+            s.setText("s");
+            d.setText("d");
+            f.setText("f");
+            g.setText("g");
+            h.setText("h");
+            j.setText("j");
+            k.setText("k");
+            l.setText("l");
+            ö.setText("ö");
+            ä.setText("ä");
+            y.setText("y");
+            x.setText("x");
+            c.setText("c");
+            v.setText("v");
+            b.setText("b");
+            n.setText("n");
+            m.setText("m");
         }
     }
 
@@ -97,9 +185,67 @@ public class NameInputController implements Initializable {
         if (capsLockOn) {
             capsLockOn = false;
             btnCaps.setStyle("-fx-background-color: #ffffff");
+            q.setText("q");
+            w.setText("w");
+            e.setText("e");
+            r.setText("r");
+            t.setText("t");
+            z.setText("z");
+            u.setText("u");
+            i.setText("i");
+            o.setText("o");
+            p.setText("p");
+            ü.setText("ü");
+            a.setText("a");
+            s.setText("s");
+            d.setText("d");
+            f.setText("f");
+            g.setText("g");
+            h.setText("h");
+            j.setText("j");
+            k.setText("k");
+            l.setText("l");
+            ö.setText("ö");
+            ä.setText("ä");
+            y.setText("y");
+            x.setText("x");
+            c.setText("c");
+            v.setText("v");
+            b.setText("b");
+            n.setText("n");
+            m.setText("m");
         } else {
             capsLockOn = true;
             btnCaps.setStyle("-fx-background-color: #AEAEAE");
+            q.setText("Q");
+            w.setText("W");
+            e.setText("E");
+            r.setText("R");
+            t.setText("T");
+            z.setText("Z");
+            u.setText("U");
+            i.setText("I");
+            o.setText("O");
+            p.setText("P");
+            ü.setText("Ü");
+            a.setText("A");
+            s.setText("S");
+            d.setText("D");
+            f.setText("F");
+            g.setText("G");
+            h.setText("H");
+            j.setText("J");
+            k.setText("K");
+            l.setText("L");
+            ö.setText("Ö");
+            ä.setText("Ä");
+            y.setText("Y");
+            x.setText("X");
+            c.setText("C");
+            v.setText("V");
+            b.setText("B");
+            n.setText("N");
+            m.setText("M");
         }
     }
 
