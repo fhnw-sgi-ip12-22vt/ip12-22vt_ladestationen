@@ -6,17 +6,18 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #1E1E1E;" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.EndScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #1E1E1E;" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.EndScreenController">
    <children>
       <Text fill="WHITE" layoutX="215.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="end-screen-label" text="Dein Score:">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>
       </Text>
-      <Button fx:id="btnPlayAgain" layoutX="211.0" layoutY="267.0" mnemonicParsing="false" onAction="#goToGameScreen" prefHeight="43.0" prefWidth="175.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen:">
+      <Button fx:id="btnPlayAgain" layoutX="211.0" layoutY="267.0" mnemonicParsing="false" onAction="#handlePlayAgainButton" prefHeight="43.0" prefWidth="175.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen:">
          <font>
             <Font size="19.0" />
          </font>
@@ -29,7 +30,7 @@
             <Image url="@../../../images/trophy.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnHighscore" layoutX="435.0" layoutY="267.0" mnemonicParsing="false" onAction="#goToNameInputScreen" prefHeight="43.0" prefWidth="175.0" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Rangliste" textFill="WHITE">
+      <Button fx:id="btnHighscore" layoutX="435.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleNameInputButton" prefHeight="43.0" prefWidth="175.0" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Rangliste" textFill="WHITE">
          <font>
             <Font size="19.0" />
          </font>
@@ -42,5 +43,7 @@
             <Font size="35.0" />
          </font>
       </Label>
+      <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
+      <Button fx:id="btnMenu" layoutX="575.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleMenuClick" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" />
    </children>
 </AnchorPane>

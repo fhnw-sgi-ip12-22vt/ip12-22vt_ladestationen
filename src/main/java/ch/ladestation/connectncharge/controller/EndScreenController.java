@@ -7,11 +7,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class EndScreenController {
+    @FXML
+    public Button btnHighscore;
+    @FXML
+    public Button btnPlayAgain;
+    @FXML
+    public Label lblTime;
+
 
     @FXML
     private Parent root;
@@ -26,29 +36,28 @@ public class EndScreenController {
                 (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 
-    public void goToGameScreen(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/gamepage.fxml"));
-        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add("/css/style.css");
-        stage.setTitle("");
-        stage.setMaximized(true);
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+    @FXML
+    public void handlePlayAgainButton(ActionEvent actionEvent) throws IOException {
+        showGameScreen(actionEvent);
     }
 
-    public void goToNameInputScreen(ActionEvent actionEvent) throws IOException {
-        root = FXMLLoader.load(AppStarter.class.getResource("/ch/ladestation/connectncharge/nameinput.fxml"));
-        stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add("/css/style.css");
-        stage.setTitle("Name Eingeben");
-        stage.setMaximized(true);
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+    public void showGameScreen(ActionEvent actionEvent) throws IOException{
+        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css",
+                (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
+
     }
+
+    @FXML
+    public void handleNameInputButton(ActionEvent actionEvent) throws IOException {
+        showNameInputScreen(actionEvent);
+    }
+
+
+    public void showNameInputScreen(ActionEvent actionEvent) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml", "/css/style.css",
+                (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
+    }
+
+
+
 }
