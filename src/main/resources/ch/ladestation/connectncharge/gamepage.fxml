@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.GamePageController">
+    <children>
+        <Label alignment="CENTER" layoutX="481.0" layoutY="195.0" prefHeight="69.0" prefWidth="98.0" text="Kosten" textAlignment="JUSTIFY" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="27.0" />
+            </font>
+        </Label>
+        <Button fx:id="endGameButton" layoutX="530.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleEndGameButton" prefHeight="38.0" prefWidth="130.0" styleClass="standard-second-button" text="Spiel beenden">
+            <font>
+                <Font name="Arial Black" size="12.0" />
+            </font>
+        </Button>
+        <Button fx:id="addTimeButton" layoutX="43.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleAddTimeButton" prefHeight="38.0" prefWidth="130.0" styleClass="standard-first-button" text="Tipp +15sec">
+            <font>
+                <Font name="Arial Black" size="12.0" />
+            </font>
+        </Button>
+        <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
+        <Circle fx:id="r" fill="#f4e158" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+        <StackPane layoutX="21.0" layoutY="15.0" maxHeight="60.0" maxWidth="53.0" prefHeight="43.0" prefWidth="43.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css">
+            <children>
+                <Button fx:id="helpIconButton" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="54.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="60.0" prefWidth="54.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+            </children>
+        </StackPane>
+        <Label alignment="CENTER" layoutX="237.0" layoutY="139.0" prefHeight="130.0" prefWidth="310.0" text="0" textAlignment="JUSTIFY" textFill="WHITE">
+            <font>
+                <Font size="96.0" />
+            </font>
+        </Label>
+        <Label fx:id="timerLabel" alignment="CENTER" layoutX="300.0" layoutY="294.0" prefHeight="70.0" prefWidth="200.0" style="-fx-background-color: #333333;" text="Zeit: 00:00" textAlignment="JUSTIFY" textFill="WHITE">
+            <font>
+                <Font size="30.0" />
+            </font>
+        </Label>
+        <StackPane layoutX="741.0" layoutY="15.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
+            <children>
+                <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+            </children>
+        </StackPane>
+        <AnchorPane fx:id="menuPane" layoutX="548.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" opacity="0.0" prefHeight="632.0" prefWidth="339.0" style="-fx-background-color: #f4e158;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
+            <children>
+                <Button layoutX="14.0" layoutY="124.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Bonus Spiel">
+                    <font>
+                        <Font name="Arial Bold" size="18.0" />
+                    </font>
+                </Button>
+                <Button layoutX="14.0" layoutY="176.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Rangliste">
+                    <font>
+                        <Font name="Arial Bold" size="18.0" />
+                    </font>
+                </Button>
+                <Button layoutX="14.0" layoutY="427.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" text="Admin">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Button>
+                <Label layoutX="19.0" prefHeight="60.0" prefWidth="158.0" text="Menü">
+                    <font>
+                        <Font name="System Bold" size="32.0" />
+                    </font>
+                </Label>
+                <Button fx:id="menuCloseButton" layoutX="176.0" layoutY="11.0" minWidth="30.0" mnemonicParsing="false" onAction="#handleMenuCloseButton" prefHeight="38.0" prefWidth="60.0" text="X">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="popupPane1" layoutX="159.0" layoutY="24.0" opacity="0.0" prefHeight="265.0" prefWidth="515.0" styleClass="popup-pane" stylesheets="@../../../css/style.css" visible="false">
+            <children>
+                <Label layoutX="208.0" layoutY="14.0" prefHeight="102.0" prefWidth="98.0" text="Hinweis:" textAlignment="JUSTIFY">
+                    <font>
+                        <Font name="Arial Black" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="136.0" layoutY="110.0" prefHeight="102.0" prefWidth="242.0" text="Du hast einen Kreis gebildet?" textAlignment="JUSTIFY">
+                    <font>
+                        <Font name="Arial" size="18.0" />
+                    </font>
+                </Label>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </AnchorPane>
+        <AnchorPane fx:id="popupPane" layoutX="149.0" layoutY="14.0" opacity="0.0" prefHeight="265.0" prefWidth="515.0" styleClass="popup-pane" stylesheets="@../../../css/style.css" visible="false">
+            <children>
+                <Label layoutX="30.0" layoutY="14.0" prefHeight="102.0" prefWidth="454.0" text="Möchten Sie das Spiel wirklich beenden?" textAlignment="CENTER">
+                    <font>
+                        <Font name="Arial Black" size="20.0" />
+                    </font>
+                </Label>
+                <Button fx:id="confirmEndGameButton" layoutX="66.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleConfirmEndGameButton" prefHeight="46.0" prefWidth="139.0" text="Beenden">
+                    <font>
+                        <Font name="Arial Bold" size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="cancelEndGameButton" layoutX="302.0" layoutY="157.0" mnemonicParsing="false" onAction="#handleCancelEndGameButton" prefHeight="46.0" prefWidth="139.0" text="Zurück">
+                    <font>
+                        <Font name="Arial Bold" size="14.0" />
+                    </font>
+                </Button>
+            </children>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+        </AnchorPane>
+    </children>
+</AnchorPane>
