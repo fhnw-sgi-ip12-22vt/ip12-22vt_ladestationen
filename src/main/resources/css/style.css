@@ -21,9 +21,10 @@
     -fx-background-size: cover;
 }
 
-.root-pane .title-label {
+.root-pane .countDown-label {
     -fx-font-size: 152px;
     -fx-text-fill: #FFFFFF;
+    -fx-alignment: center;
 }
 
 .root-pane .story-label {

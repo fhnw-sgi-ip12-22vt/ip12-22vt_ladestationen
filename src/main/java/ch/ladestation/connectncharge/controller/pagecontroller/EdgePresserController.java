@@ -1,5 +1,6 @@
-package ch.ladestation.connectncharge.controller;
+package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -21,7 +22,7 @@ public class EdgePresserController {
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgepresser.fxml");
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgepresserpage.fxml");
         StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css",
             (Stage) ((Node) event.getSource()).getScene().getWindow());
     }

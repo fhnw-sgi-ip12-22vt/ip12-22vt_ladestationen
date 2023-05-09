@@ -1,5 +1,6 @@
-package ch.ladestation.connectncharge.controller;
+package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -18,7 +19,7 @@ public class HomePageController {
 
     @FXML
     public void handleShowEdgePresser(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/edgepresser.fxml", "/css/style.css",
+        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml", "/css/style.css",
             (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
 

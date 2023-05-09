@@ -1,5 +1,6 @@
-package ch.ladestation.connectncharge.controller;
+package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -26,7 +27,7 @@ public class GamePageController implements Initializable {
     private static final String FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
     private static final String CSS_PATH = "/css/style.css";
     private LocalTime startTime = LocalTime.of(0, 0);
-    private LocalTime publicEndTime;
+    public LocalTime publicEndTime;
     @FXML
     private Label timerLabel;
     @FXML
