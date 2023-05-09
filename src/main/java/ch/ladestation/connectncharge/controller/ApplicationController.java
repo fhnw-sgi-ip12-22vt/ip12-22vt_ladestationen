@@ -2,7 +2,7 @@ package ch.ladestation.connectncharge.controller;
 
 import ch.ladestation.connectncharge.model.Edge;
 import ch.ladestation.connectncharge.model.Game;
-import ch.ladestation.connectncharge.model.Segment;
+import ch.ladestation.connectncharge.model.Node;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 
 import java.util.Arrays;
@@ -13,25 +13,25 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void edgePressed(Edge edge) {
-        segmentToggled(edge);
-    }
-
-    public void segmentToggled(Segment segment) {
-        if (!segment.isOn()) {
-            segment.on();
-            Segment[] oldValues = model.activatedEdges.getValues();
-            Segment[] newValues = new Segment[oldValues.length + 1];
+        if (!edge.isOn()) {
+            edge.on();
+            Edge[] oldValues = model.activatedEdges.getValues();
+            Edge[] newValues = new Edge[oldValues.length + 1];
             System.arraycopy(oldValues, 0, newValues, 0, oldValues.length);
-            newValues[newValues.length - 1] = segment;
+            newValues[newValues.length - 1] = edge;
             setValues(model.activatedEdges, newValues);
         } else {
-            segment.off();
-            Segment[] oldValues = model.activatedEdges.getValues();
-            Segment[] newValues =
+            edge.off();
+            Edge[] oldValues = model.activatedEdges.getValues();
+            Edge[] newValues =
                     Arrays.stream(oldValues)
-                            .filter(curr -> curr != segment)
-                            .toArray(Segment[]::new);
+                            .filter(curr -> curr != edge)
+                            .toArray(Edge[]::new);
             setValues(model.activatedEdges, newValues);
         }
+    }
+
+    public void setTerminals(Node[] terms) {
+        setValues(model.terminals, terms);
     }
 }

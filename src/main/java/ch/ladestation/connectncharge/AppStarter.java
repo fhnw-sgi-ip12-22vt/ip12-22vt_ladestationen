@@ -2,6 +2,7 @@ package ch.ladestation.connectncharge;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.model.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.util.Pi4JContext;
 import ch.ladestation.connectncharge.util.mvcbase.MvcLogger;
@@ -12,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class AppStarter extends Application {
     private static final MvcLogger LOGGER = new MvcLogger();
@@ -40,9 +42,11 @@ public class AppStarter extends Application {
             18,
             67};
 
-        for (int terminal : terms) {
-            controller.segmentToggled(gPUI.lookUpSegmentIdToSegment(terminal));
-        }
+        var terminalNodes = Arrays.stream(terms)
+                .mapToObj(gPUI::lookUpSegmentIdToSegment)
+                .map(seg -> (Node) seg)
+                .toArray(Node[]::new);
+        controller.setTerminals(terminalNodes);
         //////////////////TMPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 
         // This will ensure Pi4J is properly finished. All I/O instances are
