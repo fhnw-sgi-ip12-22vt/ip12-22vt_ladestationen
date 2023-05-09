@@ -138,6 +138,65 @@
     -fx-text-fill: #F4E158;
 }
 
+.root-pane .keyboardlayout {
+    -fx-text-fill: #000000;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+}
+
+.root-pane .keyboardlayout-cap {
+    -fx-text-fill: #000000;
+    -fx-min-width: 60px;
+    -fx-min-height: 45px;
+    -fx-max-width: 60px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 25;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
+}
+
+.root-pane .keyboardlayout-special {
+    -fx-text-fill: #000000;
+    -fx-min-width: 60px;
+    -fx-min-height: 45px;
+    -fx-max-width: 60px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
+}
+
+.root-pane .keyboardlayout-backspace {
+    -fx-text-fill: #000000;
+    -fx-min-width: 259px;
+    -fx-min-height: 45px;
+    -fx-max-width: 259px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
+}
+
 .root-pane .standard-menu-button {
     -fx-layoutX: 741;
     -fx-layoutY: 15;

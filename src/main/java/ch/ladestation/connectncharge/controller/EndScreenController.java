@@ -24,9 +24,6 @@ public class EndScreenController implements Initializable {
     @FXML
     public Button btnMenu;
 
-    private GamePageController gamePageController;
-
-
 
     @FXML
     private Parent root;
@@ -46,7 +43,7 @@ public class EndScreenController implements Initializable {
         showGameScreen(actionEvent);
     }
 
-    public void showGameScreen(ActionEvent actionEvent) throws IOException{
+    public void showGameScreen(ActionEvent actionEvent) throws IOException {
         StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css",
                 (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
 
