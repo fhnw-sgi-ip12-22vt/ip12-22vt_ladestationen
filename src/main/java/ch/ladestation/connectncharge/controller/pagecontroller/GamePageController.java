@@ -21,37 +21,32 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class GamePageController implements Initializable {
+    @FXML
+    private AnchorPane endGampePopupPane;
+    @FXML
+    private AnchorPane hintPopupPane;
+    @FXML
+    private AnchorPane shadowPane;
+    @FXML
+    private AnchorPane menuPane;
+    @FXML
+    private Button addTimeButton;
+    @FXML
+    private Button stackMenu;
+    @FXML
+    private Label costs;
+    @FXML
+    private Label timerLabel;
+
+    private Timeline timeline;
+    private int additionalTime = 15;
+    private int seconds = 0, minutes = 0;
+
 
     private static final String FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
     private static final String CSS_PATH = "/css/style.css";
     private LocalTime startTime = LocalTime.of(0, 0);
     private LocalTime publicEndTime;
-    @FXML
-    private Label timerLabel;
-    @FXML
-    private Button addTimeButton;
-    @FXML
-    private Button endGameButton;
-    @FXML
-    private AnchorPane endGampePopupPane;
-    @FXML
-    private AnchorPane shadowPane;
-    @FXML
-    private Button stackMenu;
-    @FXML
-    private Button cancelEndGameButton;
-
-    private Timeline timeline;
-    @FXML
-    private AnchorPane menuPane;
-    @FXML
-    private AnchorPane tippPopupPane;
-    @FXML
-    private Button menuCloseButton;
-    @FXML
-    private int additionalTime = 15;
-    @FXML
-    private Label costs;
 
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
@@ -89,6 +84,7 @@ public class GamePageController implements Initializable {
 
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
+        String tippText;
         if (!startTime.equals(LocalTime.of(1, 0))) {
             LocalTime newTime = startTime.plusSeconds(additionalTime);
             if (newTime.isAfter(LocalTime.of(1, 0))) {
@@ -99,7 +95,10 @@ public class GamePageController implements Initializable {
             timerLabel.setText("Zeit: " + startTime.format(DateTimeFormatter.ofPattern("mm:ss")));
         }
         additionalTime += 15;
-        addTimeButton.setText("Tipp +" + additionalTime + "sec");
+        /*seconds = seconds % 60 == 0 ? 0 : seconds + 15;
+        minutes += additionalTime % 60 == 0 ? 1 : 0;
+        tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
+        addTimeButton.setText("Tipp +" + additionalTime + "sek.");
     }
 
     @FXML
