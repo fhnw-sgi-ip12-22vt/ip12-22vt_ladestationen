@@ -84,9 +84,6 @@ public class NameInputController implements Initializable {
         String buttonText = button.getText();
         String currentText = txtNameInput.getText();
 
-        if (capsLockOn) {
-            buttonText = buttonText.toUpperCase();
-        }
         txtNameInput.setText(currentText + buttonText);
     }
 
@@ -102,6 +99,8 @@ public class NameInputController implements Initializable {
     }
 
     public void toggleSpace(ActionEvent actionEvent) {
+        String currentText = txtNameInput.getText();
+        txtNameInput.setText(currentText + "  ");
 
     }
 
