@@ -2,7 +2,6 @@ package ch.ladestation.connectncharge.controller.pagecontroller;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.AppStarter;
 import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
