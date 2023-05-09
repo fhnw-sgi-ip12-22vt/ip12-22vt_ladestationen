@@ -244,5 +244,13 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     public Segment lookUpSegmentIdToSegment(int segmentId) {
         return segmentIdLUT.get(segmentId);
     }
+
+    public Edge lookUpEdge(int fromIndex, int toIndex) {
+        return edges.stream()
+            .filter(e -> (e.getFromNodeId() == fromIndex && e.getToNodeId() == toIndex)
+                || (e.getFromNodeId() == toIndex && e.getToNodeId() == fromIndex))
+            .findFirst()
+            .orElse(null);
+    }
 }
 
