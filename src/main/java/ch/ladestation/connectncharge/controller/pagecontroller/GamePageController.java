@@ -1,6 +1,11 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.StageHandler;
+import ch.ladestation.connectncharge.AppStarter;
+import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
+import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,9 +23,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class GamePageController implements Initializable {
+public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>, Initializable {
+
     @FXML
     private AnchorPane endGampePopupPane;
     @FXML
@@ -59,6 +66,10 @@ public class GamePageController implements Initializable {
         startTimer();
         stackMenu.setVisible(true);
         stackMenu.setOpacity(1);
+    }
+
+    public void setController(ApplicationController controller) {
+        init(controller);
     }
 
     private void startTimer() {
@@ -166,5 +177,24 @@ public class GamePageController implements Initializable {
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
         StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css",
             (Stage) ((Node) event.getSource()).getScene().getWindow());
+    }
+
+    @Override
+    public void setupModelToUiBindings(Game model) {
+        onChangeOf(model.currentScore).convertedBy(String::valueOf).update(costs.textProperty());
+    }
+
+    @Override
+    public void initializeParts() {
+    }
+
+    @Override
+    public void layoutParts() {
+
+    }
+
+    @Override
+    public List<String> getStylesheets() {
+        return null;
     }
 }

@@ -13,7 +13,9 @@ module ch.ladestation.connectncharge {
     requires com.pi4j.library.pigpio;
     requires java.logging;
     requires org.apache.logging.log4j;
-
+    // Pi4J Modules
+    requires com.pi4j.plugin.mock;
+    requires com.pi4j.plugin.linuxfs;
     uses com.pi4j.extension.Extension;
     uses com.pi4j.provider.Provider;
 
