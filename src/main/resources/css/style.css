@@ -6,8 +6,10 @@
 }
 
 .loading-pane .loading-button {
-    -fx-min-width: 800;
-    -fx-min-height: 480;
+    -fx-min-width: 800px;
+    -fx-min-height: 480px;
+    -fx-max-width: 800px;
+    -fx-max-height: 480px;
     -fx-background-color: transparent;
 }
 
@@ -57,7 +59,7 @@
 }
 
 .root-pane .standard-second-button {
-    -fx-background-color: #1E1E1E;
+    -fx-background-color: transparent;
     -fx-min-width: 211px;
     -fx-min-height: 52px;
     -fx-max-width: 211px;
@@ -138,8 +140,17 @@
     -fx-min-height: 265px;
     -fx-max-width: 515px;
     -fx-max-height: 265px;
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: #F9F9F9;
     -fx-background-size: cover;
+    -fx-background-radius: 15px;
+}
+
+.popup-pane .pane-shadow {
+    -fx-min-width: 800px;
+    -fx-min-height: 480px;
+    -fx-max-width: 800px;
+    -fx-max-height: 480px;
+    -fx-background-color: #00022e89;
 }
 
 .menu-pane {
@@ -152,7 +163,6 @@
     -fx-background-radius: 25px;
     -fx-layoutX: 0;
     -fx-layoutY: 0;
-
 }
 
 .menu-pane .info-text {
@@ -161,6 +171,25 @@
     -fx-max-width: 165px;
     -fx-max-height: 43px;
     -fx-alignment: left;
+}
+
+.menu-pane .info-icon-size {
+    -fx-min-width: 26px;
+    -fx-min-height: 27px;
+    -fx-max-width: 26px;
+    -fx-max-height: 27px;
+}
+
+.menu-pane .info-icon-admin {
+    -fx-background-image: url(.././images/admin.png);
+}
+
+.menu-pane .info-icon-cup {
+    -fx-background-image: url(.././images/cup.png);
+}
+
+.menu-pane .info-icon-medalstar {
+    -fx-background-image: url(.././images/medalstar.png);
 }
 
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,16 +17,72 @@
                 <Font size="20.0" />
             </font>
         </Label>
-        <StackPane layoutX="20.0" layoutY="14.0" maxHeight="60.0" maxWidth="53.0" prefHeight="43.0" prefWidth="43.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css">
+        <StackPane layoutX="20.0" layoutY="15.0" maxHeight="60.0" maxWidth="53.0" prefHeight="43.0" prefWidth="43.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css">
             <children>
                 <Button fx:id="helpIconButton" layoutX="10.0" layoutY="10.0" maxHeight="60.0" maxWidth="54.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="60.0" prefWidth="54.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
             </children>
         </StackPane>
-        <StackPane layoutX="731.0" layoutY="26.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
+        <StackPane layoutX="740.0" layoutY="15.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
             <children>
                 <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
             </children>
         </StackPane>
         <Button layoutX="200.0" layoutY="40.0" maxHeight="415.0" maxWidth="492.0" minHeight="302.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="415.0" prefWidth="492.0" styleClass="loading-button" stylesheets="@../../../css/style.css" />
+        <AnchorPane fx:id="menuPane" layoutX="547.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="274.0" style="-fx-background-radius: 25px;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
+            <children>
+                <Button layoutX="42.0" layoutY="138.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Bonus Spiel">
+                    <font>
+                        <Font name="Arial Bold" size="18.0" />
+                    </font>
+                </Button>
+                <Button layoutX="42.0" layoutY="95.0" maxHeight="43.0" maxWidth="165.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="165.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Rangliste">
+                    <font>
+                        <Font name="Arial Bold" size="18.0" />
+                    </font>
+                </Button>
+                <Button layoutX="42.0" layoutY="422.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Admin">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Button>
+                <Label layoutX="19.0" prefHeight="60.0" prefWidth="158.0" text="Menü">
+                    <font>
+                        <Font name="System Bold" size="32.0" />
+                    </font>
+                </Label>
+                <Button fx:id="menuCloseButton" layoutX="191.0" layoutY="15.0" minWidth="30.0" mnemonicParsing="false" onAction="#handleMenuCloseButton" prefHeight="38.0" prefWidth="60.0" styleClass="standard-xclose-button" stylesheets="@../../../css/style.css">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Button layoutX="14.0" layoutY="103.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="info-icon-cup" />
+                        <String fx:value="info-icon-size" />
+                    </styleClass>
+                </Button>
+                <Button layoutX="14.0" layoutY="430.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="info-icon-admin" />
+                        <String fx:value="info-icon-size" />
+                    </styleClass>
+                </Button>
+                <Button layoutX="14.0" layoutY="146.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="info-icon-medalstar" />
+                        <String fx:value="info-icon-size" />
+                    </styleClass>
+                </Button>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>
