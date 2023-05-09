@@ -2,6 +2,7 @@ package ch.ladestation.connectncharge;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.SpielPageController;
+import ch.ladestation.connectncharge.model.Edge;
 import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.model.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
@@ -36,6 +37,7 @@ public class AppStarter extends Application {
                 .map(seg -> (Node) seg)
                 .toArray(Node[]::new);
         controller.setTerminals(terminalNodes);
+        controller.startBlinkingEdge((Edge) gPUI.lookUpSegmentIdToSegment(1));
         //////////////////TMPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 
         // This will ensure Pi4J is properly finished. All I/O instances are

@@ -9,4 +9,6 @@ public class Game {
     public final ObservableArray<Edge> activatedEdges = new ObservableArray<>(new Edge[0]);
     public final ObservableArray<Node> terminals = new ObservableArray<>(new Node[0]);
     public final ObservableValue<Integer> currentScore = new ObservableValue<>(0);
+
+    public final ObservableValue<Boolean> gameStarted = new ObservableValue<>(false);
 }
