@@ -30,7 +30,7 @@ public class CountDownController implements Initializable {
         final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
         final Runnable runnable = new Runnable() {
-            int countdownStarter = COUNTDOWN_SECONDS;
+            private int countdownStarter = COUNTDOWN_SECONDS;
 
             public void run() {
                 Platform.runLater(() -> {

@@ -8,8 +8,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -27,7 +25,7 @@ public class GamePageController implements Initializable {
     private static final String FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
     private static final String CSS_PATH = "/css/style.css";
     private LocalTime startTime = LocalTime.of(0, 0);
-    public LocalTime publicEndTime;
+    private LocalTime publicEndTime;
     @FXML
     private Label timerLabel;
     @FXML
