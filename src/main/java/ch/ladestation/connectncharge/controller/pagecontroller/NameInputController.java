@@ -1,6 +1,7 @@
-package ch.ladestation.connectncharge.controller;
+package ch.ladestation.connectncharge.controller.pagecontroller;
 
 import ch.ladestation.connectncharge.AppStarter;
+import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,10 +86,21 @@ public class NameInputController implements Initializable {
         String currentText = txtNameInput.getText();
 
         txtNameInput.setText(currentText + buttonText);
+
+        if (capsLockOn) {
+            capsLockOn = false;
+            btnCaps.setStyle("-fx-background-color: #ffffff");
+        }
     }
 
     public void toggleCapsLock(ActionEvent actionEvent) {
-
+        if (capsLockOn) {
+            capsLockOn = false;
+            btnCaps.setStyle("-fx-background-color: #ffffff");
+        } else {
+            capsLockOn = true;
+            btnCaps.setStyle("-fx-background-color: #AEAEAE");
+        }
     }
 
     public void toggleDelete(ActionEvent actionEvent) {

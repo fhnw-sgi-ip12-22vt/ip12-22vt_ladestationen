@@ -1,6 +1,8 @@
 package ch.ladestation.connectncharge;
 
-import ch.ladestation.connectncharge.controller.PUIController;
+//import ch.ladestation.connectncharge.controller.PUIController;
+
+import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -16,20 +18,6 @@ public class AppStarter extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    AppStarter.class.getResource("/ch/ladestation/connectncharge/nameinput.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-
-            scene.getStylesheets().add("src/main/resources/css/style.css");
-            stage.setTitle("Connect 'n Charge");
-            stage.setMaximized(true);
-            stage.setFullScreen(true);
-            stage.setResizable(false);
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml", "/css/style.css", stage);
     }
 }
