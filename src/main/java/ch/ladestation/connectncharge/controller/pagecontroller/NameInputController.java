@@ -20,77 +20,77 @@ import java.util.ResourceBundle;
 public class NameInputController implements Initializable {
 
     @FXML
-    public TextField txtNameInput;
+    private TextField txtNameInput;
     @FXML
-    public GridPane keyboardPane;
+    private GridPane keyboardPane;
     @FXML
-    public Button btnCaps;
+    private Button btnCaps;
     @FXML
-    public Button btnSpace;
+    private Button btnSpace;
     @FXML
-    public Button btnDel;
+    private Button btnDel;
     @FXML
-    public AnchorPane anchorPane;
+    private AnchorPane anchorPane;
     @FXML
-    public Button q;
+    private Button q;
     @FXML
-    public Button w;
+    private Button w;
     @FXML
-    public Button e;
+    private Button e;
     @FXML
-    public Button r;
+    private Button r;
     @FXML
-    public Button t;
+    private Button t;
     @FXML
-    public Button z;
+    private Button z;
     @FXML
-    public Button u;
+    private Button u;
     @FXML
-    public Button i;
+    private Button i;
     @FXML
-    public Button o;
+    private Button o;
     @FXML
-    public Button p;
+    private Button p;
     @FXML
-    public Button ü;
+    private Button ü;
     @FXML
-    public Button a;
+    private Button a;
     @FXML
-    public Button s;
+    private Button s;
     @FXML
-    public Button d;
+    private Button d;
     @FXML
-    public Button f;
+    private Button f;
     @FXML
-    public Button g;
+    private Button g;
     @FXML
-    public Button h;
+    private Button h;
     @FXML
-    public Button j;
+    private Button j;
     @FXML
-    public Button k;
+    private Button k;
     @FXML
-    public Button l;
+    private Button l;
     @FXML
-    public Button ö;
+    private Button ö;
     @FXML
-    public Button ä;
+    private Button ä;
     @FXML
-    public Button y;
+    private Button y;
     @FXML
-    public Button x;
+    private Button x;
     @FXML
-    public Button c;
+    private Button c;
     @FXML
-    public Button v;
+    private Button v;
     @FXML
-    public Button b;
+    private Button b;
     @FXML
-    public Button n;
+    private Button n;
     @FXML
-    public Button m;
+    private Button m;
     @FXML
-    public Label lblWarning;
+    private Label lblWarning;
 
     private boolean capsLockOn = false;
 
