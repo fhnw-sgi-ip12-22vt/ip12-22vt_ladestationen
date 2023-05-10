@@ -3,10 +3,12 @@ package ch.ladestation.connectncharge.controller.pagecontroller;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import ch.ladestation.connectncharge.model.Player;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -14,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,19 +25,29 @@ import java.util.List;
 
 public class HighscoreScreenController {
     @FXML
-    public Button btnPlayAgain;
+    private Button btnPlayAgain;
     @FXML
-    public Button btnBonus;
+    private Button btnBonus;
     @FXML
-    public ImageView imgHome;
+    private ImageView imgHome;
     @FXML
-    public TableView<Player> tableView;
+    private TableView<Player> tableView;
     @FXML
-    public TableColumn<Player, Integer> rankColumn;
+    private TableColumn<Player, Integer> rankColumn;
     @FXML
-    public TableColumn<Player, String> nameColumn;
+    private TableColumn<Player, String> nameColumn;
     @FXML
-    public TableColumn<Player, String> timeColumn;
+    private TableColumn<Player, String> timeColumn;
+    @FXML
+    private ScrollPane restHighscore;
+    @FXML
+    private TableView restTableView;
+    @FXML
+    private TableColumn restRankColumn;
+    @FXML
+    private TableColumn restNameColumn;
+    @FXML
+    private TableColumn restTimeColumn;
 
 
     @FXML
@@ -46,114 +60,66 @@ public class HighscoreScreenController {
     public void initialize() {
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("score"));
+        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        restRankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
+        restNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
+        restTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
 
+        // Fetch data from the text file and populate the TableViews
+        fetchDataAndPopulateTableViews();
+    }
+
+    private void fetchDataAndPopulateTableViews() {
+        List<Player> players = readPlayerDataFromFile("players.txt");
+        players.sort(Comparator.comparingInt(player -> Integer.parseInt(player.getScore())));
+
+        ObservableList<Player> topPlayers = FXCollections.observableArrayList();
+        ObservableList<Player> restPlayers = FXCollections.observableArrayList();
+
+        if (players.size() > 5) {
+            topPlayers.addAll(players.subList(0, 5));
+            restPlayers.addAll(players.subList(5, players.size()));
+        } else {
+            topPlayers.addAll(players);
+        }
+
+        tableView.setItems(topPlayers);
+        restTableView.setItems(restPlayers);
+    }
+
+    private List<Player> readPlayerDataFromFile(String filePath) {
         List<Player> players = new ArrayList<>();
 
-        players.add(new Player(2, "Emma", "1min 45sec"));
-        players.add(new Player(11, "Matthew", "1min 51sec"));
-        players.add(new Player(3, "David", "2min 44sec"));
-        players.add(new Player(4, "Sophia", "1min 55sec"));
-        players.add(new Player(9, "Daniel", "2min 5sec"));
-        players.add(new Player(5, "Michael", "2min 12sec"));
-        players.add(new Player(6, "Olivia", "2min 30sec"));
-        players.add(new Player(20, "Charlotte", "2min 8sec"));
-        players.add(new Player(7, "James", "1min 58sec"));
-        players.add(new Player(8, "Emily", "2min 19sec"));
-        players.add(new Player(18, "Aria", "2min 14sec"));
-        players.add(new Player(10, "Ava", "2min 37sec"));
-        players.add(new Player(1, "John", "1min 23sec"));
-        players.add(new Player(12, "Lily", "2min 41sec"));
-        players.add(new Player(13, "Benjamin", "1min 39sec"));
-        players.add(new Player(14, "Mia", "2min 26sec"));
-        players.add(new Player(15, "William", "2min 10sec"));
-        players.add(new Player(16, "Sophia", "1min 55sec"));
-        players.add(new Player(17, "Lucas", "2min 32sec"));
-        players.add(new Player(19, "Oliver", "2min 49sec"));
-
-        setPlayerData(players);
-    }
-
-    //Create a method setPlayerData and get the 5 top best one from the list given
-    public void setPlayerData(List<Player> players) {
-        //get the top players from the arraylist
-
-        players.sort(Comparator.comparing(Player::getRank));
-
-        int topPlayersCount = Math.min(5, players.size());
-        tableView.setItems(FXCollections.observableArrayList(players.subList(0, topPlayersCount)));
-
-        if (players.size() > topPlayersCount) {
-            StringBuilder showcaseText = new StringBuilder();
-            int showcaseStartIndex = topPlayersCount;
-            int showcaseEndIndex = Math.min(topPlayersCount + 5, players.size()
-            );
-            if (topPlayersCount >= 11) {
-                showcaseText.append("...\n");
-                showcaseStartIndex = Math.max(showcaseStartIndex, topPlayersCount - 5);
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length == 3) {
+                    int rank = Integer.parseInt(data[0]);
+                    String playerName = data[1];
+                    String score = data[2];
+                    Player player = new Player(rank, playerName, score);
+                    players.add(player);
+                }
             }
-
-            for (int i = showcaseStartIndex; i < showcaseEndIndex; i++) {
-                Player player = players.get(i);
-                showcaseText.append(String.format("%d. %10s %10s\n", player.getRank(), player.getPlayerName(), player.getScore()));
-            }
-
-            if (players.size() > showcaseEndIndex) {
-                showcaseText.append("...");
-            }
-
-            // Display the showcaseText however you want (e.g., set it to a label or print it)
-            // For example, assuming you have a label with fx:id "showcaseLabel":
-            // showcaseLabel.setText(showcaseText.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        return players;
     }
 
-
-    /*public void setPlayerData(List<Player> players) {
-       //get the top players from the arraylist
-
-      players.sort(Comparator.comparing(Player::getRank));
-
-       int topPlayersCount = Math.min(5, players.size());
-       tableView.setItems(FXCollections.observableArrayList(players.subList(0, topPlayersCount)));
-
-       if (players.size() > topPlayersCount) {
-           StringBuilder showcaseText = new StringBuilder();
-           int showcaseStartIndex = topPlayersCount;
-           int showcaseEndIndex = Math.min(topPlayersCount + 5, players.size()
-           );
-           if (topPlayersCount >= 11) {
-               showcaseText.append("...\n");
-               showcaseStartIndex = Math.max(showcaseStartIndex, topPlayersCount - 5);
-           }
-
-           for (int i = showcaseStartIndex; i < showcaseEndIndex; i++) {
-               Player player = players.get(i);
-               showcaseText.append(String.format("%d. %10s %10s\n", player.getRank(), player.getPlayerName(), player.getScore()));
-           }
-
-           if (players.size() > showcaseEndIndex) {
-               showcaseText.append("...");
-           }
-
-           // Display the showcaseText however you want (e.g., set it to a label or print it)
-           // For example, assuming you have a label with fx:id "showcaseLabel":
-           // showcaseLabel.setText(showcaseText.toString());
-       }
-   }*/
     public void showGamePage(ActionEvent actionEvent) throws IOException {
         StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css",
                 (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
-
     }
 
     public void showBonusPage(ActionEvent actionEvent) {
-
+        //TODO
     }
 
     public void showHomeScreen(MouseEvent mouseEvent) throws IOException {
         StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
                 (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow());
     }
-
 }
