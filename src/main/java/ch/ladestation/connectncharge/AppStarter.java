@@ -1,6 +1,11 @@
 package ch.ladestation.connectncharge;
 
+<<<<<<< HEAD
 import ch.ladestation.connectncharge.controller.ApplicationController;
+=======
+//import ch.ladestation.connectncharge.controller.PUIController;
+
+>>>>>>> bb9d6d9257e3f6218c2cc896f614f792eceec7d9
 import ch.ladestation.connectncharge.controller.StageHandler;
 import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.pui.GamePUI;
@@ -17,20 +22,10 @@ public class AppStarter extends Application {
     private static ApplicationController controller;
 
     public static void main(String[] args) {
-        Context pi4J = Pi4JContext.createContext();
+        /*Context pi4J = Pi4JContext.createContext();
 
         controller = new ApplicationController(new Game());
         var gPUI = new GamePUI(controller, pi4J);
-
-        /*LOGGER.logInfo("App started");
-
-        int[] terms = {81, 27, 11, 31, 52, 47, 33, 62, 77, 16, 95, 18, 67};
-
-        var terminalNodes = Arrays.stream(terms)
-            .mapToObj(gPUI::lookUpSegmentIdToSegment)
-            .map(seg -> (Node) seg)
-            .toArray(Node[]::new);
-        controller.setTerminals(terminalNodes);*/
 
         controller.setGPUI(gPUI);
         controller.loadLevels();
@@ -46,14 +41,14 @@ public class AppStarter extends Application {
             controller.shutdown();
             pi4J.shutdown();
             LOGGER.logInfo("App stopped");
-        }));
+        }));*/
         launch();
     }
 
     @Override
     public void start(Stage stage) throws IOException {
         StageHandler.setStage(stage);
-        StageHandler.setController(controller);
-        StageHandler.openStage("/ch/ladestation/connectncharge/loadingpage.fxml", "/css/style.css");
+        StageHandler.setController(new ApplicationController(new Game()));
+        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css");
     }
 }

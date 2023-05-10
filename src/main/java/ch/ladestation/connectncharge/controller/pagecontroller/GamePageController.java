@@ -170,7 +170,13 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     private void endGame() {
-        saveEndTime();
+        saveEndTime(); // Rufe die saveEndTime-Methode auf
+        // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
+        try {
+            StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
