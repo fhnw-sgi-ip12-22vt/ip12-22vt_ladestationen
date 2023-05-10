@@ -32,7 +32,7 @@
 .root-pane .story-label {
     -fx-text-fill: #000000;
     -fx-background-color: transparent;
-    -fx-font-size: 15;
+    -fx-font-size: 18;
     -fx-wrap-text: true;
     -fx-wrap-width: 355.99999999999994;
 }
@@ -127,9 +127,9 @@
 .root-pane .help-text-area {
     -fx-wrap-text: true;
     -fx-min-width: 589px;
-    -fx-min-height: 200px;
+    -fx-min-height: 400px;
     -fx-max-width: 589px;
-    -fx-max-height: 200px;
+    -fx-max-height: 400px;
     -fx-control-inner-background: #1E1E1E;
     -fx-text-fill: #FFFFFF;
     -fx-border-color: transparent;

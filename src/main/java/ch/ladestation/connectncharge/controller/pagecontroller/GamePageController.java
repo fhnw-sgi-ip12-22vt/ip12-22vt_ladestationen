@@ -142,6 +142,22 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     @FXML
+    private void handleHelpButton(ActionEvent event) throws IOException {
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
+    }
+
+    @FXML
+    private void handleShadowAnchorPaneClick(ActionEvent event) {
+        endGampePopupPane.setVisible(false);
+        endGampePopupPane.setOpacity(0);
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
+        menuPane.setVisible(false);
+        menuPane.setOpacity(0);
+    }
+
+    @FXML
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
@@ -168,12 +184,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     public Label getCosts() {
         return costs;
-    }
-
-    @FXML
-    private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
     }
 
     @Override

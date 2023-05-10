@@ -20,6 +20,8 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private AnchorPane menuPane;
+    @FXML
+    private AnchorPane shadowPane;
 
     @FXML
     public void handleShowEdgePresser(ActionEvent event) throws IOException {
@@ -42,6 +44,14 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
     private void handleHelpButton(ActionEvent event) throws IOException {
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/homepage.fxml");
         StageHandler.openStage(HELP_FXML_PATH, CSS_PATH);
+    }
+
+    @FXML
+    private void handleShadowAnchorPaneClick(ActionEvent event) {
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
+        menuPane.setVisible(false);
+        menuPane.setOpacity(0);
     }
 
     @Override

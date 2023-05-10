@@ -17,6 +17,8 @@ public class EdgePresserController implements ViewMixin<Game, ControllerBase<Gam
 
     @FXML
     private AnchorPane menuPane;
+    @FXML
+    private AnchorPane shadowPane;
 
     @FXML
     public void handleNextButton(ActionEvent event) throws IOException {
@@ -37,6 +39,14 @@ public class EdgePresserController implements ViewMixin<Game, ControllerBase<Gam
 
     @FXML
     private void handleMenuCloseButton(ActionEvent event) {
+        menuPane.setVisible(false);
+        menuPane.setOpacity(0);
+    }
+
+    @FXML
+    private void handleShadowAnchorPaneClick(ActionEvent event) {
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
     }
