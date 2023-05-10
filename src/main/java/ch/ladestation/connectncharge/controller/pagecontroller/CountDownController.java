@@ -1,19 +1,25 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.controller.PageController;
 import ch.ladestation.connectncharge.controller.StageHandler;
+import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
+import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
-public class CountDownController implements Initializable {
+public class CountDownController implements ViewMixin<Game, ControllerBase<Game>>, Initializable, PageController {
 
     private static final int COUNTDOWN_SECONDS = 4;
     @FXML
@@ -54,5 +60,25 @@ public class CountDownController implements Initializable {
             }
         };
         scheduler.scheduleAtFixedRate(runnable, 0, 1, SECONDS);
+    }
+
+    @Override
+    public void setController(ApplicationController controller) {
+        init(controller);
+    }
+
+    @Override
+    public void initializeParts() {
+
+    }
+
+    @Override
+    public void layoutParts() {
+
+    }
+
+    @Override
+    public List<String> getStylesheets() {
+        return null;
     }
 }

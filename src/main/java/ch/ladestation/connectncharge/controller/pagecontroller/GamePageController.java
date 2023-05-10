@@ -1,6 +1,7 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.controller.PageController;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
@@ -23,7 +24,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>, Initializable {
+public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>, Initializable, PageController {
 
     @FXML
     private AnchorPane endGampePopupPane;
@@ -64,6 +65,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         stackMenu.setOpacity(1);
     }
 
+    @Override
     public void setController(ApplicationController controller) {
         init(controller);
     }

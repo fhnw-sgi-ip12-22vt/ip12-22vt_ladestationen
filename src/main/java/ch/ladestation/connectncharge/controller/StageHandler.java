@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public final class StageHandler {
-
+    private static ApplicationController controller;
     private static String lastFxmlPath;
 
     private static Stage stage;
@@ -24,6 +24,8 @@ public final class StageHandler {
         FXMLLoader fxmlLoader = new FXMLLoader(AppStarter.class.getResource(fxmlPath));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
+        PageController pageController = fxmlLoader.getController();
+        pageController.setController(controller);
 
         scene.getStylesheets().add(cssPath);
         stage.setTitle(STAGE_TITLE);
@@ -48,5 +50,9 @@ public final class StageHandler {
 
     public static void setStage(Stage stageParam) {
         stage = stageParam;
+    }
+
+    public static void setController(ApplicationController controllerParam) {
+        controller = controllerParam;
     }
 }

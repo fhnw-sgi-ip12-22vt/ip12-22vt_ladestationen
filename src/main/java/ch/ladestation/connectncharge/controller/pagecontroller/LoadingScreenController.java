@@ -1,5 +1,7 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.controller.PageController;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
@@ -13,7 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.List;
 
-public class LoadingScreenController implements ViewMixin<Game, ControllerBase<Game>> {
+public class LoadingScreenController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
     private Scene scene;
     private Stage stage;
     private Parent root;
@@ -37,5 +39,10 @@ public class LoadingScreenController implements ViewMixin<Game, ControllerBase<G
     @Override
     public List<String> getStylesheets() {
         return null;
+    }
+
+    @Override
+    public void setController(ApplicationController controller) {
+
     }
 }

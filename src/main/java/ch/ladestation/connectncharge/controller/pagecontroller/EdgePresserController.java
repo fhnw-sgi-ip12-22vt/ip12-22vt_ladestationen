@@ -1,12 +1,19 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.controller.PageController;
 import ch.ladestation.connectncharge.controller.StageHandler;
+import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
+import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
-import java.io.IOException;
 
-public class EdgePresserController {
+import java.io.IOException;
+import java.util.List;
+
+public class EdgePresserController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
 
     @FXML
     private AnchorPane menuPane;
@@ -32,5 +39,25 @@ public class EdgePresserController {
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
+    }
+
+    @Override
+    public void setController(ApplicationController controller) {
+        init(controller);
+    }
+
+    @Override
+    public void initializeParts() {
+
+    }
+
+    @Override
+    public void layoutParts() {
+
+    }
+
+    @Override
+    public List<String> getStylesheets() {
+        return null;
     }
 }

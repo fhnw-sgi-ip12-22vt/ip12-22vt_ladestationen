@@ -50,6 +50,7 @@ public class AppStarter extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         StageHandler.setStage(stage);
+        StageHandler.setController(controller);
         StageHandler.openStage("/ch/ladestation/connectncharge/loadingpage.fxml", "/css/style.css");
     }
 }
