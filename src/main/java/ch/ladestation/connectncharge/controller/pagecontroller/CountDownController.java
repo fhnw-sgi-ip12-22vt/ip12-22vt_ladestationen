@@ -5,8 +5,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,8 +44,7 @@ public class CountDownController implements Initializable {
                     Platform.runLater(() -> {
                         countDownText.setText("Los ...");
                         try {
-                            StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css",
-                                (Stage) countDownText.getScene().getWindow());
+                            StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css");
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

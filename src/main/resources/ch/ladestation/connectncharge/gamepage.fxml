@@ -33,7 +33,7 @@
                 <Button fx:id="helpIconButton" maxHeight="60.0" maxWidth="54.0" mnemonicParsing="false" onAction="#handleHelpButton" opacity="0.0" prefHeight="60.0" prefWidth="54.0" styleClass="standard-help-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
             </children>
         </StackPane>
-        <Label alignment="CENTER" layoutX="237.0" layoutY="139.0" prefHeight="130.0" prefWidth="310.0" text="0" textAlignment="JUSTIFY" textFill="WHITE">
+        <Label fx:id="costs" alignment="CENTER" layoutX="237.0" layoutY="139.0" prefHeight="130.0" prefWidth="310.0" text="0" textAlignment="JUSTIFY" textFill="WHITE">
             <font>
                 <Font size="96.0" />
             </font>

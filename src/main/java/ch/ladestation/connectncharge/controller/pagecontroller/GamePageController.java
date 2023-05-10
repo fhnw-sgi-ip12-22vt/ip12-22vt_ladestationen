@@ -11,11 +11,9 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -56,8 +54,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
-            (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css");
     }
 
     @Override
@@ -174,8 +171,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css",
-            (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
     }
 
     @Override

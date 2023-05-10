@@ -3,9 +3,7 @@ package ch.ladestation.connectncharge.controller.pagecontroller;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -19,8 +17,7 @@ public class HomePageController {
 
     @FXML
     public void handleShowEdgePresser(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/edgepresserpage.fxml", "/css/style.css",
-            (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/edgepresserpage.fxml", "/css/style.css");
     }
 
     @FXML
@@ -39,6 +36,6 @@ public class HomePageController {
     private void handleHelpButton(ActionEvent event) throws IOException {
         menuPane.getScene().getRoot();
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/homepage.fxml");
-        StageHandler.openStage(HELP_FXML_PATH, CSS_PATH, (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage(HELP_FXML_PATH, CSS_PATH);
     }
 }

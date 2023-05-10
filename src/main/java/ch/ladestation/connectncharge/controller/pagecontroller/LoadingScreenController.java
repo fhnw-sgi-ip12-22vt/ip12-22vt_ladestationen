@@ -6,7 +6,6 @@ import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -21,8 +20,7 @@ public class LoadingScreenController implements ViewMixin<Game, ControllerBase<G
 
     @FXML
     public void loadHomePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
-            (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css");
     }
 
 

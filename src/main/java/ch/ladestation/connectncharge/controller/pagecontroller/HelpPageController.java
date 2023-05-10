@@ -3,8 +3,6 @@ package ch.ladestation.connectncharge.controller.pagecontroller;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -14,7 +12,6 @@ public class HelpPageController {
     @FXML
     private void handleXCloseButton(ActionEvent event) throws IOException {
         String fxmlPath = StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() : DEFAUL_FXML_PATH;
-        StageHandler.openStage(fxmlPath, "/css/style.css",
-            (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage(fxmlPath, "/css/style.css");
     }
 }

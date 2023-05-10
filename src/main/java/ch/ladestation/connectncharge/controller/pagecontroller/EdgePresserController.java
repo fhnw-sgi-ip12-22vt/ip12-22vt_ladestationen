@@ -3,10 +3,7 @@ package ch.ladestation.connectncharge.controller.pagecontroller;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class EdgePresserController {
@@ -16,15 +13,13 @@ public class EdgePresserController {
 
     @FXML
     public void handleNextButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml", "/css/style.css",
-            (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml", "/css/style.css");
     }
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgepresserpage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css",
-            (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
     }
 
     @FXML

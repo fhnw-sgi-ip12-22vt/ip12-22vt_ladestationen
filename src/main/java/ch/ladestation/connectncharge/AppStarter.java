@@ -49,6 +49,7 @@ public class AppStarter extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/loadingpage.fxml", "/css/style.css", stage);
+        StageHandler.setStage(stage);
+        StageHandler.openStage("/ch/ladestation/connectncharge/loadingpage.fxml", "/css/style.css");
     }
 }
