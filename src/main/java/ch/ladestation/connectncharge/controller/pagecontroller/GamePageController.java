@@ -1,6 +1,8 @@
-package ch.ladestation.connectncharge.controller;
+package ch.ladestation.connectncharge.controller.pagecontroller;
 
-import ch.ladestation.connectncharge.AppStarter;
+import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.controller.PageController;
+import ch.ladestation.connectncharge.controller.StageHandler;
 import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
@@ -9,15 +11,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -27,53 +24,38 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class SpielPageController implements ViewMixin<Game, ControllerBase<Game>>, Initializable {
-
-    private LocalTime startTime = LocalTime.of(0, 0);
-    private LocalTime publicEndTime;
-    @FXML
-    private Label timerLabel;
-    @FXML
-    private Button addTimeButton;
-    @FXML
-    private Button endGameButton;
-    @FXML
-    private AnchorPane popupPane; // updated data type to AnchorPane
+public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>, Initializable, PageController {
 
     @FXML
-    private Button stackMenu;
-
-    private Timeline timeline;
+    private AnchorPane endGampePopupPane;
+    @FXML
+    private AnchorPane hintPopupPane;
+    @FXML
+    private AnchorPane shadowPane;
     @FXML
     private AnchorPane menuPane;
     @FXML
-    private Button menuCloseButton;
+    private Button addTimeButton;
     @FXML
-    private int additionalTime = 15;
-
+    private Button stackMenu;
     @FXML
     private Label costs;
     @FXML
-    private Parent root;
-    @FXML
-    private Stage stage;
-    @FXML
-    private Scene scene;
+    private Label timerLabel;
+
+    private Timeline timeline;
+    private int additionalTime = 15;
+    private int seconds = 0, minutes = 0;
+
+
+    private static final String FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
+    private static final String CSS_PATH = "/css/style.css";
+    private LocalTime startTime = LocalTime.of(0, 0);
+    private LocalTime publicEndTime;
 
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
-        FXMLLoader loader =
-            new FXMLLoader(AppStarter.class.getResource("/ch/ladestation/connectncharge/homepage.fxml"));
-        root = loader.load();
-        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        scene.getStylesheets().add("/css/style.css");
-        stage.setTitle("Connect 'n Charge");
-        stage.setMaximized(true);
-        stage.setFullScreen(true);
-        stage.setResizable(false);
-        stage.setScene(scene);
-        stage.show();
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css");
     }
 
     @Override
@@ -83,6 +65,7 @@ public class SpielPageController implements ViewMixin<Game, ControllerBase<Game>
         stackMenu.setOpacity(1);
     }
 
+    @Override
     public void setController(ApplicationController controller) {
         init(controller);
     }
@@ -92,14 +75,12 @@ public class SpielPageController implements ViewMixin<Game, ControllerBase<Game>
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             startTime = startTime.plusSeconds(1);
 
-            // Überprüfe, ob die Zeit gleich oder größer als 1 Stunde ist
             if (startTime.isAfter(LocalTime.of(0, 59, 59))) {
-                timeline.stop(); // Stoppe den Timer
-                endGame(); // Rufe die endGame-Methode auf, wenn die maximale Zeit erreicht ist
-                startTime = LocalTime.of(1, 0); // Setze die Zeit auf genau 1 Stunde
+                timeline.stop();
+                endGame();
+                startTime = LocalTime.of(1, 0);
             }
 
-            // Aktualisiere den Text der Anzeige
             if (startTime.equals(LocalTime.of(1, 0))) {
                 timerLabel.setText("Zeit: 60:00");
             } else {
@@ -112,55 +93,76 @@ public class SpielPageController implements ViewMixin<Game, ControllerBase<Game>
 
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
-        // Füge die zusätzliche Zeit nur hinzu, wenn die aktuelle Zeit kleiner als 60
-        // Minuten ist
+        String tippText;
         if (!startTime.equals(LocalTime.of(1, 0))) {
-            // Prüfe, ob die zusätzliche Zeit die 60 Minuten überschreiten würde
             LocalTime newTime = startTime.plusSeconds(additionalTime);
             if (newTime.isAfter(LocalTime.of(1, 0))) {
-                startTime = LocalTime.of(1, 0); // Setze die Zeit auf genau 1 Stunde
+                startTime = LocalTime.of(1, 0);
             } else {
                 startTime = newTime;
             }
-
             timerLabel.setText("Zeit: " + startTime.format(DateTimeFormatter.ofPattern("mm:ss")));
         }
-
         additionalTime += 15;
-        addTimeButton.setText("Tipp +" + additionalTime + "sec");
+        /*seconds = seconds % 60 == 0 ? 0 : seconds + 15;
+        minutes += additionalTime % 60 == 0 ? 1 : 0;
+        tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
+        addTimeButton.setText("Tipp +" + additionalTime + "sek.");
     }
 
     @FXML
     private void handleEndGameButton(ActionEvent event) {
-        popupPane.setOpacity(1);
-        popupPane.setVisible(true);
+        endGampePopupPane.setVisible(true);
+        endGampePopupPane.setOpacity(1);
+        shadowPane.setVisible(true);
+        shadowPane.setOpacity(1);
     }
 
     @FXML
     private void handleConfirmEndGameButton(ActionEvent event) throws IOException {
-        // Stop the game and go to the homepage screen.
         showHomePage(event);
-        popupPane.setOpacity(0);
-        popupPane.setVisible(false);
+        endGampePopupPane.setVisible(false);
+        endGampePopupPane.setOpacity(0);
     }
 
     @FXML
     private void handleCancelEndGameButton(ActionEvent event) {
-        // Schließen Sie das Popup und lassen Sie das Spiel weiterlaufen.
-        popupPane.setOpacity(0);
-        popupPane.setVisible(false);
+        endGampePopupPane.setVisible(false);
+        endGampePopupPane.setOpacity(0);
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
     }
 
     @FXML
     private void handleStackMenuClick(ActionEvent event) {
         menuPane.setVisible(true);
         menuPane.setOpacity(1);
+        shadowPane.setVisible(true);
+        shadowPane.setOpacity(1);
+    }
+
+    @FXML
+    private void handleHelpButton(ActionEvent event) throws IOException {
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
+    }
+
+    @FXML
+    private void handleShadowAnchorPaneClick(ActionEvent event) {
+        endGampePopupPane.setVisible(false);
+        endGampePopupPane.setOpacity(0);
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
+        menuPane.setVisible(false);
+        menuPane.setOpacity(0);
     }
 
     @FXML
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
     }
 
     private void saveEndTime() {
@@ -168,8 +170,7 @@ public class SpielPageController implements ViewMixin<Game, ControllerBase<Game>
     }
 
     private void endGame() {
-        saveEndTime(); // Rufe die saveEndTime-Methode auf
-        // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
+        saveEndTime();
     }
 
     @FXML

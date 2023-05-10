@@ -1,17 +1,19 @@
-.root-pane {
+.loading-pane {
     -fx-pref-width: 800;
     -fx-pref-height: 480;
-    -fx-background-image: url("../images/LogoConnectnCharge.PNG");
+    -fx-background-image: url(".././images/LogoConnectnCharge.png");
     -fx-background-size: cover;
 }
 
-.root-pane .loading-button {
-    -fx-min-width: 800;
-    -fx-min-height: 480;
+.loading-pane .loading-button {
+    -fx-min-width: 800px;
+    -fx-min-height: 480px;
+    -fx-max-width: 800px;
+    -fx-max-height: 480px;
     -fx-background-color: transparent;
 }
 
-.home-pane {
+.root-pane {
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
     -fx-font-size: 16;
@@ -21,17 +23,21 @@
     -fx-background-size: cover;
 }
 
-.home-pane .title-label {
-    -fx-font-size: 10;
+.root-pane .countDown-label {
+    -fx-font-size: 152px;
     -fx-text-fill: #FFFFFF;
+    -fx-alignment: center;
 }
 
-.home-pane .story-label {
-    -fx-font-size: 152;
-    -fx-text-fill: #FFFFFF;
+.root-pane .story-label {
+    -fx-text-fill: #000000;
+    -fx-background-color: transparent;
+    -fx-font-size: 18;
+    -fx-wrap-text: true;
+    -fx-wrap-width: 355.99999999999994;
 }
 
-.home-pane .button {
+.root-pane .button {
     -fx-background-radius: 5em;
     -fx-min-width: 400px;
     -fx-min-height: 400px;
@@ -39,4 +45,153 @@
     -fx-max-height: 400px;
     -fx-background-color: transparent;
 }
+
+.root-pane .standard-first-button {
+    -fx-background-color: #f4e158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 211px;
+    -fx-min-height: 52px;
+    -fx-max-width: 211px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 16;
+}
+
+.root-pane .standard-second-button {
+    -fx-background-color: transparent;
+    -fx-min-width: 211px;
+    -fx-min-height: 52px;
+    -fx-max-width: 211px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 16;
+    -fx-border-color: #3C3C3C;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .standard-menu-button {
+    -fx-layoutX: 741;
+    -fx-layoutY: 15;
+    -fx-min-width: 43px;
+    -fx-min-height: 43px;
+    -fx-max-width: 43px;
+    -fx-max-height: 43px;
+    -fx-background-image: url(".././images/HbMenue.png");
+}
+
+.root-pane .standard-help-button {
+    -fx-layoutX: 50;
+    -fx-layoutY: 15;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-background-image: url(".././images/HelpIcon.png");
+}
+
+.root-pane .standard-xclose-button {
+    -fx-layoutX: 741;
+    -fx-layoutY: 15;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-background-image: url(".././images/XClose.png");
+}
+
+.root-pane .right-circle {
+    -fx-layoutX: 793;
+    -fx-layoutY: 0;
+    -fx-min-width: 98px;
+    -fx-min-height: 98px;
+    -fx-max-width: 98px;
+    -fx-max-height: 98px;
+    -fx-background-color: #FFFFFF;
+}
+
+.root-pane .left-circle {
+    -fx-layoutX: 50;
+    -fx-layoutY: 0;
+    -fx-min-width: 98px;
+    -fx-min-height: 98px;
+    -fx-max-width: 98px;
+    -fx-max-height: 98px;
+    -fx-background-color: #FFFFFF;
+}
+
+
+.root-pane .help-text-area {
+    -fx-wrap-text: true;
+    -fx-min-width: 589px;
+    -fx-min-height: 400px;
+    -fx-max-width: 589px;
+    -fx-max-height: 400px;
+    -fx-control-inner-background: #1E1E1E;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: transparent;
+}
+
+.popup-pane {
+    -fx-min-width: 515px;
+    -fx-min-height: 265px;
+    -fx-max-width: 515px;
+    -fx-max-height: 265px;
+    -fx-background-color: #F9F9F9;
+    -fx-background-size: cover;
+    -fx-background-radius: 15px;
+}
+
+.popup-pane .pane-shadow {
+    -fx-min-width: 800px;
+    -fx-min-height: 480px;
+    -fx-max-width: 800px;
+    -fx-max-height: 480px;
+    -fx-background-color: #00022e89;
+}
+
+.menu-pane {
+    -fx-min-width: 300 pxpx;
+    -fx-min-height: 480px;
+    -fx-max-width: 300 pxpx;
+    -fx-max-height: 480px;
+    -fx-background-color: #f4e158;
+    -fx-background-size: cover;
+    -fx-background-radius: 25px;
+    -fx-layoutX: 0;
+    -fx-layoutY: 0;
+}
+
+.menu-pane .info-text {
+    -fx-min-width: 165px;
+    -fx-min-height: 43px;
+    -fx-max-width: 165px;
+    -fx-max-height: 43px;
+    -fx-alignment: left;
+}
+
+.menu-pane .info-icon-size {
+    -fx-min-width: 26px;
+    -fx-min-height: 27px;
+    -fx-max-width: 26px;
+    -fx-max-height: 27px;
+}
+
+.menu-pane .info-icon-admin {
+    -fx-background-image: url(.././images/admin.png);
+}
+
+.menu-pane .info-icon-cup {
+    -fx-background-image: url(.././images/cup.png);
+}
+
+.menu-pane .info-icon-medalstar {
+    -fx-background-image: url(.././images/medalstar.png);
+}
+
+
+
 
