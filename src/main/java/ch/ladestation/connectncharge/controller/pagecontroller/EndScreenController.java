@@ -17,13 +17,13 @@ import java.util.ResourceBundle;
 
 public class EndScreenController implements Initializable {
     @FXML
-    public Button btnHighscore;
+    private Button btnHighscore;
     @FXML
-    public Button btnPlayAgain;
+    private Button btnPlayAgain;
     @FXML
-    public Label lblTime;
+    private Label lblTime;
     @FXML
-    public Button btnMenu;
+    private Button btnMenu;
 
 
     @FXML
@@ -72,6 +72,5 @@ public class EndScreenController implements Initializable {
         //lblTime.setText(String.valueOf(gamePageController.publicEndTime));
         lblTime.setText("2min12sec");
     }
-
 
 }
