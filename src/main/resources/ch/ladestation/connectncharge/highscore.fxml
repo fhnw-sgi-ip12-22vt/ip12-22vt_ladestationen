@@ -1,11 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.HighscoreScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.HighscoreScreenController">
    <children>
-      <Label layoutX="227.0" layoutY="183.0" text="This is the highscore list" />
+      <Button fx:id="btnPlayAgain" layoutX="97.0" layoutY="122.0" mnemonicParsing="false" onAction="#handlePlayAgain" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen" />
+      <Button fx:id="btnBonus" layoutX="97.0" layoutY="238.0" mnemonicParsing="false" onAction="#handlePlayBonus" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Bonus spielen" textFill="WHITE" />
+      <ImageView fx:id="imgHome" fitHeight="75.0" fitWidth="75.0" layoutX="139.0" layoutY="340.0" onMouseClicked="#showHomeScreen" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/home.png" />
+         </image>
+      </ImageView>
+      <Line endX="281.0" layoutX="501.0" layoutY="13.0" startX="-179.0" startY="1.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-153.0" endY="447.12841796875" layoutX="475.0" layoutY="21.0" startX="-153.0" startY="-5.585784912109375" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="281.0" layoutX="501.0" layoutY="468.0" startX="-179.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-153.0" endY="447.12841796875" layoutX="935.0" layoutY="20.0" startX="-153.0" startY="-5.585784912109375" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="281.0" layoutX="501.0" layoutY="51.0" startX="-179.0" startY="1.0" stroke="WHITE" strokeWidth="2.0" />
+      <Label layoutX="499.0" layoutY="15.0" text="Rangliste" textFill="WHITE">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Label layoutX="350.0" layoutY="72.0" text="Rang" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
