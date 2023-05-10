@@ -25,7 +25,6 @@ public class EndScreenController implements Initializable {
     @FXML
     private Button btnMenu;
 
-
     @FXML
     private Parent root;
     @FXML
@@ -60,17 +59,14 @@ public class EndScreenController implements Initializable {
 
     }
 
-
     public void showNameInputScreen(ActionEvent actionEvent) throws IOException {
         StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml", "/css/style.css",
                 (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
     }
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //lblTime.setText(String.valueOf(gamePageController.publicEndTime));
         lblTime.setText("2min12sec");
     }
-
 }

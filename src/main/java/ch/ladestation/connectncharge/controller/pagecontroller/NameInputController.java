@@ -52,7 +52,7 @@ public class NameInputController implements Initializable {
     @FXML
     private Button p;
     @FXML
-    private Button ü;
+    private Button ue;
     @FXML
     private Button a;
     @FXML
@@ -72,9 +72,9 @@ public class NameInputController implements Initializable {
     @FXML
     private Button l;
     @FXML
-    private Button ö;
+    private Button oe;
     @FXML
-    private Button ä;
+    private Button ae;
     @FXML
     private Button y;
     @FXML
@@ -159,7 +159,7 @@ public class NameInputController implements Initializable {
             i.setText("i");
             o.setText("o");
             p.setText("p");
-            ü.setText("ü");
+            ue.setText("ü");
             a.setText("a");
             s.setText("s");
             d.setText("d");
@@ -169,8 +169,8 @@ public class NameInputController implements Initializable {
             j.setText("j");
             k.setText("k");
             l.setText("l");
-            ö.setText("ö");
-            ä.setText("ä");
+            oe.setText("ö");
+            ae.setText("ä");
             y.setText("y");
             x.setText("x");
             c.setText("c");
@@ -195,7 +195,7 @@ public class NameInputController implements Initializable {
             i.setText("i");
             o.setText("o");
             p.setText("p");
-            ü.setText("ü");
+            ue.setText("ü");
             a.setText("a");
             s.setText("s");
             d.setText("d");
@@ -205,8 +205,8 @@ public class NameInputController implements Initializable {
             j.setText("j");
             k.setText("k");
             l.setText("l");
-            ö.setText("ö");
-            ä.setText("ä");
+            oe.setText("ö");
+            ae.setText("ä");
             y.setText("y");
             x.setText("x");
             c.setText("c");
@@ -227,7 +227,7 @@ public class NameInputController implements Initializable {
             i.setText("I");
             o.setText("O");
             p.setText("P");
-            ü.setText("Ü");
+            ue.setText("Ü");
             a.setText("A");
             s.setText("S");
             d.setText("D");
@@ -237,8 +237,8 @@ public class NameInputController implements Initializable {
             j.setText("J");
             k.setText("K");
             l.setText("L");
-            ö.setText("Ö");
-            ä.setText("Ä");
+            oe.setText("Ö");
+            ae.setText("Ä");
             y.setText("Y");
             x.setText("X");
             c.setText("C");
