@@ -219,7 +219,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
             }
         }
 
-        //linkNodeReferencesInAllEdges();
+        linkNodeReferencesInAllEdges();
     }
 
     private void linkNodeReferencesInAllEdges() {

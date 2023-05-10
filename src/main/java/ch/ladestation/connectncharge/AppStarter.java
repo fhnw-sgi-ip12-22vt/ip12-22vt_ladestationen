@@ -2,9 +2,7 @@ package ch.ladestation.connectncharge;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.SpielPageController;
-import ch.ladestation.connectncharge.model.Edge;
 import ch.ladestation.connectncharge.model.Game;
-import ch.ladestation.connectncharge.model.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.util.Pi4JContext;
 import ch.ladestation.connectncharge.util.mvcbase.MvcLogger;
@@ -15,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 public class AppStarter extends Application {
     private static final MvcLogger LOGGER = new MvcLogger();
@@ -27,18 +24,10 @@ public class AppStarter extends Application {
         controller = new ApplicationController(new Game());
         var gPUI = new GamePUI(controller, pi4J);
 
+        controller.setGPUI(gPUI);
+        controller.loadLevels();
+
         LOGGER.logInfo("App started");
-
-        /////////////////////TMMMMMMMMMMMMMP
-        int[] terms = {81, 27, 11, 31, 52, 47, 33, 62, 77, 16, 95, 18, 67};
-
-        var terminalNodes = Arrays.stream(terms)
-                .mapToObj(gPUI::lookUpSegmentIdToSegment)
-                .map(seg -> (Node) seg)
-                .toArray(Node[]::new);
-        controller.setTerminals(terminalNodes);
-        controller.startBlinkingEdge((Edge) gPUI.lookUpSegmentIdToSegment(1));
-        //////////////////TMPPPPPPPPPPPPPPPPPPPPPPPPPPPPP
 
         // This will ensure Pi4J is properly finished. All I/O instances are
         // released by the system and shutdown in the appropriate
