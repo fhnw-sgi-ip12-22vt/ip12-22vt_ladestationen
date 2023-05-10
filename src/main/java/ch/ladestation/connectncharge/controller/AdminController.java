@@ -108,7 +108,7 @@ public class AdminController {
 
         if (enteredCode.equals("123456")) {
             try {
-                StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
+                StageHandler.openStage("/ch/ladestation/connectncharge/adminhomepage.fxml", "/css/style.css",
                     (Stage) ((Node) event.getSource()).getScene().getWindow());
             } catch (IOException e) {
                 throw new RuntimeException(e);
