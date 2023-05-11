@@ -118,8 +118,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
      *                  that the {@link MCP23S17.PinView} argument belongs to is stored.
      * @param pinView   the {@link MCP23S17.PinView} object the interrupt originated from.
      */
-    private void addEdgePressListenerToPinView(int indexOfIC,
-                                               MCP23S17.PinView pinView,
+    private void addEdgePressListenerToPinView(int indexOfIC, MCP23S17.PinView pinView,
                                                ApplicationController controller) {
         pinView.addListener((state, pin) -> {
             if (state) {
@@ -137,10 +136,8 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     private void handleEdgePressed(Edge edge, ApplicationController controller) {
         controller.edgePressed(edge);
         //controller.updateScore();
-        logger.info("edge "
-                + edge.getSegmentIndex() + " between "
-                + edge.getFromNodeId() + " & "
-                + edge.getToNodeId() + " was pressed");
+        logger.info("edge " + edge.getSegmentIndex() + " between " + edge.getFromNodeId() + " & "
+            + edge.getToNodeId() + " was pressed");
     }
 
     /**
@@ -152,12 +149,9 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
      *                     gathering of the {@link MCP23S17.PinView} objects fail
      */
     private List<MCP23S17> setupGPIOExtensionICs(Context pi4J) {
-        var interruptPinConfig = DigitalInput.newConfigBuilder(pi4J)
-                .id("interrupt0")
-                .name("a MCP interrupt")
-                .address(22)
-                .pull(PullResistance.PULL_UP)
-                .provider("pigpio-digital-input");
+        var interruptPinConfig =
+            DigitalInput.newConfigBuilder(pi4J).id("interrupt0").name("a MCP interrupt").address(22)
+                .pull(PullResistance.PULL_UP).provider("pigpio-digital-input");
 
         var interruptPinChip0 = pi4J.create(interruptPinConfig);
         var interruptPinChip1 = pi4J.create(interruptPinConfig.address(23).id("interrupt1"));
@@ -165,20 +159,13 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         var interruptPinChip3 = pi4J.create(interruptPinConfig.address(25).id("interrupt3"));
         var interruptPinChip4 = pi4J.create(interruptPinConfig.address(27).id("interrupt4"));
 
-        DigitalInput[] interruptPins = {interruptPinChip0,
-            interruptPinChip1,
-            interruptPinChip2,
-            interruptPinChip3,
-            interruptPinChip4};
+        DigitalInput[] interruptPins =
+            {interruptPinChip0, interruptPinChip1, interruptPinChip2, interruptPinChip3, interruptPinChip4};
         List<MCP23S17> interruptChips;
         try {
             interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
 
-                    pi4J,
-                    SpiBus.BUS_1,
-                    interruptPins,
-                    5,
-                    true);
+                pi4J, SpiBus.BUS_1, interruptPins, 5, true);
         } catch (IOException e) {
             throw new RuntimeException("Fatal error when instantiating MCP23S17 chips: " + e.getMessage());
         }
@@ -190,7 +177,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
 
         int runningTotal = 0;
         var retSegments = new ArrayList<Segment>();
-        for (int i = 1; i < records.size(); i++) {
+        for (int i = 1; i < records.size() - 1; i++) {
             var record = records.get(i);
             int startIndex = runningTotal;
             runningTotal += Integer.parseInt(record.get(1));
@@ -246,11 +233,8 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     }
 
     public Edge lookUpEdge(int fromIndex, int toIndex) {
-        return edges.stream()
-            .filter(e -> (e.getFromNodeId() == fromIndex && e.getToNodeId() == toIndex)
-                || (e.getFromNodeId() == toIndex && e.getToNodeId() == fromIndex))
-            .findFirst()
-            .orElse(null);
+        return edges.stream().filter(e -> (e.getFromNodeId() == fromIndex && e.getToNodeId() == toIndex)
+            || (e.getFromNodeId() == toIndex && e.getToNodeId() == fromIndex)).findFirst().orElse(null);
     }
 }
 

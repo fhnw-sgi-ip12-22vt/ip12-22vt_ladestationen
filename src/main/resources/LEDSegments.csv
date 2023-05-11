@@ -100,3 +100,4 @@ Segment;LEDs (amount);Chip (0-4);Pin (0-15);newCost;From Node;To Node;Segment to
 99;4;1;9;89;56;100;;
 100;5;H;;;;;;
 101;12;4;12;234;100;62;;
+;;;;;;;;
