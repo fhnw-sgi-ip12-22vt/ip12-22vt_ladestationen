@@ -22,8 +22,6 @@ public class AppStarter extends Application {
         controller = new ApplicationController(new Game());
         var gPUI = new GamePUI(controller, pi4J);
 
-        LOGGER.logInfo("App started");
-
         controller.setGPUI(gPUI);
         controller.loadLevels();
         controller.loadNextLevel();
@@ -48,6 +46,6 @@ public class AppStarter extends Application {
         StageHandler.setStage(stage);
         StageHandler.setController(controller);
         //StageHandler.setController(new ApplicationController(new Game()));
-        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/loadingpage.fxml", "/css/style.css");
     }
 }
