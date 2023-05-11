@@ -22,9 +22,9 @@ public class AppStarter extends Application {
         controller = new ApplicationController(new Game());
         var gPUI = new GamePUI(controller, pi4J);
 
-        /*LOGGER.logInfo("App started");
+        LOGGER.logInfo("App started");
 
-        int[] terms = {81, 27, 11, 31, 52, 47, 33, 62, 77, 16, 95, 18, 67};
+        /*int[] terms = {81, 27, 11, 31, 52, 47, 33, 62, 77, 16, 95, 18, 67};
 
         var terminalNodes = Arrays.stream(terms)
             .mapToObj(gPUI::lookUpSegmentIdToSegment)
@@ -34,6 +34,7 @@ public class AppStarter extends Application {
 
         controller.setGPUI(gPUI);
         controller.loadLevels();
+        controller.loadNextLevel();
 
         LOGGER.logInfo("App started");
         
