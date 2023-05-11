@@ -13,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.IOException;
 import java.util.List;
 
-public class EdgePresserController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
+public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
 
     @FXML
     private AnchorPane menuPane;
@@ -27,7 +27,7 @@ public class EdgePresserController implements ViewMixin<Game, ControllerBase<Gam
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgepresserpage.fxml");
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
         StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
     }
 

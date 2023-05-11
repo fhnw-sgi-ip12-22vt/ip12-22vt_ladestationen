@@ -51,7 +51,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private static final String FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
     private static final String CSS_PATH = "/css/style.css";
     private LocalTime startTime = LocalTime.of(0, 0);
-    private LocalTime publicEndTime;
+    private static LocalTime publicEndTime;
 
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
@@ -79,10 +79,15 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
                 timeline.stop();
                 endGame();
                 startTime = LocalTime.of(1, 0);
+                try {
+                    StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-
             if (startTime.equals(LocalTime.of(1, 0))) {
                 timerLabel.setText("Zeit: 60:00");
+
             } else {
                 timerLabel.setText("Zeit: " + startTime.format(formatter));
             }
@@ -107,7 +112,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         /*seconds = seconds % 60 == 0 ? 0 : seconds + 15;
         minutes += additionalTime % 60 == 0 ? 1 : 0;
         tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
-        addTimeButton.setText("Tipp +" + additionalTime + "sek.");
+        addTimeButton.setText("Tipp +" + additionalTime + "sek");
     }
 
     @FXML
@@ -169,17 +174,18 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         publicEndTime = startTime;
     }
 
+    public static LocalTime getPublicEndTime() {
+        return publicEndTime;
+    }
+
     private void endGame() {
-        saveEndTime();
+        saveEndTime(); // Rufe die saveEndTime-Methode auf
+        // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
     }
 
     @FXML
     public void showCost() {
 
-    }
-
-    public LocalTime getPublicEndTime() {
-        return publicEndTime;
     }
 
     public Label getCosts() {

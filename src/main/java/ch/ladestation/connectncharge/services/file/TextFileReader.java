@@ -1,12 +1,14 @@
 package ch.ladestation.connectncharge.services.file;
 
+import ch.ladestation.connectncharge.model.Player;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public final class TextFileReader {
 
-    private static final String LEVEL_DIRECTORY_PATH = "src/main/resources/levels";
+    private static final String LEVEL_DIRECTORY_PATH = "src/main/resources/textfiles/levels";
 
     private static final int NUMBER_OF_LEVELS = 5;
 
@@ -18,8 +20,8 @@ public final class TextFileReader {
 
         for (int i = 1; i < NUMBER_OF_LEVELS + 1; i++) {
             int levelNumber = i;
-            InputStream level = TextFileReader.class.getResourceAsStream("/levels/" + i + ".txt");
-            Objects.requireNonNull(level, "error, " + "/levels/" + i + ".txt" + "file was null");
+            InputStream level = TextFileReader.class.getResourceAsStream("/textfiles/levels/" + i + ".txt");
+            Objects.requireNonNull(level, "error, " + "/textfiles/levels/" + i + ".txt" + "file was null");
             List<String> lines = new ArrayList<>();
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(level, StandardCharsets.UTF_8))) {
@@ -64,5 +66,26 @@ public final class TextFileReader {
         }
 
         return lines;
+    }
+
+    public static List<Player> readPlayerDataFromFile(String filePath) {
+        List<Player> players = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length == 3) {
+                    String playerName = data[1];
+                    String score = data[2];
+                    Player player = new Player(playerName, score);
+                    players.add(player);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return players;
     }
 }
