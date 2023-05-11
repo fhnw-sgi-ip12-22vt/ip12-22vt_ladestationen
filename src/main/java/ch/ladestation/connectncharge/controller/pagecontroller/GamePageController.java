@@ -79,10 +79,15 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
                 timeline.stop();
                 endGame();
                 startTime = LocalTime.of(1, 0);
+                try {
+                    StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
-
             if (startTime.equals(LocalTime.of(1, 0))) {
                 timerLabel.setText("Zeit: 60:00");
+
             } else {
                 timerLabel.setText("Zeit: " + startTime.format(formatter));
             }
@@ -172,11 +177,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private void endGame() {
         saveEndTime(); // Rufe die saveEndTime-Methode auf
         // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
-        try {
-            StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @FXML
