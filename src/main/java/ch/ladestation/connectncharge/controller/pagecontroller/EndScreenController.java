@@ -37,6 +37,11 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     @FXML
     private Scene scene;
 
+    //create variable from GamePageController publicEndTime
+    //private String endTime = GamePageController.publicEndTime;
+
+    private final String endTime = String.valueOf(GamePageController.getPublicEndTime());
+
     @FXML
     public void showEndPage(ActionEvent event) throws IOException {
         StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
@@ -68,8 +73,7 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //lblTime.setText(String.valueOf(gamePageController.publicEndTime));
-        lblTime.setText("2min12sec");
+        lblTime.setText(endTime);
     }
 
     @Override

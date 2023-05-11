@@ -7,6 +7,7 @@ import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.model.Player;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -22,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Attributes;
 
 public class HighscoreScreenController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
     @FXML
@@ -41,15 +43,19 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     @FXML
     private ScrollPane restHighscore;
     @FXML
-    private TableView restTableView;
+    private TableView<Player> restTableView;
     @FXML
-    private TableColumn restRankColumn;
+    private TableColumn<Player, Integer> restRankColumn;
     @FXML
-    private TableColumn restNameColumn;
+    private TableColumn<Player, String> restNameColumn;
     @FXML
-    private TableColumn restTimeColumn;
-    private static final String PLAYER_PATH = "/textfiles/highscore/player.txt";
+    private TableColumn<Player, String> restTimeColumn;
+    //private static final String PLAYER_PATH = "/textfiles/highscore/player.txt";
+
     private static final int PLAYER_PLACE_TOP = 5;
+    private String endTime = String.valueOf(GamePageController.getPublicEndTime());
+    //private String playerName = NameInputController.getPlayerName();
+    private String playerName = NameInputController.getCurrentName();
 
     @FXML
     public void showHighscorePage(ActionEvent event) throws IOException {
@@ -59,45 +65,33 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     @FXML
     public void initialize() {
         rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayerName()));
+        timeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEndTime()));
         restRankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        restNameColumn.setCellValueFactory(new PropertyValueFactory<>("playerName"));
-        restTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+        restNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayerName()));
+        restTimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEndTime()));
 
-        // Fetch data from the text file and populate the TableViews
         fetchDataAndPopulateTableViews();
     }
 
     private void fetchDataAndPopulateTableViews() {
-        /*System.out.println(String.valueOf(AppStarter.class.getResource(PLAYER_PATH)));
-        List<Player> players = TextFileReader.readPlayerDataFromFile(
-            String.valueOf(HighscoreScreenController.class.getResource(PLAYER_PATH)));
-        players.stream().forEach(System.out::println);*/
-        List<Player> players = new ArrayList<>();
-        players.add(new Player("Player1", "0:05:00"));
-        players.add(new Player("Player141", "1:00:00"));
-        players.add(new Player("Player3", "1:70:00"));
-        players.add(new Player("Player2", "0:05:45"));
-        players.add(new Player("Player89", "1:40:00"));
-        players.add(new Player("Player11", "0:55:58"));
-        players.stream().forEach(System.out::println);
-        //players.sort(Comparator.comparingInt(player -> Integer.parseInt(player.getScore())));
+        List<Player> playerList = new ArrayList<>();
+        Player currentPlayer = new Player(playerName, endTime);
+        playerList.add(currentPlayer);
 
-        ObservableList<Player> topPlayers =
-            FXCollections.observableArrayList(new Player("Player1", "0:05:00"), new Player("Player141", "1:00:00"));
-        ObservableList<Player> restPlayers =
-            FXCollections.observableArrayList(new Player("Player11", "0:55:58"), new Player("Player89", "1:40:00"));
+        // Create an ObservableList from the player list
+        ObservableList<Player> observablePlayerList = FXCollections.observableArrayList(playerList);
 
-        if (players.size() > PLAYER_PLACE_TOP) {
-            topPlayers.addAll(players.subList(0, PLAYER_PLACE_TOP));
-            restPlayers.addAll(players.subList(PLAYER_PLACE_TOP, players.size()));
-        } else {
-            topPlayers.addAll(players);
-        }
+        // Set the items in the TableView
+        tableView.setItems(observablePlayerList);
+    }
 
-        tableView.setItems(topPlayers);
-        restTableView.setItems(restPlayers);
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
+    public void setPlayerTime(String endTime) {
+        this.endTime = endTime;
     }
 
     public void showGamePage(ActionEvent actionEvent) throws IOException {

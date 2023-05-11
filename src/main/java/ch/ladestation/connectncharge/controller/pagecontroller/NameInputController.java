@@ -97,6 +97,7 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
     private Label lblWarning;
 
     private boolean capsLockOn = false;
+    private static String currentName;
 
     @FXML
     public void showNamePage(ActionEvent event) throws IOException {
@@ -131,10 +132,6 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
         });
     }
 
-    @FXML
-    public void handleInputName(ActionEvent actionEvent) {
-        String playerName = txtNameInput.getText();
-    }
 
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
         StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css");
@@ -292,4 +289,13 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
     public List<String> getStylesheets() {
         return null;
     }
+
+    public void handleInputName(ActionEvent actionEvent) {
+        currentName = txtNameInput.getText();
+    }
+
+    public static String getCurrentName() {
+        return currentName;
+    }
+
 }
