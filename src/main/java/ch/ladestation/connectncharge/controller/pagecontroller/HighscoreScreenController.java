@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.jar.Attributes;
 
 public class HighscoreScreenController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
     @FXML
