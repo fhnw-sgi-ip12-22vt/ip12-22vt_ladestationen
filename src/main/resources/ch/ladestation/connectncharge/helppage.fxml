@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="515.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.HelpPageController">
-   <children>
-      <Label layoutX="214.0" layoutY="-1.0" prefHeight="59.0" prefWidth="86.0" text="Hilfe" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="37.0" />
-         </font>
-      </Label>
-      <Circle fill="#f4e158" layoutX="509.0" layoutY="-6.0" radius="57.0" stroke="BLACK" strokeType="INSIDE" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="2.0" layoutY="58.0" prefHeight="198.0" prefWidth="510.0" vbarPolicy="ALWAYS" vmax="50.0">
-        <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
-        </content>
-      </ScrollPane>
-   </children>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.HelpPageController">
+    <children>
+        <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
+        <Circle fx:id="r" fill="#f4e158" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
+        <Label layoutX="322.0" layoutY="15.0" prefHeight="58.0" prefWidth="154.0" text="Hilfe" textFill="WHITE">
+            <font>
+                <Font size="40.0" />
+            </font>
+        </Label>
+        <StackPane layoutX="20.0" layoutY="15.0" maxHeight="423.0" maxWidth="318.0" prefHeight="423.0" prefWidth="318.0" styleClass="standard-xclose-button" stylesheets="@../../../css/style.css">
+            <children>
+                <Button maxHeight="394.0" maxWidth="278.0" mnemonicParsing="false" onAction="#handleXCloseButton" opacity="0.0" prefHeight="394.0" prefWidth="278.0" styleClass="standard-xclose-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" fx:id="x_close" />
+            </children>
+        </StackPane>
+        <TextArea editable="false" layoutX="105.0" layoutY="63.0" maxHeight="403.0" maxWidth="590.0" prefHeight="403.0" prefWidth="590.0" styleClass="help-text-area" stylesheets="@../../../css/style.css" text="Herzlich willkommen im Hilfe-Menü! Hier erhalten Sie alle wichtigen Informationen, um im Spiel erfolgreich zu sein. Bitte wählen Sie einen der folgenden Abschnitte, um detaillierte Informationen und hilfreiche Tipps zu bekommen:&#10;&#10;Spielstart: &#10;Um das Spiel zu beginnen, klicken Sie zunächst auf den Ladebildschirm (Connect 'n Charge), um zum Hauptbildschirm zu gelangen (falls Sie sich noch im Ladebildschirm befinden). Anschliessend klicken Sie auf den &quot;Start&quot;-Button in der unteren Mitte des Halbkreises, um den Countdown zu starten und das Spiel zu beginnen. Im Burger-Menü können Sie zudem ein Bonuslevel auswählen und spielen.&#10;&#10;Spielsteuerung: &#10;Um das Spiel zu steuern, tippen Sie einmal auf die weissen Kanten (Streifen), um sie blau aufleuchten zu lassen. Tippen Sie erneut auf dieselbe Kante, erlischt die Farbe wieder. Das Display kann per Touch bedient werden, um Tipps abzurufen, den Hilfe-Bildschirm aufzurufen oder das Spiel zu verlassen.&#10;&#10;Gameplay:&#10;Sobald das Spiel startet, beginnt die Zeit zu laufen. Wenn Sie Kanten auswählen, werden deren Kosten auf dem Display angezeigt. Ihr Ziel ist es, durch geschicktes Kombinieren und Ausprobieren der Kantenlängen, den kürzesten und kosteneffizientesten Weg zu finden, um alle blauleuchtende Ferienhäuser mit Ladestationen zu verbinden. &#10;&#10;Regeln: &#10;Das Spiel endet erst, wenn der kosteneffizienteste Weg gefunden und die LEDs wieder erloschen sind. Ein Kreis im Graphen ist nicht erlaubt - falls Sie dennoch einen erstellen, erhalten Sie eine entsprechende Meldung auf dem Display.&#10;&#10;Ziel:&#10;Ihr Ziel ist es, so schnell wie möglich den kostengünstigsten und kürzesten Weg im Graphen zu finden. Sobald der optimale Weg gefunden und verbunden wurde, ist das Spiel beendet, und Ihre Zeit wird in der Rangliste gespeichert.&#10;&#10;Support:&#10;Sollten Sie auf technische Probleme oder Fehler im Spiel stossen, wenden Sie sich bitte an die zuständige Aufsichtsperson." wrapText="true" />
+    </children>
 </AnchorPane>

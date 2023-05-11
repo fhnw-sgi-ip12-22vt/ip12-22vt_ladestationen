@@ -1,4 +1,4 @@
-target/
+otarget/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -24,6 +24,8 @@ target/
 .idea/
 .mvn/
 /bin/
+.metadata/
+/target/
 
 ### NetBeans ###
 /nbproject/private/
