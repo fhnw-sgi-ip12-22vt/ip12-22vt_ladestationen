@@ -206,6 +206,13 @@
     -fx-background-color: #FFFFFF;
     -fx-background-size: cover;
 }
+.admin-popup-pane {
+    -fx-pref-width: 515;
+    -fx-pref-height: 265;
+    -fx-background-color: #EDEDED;
+    -fx-background-size: cover;
+    -fx-background-radius: 23px;
+}
 
 .menu-pane {
     -fx-pref-width: 650px;
@@ -216,6 +223,76 @@
     -fx-layoutY: 0;
 }
 
-
-
+.admin-popup-pane-no-button {
+    -fx-background-color: #EDEDED;
+    -fx-min-width: 95px;
+    -fx-min-height: 50px;
+    -fx-max-width: 95px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #DA1F1F;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #DA1F1F;
+}
+.admin-popup-pane-yes-button {
+    -fx-background-color: #9EF097;
+    -fx-min-width: 95px;
+    -fx-min-height: 50px;
+    -fx-max-width: 95px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #000000;
+}
+.leaderboard-choose-button {
+    -fx-background-color: #1E1E1E;
+    -fx-background-radius: 11px;
+    -fx-min-width: 180px;
+    -fx-min-height: 52px;
+    -fx-max-width: 180px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #F4E158;
+}
+.leaderboard-un-choose-button {
+    -fx-background-color: rgba(244, 225, 88, 0.3);
+    -fx-background-radius: 11px;
+    -fx-min-width: 180px;
+    -fx-min-height: 52px;
+    -fx-max-width: 180px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #FFFFFF;
+}
+.leaderboard-choose-all-button {
+    -fx-background-color: #F4E158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 180px;
+    -fx-min-height: 52px;
+    -fx-max-width: 180px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #00000;
+}
 
