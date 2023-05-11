@@ -10,7 +10,7 @@ public final class TextFileReader {
 
     private static final String LEVEL_DIRECTORY_PATH = "src/main/resources/textfiles/levels";
 
-    private static final int NUMBER_OF_LEVELS = 1;
+    private static final int NUMBER_OF_LEVELS = 5;
 
     private TextFileReader() {
     }
