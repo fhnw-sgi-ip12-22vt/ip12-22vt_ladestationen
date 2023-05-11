@@ -42,5 +42,12 @@ public class AdminNormalLeaderboard {
     @FXML
     private void handleTrashButton(ActionEvent event) { // Methode zum Löschen der Liste
         System.out.println("Liste wurde gelöscht.");
+
+        // Setze die CSS-Klassen der beiden Buttons zurück
+        chooseAllButton.getStyleClass().remove("leaderboard-choose-button-selected");
+        chooseAllButton.getStyleClass().add("leaderboard-choose-button");
+
+        unchooseAllButton.getStyleClass().remove("leaderboard-un-choose-button-selected");
+        unchooseAllButton.getStyleClass().add("leaderboard-choose-button");
     }
 }
