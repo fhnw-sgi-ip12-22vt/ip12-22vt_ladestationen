@@ -117,7 +117,7 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
         });
 
         txtNameInput.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.length() > 10) {
+            if (newValue.length() > 15) {
                 txtNameInput.setText(oldValue);
                 lblWarning.setText("Zu lang");
             } else {
@@ -134,7 +134,10 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
 
 
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
+        currentName = txtNameInput.getText();
         StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css");
+        System.out.println(currentName);
+        System.out.println(txtNameInput.getText());
     }
 
     public void keyPressed(ActionEvent actionEvent) {
