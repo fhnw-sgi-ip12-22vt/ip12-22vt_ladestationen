@@ -46,8 +46,8 @@ public class AppStarter extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         StageHandler.setStage(stage);
-        //StageHandler.setController(controller);
-        StageHandler.setController(new ApplicationController(new Game()));
+        StageHandler.setController(controller);
+        //StageHandler.setController(new ApplicationController(new Game()));
         StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css");
     }
 }
