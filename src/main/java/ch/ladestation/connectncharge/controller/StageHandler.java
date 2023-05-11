@@ -4,13 +4,17 @@ import ch.ladestation.connectncharge.AppStarter;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
 public final class StageHandler {
-
+    private static ApplicationController controller;
     private static String lastFxmlPath;
+
+    private static Stage stage;
 
     private StageHandler() {
         throw new AssertionError();
@@ -18,20 +22,29 @@ public final class StageHandler {
 
     private static final String STAGE_TITLE = "Connect 'n Charge";
 
-    public static void openStage(String fxmlPath, String cssPath, Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-            AppStarter.class.getResource(fxmlPath));
-        Scene scene = new Scene(fxmlLoader.load());
+    public static void openStage(String fxmlPath, String cssPath) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(AppStarter.class.getResource(fxmlPath));
+        Parent root = fxmlLoader.load();
+        Scene scene = new Scene(root);
+        PageController pageController = fxmlLoader.getController();
+        pageController.setController(controller);
 
         scene.getStylesheets().add(cssPath);
-        Parent root = FXMLLoader.load(AppStarter.class.getResource(fxmlPath));
-        scene = new Scene(root);
-        scene.getStylesheets().add(cssPath);
         stage.setTitle(STAGE_TITLE);
-        stage.setMaximized(true);
-        stage.setFullScreen(true);
-        stage.setResizable(false);
         stage.setScene(scene);
+        stage.setResizable(false);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.toFront();
+        stage.setX(0);
+        stage.setY(0);
+        stage.setWidth(Screen.getPrimary().getBounds().getWidth());
+        stage.setHeight(Screen.getPrimary().getBounds().getHeight());
+
+        if (stage.getScene() != null) {
+            stage.setMaximized(true);
+            stage.setFullScreen(true);
+        }
+
         stage.show();
     }
 
@@ -41,5 +54,13 @@ public final class StageHandler {
 
     public static String getLastFxmlPath() {
         return lastFxmlPath;
+    }
+
+    public static void setStage(Stage stageParam) {
+        stage = stageParam;
+    }
+
+    public static void setController(ApplicationController controllerParam) {
+        controller = controllerParam;
     }
 }

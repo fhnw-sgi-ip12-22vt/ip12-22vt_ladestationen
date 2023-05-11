@@ -68,15 +68,23 @@ public abstract class Segment extends Component {
         return isOn;
     }
 
-    public interface SegmentStateChange {
-        void onStateChange(int deltaCost);
-    }
-
     public void setOn(boolean on) {
         isOn = on;
     }
 
+    public void on() {
+        setOn(true);
+    }
+
+    public void off() {
+        setOn(false);
+    }
+
     public int getSegmentIndex() {
         return segmentIndex;
+    }
+
+    public interface SegmentStateChange {
+        void onStateChange(int deltaCost);
     }
 }

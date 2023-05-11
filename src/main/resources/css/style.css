@@ -6,8 +6,10 @@
 }
 
 .loading-pane .loading-button {
-    -fx-min-width: 800;
-    -fx-min-height: 480;
+    -fx-min-width: 800px;
+    -fx-min-height: 480px;
+    -fx-max-width: 800px;
+    -fx-max-height: 480px;
     -fx-background-color: transparent;
 }
 
@@ -21,7 +23,7 @@
     -fx-background-size: cover;
 }
 
-.root-pane .admin-code-text-field{
+.root-pane .admin-code-text-field {
     -fx-background-color: #F0F0F0;
     -fx-background-radius: 10px;
     -fx-min-width: 50px;
@@ -29,7 +31,8 @@
     -fx-max-width: 50px;
     -fx-max-height: 60px;
 }
-.root-pane .grid-background{
+
+.root-pane .grid-background {
     -fx-background-color: #F0F0F0;
     -fx-background-radius: 15px;
     -fx-min-width: 800px;
@@ -37,7 +40,8 @@
     -fx-max-width: 800px;
     -fx-max-height: 180px;
 }
-.root-pane .keyboard{
+
+.root-pane .keyboard {
     -fx-text-fill: #000000;
     -fx-min-width: 60px;
     -fx-min-height: 62px;
@@ -51,41 +55,38 @@
     -fx-start-margin: 0;
 }
 
-
-
 .root-pane .title-label {
     -fx-font-size: 152px;
     -fx-text-fill: #FFFFFF;
+    -fx-alignment: center;
+}
+
+.root-pane .countDown-label {
+    -fx-font-size: 152px;
+    -fx-text-fill: #FFFFFF;
+    -fx-alignment: center;
 }
 
 .root-pane .story-label {
     -fx-text-fill: #000000;
     -fx-background-color: transparent;
-    -fx-font-size: 15;
+    -fx-font-size: 18;
     -fx-wrap-text: true;
     -fx-wrap-width: 355.99999999999994;
 }
 
-/*.root-pane .button {
-    -fx-background-radius: 5em;
-    -fx-min-width: 400px;
-    -fx-min-height: 400px;
-    -fx-max-width: 400px;
-    -fx-max-height: 400px;
-    -fx-background-color: transparent;
-}*/
-
 .root-pane .standard-first-button {
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
-    -fx-min-width: 211px;
-    -fx-min-height: 52px;
-    -fx-max-width: 211px;
-    -fx-max-height: 52px;
+    -fx-min-width: 175px;
+    -fx-min-height: 45px;
+    -fx-max-width: 175px;
+    -fx-max-height: 45px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 16;
+    -fx-font-size: 19;
 }
+
 .root-pane .standard-stop-button {
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
@@ -97,6 +98,7 @@
     -fx-font-family: 'Lato Light';
     -fx-font-size: 18;
 }
+
 .root-pane .del-button {
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
@@ -109,21 +111,21 @@
     -fx-font-size: 18;
 }
 
-
 .root-pane .standard-second-button {
-    -fx-background-color: #1E1E1E;
-    -fx-min-width: 211px;
-    -fx-min-height: 52px;
-    -fx-max-width: 211px;
-    -fx-max-height: 52px;
-    -fx-padding: 10;
+    -fx-background-color: transparent;
+    -fx-min-width: 175px;
+    -fx-min-height: 43px;
+    -fx-max-width: 175px;
+    -fx-max-height: 43px;
+    -fx-padding: 0;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 16;
+    -fx-font-size: 19;
     -fx-border-color: #3C3C3C;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
     -fx-text-fill: #FFFFFF;
 }
+
 .root-pane .leaderboard-home-bonus-button {
     -fx-background-color: #1E1E1E;
     -fx-min-width: 211px;
@@ -138,6 +140,7 @@
     -fx-border-radius: 11px;
     -fx-text-fill: #F4E158;
 }
+
 .root-pane .leaderboard-home-home-button {
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
@@ -148,6 +151,133 @@
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
     -fx-font-size: 19;
+}
+
+.root-pane .name-input-textfield {
+    -fx-text-fill: #919191;
+    -fx-padding-left: 5;
+}
+
+.root-pane .end-screen-label {
+    -fx-font-size: 35px;
+    -fx-text-fill: #ffffff;
+    -fx-font-style: bold;
+}
+
+.root-pane .standard-third-button {
+    -fx-background-color: #969696;
+    -fx-min-width: 200px;
+    -fx-min-height: 45px;
+    -fx-max-width: 200px;
+    -fx-max-height: 45px;
+    -fx-padding: 0;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #E9E9E9;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .rangliste-button {
+    -fx-background-color: #969696;
+    -fx-background-radius: 11px;
+    -fx-border-color: #E9E9E9;
+    -fx-border-radius: 11px;
+    -fx-border-width: 2px;
+    -fx-min-width: 185px;
+    -fx-min-height: 50px;
+    -fx-max-width: 185px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+}
+
+.root-pane .play-again-button {
+    -fx-background-color: #f4e158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 185px;
+    -fx-min-height: 50px;
+    -fx-max-width: 185px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+}
+
+.root-pane .name-input-button {
+    -fx-background-color: #1E1E1E;
+    -fx-min-width: 111px;
+    -fx-min-height: 45px;
+    -fx-max-width: 111px;
+    -fx-max-height: 45px;
+    -fx-padding: 0;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #F4E158;
+}
+
+.root-pane .keyboardlayout {
+    -fx-text-fill: #000000;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+}
+
+.root-pane .keyboardlayout-cap {
+    -fx-text-fill: #000000;
+    -fx-min-width: 60px;
+    -fx-min-height: 45px;
+    -fx-max-width: 60px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 25;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
+}
+
+.root-pane .keyboardlayout-special {
+    -fx-text-fill: #000000;
+    -fx-min-width: 60px;
+    -fx-min-height: 45px;
+    -fx-max-width: 60px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
+}
+
+.root-pane .keyboardlayout-backspace {
+    -fx-text-fill: #000000;
+    -fx-min-width: 259px;
+    -fx-min-height: 45px;
+    -fx-max-width: 259px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
 }
 
 .root-pane .standard-menu-button {
@@ -200,12 +330,35 @@
     -fx-background-color: #FFFFFF;
 }
 
-.popup-pane {
-    -fx-pref-width: 515;
-    -fx-pref-height: 265;
-    -fx-background-color: #FFFFFF;
-    -fx-background-size: cover;
+.root-pane .help-text-area {
+    -fx-wrap-text: true;
+    -fx-min-width: 589px;
+    -fx-min-height: 400px;
+    -fx-max-width: 589px;
+    -fx-max-height: 400px;
+    -fx-control-inner-background: #1E1E1E;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: transparent;
 }
+
+.popup-pane {
+    -fx-min-width: 515px;
+    -fx-min-height: 265px;
+    -fx-max-width: 515px;
+    -fx-max-height: 265px;
+    -fx-background-color: #F9F9F9;
+    -fx-background-size: cover;
+    -fx-background-radius: 15px;
+}
+
+.popup-pane .pane-shadow {
+    -fx-min-width: 800px;
+    -fx-min-height: 480px;
+    -fx-max-width: 800px;
+    -fx-max-height: 480px;
+    -fx-background-color: #00022e89;
+}
+
 .admin-popup-pane {
     -fx-pref-width: 515;
     -fx-pref-height: 265;
@@ -215,10 +368,13 @@
 }
 
 .menu-pane {
-    -fx-pref-width: 650px;
-    -fx-pref-height: 480px;
+    -fx-min-width: 300 pxpx;
+    -fx-min-height: 480px;
+    -fx-max-width: 300 pxpx;
+    -fx-max-height: 480px;
     -fx-background-color: #f4e158;
     -fx-background-size: cover;
+    -fx-background-radius: 25px;
     -fx-layoutX: 0;
     -fx-layoutY: 0;
 }
@@ -237,6 +393,7 @@
     -fx-border-radius: 11px;
     -fx-text-fill: #DA1F1F;
 }
+
 .admin-popup-pane-yes-button {
     -fx-background-color: #9EF097;
     -fx-min-width: 95px;
@@ -250,6 +407,7 @@
     -fx-border-radius: 11px;
     -fx-text-fill: #000000;
 }
+
 .leaderboard-choose-button {
     -fx-background-color: #F4E158;
     -fx-background-radius: 11px;
@@ -265,6 +423,7 @@
     -fx-border-radius: 11px;
     -fx-text-fill: #00000;
 }
+
 .leaderboard-choose-button-selected {
     -fx-background-color: #000000;
     -fx-background-radius: 11px;
@@ -280,6 +439,7 @@
     -fx-border-radius: 11px;
     -fx-text-fill: #F4E158;
 }
+
 .leaderboard-un-choose-button {
     -fx-background-color: #F4E158;
     -fx-background-radius: 11px;
@@ -295,6 +455,7 @@
     -fx-border-radius: 11px;
     -fx-text-fill: #00000;
 }
+
 .leaderboard-un-choose-button-selected {
     -fx-background-color: #000000;
     -fx-background-radius: 11px;
@@ -311,3 +472,29 @@
     -fx-text-fill: #F4E158;
 }
 
+.menu-pane .info-text {
+    -fx-min-width: 165px;
+    -fx-min-height: 43px;
+    -fx-max-width: 165px;
+    -fx-max-height: 43px;
+    -fx-alignment: left;
+}
+
+.menu-pane .info-icon-size {
+    -fx-min-width: 26px;
+    -fx-min-height: 27px;
+    -fx-max-width: 26px;
+    -fx-max-height: 27px;
+}
+
+.menu-pane .info-icon-admin {
+    -fx-background-image: url(.././images/admin.png);
+}
+
+.menu-pane .info-icon-cup {
+    -fx-background-image: url(.././images/cup.png);
+}
+
+.menu-pane .info-icon-medalstar {
+    -fx-background-image: url(.././images/medalstar.png);
+}
