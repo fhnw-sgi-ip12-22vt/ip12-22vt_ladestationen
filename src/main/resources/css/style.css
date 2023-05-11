@@ -49,28 +49,156 @@
 .root-pane .standard-first-button {
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
-    -fx-min-width: 211px;
-    -fx-min-height: 52px;
-    -fx-max-width: 211px;
-    -fx-max-height: 52px;
+    -fx-min-width: 175px;
+    -fx-min-height: 45px;
+    -fx-max-width: 175px;
+    -fx-max-height: 45px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 16;
+    -fx-font-size: 19;
 }
 
 .root-pane .standard-second-button {
     -fx-background-color: transparent;
-    -fx-min-width: 211px;
-    -fx-min-height: 52px;
-    -fx-max-width: 211px;
-    -fx-max-height: 52px;
-    -fx-padding: 10;
+    -fx-min-width: 175px;
+    -fx-min-height: 43px;
+    -fx-max-width: 175px;
+    -fx-max-height: 43px;
+    -fx-padding: 0;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 16;
+    -fx-font-size: 19;
     -fx-border-color: #3C3C3C;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
     -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .name-input-textfield {
+    -fx-text-fill: #919191;
+    -fx-padding-left: 5;
+}
+
+.root-pane .end-screen-label {
+    -fx-font-size: 35px;
+    -fx-text-fill: #ffffff;
+    -fx-font-style: bold;
+}
+
+.root-pane .standard-third-button {
+    -fx-background-color: #969696;
+    -fx-min-width: 200px;
+    -fx-min-height: 45px;
+    -fx-max-width: 200px;
+    -fx-max-height: 45px;
+    -fx-padding: 0;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #E9E9E9;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .rangliste-button {
+    -fx-background-color: #969696;
+    -fx-background-radius: 11px;
+    -fx-border-color: #E9E9E9;
+    -fx-border-radius: 11px;
+    -fx-border-width: 2px;
+    -fx-min-width: 185px;
+    -fx-min-height: 50px;
+    -fx-max-width: 185px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+}
+
+
+.root-pane .play-again-button {
+    -fx-background-color: #f4e158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 185px;
+    -fx-min-height: 50px;
+    -fx-max-width: 185px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+}
+
+.root-pane .name-input-button {
+    -fx-background-color: #1E1E1E;
+    -fx-min-width: 111px;
+    -fx-min-height: 45px;
+    -fx-max-width: 111px;
+    -fx-max-height: 45px;
+    -fx-padding: 0;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #F4E158;
+}
+
+.root-pane .keyboardlayout {
+    -fx-text-fill: #000000;
+    -fx-min-width: 45px;
+    -fx-min-height: 45px;
+    -fx-max-width: 45px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+}
+
+.root-pane .keyboardlayout-cap {
+    -fx-text-fill: #000000;
+    -fx-min-width: 60px;
+    -fx-min-height: 45px;
+    -fx-max-width: 60px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 25;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
+}
+
+.root-pane .keyboardlayout-special {
+    -fx-text-fill: #000000;
+    -fx-min-width: 60px;
+    -fx-min-height: 45px;
+    -fx-max-width: 60px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
+}
+
+.root-pane .keyboardlayout-backspace {
+    -fx-text-fill: #000000;
+    -fx-min-width: 259px;
+    -fx-min-height: 45px;
+    -fx-max-width: 259px;
+    -fx-max-height: 45px;
+    -fx-background-radius: 5px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+    -fx-font-weight: bold;
 }
 
 .root-pane .standard-menu-button {

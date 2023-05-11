@@ -24,9 +24,10 @@ public class AppStarter extends Application {
 
         controller.setGPUI(gPUI);
         controller.loadLevels();
+        controller.loadNextLevel();
 
         LOGGER.logInfo("App started");
-        
+
         // This will ensure Pi4J is properly finished. All I/O instances are
         // released by the system and shutdown in the appropriate
         // manner. It will also ensure that any background
@@ -44,7 +45,6 @@ public class AppStarter extends Application {
     public void start(Stage stage) throws IOException {
         StageHandler.setStage(stage);
         StageHandler.setController(controller);
-        //StageHandler.setController(new ApplicationController(new Game()));
         StageHandler.openStage("/ch/ladestation/connectncharge/loadingpage.fxml", "/css/style.css");
     }
 }

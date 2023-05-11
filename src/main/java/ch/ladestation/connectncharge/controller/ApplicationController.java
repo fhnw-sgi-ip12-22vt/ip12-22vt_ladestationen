@@ -15,16 +15,28 @@ import java.util.logging.Logger;
 public class ApplicationController extends ControllerBase<Game> {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private Edge blinkingEdge;
+    private Map<Integer, List<Object>> levels;
+    private int currentLevel = 4;
+    private static final int MAX_LEVEL = 5;
     private Node[] terms;
-
     private GamePUI gamePUI;
+    Thread blinkThread;
 
     public ApplicationController(Game model) {
         super(model);
         model.activatedEdges.onChange((oldValue, newValue) -> {
-            updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
-            checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+            if (model.gameStarted.getValue()) {
+                updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+                checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+            }
         });
+
+        model.gameStarted.onChange(((oldValue, newValue) -> {
+            if (oldValue && !newValue) {
+                deactivateAllNodes();
+                loadNextLevel();
+            }
+        }));
     }
 
     public void setGPUI(GamePUI gamePUI) {
@@ -33,30 +45,42 @@ public class ApplicationController extends ControllerBase<Game> {
 
 
     public void loadLevels() {
-        Map<Integer, List<Object>> levels = null;
         try {
             levels = TextFileReader.readLevels();
         } catch (IOException ioException) {
-
+            throw new RuntimeException("error: levels could not be read!");
         }
+    }
 
-        for (int i = 1; i < levels.size() + 1; i++) {
-            List<Object> level = levels.get(i);
+    public void loadNextLevel() {
+        List<Object> level = levels.get(currentLevel);
 
-            List<Integer> terminals = (List<Integer>) level.get(0);
-            List<List<Integer>> solution = (List<List<Integer>>) level.get(1);
+        List<Integer> terminals = (List<Integer>) level.get(0);
+        List<List<Integer>> solution = (List<List<Integer>>) level.get(1);
 
-            int[] terms = terminals.stream().mapToInt(j -> j).toArray();
+        int[] terms = terminals.stream().mapToInt(j -> j).toArray();
 
-            var terminalNodes = Arrays.stream(terms).mapToObj(gamePUI::lookUpSegmentIdToSegment).map(seg -> (Node) seg)
-                .toArray(Node[]::new);
-            setTerminals(terminalNodes);
+        var terminalNodes = Arrays.stream(terms).mapToObj(gamePUI::lookUpSegmentIdToSegment).map(seg -> (Node) seg)
+            .toArray(Node[]::new);
+        setTerminals(terminalNodes);
 
-            var solutionEdges =
-                solution.stream().map((sol) -> gamePUI.lookUpEdge(sol.get(0), sol.get(1))).toArray(Edge[]::new);
-            setSolution(solutionEdges);
+        var solutionEdges =
+            solution.stream().map((sol) -> gamePUI.lookUpEdge(sol.get(0), sol.get(1))).toArray(Edge[]::new);
+        setSolution(solutionEdges);
 
+        deactivateAllEdges();
+
+        blinkThread = new Thread(() -> {
             startBlinkingEdge((Edge) gamePUI.lookUpSegmentIdToSegment(1));
+        });
+        blinkThread.start();
+    }
+
+    private void increaseCurrentLevel() {
+        if (currentLevel + 1 > MAX_LEVEL) {
+            currentLevel = 1;
+        } else {
+            currentLevel++;
         }
     }
 
@@ -65,6 +89,7 @@ public class ApplicationController extends ControllerBase<Game> {
             if (edge == this.blinkingEdge) {
                 setValue(model.gameStarted, true);
                 setValues(model.terminals, this.terms);
+                blinkThread.interrupt();
             }
             return;
         }
@@ -72,10 +97,12 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     private void toggleEdge(Edge edge) {
-        if (!edge.isOn()) {
-            activateEdge(edge);
-        } else {
-            deactivateEdge(edge);
+        if (edge != null) {
+            if (!edge.isOn()) {
+                activateEdge(edge);
+            } else {
+                deactivateEdge(edge);
+            }
         }
     }
 
@@ -97,6 +124,14 @@ public class ApplicationController extends ControllerBase<Game> {
         Edge[] oldValues = model.activatedEdges.getValues();
         Edge[] newValues = Arrays.stream(oldValues).filter(curr -> curr != edge).toArray(Edge[]::new);
         setValues(model.activatedEdges, newValues);
+    }
+
+    private void deactivateAllEdges() {
+        setValues(model.activatedEdges, new Edge[0]);
+    }
+
+    private void deactivateAllNodes() {
+        setValues(model.terminals, new Node[0]);
     }
 
     public void startBlinkingEdge(Edge edge) {
@@ -121,7 +156,7 @@ public class ApplicationController extends ControllerBase<Game> {
 
         if (allTerminalsConnected()) {
             if (score <= solutionScore) {
-                updateScore(9999);
+                finishGame();
             }
         }
     }
@@ -178,5 +213,15 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void setSolution(Edge[] edges) {
         setValues(model.solution, edges);
+    }
+
+    private void saveUserScore() {
+
+    }
+
+    private void finishGame() {
+        saveUserScore();
+        increaseCurrentLevel();
+        setValue(model.gameStarted, false);
     }
 }

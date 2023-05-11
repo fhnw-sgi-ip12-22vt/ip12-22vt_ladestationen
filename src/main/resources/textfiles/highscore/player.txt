@@ -1,0 +1,8 @@
+Player1, 1:00:00
+Player2, 0:50:00
+Player3, 1:01:00
+Player4, 0:05:40
+Player5, 0:04:44
+Player6, 0:03:55
+Player7, 0:05:5
+Player8, 0:00:00
