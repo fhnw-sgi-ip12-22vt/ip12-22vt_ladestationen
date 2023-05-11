@@ -1,25 +1,19 @@
 package ch.ladestation.connectncharge.model;
 
 public class Player {
-    private int rank;
     private String playerName;
-    private String score;
+    private String time;
 
-    public Player(int rank, String playerName, String score) {
-        this.rank = rank;
+    public Player(String playerName, String time) {
         this.playerName = playerName;
-        this.score = score;
-    }
-
-    public int getRank() {
-        return rank;
+        this.time = time;
     }
 
     public String getPlayerName() {
         return playerName;
     }
 
-    public String getScore() {
-        return score;
+    public String getTime() {
+        return time;
     }
 }

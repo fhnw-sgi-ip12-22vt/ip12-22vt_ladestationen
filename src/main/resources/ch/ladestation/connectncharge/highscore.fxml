@@ -35,9 +35,9 @@
                 </TableColumn>
             </columns>
         </TableView>
-        <Button fx:id="btnPlayAgain" layoutX="70.0" layoutY="122.0" mnemonicParsing="false" onAction="#showGamePage" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen" />
+        <Button fx:id="btnPlayAgain" layoutX="70.0" layoutY="122.0" maxWidth="190.0" mnemonicParsing="false" onAction="#showGamePage" prefHeight="50.0" prefWidth="190.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen" />
         <Button fx:id="btnBonus" layoutX="70.0" layoutY="238.0" mnemonicParsing="false" onAction="#showBonusPage" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Bonus spielen" textFill="WHITE" />
-        <ImageView fx:id="imgHome" fitHeight="69.0" fitWidth="69.0" layoutX="115.0" layoutY="340.0" onMouseClicked="#showHomeScreen" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imgHome" fitHeight="69.0" fitWidth="69.0" layoutX="128.0" layoutY="339.0" onMouseClicked="#showHomeScreen" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../images/home.png" />
             </image>

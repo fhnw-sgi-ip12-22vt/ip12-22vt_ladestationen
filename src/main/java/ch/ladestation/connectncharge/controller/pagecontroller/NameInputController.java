@@ -1,23 +1,27 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.controller.PageController;
 import ch.ladestation.connectncharge.controller.StageHandler;
+import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
+import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
-public class NameInputController implements Initializable {
+public class NameInputController implements Initializable, ViewMixin<Game, ControllerBase<Game>>, PageController {
 
     @FXML
     private TextField txtNameInput;
@@ -96,13 +100,11 @@ public class NameInputController implements Initializable {
 
     @FXML
     public void showNamePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml", "/css/style.css",
-                (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml", "/css/style.css");
     }
 
     public void goBackToEndScreen(MouseEvent mouseEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css",
-                (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
     }
 
     @Override
@@ -135,8 +137,7 @@ public class NameInputController implements Initializable {
     }
 
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css",
-                (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css");
     }
 
     public void keyPressed(ActionEvent actionEvent) {
@@ -270,5 +271,25 @@ public class NameInputController implements Initializable {
     public void hideKeyboard() {
         keyboardPane.setVisible(false);
         keyboardPane.setOpacity(1);
+    }
+
+    @Override
+    public void setController(ApplicationController controller) {
+        init(controller);
+    }
+
+    @Override
+    public void initializeParts() {
+
+    }
+
+    @Override
+    public void layoutParts() {
+
+    }
+
+    @Override
+    public List<String> getStylesheets() {
+        return null;
     }
 }

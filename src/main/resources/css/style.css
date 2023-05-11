@@ -105,9 +105,9 @@
     -fx-border-color: #E9E9E9;
     -fx-border-radius: 11px;
     -fx-border-width: 2px;
-    -fx-min-width: 175px;
+    -fx-min-width: 185px;
     -fx-min-height: 50px;
-    -fx-max-width: 175px;
+    -fx-max-width: 185px;
     -fx-max-height: 50px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
@@ -118,9 +118,9 @@
 .root-pane .play-again-button {
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
-    -fx-min-width: 175px;
+    -fx-min-width: 185px;
     -fx-min-height: 50px;
-    -fx-max-width: 175px;
+    -fx-max-width: 185px;
     -fx-max-height: 50px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';

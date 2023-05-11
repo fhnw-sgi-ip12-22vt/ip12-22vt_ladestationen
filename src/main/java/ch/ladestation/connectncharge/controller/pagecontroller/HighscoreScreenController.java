@@ -1,12 +1,16 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.controller.PageController;
 import ch.ladestation.connectncharge.controller.StageHandler;
+import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.model.Player;
+import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
+import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
@@ -14,16 +18,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
-public class HighscoreScreenController {
+public class HighscoreScreenController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
     @FXML
     private Button btnPlayAgain;
     @FXML
@@ -48,12 +48,12 @@ public class HighscoreScreenController {
     private TableColumn restNameColumn;
     @FXML
     private TableColumn restTimeColumn;
-
+    private static final String PLAYER_PATH = "/textfiles/highscore/player.txt";
+    private static final int PLAYER_PLACE_TOP = 5;
 
     @FXML
     public void showHighscorePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css",
-                (Stage) ((Node) event.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css");
     }
 
     @FXML
@@ -70,15 +70,28 @@ public class HighscoreScreenController {
     }
 
     private void fetchDataAndPopulateTableViews() {
-        List<Player> players = readPlayerDataFromFile("players.txt");
-        players.sort(Comparator.comparingInt(player -> Integer.parseInt(player.getScore())));
+        /*System.out.println(String.valueOf(AppStarter.class.getResource(PLAYER_PATH)));
+        List<Player> players = TextFileReader.readPlayerDataFromFile(
+            String.valueOf(HighscoreScreenController.class.getResource(PLAYER_PATH)));
+        players.stream().forEach(System.out::println);*/
+        List<Player> players = new ArrayList<>();
+        players.add(new Player("Player1", "0:05:00"));
+        players.add(new Player("Player141", "1:00:00"));
+        players.add(new Player("Player3", "1:70:00"));
+        players.add(new Player("Player2", "0:05:45"));
+        players.add(new Player("Player89", "1:40:00"));
+        players.add(new Player("Player11", "0:55:58"));
+        players.stream().forEach(System.out::println);
+        //players.sort(Comparator.comparingInt(player -> Integer.parseInt(player.getScore())));
 
-        ObservableList<Player> topPlayers = FXCollections.observableArrayList();
-        ObservableList<Player> restPlayers = FXCollections.observableArrayList();
+        ObservableList<Player> topPlayers =
+            FXCollections.observableArrayList(new Player("Player1", "0:05:00"), new Player("Player141", "1:00:00"));
+        ObservableList<Player> restPlayers =
+            FXCollections.observableArrayList(new Player("Player11", "0:55:58"), new Player("Player89", "1:40:00"));
 
-        if (players.size() > 5) {
-            topPlayers.addAll(players.subList(0, 5));
-            restPlayers.addAll(players.subList(5, players.size()));
+        if (players.size() > PLAYER_PLACE_TOP) {
+            topPlayers.addAll(players.subList(0, PLAYER_PLACE_TOP));
+            restPlayers.addAll(players.subList(PLAYER_PLACE_TOP, players.size()));
         } else {
             topPlayers.addAll(players);
         }
@@ -87,31 +100,8 @@ public class HighscoreScreenController {
         restTableView.setItems(restPlayers);
     }
 
-    private List<Player> readPlayerDataFromFile(String filePath) {
-        List<Player> players = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
-                if (data.length == 3) {
-                    int rank = Integer.parseInt(data[0]);
-                    String playerName = data[1];
-                    String score = data[2];
-                    Player player = new Player(rank, playerName, score);
-                    players.add(player);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return players;
-    }
-
     public void showGamePage(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css",
-                (Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css");
     }
 
     public void showBonusPage(ActionEvent actionEvent) {
@@ -119,7 +109,26 @@ public class HighscoreScreenController {
     }
 
     public void showHomeScreen(MouseEvent mouseEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
-                (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow());
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css");
+    }
+
+    @Override
+    public void setController(ApplicationController controller) {
+        init(controller);
+    }
+
+    @Override
+    public void initializeParts() {
+
+    }
+
+    @Override
+    public void layoutParts() {
+
+    }
+
+    @Override
+    public List<String> getStylesheets() {
+        return null;
     }
 }

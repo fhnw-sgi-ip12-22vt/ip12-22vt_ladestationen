@@ -27,7 +27,7 @@ public class EdgePresserController implements ViewMixin<Game, ControllerBase<Gam
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgepresserpage.fxml");
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
         StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
     }
 
