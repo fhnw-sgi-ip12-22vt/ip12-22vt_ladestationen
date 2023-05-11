@@ -58,7 +58,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
 
     @FXML
     public void showHighscorePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml");
     }
 
     @FXML
@@ -97,7 +97,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     public void showGamePage(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml");
     }
 
     public void showBonusPage(ActionEvent actionEvent) {
@@ -105,7 +105,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     public void showHomeScreen(MouseEvent mouseEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
     }
 
     @Override

@@ -23,6 +23,10 @@
     -fx-background-size: cover;
 }
 
+.root-pane .button{
+    -fx-background-color: transparent;
+}
+
 .root-pane .admin-code-text-field {
     -fx-background-color: #F0F0F0;
     -fx-background-radius: 10px;

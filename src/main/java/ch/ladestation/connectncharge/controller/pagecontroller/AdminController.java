@@ -1,18 +1,24 @@
-package ch.ladestation.connectncharge.controller;
+package ch.ladestation.connectncharge.controller.pagecontroller;
 
+import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.controller.PageController;
+import ch.ladestation.connectncharge.controller.StageHandler;
+import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
+import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import javafx.event.ActionEvent;
-import java.io.IOException;
 
-public class AdminController {
+import java.io.IOException;
+import java.util.List;
+
+public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
 
     @FXML
     private TextField textField1;
@@ -108,8 +114,7 @@ public class AdminController {
 
         if (enteredCode.equals("123456")) {
             try {
-                StageHandler.openStage("/ch/ladestation/connectncharge/adminhomepage.fxml", "/css/style.css",
-                    (Stage) ((Node) event.getSource()).getScene().getWindow());
+                StageHandler.openStage("/ch/ladestation/connectncharge/adminhomepage.fxml");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -126,10 +131,29 @@ public class AdminController {
     @FXML
     private void onStopButtonClicked(ActionEvent event) {
         try {
-            StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css",
-                (Stage) ((Node) event.getSource()).getScene().getWindow());
+            StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void setController(ApplicationController controller) {
+        init(controller);
+    }
+
+    @Override
+    public void initializeParts() {
+
+    }
+
+    @Override
+    public void layoutParts() {
+
+    }
+
+    @Override
+    public List<String> getStylesheets() {
+        return null;
     }
 }

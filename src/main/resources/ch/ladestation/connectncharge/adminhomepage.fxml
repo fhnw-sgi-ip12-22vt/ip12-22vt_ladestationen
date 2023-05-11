@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #1E1E1E;" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.AdminHomeController">
+<AnchorPane prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #1E1E1E;" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.AdminHomeController">
    <children>
       <Label layoutX="286.0" layoutY="40.0" prefHeight="71.0" prefWidth="228.0" text="Ranglisten" textAlignment="CENTER" textFill="WHITE">
          <font>

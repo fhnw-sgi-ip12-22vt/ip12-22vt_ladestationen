@@ -22,13 +22,17 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
 
     @FXML
     public void handleNextButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml");
     }
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml");
+    }
+    @FXML
+    private void handleAdminButton(ActionEvent event) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
     }
 
     @FXML

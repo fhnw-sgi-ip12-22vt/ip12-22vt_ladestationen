@@ -44,7 +44,7 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
 
     @FXML
     public void showEndPage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml");
     }
 
     @FXML
@@ -53,7 +53,7 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     }
 
     public void showGameScreen(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml");
 
     }
 
@@ -68,7 +68,12 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     }
 
     public void showNameInputScreen(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml");
+    }
+
+    @FXML
+    private void handleAdminButton(ActionEvent event) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
     }
 
     @Override

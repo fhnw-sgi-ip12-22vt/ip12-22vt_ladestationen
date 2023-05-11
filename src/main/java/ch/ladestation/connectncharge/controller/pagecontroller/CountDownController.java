@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
@@ -50,7 +51,7 @@ public class CountDownController implements ViewMixin<Game, ControllerBase<Game>
                     Platform.runLater(() -> {
                         countDownText.setText("Los ...");
                         try {
-                            StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css");
+                            StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml");
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

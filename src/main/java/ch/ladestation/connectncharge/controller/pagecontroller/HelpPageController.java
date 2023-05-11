@@ -28,7 +28,7 @@ public class HelpPageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private void handleXCloseButton(ActionEvent event) throws IOException {
         String fxmlPath = StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() : DEFAUL_FXML_PATH;
-        StageHandler.openStage(fxmlPath, "/css/style.css");
+        StageHandler.openStage(fxmlPath);
     }
 
     @Override
