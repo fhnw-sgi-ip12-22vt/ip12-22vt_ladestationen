@@ -27,5 +27,20 @@ public class AdminNormalLeaderboard {
     private void handleChooseAllButton(ActionEvent event) {
         chooseAllButton.getStyleClass().remove("leaderboard-choose-button");
         chooseAllButton.getStyleClass().add("leaderboard-choose-button-selected");
+
+        unchooseAllButton.getStyleClass().remove("leaderboard-un-choose-button-selected"); // Zeile hinzugefügt
+        unchooseAllButton.getStyleClass().add("leaderboard-un-choose-button"); // Zeile hinzugefügt
+    }
+    @FXML
+    private void handleUnChooseAllButton(ActionEvent event) {
+        unchooseAllButton.getStyleClass().remove("leaderboard-un-choose-button");
+        unchooseAllButton.getStyleClass().add("leaderboard-un-choose-button-selected");
+
+        chooseAllButton.getStyleClass().remove("leaderboard-choose-button-selected"); // Zeile hinzugefügt
+        chooseAllButton.getStyleClass().add("leaderboard-choose-button"); // Zeile hinzugefügt
+    }
+    @FXML
+    private void handleTrashButton(ActionEvent event) { // Methode zum Löschen der Liste
+        System.out.println("Liste wurde gelöscht.");
     }
 }

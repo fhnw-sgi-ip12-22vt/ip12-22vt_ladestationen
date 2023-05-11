@@ -15,7 +15,7 @@
          </font>
       </Label>
       <Button layoutX="294.0" layoutY="296.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="127.0" styleClass="leaderboard-home-bonus-button" stylesheets="@../../../css/style.css" text="Bonus Spielmodus" />
-      <Button layoutX="294.0" layoutY="214.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="119.0" styleClass="leaderboard-home-home-button" stylesheets="@../../../css/style.css" text="Normal Spielmodus" />
+      <Button fx:id="normalButton" layoutX="294.0" layoutY="214.0" mnemonicParsing="false" onAction="#handleNormalButton" prefHeight="48.0" prefWidth="119.0" styleClass="leaderboard-home-home-button" stylesheets="@../../../css/style.css" text="Normal Spielmodus" />
       <Label layoutX="93.0" layoutY="35.0" prefHeight="42.0" prefWidth="76.0" text="Admin" textFill="WHITE">
          <font>
             <Font size="26.0" />

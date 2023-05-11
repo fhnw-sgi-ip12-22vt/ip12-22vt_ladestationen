@@ -24,10 +24,10 @@
             <Image url="@../../../images/trash.png" />
          </image>
       </ImageView>
-      <Button fx:id="trashButton" layoutX="664.0" layoutY="188.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="65.0" />
+      <Button fx:id="trashButton" layoutX="664.0" layoutY="188.0" mnemonicParsing="false" onAction="#handleTrashButton" opacity="0.0" prefHeight="59.0" prefWidth="65.0" />
       <Button fx:id="backButton" layoutX="11.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleBackButton" opacity="0.0" prefHeight="59.0" prefWidth="74.0" />
       <Button fx:id="chooseAllButton" layoutX="606.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleChooseAllButton" styleClass="leaderboard-choose-button" stylesheets="@../../../css/style.css" text="Alle auswählen" />
-      <Button fx:id="unchooseAllButton" layoutX="606.0" layoutY="107.0" mnemonicParsing="false" styleClass="leaderboard-un-choose-button" stylesheets="@../../../css/style.css" text="Alle abwählen" />
+      <Button fx:id="unchooseAllButton" layoutX="606.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleUnChooseAllButton" styleClass="leaderboard-choose-button" stylesheets="@../../../css/style.css" text="Alle abwählen" />
       <TableView fx:id="tableView" layoutX="129.0" layoutY="50.0" prefHeight="214.0" prefWidth="458.0">
          <!-- Define the columns -->
          <columns>

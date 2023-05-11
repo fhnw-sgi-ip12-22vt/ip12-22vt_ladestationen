@@ -280,9 +280,8 @@
     -fx-border-radius: 11px;
     -fx-text-fill: #F4E158;
 }
-
 .leaderboard-un-choose-button {
-    -fx-background-color: rgba(244, 225, 88, 0.3);
+    -fx-background-color: #F4E158;
     -fx-background-radius: 11px;
     -fx-min-width: 180px;
     -fx-min-height: 52px;
@@ -294,6 +293,21 @@
     -fx-border-color: #F4E158;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #00000;
+}
+.leaderboard-un-choose-button-selected {
+    -fx-background-color: #000000;
+    -fx-background-radius: 11px;
+    -fx-min-width: 180px;
+    -fx-min-height: 52px;
+    -fx-max-width: 180px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #F4E158;
 }
 
