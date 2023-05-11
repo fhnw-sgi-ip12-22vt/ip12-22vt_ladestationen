@@ -22,16 +22,6 @@ public class AppStarter extends Application {
         controller = new ApplicationController(new Game());
         var gPUI = new GamePUI(controller, pi4J);
 
-        /*LOGGER.logInfo("App started");
-
-        int[] terms = {81, 27, 11, 31, 52, 47, 33, 62, 77, 16, 95, 18, 67};
-
-        var terminalNodes = Arrays.stream(terms)
-            .mapToObj(gPUI::lookUpSegmentIdToSegment)
-            .map(seg -> (Node) seg)
-            .toArray(Node[]::new);
-        controller.setTerminals(terminalNodes);*/
-
         controller.setGPUI(gPUI);
         controller.loadLevels();
 
@@ -54,6 +44,7 @@ public class AppStarter extends Application {
     public void start(Stage stage) throws IOException {
         StageHandler.setStage(stage);
         StageHandler.setController(controller);
+        //StageHandler.setController(new ApplicationController(new Game()));
         StageHandler.openStage("/ch/ladestation/connectncharge/loadingpage.fxml", "/css/style.css");
     }
 }

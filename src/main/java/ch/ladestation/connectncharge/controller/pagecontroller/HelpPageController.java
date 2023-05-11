@@ -57,11 +57,11 @@ public class HelpPageController implements ViewMixin<Game, ControllerBase<Game>>
 
         // Enable touch events
         helpTextField.addEventFilter(TouchEvent.ANY, event -> {
-             if (event.getTouchCount() == 1) {
+            if (event.getTouchCount() == 1) {
                 // Handle single-finger touch scrolling gestures here
                 TouchPoint touchPoint = event.getTouchPoint();
                 if (event.getEventType() == TouchEvent.TOUCH_MOVED) {
-                    // Calculate the vertical scroll delta based on the touch movement
+                    // Calculate the vertical scroll delta based on the touch movements
                     //double deltaY = touchPoint.getSceneY() - touchPoint.getPreviousSceneY();
                     double deltaY = touchPoint.getSceneY();
                     double scrollDelta = deltaY / helpTextField.getHeight() * helpTextField.getHeight();
