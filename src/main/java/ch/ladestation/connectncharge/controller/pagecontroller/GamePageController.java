@@ -112,7 +112,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         /*seconds = seconds % 60 == 0 ? 0 : seconds + 15;
         minutes += additionalTime % 60 == 0 ? 1 : 0;
         tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
-        addTimeButton.setText("Tipp +" + additionalTime + "sec");
+        addTimeButton.setText("Tipp +" + additionalTime + "sek");
     }
 
     @FXML
