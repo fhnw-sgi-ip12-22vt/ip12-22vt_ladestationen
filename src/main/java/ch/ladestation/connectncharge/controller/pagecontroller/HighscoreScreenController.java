@@ -82,11 +82,6 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
         // Sort the playerList based on the endTime (time)
         playerList.sort(Comparator.comparing(Player::getEndTime));
 
-        // Assign ranks based on the sorted order
-        for (int i = 0; i < playerList.size(); i++) {
-            playerList.get(i).setEndTime(String.valueOf(i + 1));
-        }
-
         // Create an ObservableList from the player list
         ObservableList<Player> observablePlayerList = FXCollections.observableArrayList(playerList);
 
