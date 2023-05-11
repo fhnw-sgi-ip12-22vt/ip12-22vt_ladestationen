@@ -28,7 +28,7 @@
             <Font size="35.0" />
          </font>
       </Label>
-      <TextField fx:id="txtNameInput" layoutX="241.0" layoutY="119.0" onAction="#handleInputName" prefHeight="52.0" prefWidth="334.0" style="-fx-background-color: #333333; -fx-background-radius: 10;" styleClass="name-input-textfield" stylesheets="@../../../css/style.css">
+      <TextField fx:id="txtNameInput" layoutX="241.0" layoutY="119.0" onAction="#handleInputName" prefHeight="52.0" prefWidth="334.0" promptText="Name" style="-fx-background-color: #333333; -fx-background-radius: 10;" styleClass="name-input-textfield" stylesheets="@../../../css/style.css">
          <font>
             <Font size="19.0" />
          </font>
