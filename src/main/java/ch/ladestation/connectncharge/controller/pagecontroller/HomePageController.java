@@ -25,7 +25,7 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     public void handleShowEdgePresser(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/edgepresserpage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/edgeclickscreen.fxml", "/css/style.css");
     }
 
     @FXML
