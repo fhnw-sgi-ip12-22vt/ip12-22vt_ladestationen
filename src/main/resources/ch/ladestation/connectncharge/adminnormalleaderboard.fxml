@@ -26,7 +26,7 @@
       </ImageView>
       <Button fx:id="trashButton" layoutX="664.0" layoutY="188.0" mnemonicParsing="false" opacity="0.0" prefHeight="59.0" prefWidth="65.0" />
       <Button fx:id="backButton" layoutX="11.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleBackButton" opacity="0.0" prefHeight="59.0" prefWidth="74.0" />
-      <Button fx:id="chooseAllButton" layoutX="606.0" layoutY="28.0" mnemonicParsing="false" styleClass="leaderboard-choose-button" stylesheets="@../../../css/style.css" text="Alle auswählen" />
+      <Button fx:id="chooseAllButton" layoutX="606.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleChooseAllButton" styleClass="leaderboard-choose-button" stylesheets="@../../../css/style.css" text="Alle auswählen" />
       <Button fx:id="unchooseAllButton" layoutX="606.0" layoutY="107.0" mnemonicParsing="false" styleClass="leaderboard-un-choose-button" stylesheets="@../../../css/style.css" text="Alle abwählen" />
       <TableView fx:id="tableView" layoutX="129.0" layoutY="50.0" prefHeight="214.0" prefWidth="458.0">
          <!-- Define the columns -->
@@ -52,7 +52,7 @@
       <Line endX="-153.0" endY="447.12841796875" layoutX="281.0" layoutY="20.0" startX="-153.0" startY="-5.585784912109375" stroke="WHITE" strokeWidth="2.0" />
       <Line endX="-153.0" endY="447.12841796875" layoutX="741.0" layoutY="19.0" startX="-153.0" startY="-5.585784912109375" stroke="WHITE" strokeWidth="2.0" />
       <Line endX="281.0" layoutX="307.0" layoutY="50.0" startX="-179.0" startY="1.0" stroke="WHITE" strokeWidth="2.0" />
-      <Label layoutX="305.0" layoutY="14.0" text="Rangliste" textFill="WHITE">
+      <Label layoutX="251.0" layoutY="14.0" text="Normal Rangliste" textFill="WHITE">
          <font>
             <Font size="28.0" />
          </font>

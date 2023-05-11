@@ -23,4 +23,9 @@ public class AdminNormalLeaderboard {
         StageHandler.openStage("/ch/ladestation/connectncharge/adminhomepage.fxml", "/css/style.css",
             (Stage) ((Node) event.getSource()).getScene().getWindow());
     }
+    @FXML
+    private void handleChooseAllButton(ActionEvent event) {
+        chooseAllButton.getStyleClass().remove("leaderboard-choose-button");
+        chooseAllButton.getStyleClass().add("leaderboard-choose-button-selected");
+    }
 }
