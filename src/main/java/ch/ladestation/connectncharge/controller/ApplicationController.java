@@ -6,6 +6,7 @@ import ch.ladestation.connectncharge.model.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
+import com.github.mbelling.ws281x.Color;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -16,11 +17,13 @@ public class ApplicationController extends ControllerBase<Game> {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private Edge blinkingEdge;
     private Map<Integer, List<Object>> levels;
-    private int currentLevel = 4;
+    private int currentLevel = 1;
     private static final int MAX_LEVEL = 5;
     private Node[] terms;
     private GamePUI gamePUI;
-    Thread blinkThread;
+    private Thread blinkThread;
+    private boolean isToBeRemoved = false;
+    private Edge tippEdge;
 
     public ApplicationController(Game model) {
         super(model);
@@ -28,6 +31,7 @@ public class ApplicationController extends ControllerBase<Game> {
             if (model.gameStarted.getValue()) {
                 updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
                 checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+                // Todo: Checks for Cycle
             }
         });
 
@@ -35,6 +39,12 @@ public class ApplicationController extends ControllerBase<Game> {
             if (oldValue && !newValue) {
                 deactivateAllNodes();
                 loadNextLevel();
+            }
+        }));
+
+        model.isTippOn.onChange(((oldValue, newValue) -> {
+            if (oldValue && !newValue) {
+                model.tippEdge.setColor(Color.GREEN);
             }
         }));
     }
@@ -71,7 +81,7 @@ public class ApplicationController extends ControllerBase<Game> {
         deactivateAllEdges();
 
         blinkThread = new Thread(() -> {
-            startBlinkingEdge((Edge) gamePUI.lookUpSegmentIdToSegment(1));
+            startBlinkingEdge((Edge) gamePUI.lookUpSegmentIdToSegment(90));
         });
         blinkThread.start();
     }
@@ -93,6 +103,12 @@ public class ApplicationController extends ControllerBase<Game> {
             }
             return;
         }
+        if (edge != null && model.isTippOn.getValue()) {
+            if (edge.equals(model.tippEdge) && !isToBeRemoved) {
+                deactivateEdge(edge);
+            }
+        }
+        removeTippEdge();
         toggleEdge(edge);
     }
 
@@ -213,6 +229,101 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void setSolution(Edge[] edges) {
         setValues(model.solution, edges);
+    }
+
+    public void handleTipp() {
+        setTippEdge();
+        // Todo: HINWEIS
+    }
+
+    public void setTippEdge() {
+        List<Edge> edgesToSelect;
+        List<Edge> edgesToRemove;
+
+        edgesToSelect = Arrays.stream(model.solution.getValues())
+            .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues()).toList().contains(solEdge)).toList();
+
+        edgesToRemove = Arrays.stream(model.activatedEdges.getValues())
+            .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
+            .toList();
+
+        if (!edgesToSelect.isEmpty()) {
+            tippEdge = getRandomEdge(edgesToSelect);
+        } else {
+            tippEdge = getRandomEdge(edgesToRemove);
+            isToBeRemoved = true;
+        }
+
+        tippEdge.setColor(Color.ORANGE);
+
+        model.tippEdge = tippEdge;
+        setValue(model.isTippOn, true);
+    }
+
+    private Edge getRandomEdge(List<Edge> edges) {
+        return edges.stream().skip(new Random().nextInt(edges.size())).findFirst().get();
+    }
+
+    public void removeTippEdge() {
+        setValue(model.isTippOn, false);
+    }
+
+    private boolean hasCycle() {
+        // Create an adjacency list to store the nodes and their neighbors
+        Map<Node, List<Node>> adjList = new HashMap<>();
+
+        // Create a list of selected edges
+        List<Edge> selectedEdges = Arrays.stream(model.activatedEdges.getValues()).toList();
+
+        // If there are less than 2 selected edges, no cycle can be formed
+        if (selectedEdges.size() < 2) {
+            return false;
+        }
+
+        // Create the adjacency list by adding the nodes and their neighbors from the
+        // selected edges
+        for (Edge edge : selectedEdges) {
+            Node node1 = edge.getFromNode();
+            Node node2 = edge.getToNode();
+            if (!adjList.containsKey(node1)) {
+                adjList.put(node1, new ArrayList<>());
+            }
+            if (!adjList.containsKey(node2)) {
+                adjList.put(node2, new ArrayList<>());
+            }
+            adjList.get(node1).add(node2);
+            adjList.get(node2).add(node1);
+        }
+
+        // Create a set to keep track of visited nodes and a map to keep track of their
+        // parent node in the DFS tree
+        Set<Node> visited = new HashSet<>();
+        Map<Node, Node> parent = new HashMap<>();
+
+        // Create a stack to perform depth-first search starting from the first node in
+        // the first selected edge
+        Stack<Node> stack = new Stack<>();
+        Node startNode = selectedEdges.get(0).getFromNode();
+        stack.push(startNode);
+        parent.put(startNode, null);
+        while (!stack.empty()) {
+            Node currNode = stack.pop();
+            visited.add(currNode);
+            List<Node> neighbors = adjList.get(currNode);
+            for (Node neighbor : neighbors) {
+                // If the neighbor node has not been visited, add it to the stack and set its
+                // parent to the current node
+                if (!visited.contains(neighbor)) {
+                    stack.push(neighbor);
+                    parent.put(neighbor, currNode);
+                } else if (parent.get(currNode) != neighbor) {
+                    return true;
+                }
+            }
+        }
+
+        // No cycle is formed
+        return false;
     }
 
     private void saveUserScore() {

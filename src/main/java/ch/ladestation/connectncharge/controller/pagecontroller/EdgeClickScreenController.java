@@ -65,10 +65,9 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
 
     @Override
     public void setController(ApplicationController controller) {
-        //this.controller = controller;
         init(controller);
-        /*controller.loadLevels();
-        controller.loadNextLevel();*/
+        controller.loadLevels();
+        controller.loadNextLevel();
     }
 
     @Override
