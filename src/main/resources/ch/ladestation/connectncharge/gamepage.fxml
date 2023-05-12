@@ -48,8 +48,8 @@
                 <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
             </children>
         </StackPane>
-      <AnchorPane fx:id="shadowPane" onMouseClicked="#handleShadowAnchorPaneClick" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #00022e89;" styleClass="pane-shadow" stylesheets="@../../../css/style.css" visible="false" />
-        <AnchorPane fx:id="menuPane" layoutX="547.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="274.0" style="-fx-background-radius: 25px;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
+        <AnchorPane fx:id="shadowPane" onMouseClicked="#handleShadowAnchorPaneClick" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #00022e89;" styleClass="pane-shadow" stylesheets="@../../../css/style.css" visible="false" />
+        <AnchorPane fx:id="menuPane" layoutX="550.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="274.0" style="-fx-background-radius: 25px;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
             <children>
                 <Button layoutX="42.0" layoutY="138.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Bonus Spiel">
                     <font>
@@ -61,7 +61,7 @@
                         <Font name="Arial Bold" size="18.0" />
                     </font>
                 </Button>
-                <Button layoutX="42.0" layoutY="422.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Admin">
+                <Button layoutX="42.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleAdminButton" prefHeight="38.0" prefWidth="168.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Admin">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
@@ -76,33 +76,33 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
-            <Button layoutX="14.0" layoutY="103.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="info-icon-cup" />
-                  <String fx:value="info-icon-size" />
-               </styleClass>
-            </Button>
-            <Button layoutX="14.0" layoutY="430.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="info-icon-admin" />
-                  <String fx:value="info-icon-size" />
-               </styleClass>
-            </Button>
-            <Button layoutX="14.0" layoutY="146.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="info-icon-medalstar" />
-                  <String fx:value="info-icon-size" />
-               </styleClass>
-            </Button>
+                <Button layoutX="14.0" layoutY="103.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="info-icon-cup" />
+                        <String fx:value="info-icon-size" />
+                    </styleClass>
+                </Button>
+                <Button layoutX="14.0" layoutY="430.0" minWidth="46.0" mnemonicParsing="false" onAction="#handleAdminButton" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="info-icon-admin" />
+                        <String fx:value="info-icon-size" />
+                    </styleClass>
+                </Button>
+                <Button layoutX="14.0" layoutY="146.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="info-icon-medalstar" />
+                        <String fx:value="info-icon-size" />
+                    </styleClass>
+                </Button>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="hintPopupPane" layoutX="142.0" layoutY="107.0" prefHeight="265.0" prefWidth="515.0" style="-fx-border-radius: 15x;" styleClass="popup-pane" stylesheets="@../../../css/style.css" visible="false">

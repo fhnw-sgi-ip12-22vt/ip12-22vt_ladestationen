@@ -4,9 +4,12 @@ import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.PageController;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.model.HighScorePlayer;
 import ch.ladestation.connectncharge.model.Player;
+import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,14 +19,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class HighscoreScreenController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
     @FXML
@@ -33,59 +37,85 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     @FXML
     private ImageView imgHome;
     @FXML
-    private TableView<Player> tableView;
+    private TableView<HighScorePlayer> tableView;
     @FXML
-    private TableColumn<Player, Integer> rankColumn;
+    private TableColumn<HighScorePlayer, Integer> rankColumn;
     @FXML
-    private TableColumn<Player, String> nameColumn;
+    private TableColumn<HighScorePlayer, String> nameColumn;
     @FXML
-    private TableColumn<Player, String> timeColumn;
+    private TableColumn<HighScorePlayer, String> timeColumn;
     @FXML
     private ScrollPane restHighscore;
     @FXML
-    private TableView<Player> restTableView;
+    private TableView<HighScorePlayer> restTableView;
     @FXML
-    private TableColumn<Player, Integer> restRankColumn;
+    private TableColumn<HighScorePlayer, Integer> restRankColumn;
     @FXML
-    private TableColumn<Player, String> restNameColumn;
+    private TableColumn<HighScorePlayer, String> restNameColumn;
     @FXML
-    private TableColumn<Player, String> restTimeColumn;
-    //private static final String PLAYER_PATH = "/textfiles/highscore/player.txt";
+    private TableColumn<HighScorePlayer, String> restTimeColumn;
+    private static final String TEXT_FILE_PLAYER_PATH = "player.txt";
+    private static final String WHOLE_TEXT_FILE_PLAYER_PATH =
+        File.separator + "home" + File.separator + "pi" + File.separator + TEXT_FILE_PLAYER_PATH;
 
     private static final int PLAYER_PLACE_TOP = 5;
     private String endTime = String.valueOf(GamePageController.getPublicEndTime());
     private String playerName = NameInputController.getCurrentName();
 
-    @FXML
-    public void showHighscorePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css");
-    }
 
     @FXML
     public void initialize() {
-        rankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayerName()));
-        timeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEndTime()));
-        restRankColumn.setCellValueFactory(new PropertyValueFactory<>("rank"));
-        restNameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayerName()));
-        restTimeColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEndTime()));
-
+        initColumns(rankColumn, nameColumn, timeColumn);
+        initColumns(restRankColumn, restNameColumn, restTimeColumn);
         fetchDataAndPopulateTableViews();
     }
 
+    private void initColumns(TableColumn<HighScorePlayer, Integer> rank, TableColumn<HighScorePlayer, String> name,
+                             TableColumn<HighScorePlayer, String> time) {
+        rank.setCellValueFactory(cellData -> {
+            int rankValue = cellData.getValue().getRank();
+            return new SimpleIntegerProperty(rankValue).asObject();
+        });
+        name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getPlayerName()));
+        time.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getEndTime()));
+    }
+
     private void fetchDataAndPopulateTableViews() {
-        List<Player> playerList = new ArrayList<>();
+        List<Player> playerList = TextFileEditor.readPlayerDataFromFile(TEXT_FILE_PLAYER_PATH);
         Player currentPlayer = new Player(playerName, endTime);
         playerList.add(currentPlayer);
 
         // Sort the playerList based on the endTime (time)
         playerList.sort(Comparator.comparing(Player::getEndTime));
+        List<HighScorePlayer> highScorePlayers = Stream.iterate(0, i -> i + 1).limit(playerList.size())
+            .map(number -> new HighScorePlayer(number.intValue() + 1, playerList.get(number)))
+            .collect(Collectors.toList());
 
         // Create an ObservableList from the player list
-        ObservableList<Player> observablePlayerList = FXCollections.observableArrayList(playerList);
+        ObservableList<HighScorePlayer> topPlayers;
+        ObservableList<HighScorePlayer> restPlayers;
 
-        // Set the items in the TableView
-        tableView.setItems(observablePlayerList);
+        if (highScorePlayers.size() > PLAYER_PLACE_TOP) {
+            topPlayers = FXCollections.observableArrayList(highScorePlayers.subList(0, PLAYER_PLACE_TOP));
+            restPlayers =
+                FXCollections.observableArrayList(highScorePlayers.subList(PLAYER_PLACE_TOP, highScorePlayers.size()));
+            restTableView.setItems(restPlayers);
+        } else {
+            topPlayers = FXCollections.observableArrayList(highScorePlayers);
+        }
+
+        tableView.setItems(topPlayers);
+
+        //writes the new data
+        TextFileEditor.writeTextFile(WHOLE_TEXT_FILE_PLAYER_PATH,
+            playerList.stream().map(val -> val.getPlayerName() + "," + val.getEndTime()).peek(p -> {
+                System.out.println(p);
+            }).collect(Collectors.toList()));
+    }
+
+    @FXML
+    public void showHighscorePage(ActionEvent event) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml");
     }
 
     public void setPlayerName(String playerName) {
@@ -97,7 +127,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     public void showGamePage(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml");
     }
 
     public void showBonusPage(ActionEvent actionEvent) {
@@ -105,7 +135,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     public void showHomeScreen(MouseEvent mouseEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
     }
 
     @Override

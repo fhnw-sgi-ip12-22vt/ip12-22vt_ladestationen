@@ -23,6 +23,48 @@
     -fx-background-size: cover;
 }
 
+.root-pane .button{
+    -fx-background-color: transparent;
+}
+
+.root-pane .admin-code-text-field {
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 10px;
+    -fx-min-width: 50px;
+    -fx-min-height: 60px;
+    -fx-max-width: 50px;
+    -fx-max-height: 60px;
+}
+
+.root-pane .grid-background {
+    -fx-background-color: #F0F0F0;
+    -fx-background-radius: 15px;
+    -fx-min-width: 800px;
+    -fx-min-height: 180px;
+    -fx-max-width: 800px;
+    -fx-max-height: 180px;
+}
+
+.root-pane .keyboard {
+    -fx-text-fill: #000000;
+    -fx-min-width: 60px;
+    -fx-min-height: 62px;
+    -fx-max-width: 60px;
+    -fx-max-height: 62px;
+    -fx-background-radius: 4px;
+    -fx-background-color: #FFFFFF;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-end-margin: 0;
+    -fx-start-margin: 0;
+}
+
+.root-pane .title-label {
+    -fx-font-size: 152px;
+    -fx-text-fill: #FFFFFF;
+    -fx-alignment: center;
+}
+
 .root-pane .countDown-label {
     -fx-font-size: 152px;
     -fx-text-fill: #FFFFFF;
@@ -37,15 +79,6 @@
     -fx-wrap-width: 355.99999999999994;
 }
 
-.root-pane .button {
-    -fx-background-radius: 5em;
-    -fx-min-width: 400px;
-    -fx-min-height: 400px;
-    -fx-max-width: 400px;
-    -fx-max-height: 400px;
-    -fx-background-color: transparent;
-}
-
 .root-pane .standard-first-button {
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
@@ -56,6 +89,30 @@
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
     -fx-font-size: 19;
+}
+
+.root-pane .standard-stop-button {
+    -fx-background-color: #f4e158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 211px;
+    -fx-min-height: 52px;
+    -fx-max-width: 211px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 18;
+}
+
+.root-pane .del-button {
+    -fx-background-color: #f4e158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 55px;
+    -fx-min-height: 40px;
+    -fx-max-width: 55px;
+    -fx-max-height: 40px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 18;
 }
 
 .root-pane .standard-second-button {
@@ -71,6 +128,33 @@
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
     -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .leaderboard-home-bonus-button {
+    -fx-background-color: #1E1E1E;
+    -fx-min-width: 211px;
+    -fx-min-height: 52px;
+    -fx-max-width: 211px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #F4E158;
+}
+
+.root-pane .leaderboard-home-home-button {
+    -fx-background-color: #f4e158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 211px;
+    -fx-min-height: 52px;
+    -fx-max-width: 211px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
 }
 
 .root-pane .name-input-textfield {
@@ -113,7 +197,6 @@
     -fx-font-family: 'Lato Light';
     -fx-font-size: 19;
 }
-
 
 .root-pane .play-again-button {
     -fx-background-color: #f4e158;
@@ -250,7 +333,6 @@
     -fx-background-color: #FFFFFF;
 }
 
-
 .root-pane .help-text-area {
     -fx-wrap-text: true;
     -fx-min-width: 589px;
@@ -279,6 +361,9 @@
     -fx-background-radius: 10px;
     -fx-font-size: 20px;
 }
+.root-pane .table-view {
+    -fx-table-view-scroll-x: false;
+}
 
 .popup-pane {
     -fx-min-width: 515px;
@@ -300,6 +385,14 @@
     -fx-background-color: #00022e89;
 }
 
+.admin-popup-pane {
+    -fx-pref-width: 515;
+    -fx-pref-height: 265;
+    -fx-background-color: #EDEDED;
+    -fx-background-size: cover;
+    -fx-background-radius: 23px;
+}
+
 .menu-pane {
     -fx-min-width: 300 pxpx;
     -fx-min-height: 480px;
@@ -310,6 +403,99 @@
     -fx-background-radius: 25px;
     -fx-layoutX: 0;
     -fx-layoutY: 0;
+}
+
+.admin-popup-pane-no-button {
+    -fx-background-color: #EDEDED;
+    -fx-min-width: 95px;
+    -fx-min-height: 50px;
+    -fx-max-width: 95px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #DA1F1F;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #DA1F1F;
+}
+
+.admin-popup-pane-yes-button {
+    -fx-background-color: #9EF097;
+    -fx-min-width: 95px;
+    -fx-min-height: 50px;
+    -fx-max-width: 95px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #000000;
+}
+
+.leaderboard-choose-button {
+    -fx-background-color: #F4E158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 180px;
+    -fx-min-height: 52px;
+    -fx-max-width: 180px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #00000;
+}
+
+.leaderboard-choose-button-selected {
+    -fx-background-color: #000000;
+    -fx-background-radius: 11px;
+    -fx-min-width: 180px;
+    -fx-min-height: 52px;
+    -fx-max-width: 180px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #F4E158;
+}
+
+.leaderboard-un-choose-button {
+    -fx-background-color: #F4E158;
+    -fx-background-radius: 11px;
+    -fx-min-width: 180px;
+    -fx-min-height: 52px;
+    -fx-max-width: 180px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #00000;
+}
+
+.leaderboard-un-choose-button-selected {
+    -fx-background-color: #000000;
+    -fx-background-radius: 11px;
+    -fx-min-width: 180px;
+    -fx-min-height: 52px;
+    -fx-max-width: 180px;
+    -fx-max-height: 52px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #F4E158;
 }
 
 .menu-pane .info-text {
@@ -338,7 +524,3 @@
 .menu-pane .info-icon-medalstar {
     -fx-background-image: url(.././images/medalstar.png);
 }
-
-
-
-

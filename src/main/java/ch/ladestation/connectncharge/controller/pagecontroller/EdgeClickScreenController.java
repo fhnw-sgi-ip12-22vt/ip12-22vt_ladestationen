@@ -8,27 +8,39 @@ import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
+public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase<Game>>, PageController, Initializable {
 
     @FXML
     private AnchorPane menuPane;
     @FXML
     private AnchorPane shadowPane;
 
+    private static ApplicationController controller;
+
+
     @FXML
     public void handleNextButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml");
     }
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml");
+    }
+
+    @FXML
+    private void handleAdminButton(ActionEvent event) throws IOException {
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
+        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
     }
 
     @FXML
@@ -53,7 +65,10 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
 
     @Override
     public void setController(ApplicationController controller) {
+        //this.controller = controller;
         init(controller);
+        /*controller.loadLevels();
+        controller.loadNextLevel();*/
     }
 
     @Override
@@ -69,5 +84,10 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
     @Override
     public List<String> getStylesheets() {
         return null;
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }
