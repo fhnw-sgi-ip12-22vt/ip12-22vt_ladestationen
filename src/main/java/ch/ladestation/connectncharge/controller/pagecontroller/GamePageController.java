@@ -53,6 +53,8 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private LocalTime startTime = LocalTime.of(0, 0);
     private static LocalTime publicEndTime;
 
+    private ApplicationController controller;
+
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
         StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css");
@@ -68,6 +70,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @Override
     public void setController(ApplicationController controller) {
         init(controller);
+        this.controller = controller;
     }
 
     private void startTimer() {
@@ -112,7 +115,9 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         /*seconds = seconds % 60 == 0 ? 0 : seconds + 15;
         minutes += additionalTime % 60 == 0 ? 1 : 0;
         tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
-        addTimeButton.setText("Tipp +" + additionalTime + "sek");
+        addTimeButton.setText("Tipp +" + String.format("%dm %ds", additionalTime / 60, additionalTime % 60));
+
+        controller.handleTipp();
     }
 
     @FXML
@@ -195,6 +200,9 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @Override
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.currentScore).convertedBy(String::valueOf).update(costs.textProperty());
+        onChangeOf(model.isTippOn).execute(((oldValue, newValue) -> {
+            addTimeButton.setDisable(newValue);
+        }));
     }
 
     @Override

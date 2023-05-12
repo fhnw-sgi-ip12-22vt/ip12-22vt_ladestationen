@@ -22,14 +22,8 @@ public final class TextFileReader {
             int levelNumber = i;
             InputStream level = TextFileReader.class.getResourceAsStream("/textfiles/levels/" + i + ".txt");
             Objects.requireNonNull(level, "error, " + "/textfiles/levels/" + i + ".txt" + "file was null");
-            List<String> lines = new ArrayList<>();
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(level, StandardCharsets.UTF_8))) {
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    lines.add(line);
-                }
-            }
+            List<String> lines = readLevel(level);
 
             List<Integer> terminals = new ArrayList<>();
             List<List<Integer>> solution = new ArrayList<>();
@@ -55,16 +49,15 @@ public final class TextFileReader {
         return levels;
     }
 
-    private static List<String> readLevel(String levelFilePath) throws IOException {
+    private static List<String> readLevel(InputStream filePath) throws IOException {
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader(levelFilePath))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(filePath, StandardCharsets.UTF_8))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 lines.add(line);
             }
         }
-
         return lines;
     }
 
