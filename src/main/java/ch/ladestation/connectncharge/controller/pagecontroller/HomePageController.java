@@ -48,7 +48,8 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleAdminButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/homepage.fxml");
+        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
     }
 
     @FXML

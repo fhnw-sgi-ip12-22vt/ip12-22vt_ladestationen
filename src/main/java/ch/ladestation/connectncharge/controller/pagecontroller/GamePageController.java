@@ -49,16 +49,16 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private LocalTime startTime = LocalTime.of(0, 0);
     private static LocalTime publicEndTime;
 
-    @FXML
-    public void showHomePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startTimer();
         stackMenu.setVisible(true);
         stackMenu.setOpacity(1);
+    }
+
+    @FXML
+    public void showHomePage(ActionEvent event) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
     }
 
     @Override
@@ -150,6 +150,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleAdminButton(ActionEvent event) throws IOException {
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
         StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
     }
 

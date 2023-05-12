@@ -344,6 +344,9 @@
     -fx-text-fill: #FFFFFF;
     -fx-border-color: transparent;
 }
+.root-pane .table-view {
+    -fx-table-view-scroll-x: false;
+}
 
 .popup-pane {
     -fx-min-width: 515px;

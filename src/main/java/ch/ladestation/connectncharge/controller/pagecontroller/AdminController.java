@@ -53,6 +53,8 @@ public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, P
     @FXML
     private Label errorMessage;
 
+    private static final String ADMIN_CODE = "123456";
+    private static final String DEFAUL_FXML_PATH = "/ch/ladestation/connectncharge/homepage.fxml";
     private TextField[] textFields;
 
     public void initialize() {
@@ -112,7 +114,7 @@ public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, P
         String enteredCode = String.join("", textField1.getText(), textField2.getText(), textField3.getText(),
             textField4.getText(), textField5.getText(), textField6.getText());
 
-        if (enteredCode.equals("123456")) {
+        if (enteredCode.equals(ADMIN_CODE)) {
             try {
                 StageHandler.openStage("/ch/ladestation/connectncharge/adminhomepage.fxml");
             } catch (IOException e) {
@@ -131,7 +133,9 @@ public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, P
     @FXML
     private void onStopButtonClicked(ActionEvent event) {
         try {
-            StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
+            String fxmlPath =
+                StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() : DEFAUL_FXML_PATH;
+            StageHandler.openStage(fxmlPath);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

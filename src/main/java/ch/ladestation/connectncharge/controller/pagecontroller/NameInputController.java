@@ -136,8 +136,6 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
         currentName = txtNameInput.getText();
         StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml");
-        System.out.println(currentName);
-        System.out.println(txtNameInput.getText());
     }
 
     public void keyPressed(ActionEvent actionEvent) {
