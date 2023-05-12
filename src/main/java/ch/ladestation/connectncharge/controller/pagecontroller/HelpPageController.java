@@ -63,12 +63,10 @@ public class HelpPageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @Override
     public void initializeParts() {
-
     }
 
     public void goForward(ActionEvent actionEvent) {
         setPage(currentPage.getNext());
-
     }
 
     public void goBack(ActionEvent actionEvent) {
