@@ -4,7 +4,9 @@ import ch.ladestation.connectncharge.AppStarter;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
@@ -31,6 +33,12 @@ public final class StageHandler {
         stage.setTitle(STAGE_TITLE);
         stage.setScene(scene);
         stage.setResizable(false);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.toFront();
+        stage.setX(0);
+        stage.setY(0);
+        stage.setWidth(Screen.getPrimary().getBounds().getWidth());
+        stage.setHeight(Screen.getPrimary().getBounds().getHeight());
 
         if (stage.getScene() != null) {
             stage.setMaximized(true);

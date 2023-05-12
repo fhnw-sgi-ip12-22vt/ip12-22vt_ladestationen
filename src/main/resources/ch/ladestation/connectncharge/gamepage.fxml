@@ -21,7 +21,7 @@
                 <Font name="Arial Black" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="addTimeButton" layoutX="43.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleAddTimeButton" prefHeight="38.0" prefWidth="130.0" styleClass="standard-first-button" text="Tipp +15sec">
+        <Button fx:id="addTimeButton" layoutX="43.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleAddTimeButton" prefHeight="38.0" prefWidth="130.0" styleClass="standard-first-button" text="Tipp +15sek">
             <font>
                 <Font name="Arial Black" size="12.0" />
             </font>
