@@ -47,12 +47,16 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
     private void handleStackMenuClick(ActionEvent event) {
         menuPane.setVisible(true);
         menuPane.setOpacity(1);
+        shadowPane.setVisible(true);
+        shadowPane.setOpacity(1);
     }
 
     @FXML
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
     }
 
     @FXML

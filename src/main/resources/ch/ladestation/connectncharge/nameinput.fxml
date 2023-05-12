@@ -36,7 +36,7 @@
             <Cursor fx:constant="TEXT" />
          </cursor>
       </TextField>
-      <Button layoutX="462.0" layoutY="190.0" mnemonicParsing="false" onAction="#goToHighscoreScreen" styleClass="name-input-button" stylesheets="@../../../css/style.css" text="Fertig">
+      <Button layoutX="596.0" layoutY="123.0" mnemonicParsing="false" onAction="#goToHighscoreScreen" styleClass="name-input-button" stylesheets="@../../../css/style.css" text="Fertig">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -117,7 +117,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </GridPane>
-      <Label fx:id="lblWarning" layoutX="584.0" layoutY="137.0" prefHeight="19.0" prefWidth="111.0" textFill="#cd1d1d">
+      <Label fx:id="lblWarning" layoutX="264.0" layoutY="29.0" prefHeight="24.0" prefWidth="268.0" textFill="#cd1d1d">
          <font>
             <Font size="19.0" />
          </font>
