@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.time.LocalTime;
 
 public final class StageHandler {
 
@@ -18,7 +19,7 @@ public final class StageHandler {
     private static ApplicationController controller;
     private static String lastFxmlPath;
     private static int additionalTime = 15;
-    private static int timer;
+    private static LocalTime timer = LocalTime.of(0, 0);
 
     private static Stage stage;
 
@@ -62,7 +63,8 @@ public final class StageHandler {
     public static int getAdditionalTime() {
         return additionalTime;
     }
-    public static int getTimer() {
+
+    public static LocalTime getTimer() {
         return timer;
     }
 
@@ -76,6 +78,10 @@ public final class StageHandler {
 
     public static void setAdditionalTime(int additionalTimeParam) {
         additionalTime = additionalTimeParam;
+    }
+
+    public static void setTimer(LocalTime timerParam) {
+        timer = timerParam;
     }
 
     public static void setLastFxmlPath(String lastFxmlPathParam) {

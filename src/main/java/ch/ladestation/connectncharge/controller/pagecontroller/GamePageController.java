@@ -53,6 +53,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         startTimer();
         stackMenu.setVisible(true);
         stackMenu.setOpacity(1);
+        addTimeButton.setText("Tipp +" + StageHandler.getAdditionalTime() + "sek");
     }
 
     @FXML
@@ -67,10 +68,10 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     private void startTimer() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
-
+        startTime = StageHandler.getTimer();
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             startTime = startTime.plusSeconds(1);
-
+            StageHandler.setTimer(startTime);
             if (startTime.isAfter(LocalTime.of(0, 59, 59))) {
                 timeline.stop();
                 endGame();
@@ -95,9 +96,11 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
         String tippText;
+        System.out.println("1. StageHandler.getAdditionalTime()" + StageHandler.getAdditionalTime());
         additionalTime = StageHandler.getAdditionalTime();
         if (!startTime.equals(LocalTime.of(1, 0))) {
             LocalTime newTime = startTime.plusSeconds(additionalTime);
+            StageHandler.setTimer(startTime);
             if (newTime.isAfter(LocalTime.of(1, 0))) {
                 startTime = LocalTime.of(1, 0);
             } else {
@@ -111,6 +114,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
         addTimeButton.setText("Tipp +" + additionalTime + "sek");
         StageHandler.setAdditionalTime(additionalTime);
+        System.out.println("2. StageHandler.getAdditionalTime()" + StageHandler.getAdditionalTime());
     }
 
     @FXML
