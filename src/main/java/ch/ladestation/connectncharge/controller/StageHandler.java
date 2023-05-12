@@ -17,6 +17,8 @@ public final class StageHandler {
 
     private static ApplicationController controller;
     private static String lastFxmlPath;
+    private static int additionalTime = 15;
+    private static int timer;
 
     private static Stage stage;
 
@@ -53,12 +55,15 @@ public final class StageHandler {
         stage.show();
     }
 
-    public static void setLastFxmlPath(String lastFxmlPathParam) {
-        lastFxmlPath = lastFxmlPathParam;
-    }
-
     public static String getLastFxmlPath() {
         return lastFxmlPath;
+    }
+
+    public static int getAdditionalTime() {
+        return additionalTime;
+    }
+    public static int getTimer() {
+        return timer;
     }
 
     public static void setStage(Stage stageParam) {
@@ -67,5 +72,13 @@ public final class StageHandler {
 
     public static void setController(ApplicationController controllerParam) {
         controller = controllerParam;
+    }
+
+    public static void setAdditionalTime(int additionalTimeParam) {
+        additionalTime = additionalTimeParam;
+    }
+
+    public static void setLastFxmlPath(String lastFxmlPathParam) {
+        lastFxmlPath = lastFxmlPathParam;
     }
 }

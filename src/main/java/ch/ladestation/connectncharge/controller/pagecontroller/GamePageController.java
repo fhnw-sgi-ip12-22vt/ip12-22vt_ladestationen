@@ -45,7 +45,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     private Timeline timeline;
     private int additionalTime = 15;
-    private int seconds = 0, minutes = 0;
     private LocalTime startTime = LocalTime.of(0, 0);
     private static LocalTime publicEndTime;
 
@@ -68,6 +67,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     private void startTimer() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
+
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             startTime = startTime.plusSeconds(1);
 
@@ -95,6 +95,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
         String tippText;
+        additionalTime = StageHandler.getAdditionalTime();
         if (!startTime.equals(LocalTime.of(1, 0))) {
             LocalTime newTime = startTime.plusSeconds(additionalTime);
             if (newTime.isAfter(LocalTime.of(1, 0))) {
@@ -109,6 +110,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         minutes += additionalTime % 60 == 0 ? 1 : 0;
         tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
         addTimeButton.setText("Tipp +" + additionalTime + "sek");
+        StageHandler.setAdditionalTime(additionalTime);
     }
 
     @FXML

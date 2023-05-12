@@ -301,6 +301,7 @@
     -fx-min-height: 45px;
     -fx-max-width: 45px;
     -fx-max-height: 45px;
+    -fx-background-image: url(".././images/HelpIcon.png");
 }
 
 .root-pane .standard-xclose-button {
