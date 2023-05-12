@@ -22,6 +22,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -54,7 +55,8 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     @FXML
     private TableColumn<HighScorePlayer, String> restTimeColumn;
     private static final String TEXT_FILE_PLAYER_PATH = "player.txt";
-    //private static final String WHOLE_TEXT_FILE_PLAYER_PATH = "src/main/resources/textfiles/highscore/player.txt";
+    private static final String WHOLE_TEXT_FILE_PLAYER_PATH =
+        File.separator + "home" + File.separator + "pi" + File.separator + TEXT_FILE_PLAYER_PATH;
 
     private static final int PLAYER_PLACE_TOP = 5;
     private String endTime = String.valueOf(GamePageController.getPublicEndTime());
@@ -74,34 +76,21 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
             int rankValue = cellData.getValue().getRank();
             return new SimpleIntegerProperty(rankValue).asObject();
         });
-        name.setCellValueFactory(
-            cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getPlayerName()));
-        time.setCellValueFactory(
-            cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getEndTime()));
+        name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getPlayerName()));
+        time.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getEndTime()));
     }
 
     private void fetchDataAndPopulateTableViews() {
-        List<Player> playerList =
-            TextFileEditor.readPlayerDataFromFile(TEXT_FILE_PLAYER_PATH);
+        List<Player> playerList = TextFileEditor.readPlayerDataFromFile(TEXT_FILE_PLAYER_PATH);
         Player currentPlayer = new Player(playerName, endTime);
         playerList.add(currentPlayer);
 
-
-        System.out.println(currentPlayer.getPlayerName());
-        System.out.println(currentPlayer.getEndTime());
-
         // Sort the playerList based on the endTime (time)
         playerList.sort(Comparator.comparing(Player::getEndTime));
-        System.out.println("=======================================");
         List<HighScorePlayer> highScorePlayers = Stream.iterate(0, i -> i + 1).limit(playerList.size())
             .map(number -> new HighScorePlayer(number.intValue() + 1, playerList.get(number)))
-            .peek(p -> {
-                System.out.println(p.getRank());
-                System.out.println(p.getPlayer().getPlayerName());
-                System.out.println(p.getPlayer().getEndTime());
-            })
             .collect(Collectors.toList());
-        System.out.println("=======================================");
+
         // Create an ObservableList from the player list
         ObservableList<HighScorePlayer> topPlayers;
         ObservableList<HighScorePlayer> restPlayers;
@@ -109,17 +98,16 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
         if (highScorePlayers.size() > PLAYER_PLACE_TOP) {
             topPlayers = FXCollections.observableArrayList(highScorePlayers.subList(0, PLAYER_PLACE_TOP));
             restPlayers =
-                FXCollections.observableArrayList(
-                    highScorePlayers.subList(PLAYER_PLACE_TOP, highScorePlayers.size()));
+                FXCollections.observableArrayList(highScorePlayers.subList(PLAYER_PLACE_TOP, highScorePlayers.size()));
             restTableView.setItems(restPlayers);
         } else {
             topPlayers = FXCollections.observableArrayList(highScorePlayers);
         }
 
-        // Set the items in the TableView
         tableView.setItems(topPlayers);
 
-        TextFileEditor.writeTextFile(TEXT_FILE_PLAYER_PATH,
+        //writes the new data
+        TextFileEditor.writeTextFile(WHOLE_TEXT_FILE_PLAYER_PATH,
             playerList.stream().map(val -> val.getPlayerName() + "," + val.getEndTime()).peek(p -> {
                 System.out.println(p);
             }).collect(Collectors.toList()));
