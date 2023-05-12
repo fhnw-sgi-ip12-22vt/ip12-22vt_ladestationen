@@ -218,7 +218,6 @@
     -fx-min-height: 45px;
     -fx-max-width: 45px;
     -fx-max-height: 45px;
-    -fx-background-image: url(".././images/HelpIcon.png");
 }
 
 .root-pane .standard-xclose-button {
@@ -259,8 +258,26 @@
     -fx-max-width: 589px;
     -fx-max-height: 400px;
     -fx-control-inner-background: #1E1E1E;
-    -fx-text-fill: #FFFFFF;
+    -fx-text-fill: #ffffff;
     -fx-border-color: transparent;
+    -fx-highlight-fill: transparent;
+    -fx-cursor: hand;
+}
+
+.root-pane .help-text-button {
+    -fx-wrap-text: true;
+    -fx-min-width: 70px;
+    -fx-min-height: 70px;
+    -fx-max-width: 70px;
+    -fx-max-height: 70px;
+    -fx-background-color: transparent;
+}
+
+.root-pane .help-text{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 10px;
+    -fx-font-size: 20px;
 }
 
 .popup-pane {
@@ -268,10 +285,12 @@
     -fx-min-height: 265px;
     -fx-max-width: 515px;
     -fx-max-height: 265px;
-    -fx-background-color: #F9F9F9;
+    -fx-background-color: #ffffff;
     -fx-background-size: cover;
     -fx-background-radius: 15px;
 }
+
+
 
 .popup-pane .pane-shadow {
     -fx-min-width: 800px;
