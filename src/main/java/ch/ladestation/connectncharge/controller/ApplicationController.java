@@ -4,7 +4,7 @@ import ch.ladestation.connectncharge.model.Edge;
 import ch.ladestation.connectncharge.model.Game;
 import ch.ladestation.connectncharge.model.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
-import ch.ladestation.connectncharge.services.file.TextFileReader;
+import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import com.github.mbelling.ws281x.Color;
 
@@ -56,7 +56,7 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void loadLevels() {
         try {
-            levels = TextFileReader.readLevels();
+            levels = TextFileEditor.readLevels();
         } catch (IOException ioException) {
             throw new RuntimeException("error: levels could not be read!");
         }

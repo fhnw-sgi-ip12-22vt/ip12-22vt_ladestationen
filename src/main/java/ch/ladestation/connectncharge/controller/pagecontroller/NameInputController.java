@@ -101,11 +101,11 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
 
     @FXML
     public void showNamePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml");
     }
 
     public void goBackToEndScreen(MouseEvent mouseEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml");
     }
 
     @Override
@@ -135,9 +135,7 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
 
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
         currentName = txtNameInput.getText();
-        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml", "/css/style.css");
-        System.out.println(currentName);
-        System.out.println(txtNameInput.getText());
+        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml");
     }
 
     public void keyPressed(ActionEvent actionEvent) {

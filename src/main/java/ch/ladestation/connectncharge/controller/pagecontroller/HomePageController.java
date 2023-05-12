@@ -25,7 +25,7 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     public void handleShowEdgePresser(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/edgeclickscreen.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
     }
 
     @FXML
@@ -43,7 +43,13 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/homepage.fxml");
-        StageHandler.openStage(HELP_FXML_PATH, CSS_PATH);
+        StageHandler.openStage(HELP_FXML_PATH);
+    }
+
+    @FXML
+    private void handleAdminButton(ActionEvent event) throws IOException {
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/homepage.fxml");
+        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
     }
 
     @FXML

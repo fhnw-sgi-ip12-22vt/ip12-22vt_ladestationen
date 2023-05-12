@@ -55,16 +55,16 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     private ApplicationController controller;
 
-    @FXML
-    public void showHomePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml", "/css/style.css");
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startTimer();
         stackMenu.setVisible(true);
         stackMenu.setOpacity(1);
+    }
+
+    @FXML
+    public void showHomePage(ActionEvent event) throws IOException {
+        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
     }
 
     @Override
@@ -83,7 +83,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
                 endGame();
                 startTime = LocalTime.of(1, 0);
                 try {
-                    StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml", "/css/style.css");
+                    StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml");
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -154,7 +154,13 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
         StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml", "/css/style.css");
+        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml");
+    }
+
+    @FXML
+    private void handleAdminButton(ActionEvent event) throws IOException {
+        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
+        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
     }
 
     @FXML

@@ -11,6 +11,10 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 
 public final class StageHandler {
+
+    private static final String CSS_PATH = "/css/style.css";
+    private static final String STAGE_TITLE = "Connect 'n Charge";
+
     private static ApplicationController controller;
     private static String lastFxmlPath;
 
@@ -20,20 +24,21 @@ public final class StageHandler {
         throw new AssertionError();
     }
 
-    private static final String STAGE_TITLE = "Connect 'n Charge";
 
-    public static void openStage(String fxmlPath, String cssPath) throws IOException {
+    public static void openStage(String fxmlPath) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(AppStarter.class.getResource(fxmlPath));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
         PageController pageController = fxmlLoader.getController();
         pageController.setController(controller);
 
-        scene.getStylesheets().add(cssPath);
+        scene.getStylesheets().add(CSS_PATH);
         stage.setTitle(STAGE_TITLE);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.initStyle(StageStyle.UNDECORATED);
+        if (!stage.isShowing()) {
+            stage.initStyle(StageStyle.UNDECORATED);
+        }
         stage.toFront();
         stage.setX(0);
         stage.setY(0);

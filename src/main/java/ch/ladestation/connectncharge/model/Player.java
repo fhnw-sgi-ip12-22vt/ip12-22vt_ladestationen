@@ -5,8 +5,8 @@ public class Player {
     private String endTime;
 
     public Player(String playerName, String endTime) {
-        this.playerName = playerName;
-        this.endTime = endTime;
+        this.playerName = playerName.replaceAll(" ", "");
+        this.endTime = endTime.replaceAll(" ", "");
     }
 
     public String getPlayerName() {
