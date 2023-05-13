@@ -18,6 +18,10 @@ public final class HighScoreTable {
 
     private static final int PLAYER_PLACE_TOP = 5;
 
+    private HighScoreTable() {
+        throw new AssertionError();
+    }
+    
     public static void initRowHeight(TableView<HighScorePlayer> tableView) {
         tableView.setRowFactory(param -> new TableRow<HighScorePlayer>() {
             @Override

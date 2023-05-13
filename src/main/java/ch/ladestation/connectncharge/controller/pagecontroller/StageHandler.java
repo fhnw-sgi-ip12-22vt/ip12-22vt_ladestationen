@@ -4,6 +4,7 @@ import ch.ladestation.connectncharge.AppStarter;
 import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.model.text.FilePath;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
@@ -40,18 +41,15 @@ public final class StageHandler {
         if (!stage.isShowing()) {
             stage.initStyle(StageStyle.UNDECORATED);
         }
-        stage.toFront();
-        stage.setX(0);
-        stage.setY(0);
-        stage.setWidth(Screen.getPrimary().getBounds().getWidth());
-        stage.setHeight(Screen.getPrimary().getBounds().getHeight());
 
-        if (stage.getScene() != null) {
-            stage.setMaximized(true);
-            stage.setFullScreen(true);
-        }
+        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+        stage.setX(screenBounds.getMinX());
+        stage.setY(screenBounds.getMinY());
+        stage.setWidth(screenBounds.getWidth());
+        stage.setHeight(screenBounds.getHeight());
 
         stage.show();
+        stage.setMaximized(true);
     }
 
     public static String getLastFxmlPath() {

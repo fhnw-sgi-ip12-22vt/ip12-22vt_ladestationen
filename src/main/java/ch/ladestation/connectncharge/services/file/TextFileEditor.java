@@ -72,8 +72,8 @@ public final class TextFileEditor {
         if (!createPlayerFile(filePath)) {
             try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                 String line;
-                while ((line = reader.readLine()) != null && !line.replaceAll(" ", "").equals("") &&
-                    !line.contains(",")) {
+                while ((line = reader.readLine()) != null && !line.replaceAll(" ", "").equals("")
+                    && !line.contains(",")) {
                     players.add(new Player(line.split(",")[0], line.split(",")[1]));
                 }
             } catch (IOException e) {
@@ -86,7 +86,7 @@ public final class TextFileEditor {
     /**
      * This methode creates the save file for the players.
      *
-     * @param fileName
+     * @param filePath
      * @return a true if a new file is created and false when a file is already existing.
      */
     private static boolean createPlayerFile(String filePath) {
