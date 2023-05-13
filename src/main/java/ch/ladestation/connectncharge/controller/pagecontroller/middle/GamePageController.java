@@ -5,6 +5,7 @@ import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.model.game.gameinfo.MyTimer;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -39,6 +40,8 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private Label timerLabel;
     private static String publicEndTime;
 
+    private String leaveGamePath;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startTimer();
@@ -59,7 +62,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     public void showHomePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
+        StageHandler.openStage(leaveGamePath);
     }
 
     @FXML
@@ -71,14 +74,15 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private void handleEndGameButton(ActionEvent event) {
         Button button = (Button) event.getSource();
         String buttonId = button.getId();
-        System.out.println("Button ID: " + buttonId);
 
-        if(buttonId.contains("highScore")){
-
-        }else if(buttonId.contains("bonusRound")){
-
-        }else if(buttonId.contains("admin")){
-
+        if (buttonId.contains("highScore")) {
+            leaveGamePath = FilePath.HIGHSCORE.getFilePath();
+        } else if (buttonId.contains("bonusRound")) {
+            leaveGamePath = FilePath.HOMEPAGE.getFilePath();
+        } else if (buttonId.contains("admin")) {
+            leaveGamePath = FilePath.ADMINPAGE.getFilePath();
+        } else {
+            leaveGamePath = FilePath.HOMEPAGE.getFilePath();
         }
 
         endGampePopupPane.setVisible(true);
@@ -113,15 +117,8 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml");
-    }
-
-    @FXML
-    private void handleAdminButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
-        MyTimer.stop();
+        StageHandler.setLastFxmlPath(FilePath.GAMEPAGE.getFilePath());
+        StageHandler.openStage(FilePath.HELPPAGE.getFilePath());
     }
 
     @FXML
@@ -151,8 +148,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     private void endGame() {
-        saveEndTime(); // Rufe die saveEndTime-Methode auf
-        // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
+        saveEndTime();
     }
 
     @FXML
