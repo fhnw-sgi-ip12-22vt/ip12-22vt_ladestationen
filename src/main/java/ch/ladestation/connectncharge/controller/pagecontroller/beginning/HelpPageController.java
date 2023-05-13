@@ -1,10 +1,10 @@
-package ch.ladestation.connectncharge.controller.pagecontroller;
+package ch.ladestation.connectncharge.controller.pagecontroller.beginning;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.controller.PageController;
-import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.model.Game;
-import ch.ladestation.connectncharge.model.HelpPage;
+import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
+import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.HelpPage;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;

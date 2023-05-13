@@ -1,12 +1,9 @@
 package ch.ladestation.connectncharge;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.model.Game;
-import ch.ladestation.connectncharge.pui.GamePUI;
-import ch.ladestation.connectncharge.util.Pi4JContext;
+import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.util.mvcbase.MvcLogger;
-import com.pi4j.context.Context;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

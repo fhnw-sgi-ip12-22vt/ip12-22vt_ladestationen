@@ -1,6 +1,7 @@
-package ch.ladestation.connectncharge.controller;
+package ch.ladestation.connectncharge.controller.pagecontroller;
 
 import ch.ladestation.connectncharge.AppStarter;
+import ch.ladestation.connectncharge.controller.ApplicationController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -9,7 +10,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
-import java.time.LocalTime;
 
 public final class StageHandler {
 
@@ -18,8 +18,6 @@ public final class StageHandler {
 
     private static ApplicationController controller;
     private static String lastFxmlPath;
-    private static int additionalTime = 15;
-    private static LocalTime timer = LocalTime.of(0, 0);
 
     private static Stage stage;
 
@@ -60,28 +58,12 @@ public final class StageHandler {
         return lastFxmlPath;
     }
 
-    public static int getAdditionalTime() {
-        return additionalTime;
-    }
-
-    public static LocalTime getTimer() {
-        return timer;
-    }
-
     public static void setStage(Stage stageParam) {
         stage = stageParam;
     }
 
     public static void setController(ApplicationController controllerParam) {
         controller = controllerParam;
-    }
-
-    public static void setAdditionalTime(int additionalTimeParam) {
-        additionalTime = additionalTimeParam;
-    }
-
-    public static void setTimer(LocalTime timerParam) {
-        timer = timerParam;
     }
 
     public static void setLastFxmlPath(String lastFxmlPathParam) {

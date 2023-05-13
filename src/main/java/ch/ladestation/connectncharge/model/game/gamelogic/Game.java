@@ -1,4 +1,4 @@
-package ch.ladestation.connectncharge.model;
+package ch.ladestation.connectncharge.model.game.gamelogic;
 
 import ch.ladestation.connectncharge.util.mvcbase.ObservableArray;
 import ch.ladestation.connectncharge.util.mvcbase.ObservableValue;

@@ -1,4 +1,4 @@
-package ch.ladestation.connectncharge.model;
+package ch.ladestation.connectncharge.model.game.gamelogic;
 
 import com.github.mbelling.ws281x.Color;
 

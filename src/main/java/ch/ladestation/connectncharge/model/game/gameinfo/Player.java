@@ -1,4 +1,4 @@
-package ch.ladestation.connectncharge.model;
+package ch.ladestation.connectncharge.model.game.gameinfo;
 
 public class Player {
     private String playerName;

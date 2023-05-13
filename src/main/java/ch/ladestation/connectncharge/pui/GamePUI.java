@@ -1,7 +1,10 @@
 package ch.ladestation.connectncharge.pui;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.model.*;
+import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.game.gamelogic.Node;
+import ch.ladestation.connectncharge.model.game.gamelogic.Segment;
 import ch.ladestation.connectncharge.services.file.CSVReader;
 import ch.ladestation.connectncharge.util.mvcbase.PuiBase;
 import com.github.mbelling.ws281x.Color;

@@ -1,6 +1,6 @@
 package ch.ladestation.connectncharge.services.file;
 
-import ch.ladestation.connectncharge.model.Player;
+import ch.ladestation.connectncharge.model.game.gameinfo.Player;
 import ch.ladestation.connectncharge.util.mvcbase.MvcLogger;
 
 import java.io.*;

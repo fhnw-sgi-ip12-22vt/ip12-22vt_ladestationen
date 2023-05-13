@@ -504,7 +504,7 @@
     -fx-min-height: 43px;
     -fx-max-width: 165px;
     -fx-max-height: 43px;
-    -fx-alignment: left;
+    -fx-alignment: CENTER_LEFT;
 }
 
 .menu-pane .info-icon-size {
