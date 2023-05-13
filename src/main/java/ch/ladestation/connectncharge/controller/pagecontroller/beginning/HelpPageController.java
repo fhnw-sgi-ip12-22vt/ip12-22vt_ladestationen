@@ -4,6 +4,7 @@ import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.model.text.HelpPage;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
@@ -26,14 +27,13 @@ public class HelpPageController implements ViewMixin<Game, ControllerBase<Game>>
     private Button back;
     @FXML
     private Label lbltextHelp;
-
-    private static final String DEFAUL_FXML_PATH = "/ch/ladestation/connectncharge/homepage.fxml";
     private HelpPage currentPage;
 
 
     @FXML
     private void handleXCloseButton(ActionEvent event) throws IOException {
-        String fxmlPath = StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() : DEFAUL_FXML_PATH;
+        String fxmlPath =
+            StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() : FilePath.HOMEPAGE.getFilePath();
         StageHandler.openStage(fxmlPath);
     }
 

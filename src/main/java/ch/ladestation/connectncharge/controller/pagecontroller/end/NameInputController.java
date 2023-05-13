@@ -4,6 +4,7 @@ import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -101,11 +102,11 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
 
     @FXML
     public void showNamePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml");
+        StageHandler.openStage(FilePath.NAMEINPUT.getFilePath());
     }
 
     public void goBackToEndScreen(MouseEvent mouseEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml");
+        StageHandler.openStage(FilePath.ENDSCREEN.getFilePath());
     }
 
     @Override
@@ -120,6 +121,9 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
             if (newValue.length() > 15) {
                 txtNameInput.setText(oldValue);
                 lblWarning.setText("Zu lang");
+            } else if (newValue.length() <= 2) {
+                txtNameInput.setText(oldValue);
+                lblWarning.setText("mindestens 3 Zeichen");
             } else {
                 lblWarning.setText("");
             }
@@ -135,7 +139,7 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
 
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
         currentName = txtNameInput.getText();
-        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml");
+        StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
     }
 
     public void keyPressed(ActionEvent actionEvent) {

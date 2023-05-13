@@ -4,6 +4,7 @@ import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -25,7 +26,7 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
 
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/adminhomepage.fxml");
+        StageHandler.openStage(FilePath.ADMINHOMEPAGE.getFilePath());
     }
 
     @FXML

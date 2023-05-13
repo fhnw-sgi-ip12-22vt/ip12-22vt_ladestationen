@@ -2,6 +2,7 @@ package ch.ladestation.connectncharge.controller.pagecontroller;
 
 import ch.ladestation.connectncharge.AppStarter;
 import ch.ladestation.connectncharge.controller.ApplicationController;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,7 +14,6 @@ import java.io.IOException;
 
 public final class StageHandler {
 
-    private static final String CSS_PATH = "/css/style.css";
     private static final String STAGE_TITLE = "Connect 'n Charge";
 
     private static ApplicationController controller;
@@ -33,7 +33,7 @@ public final class StageHandler {
         PageController pageController = fxmlLoader.getController();
         pageController.setController(controller);
 
-        scene.getStylesheets().add(CSS_PATH);
+        scene.getStylesheets().add(FilePath.CSS.getFilePath());
         stage.setTitle(STAGE_TITLE);
         stage.setScene(scene);
         stage.setResizable(false);

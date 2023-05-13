@@ -7,7 +7,7 @@ import javafx.scene.control.Label;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MyTimer {
+public final class MyTimer {
     private static final int MAX_SECONDS_PER_ROUND = 3600;
     private static final int MINUTES_PER_SECOND = 60;
     public static final int ADD_TIME = 15;
@@ -18,6 +18,9 @@ public class MyTimer {
     private static Timer timer;
     private static Label timerLabel;
 
+    private MyTimer() {
+        throw new AssertionError();
+    }
 
     public static void start() {
         if (!isTimerRunning) {

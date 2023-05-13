@@ -4,9 +4,10 @@ import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.controller.pagecontroller.middle.GamePageController;
-import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.game.gameinfo.HighScorePlayer;
 import ch.ladestation.connectncharge.model.game.gameinfo.Player;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
@@ -23,7 +24,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
@@ -55,9 +55,6 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     private TableColumn<HighScorePlayer, String> restNameColumn;
     @FXML
     private TableColumn<HighScorePlayer, String> restTimeColumn;
-    private static final String TEXT_FILE_PLAYER_PATH = "player.txt";
-    private static final String WHOLE_TEXT_FILE_PLAYER_PATH =
-        File.separator + "home" + File.separator + "pi" + File.separator + TEXT_FILE_PLAYER_PATH;
 
     private static final int PLAYER_PLACE_TOP = 5;
     private String endTime = String.valueOf(GamePageController.getPublicEndTime());
@@ -82,7 +79,8 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     private void fetchDataAndPopulateTableViews() {
-        List<Player> playerList = TextFileEditor.readPlayerDataFromFile(TEXT_FILE_PLAYER_PATH);
+        List<Player> playerList =
+            TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
         Player currentPlayer = new Player(playerName, endTime);
         playerList.add(currentPlayer);
 
@@ -108,7 +106,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
         tableView.setItems(topPlayers);
 
         //writes the new data
-        TextFileEditor.writeTextFile(WHOLE_TEXT_FILE_PLAYER_PATH,
+        TextFileEditor.writeTextFile(FilePath.WHOLE_TEXT_FILE_PLAYER_PATH_LINUX.getFilePath(),
             playerList.stream().map(val -> val.getPlayerName() + "," + val.getEndTime()).peek(p -> {
                 System.out.println(p);
             }).collect(Collectors.toList()));
@@ -116,7 +114,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
 
     @FXML
     public void showHighscorePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml");
+        StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
     }
 
     public void setPlayerName(String playerName) {
@@ -128,7 +126,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     public void showGamePage(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml");
+        StageHandler.openStage(FilePath.GAMEPAGE.getFilePath());
     }
 
     public void showBonusPage(ActionEvent actionEvent) {
@@ -136,7 +134,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     public void showHomeScreen(MouseEvent mouseEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
+        StageHandler.openStage(FilePath.HOMEPAGE.getFilePath());
     }
 
     @Override

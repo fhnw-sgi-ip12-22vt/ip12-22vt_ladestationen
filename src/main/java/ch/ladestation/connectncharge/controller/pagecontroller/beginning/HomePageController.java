@@ -4,6 +4,7 @@ import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -14,10 +15,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>, PageController {
-    private static final String HELP_FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
-    private static final String CSS_PATH = "/css/style.css";
-
-
     @FXML
     private AnchorPane menuPane;
     @FXML
@@ -25,7 +22,7 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     public void handleShowEdgePresser(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
+        StageHandler.openStage(FilePath.EDGECLICKSCREEN.getFilePath());
     }
 
     @FXML
@@ -42,14 +39,14 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/homepage.fxml");
-        StageHandler.openStage(HELP_FXML_PATH);
+        StageHandler.setLastFxmlPath(FilePath.HOMEPAGE.getFilePath());
+        StageHandler.openStage(FilePath.HELPPAGE.getFilePath());
     }
 
     @FXML
     private void handleAdminButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/homepage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
+        StageHandler.setLastFxmlPath(FilePath.HOMEPAGE.getFilePath());
+        StageHandler.openStage(FilePath.ADMINPAGE.getFilePath());
     }
 
     @FXML

@@ -4,6 +4,7 @@ import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -54,7 +55,6 @@ public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, P
     private Label errorMessage;
 
     private static final String ADMIN_CODE = "123456";
-    private static final String DEFAUL_FXML_PATH = "/ch/ladestation/connectncharge/homepage.fxml";
     private TextField[] textFields;
 
     public void initialize() {
@@ -116,7 +116,7 @@ public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, P
 
         if (enteredCode.equals(ADMIN_CODE)) {
             try {
-                StageHandler.openStage("/ch/ladestation/connectncharge/adminhomepage.fxml");
+                StageHandler.openStage(FilePath.ADMINHOMEPAGE.getFilePath());
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -134,7 +134,8 @@ public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, P
     private void onStopButtonClicked(ActionEvent event) {
         try {
             String fxmlPath =
-                StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() : DEFAUL_FXML_PATH;
+                StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() :
+                    FilePath.HOMEPAGE.getFilePath();
             StageHandler.openStage(fxmlPath);
         } catch (IOException e) {
             throw new RuntimeException(e);

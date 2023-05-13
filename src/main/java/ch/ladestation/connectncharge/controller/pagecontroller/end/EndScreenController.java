@@ -5,6 +5,7 @@ import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.controller.pagecontroller.middle.GamePageController;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -38,14 +39,11 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     @FXML
     private Scene scene;
 
-    //create variable from GamePageController publicEndTime
-    //private String endTime = GamePageController.publicEndTime;
-
     private final String endTime = String.valueOf(GamePageController.getPublicEndTime());
 
     @FXML
     public void showEndPage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml");
+        StageHandler.openStage(FilePath.ENDSCREEN.getFilePath());
     }
 
     @FXML
@@ -54,7 +52,7 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     }
 
     public void showGameScreen(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/gamepage.fxml");
+        StageHandler.openStage(FilePath.GAMEPAGE.getFilePath());
 
     }
 
@@ -69,12 +67,12 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     }
 
     public void showNameInputScreen(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml");
+        StageHandler.openStage(FilePath.NAMEINPUT.getFilePath());
     }
 
     @FXML
     private void handleAdminButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
+        StageHandler.openStage(FilePath.ADMINPAGE.getFilePath());
     }
 
     @Override
