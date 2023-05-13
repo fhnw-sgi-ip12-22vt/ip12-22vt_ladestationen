@@ -57,7 +57,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     private TableColumn<HighScorePlayer, String> restTimeColumn;
 
     private static final int PLAYER_PLACE_TOP = 5;
-    private String endTime = String.valueOf(GamePageController.getPublicEndTime());
+    private String endTime = GamePageController.getPublicEndTime();
     private String playerName = NameInputController.getCurrentName();
 
 
@@ -66,50 +66,12 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
         initColumns(rankColumn, nameColumn, timeColumn);
         initColumns(restRankColumn, restNameColumn, restTimeColumn);
         fetchDataAndPopulateTableViews();
-    }
-
-    private void initColumns(TableColumn<HighScorePlayer, Integer> rank, TableColumn<HighScorePlayer, String> name,
-                             TableColumn<HighScorePlayer, String> time) {
-        rank.setCellValueFactory(cellData -> {
-            int rankValue = cellData.getValue().getRank();
-            return new SimpleIntegerProperty(rankValue).asObject();
-        });
-        name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getPlayerName()));
-        time.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getEndTime()));
-    }
-
-    private void fetchDataAndPopulateTableViews() {
-        List<Player> playerList =
-            TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
-        Player currentPlayer = new Player(playerName, endTime);
-        playerList.add(currentPlayer);
-
-        // Sort the playerList based on the endTime (time)
-        playerList.sort(Comparator.comparing(Player::getEndTime));
-        List<HighScorePlayer> highScorePlayers = Stream.iterate(0, i -> i + 1).limit(playerList.size())
-            .map(number -> new HighScorePlayer(number.intValue() + 1, playerList.get(number)))
-            .collect(Collectors.toList());
-
-        // Create an ObservableList from the player list
-        ObservableList<HighScorePlayer> topPlayers;
-        ObservableList<HighScorePlayer> restPlayers;
-
-        if (highScorePlayers.size() > PLAYER_PLACE_TOP) {
-            topPlayers = FXCollections.observableArrayList(highScorePlayers.subList(0, PLAYER_PLACE_TOP));
-            restPlayers =
-                FXCollections.observableArrayList(highScorePlayers.subList(PLAYER_PLACE_TOP, highScorePlayers.size()));
-            restTableView.setItems(restPlayers);
-        } else {
-            topPlayers = FXCollections.observableArrayList(highScorePlayers);
+        if (playerName != null && endTime != null) {
+            btnBonus.setVisible(false);
+            btnPlayAgain.setVisible(false);
+            btnBonus.setOpacity(0);
+            btnPlayAgain.setOpacity(0);
         }
-
-        tableView.setItems(topPlayers);
-
-        //writes the new data
-        TextFileEditor.writeTextFile(FilePath.WHOLE_TEXT_FILE_PLAYER_PATH_LINUX.getFilePath(),
-            playerList.stream().map(val -> val.getPlayerName() + "," + val.getEndTime()).peek(p -> {
-                System.out.println(p);
-            }).collect(Collectors.toList()));
     }
 
     @FXML
@@ -155,5 +117,51 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     @Override
     public List<String> getStylesheets() {
         return null;
+    }
+
+    private void initColumns(TableColumn<HighScorePlayer, Integer> rank, TableColumn<HighScorePlayer, String> name,
+                             TableColumn<HighScorePlayer, String> time) {
+        rank.setCellValueFactory(cellData -> {
+            int rankValue = cellData.getValue().getRank();
+            return new SimpleIntegerProperty(rankValue).asObject();
+        });
+        name.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getPlayerName()));
+        time.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getEndTime()));
+    }
+
+    private void fetchDataAndPopulateTableViews() {
+        List<Player> playerList =
+            TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
+        if (playerName != null && endTime != null) {
+            Player currentPlayer = new Player(playerName, endTime);
+            playerList.add(currentPlayer);
+        }
+
+        // Sort the playerList based on the endTime (time)
+        playerList.sort(Comparator.comparing(Player::getEndTime));
+        List<HighScorePlayer> highScorePlayers = Stream.iterate(0, i -> i + 1).limit(playerList.size())
+            .map(number -> new HighScorePlayer(number.intValue() + 1, playerList.get(number)))
+            .collect(Collectors.toList());
+
+        // Create an ObservableList from the player list
+        ObservableList<HighScorePlayer> topPlayers;
+        ObservableList<HighScorePlayer> restPlayers;
+
+        if (highScorePlayers.size() > PLAYER_PLACE_TOP) {
+            topPlayers = FXCollections.observableArrayList(highScorePlayers.subList(0, PLAYER_PLACE_TOP));
+            restPlayers =
+                FXCollections.observableArrayList(highScorePlayers.subList(PLAYER_PLACE_TOP, highScorePlayers.size()));
+            restTableView.setItems(restPlayers);
+        } else {
+            topPlayers = FXCollections.observableArrayList(highScorePlayers);
+        }
+
+        tableView.setItems(topPlayers);
+
+        //writes the new data
+        TextFileEditor.writeTextFile(FilePath.WHOLE_TEXT_FILE_PLAYER_PATH_LINUX.getFilePath(),
+            playerList.stream().map(val -> val.getPlayerName() + "," + val.getEndTime()).peek(p -> {
+                System.out.println(p);
+            }).collect(Collectors.toList()));
     }
 }

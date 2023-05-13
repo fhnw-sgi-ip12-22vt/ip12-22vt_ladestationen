@@ -57,13 +57,9 @@ public final class MyTimer {
     }
 
     public static void addTime(int additionalTime, Button addTimeButton) {
-        int timeOnButton = ADD_TIME;
-        if (additionalTime > 0) {
-            MyTimer.additionalTime += additionalTime;
-            secondsElapsed += MyTimer.additionalTime;
-            timeOnButton = MyTimer.additionalTime + ADD_TIME;
-        }
-        addTimeButton.setText("Tipp +" + timeFormat(timeOnButton));
+        MyTimer.additionalTime += additionalTime;
+        secondsElapsed += MyTimer.additionalTime;
+        addTimeButton.setText("Tipp +" + timeFormat(MyTimer.additionalTime + ADD_TIME));
     }
 
     private static String timeFormat(int allSeconds) {
