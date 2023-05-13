@@ -42,6 +42,11 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
     }
 
     @FXML
+    private void handleHighScoreButton(ActionEvent event) throws IOException {
+        StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
+    }
+
+    @FXML
     private void handleStackMenuClick(ActionEvent event) {
         menuPane.setVisible(true);
         menuPane.setOpacity(1);

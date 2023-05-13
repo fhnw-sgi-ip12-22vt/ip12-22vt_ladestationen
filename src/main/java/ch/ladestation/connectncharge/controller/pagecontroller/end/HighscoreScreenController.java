@@ -65,13 +65,8 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     public void initialize() {
         initColumns(rankColumn, nameColumn, timeColumn);
         initColumns(restRankColumn, restNameColumn, restTimeColumn);
+        iniButtons();
         fetchDataAndPopulateTableViews();
-        if (playerName != null && endTime != null) {
-            btnBonus.setVisible(false);
-            btnPlayAgain.setVisible(false);
-            btnBonus.setOpacity(0);
-            btnPlayAgain.setOpacity(0);
-        }
     }
 
     @FXML
@@ -129,9 +124,18 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
         time.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPlayer().getEndTime()));
     }
 
+    private void iniButtons() {
+        if (playerName != null && endTime != null) {
+            btnBonus.setVisible(true);
+            btnPlayAgain.setVisible(true);
+        }
+    }
+
     private void fetchDataAndPopulateTableViews() {
+        /*List<Player> playerList =
+            TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());*/
         List<Player> playerList =
-            TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
+            TextFileEditor.readPlayerDataFromFile("src/main/resources/textfiles/highscore/player.txt");
         if (playerName != null && endTime != null) {
             Player currentPlayer = new Player(playerName, endTime);
             playerList.add(currentPlayer);

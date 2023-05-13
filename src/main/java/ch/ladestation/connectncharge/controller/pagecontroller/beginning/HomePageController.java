@@ -50,6 +50,11 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     @FXML
+    private void handleHighScoreButton(ActionEvent event) throws IOException {
+        StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
+    }
+
+    @FXML
     private void handleShadowAnchorPaneClick(ActionEvent event) {
         shadowPane.setVisible(false);
         shadowPane.setOpacity(0);
