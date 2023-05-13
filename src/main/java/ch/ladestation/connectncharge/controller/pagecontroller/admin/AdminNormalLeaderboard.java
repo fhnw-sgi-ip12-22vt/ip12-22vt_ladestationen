@@ -73,6 +73,9 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
 
     @FXML
     private void handleChooseAllButton(ActionEvent event) {
+        tableView.getSelectionModel().selectAll();
+        restTableView.getSelectionModel().selectAll();
+
         chooseAllButton.getStyleClass().remove("leaderboard-choose-button");
         chooseAllButton.getStyleClass().add("leaderboard-choose-button-selected");
 
@@ -82,6 +85,8 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
 
     @FXML
     private void handleUnChooseAllButton(ActionEvent event) {
+        tableView.getSelectionModel().clearSelection();
+        restTableView.getSelectionModel().clearSelection();
         unchooseAllButton.getStyleClass().remove("leaderboard-un-choose-button");
         unchooseAllButton.getStyleClass().add("leaderboard-un-choose-button-selected");
 
@@ -90,9 +95,7 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
     }
 
     @FXML
-    private void handleTrashButton(ActionEvent event) { // Methode zum Löschen der Liste
-        System.out.println("Liste wurde gelöscht.");
-
+    private void handleTrashButton(ActionEvent event) {
         ObservableList<HighScorePlayer> selectedRows = tableView.getSelectionModel().getSelectedItems();
         for (HighScorePlayer rowData : selectedRows) {
             playerList.remove(rowData.getPlayer());

@@ -72,7 +72,8 @@ public final class TextFileEditor {
         if (!createPlayerFile(filePath)) {
             try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                 String line;
-                while ((line = reader.readLine()) != null) {
+                while ((line = reader.readLine()) != null && !line.replaceAll(" ", "").equals("") &&
+                    !line.contains(",")) {
                     players.add(new Player(line.split(",")[0], line.split(",")[1]));
                 }
             } catch (IOException e) {
