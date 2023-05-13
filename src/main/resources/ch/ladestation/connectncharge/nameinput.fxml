@@ -117,7 +117,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </GridPane>
-      <Label fx:id="lblWarning" layoutX="584.0" layoutY="137.0" prefHeight="19.0" prefWidth="111.0" textFill="#cd1d1d">
+      <Label fx:id="lblWarning" layoutX="584.0" layoutY="137.0" prefHeight="28.0" prefWidth="201.0" textFill="#cd1d1d">
          <font>
             <Font size="19.0" />
          </font>

@@ -23,7 +23,7 @@
     -fx-background-size: cover;
 }
 
-.root-pane .button{
+.root-pane .button {
     -fx-background-color: transparent;
 }
 
@@ -356,12 +356,13 @@
     -fx-background-color: transparent;
 }
 
-.root-pane .help-text{
+.root-pane .help-text {
     -fx-background-color: #ffffff;
     -fx-text-fill: #000000;
     -fx-background-radius: 10px;
     -fx-font-size: 20px;
 }
+
 .root-pane .table-view {
     -fx-table-view-scroll-x: false;
 }
@@ -375,8 +376,6 @@
     -fx-background-size: cover;
     -fx-background-radius: 15px;
 }
-
-
 
 .popup-pane .pane-shadow {
     -fx-min-width: 800px;

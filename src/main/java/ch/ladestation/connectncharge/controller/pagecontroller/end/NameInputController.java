@@ -121,9 +121,6 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
             if (newValue.length() > 15) {
                 txtNameInput.setText(oldValue);
                 lblWarning.setText("Zu lang");
-            } else if (newValue.length() <= 2) {
-                txtNameInput.setText(oldValue);
-                lblWarning.setText("mindestens 3 Zeichen");
             } else {
                 lblWarning.setText("");
             }
@@ -138,8 +135,12 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
 
 
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
-        currentName = txtNameInput.getText();
-        StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
+        if (txtNameInput.getText().length() <= 2) {
+            lblWarning.setText("mindestens 3 Zeichen");
+        } else {
+            currentName = txtNameInput.getText();
+            StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
+        }
     }
 
     public void keyPressed(ActionEvent actionEvent) {
@@ -262,7 +263,6 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
     public void toggleSpace(ActionEvent actionEvent) {
         String currentText = txtNameInput.getText();
         txtNameInput.setText(currentText + "  ");
-
     }
 
     public void showKeyboard() {

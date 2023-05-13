@@ -38,9 +38,7 @@ public final class StageHandler {
         stage.setTitle(STAGE_TITLE);
         stage.setScene(scene);
         stage.setResizable(false);
-        if (!stage.isShowing()) {
-            stage.initStyle(StageStyle.UNDECORATED);
-        }
+        stage.initStyle(StageStyle.UNDECORATED);
 
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         stage.setX(screenBounds.getMinX());
