@@ -111,8 +111,9 @@ public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, P
     }
 
     private void checkCode(MouseEvent event) {
-        String enteredCode = String.join("", textField1.getText(), textField2.getText(), textField3.getText(),
-            textField4.getText(), textField5.getText(), textField6.getText());
+        String enteredCode =
+            String.join("", textField1.getText(), textField2.getText(), textField3.getText(), textField4.getText(),
+                textField5.getText(), textField6.getText());
 
         if (enteredCode.equals(ADMIN_CODE)) {
             try {
@@ -133,9 +134,8 @@ public class AdminController implements ViewMixin<Game, ControllerBase<Game>>, P
     @FXML
     private void onStopButtonClicked(ActionEvent event) {
         try {
-            String fxmlPath =
-                StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath() :
-                    FilePath.HOMEPAGE.getFilePath();
+            String fxmlPath = StageHandler.getLastFxmlPath() != null ? StageHandler.getLastFxmlPath()
+                : FilePath.HOMEPAGE.getFilePath();
             StageHandler.openStage(fxmlPath);
         } catch (IOException e) {
             throw new RuntimeException(e);
