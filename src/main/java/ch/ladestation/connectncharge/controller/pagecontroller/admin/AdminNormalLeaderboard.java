@@ -55,8 +55,8 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //playerList = TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
-        playerList = TextFileEditor.readPlayerDataFromFile("src/main/resources/textfiles/highscore/player.txt");
+        playerList = TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
+        //playerList = TextFileEditor.readPlayerDataFromFile("src/main/resources/textfiles/highscore/player.txt");
         HighScoreTable.initColumns(rankColumn, nameColumn, timeColumn);
         HighScoreTable.initColumns(restRankColumn, restNameColumn, restTimeColumn);
         HighScoreTable.initRowHeight(tableView);
@@ -104,8 +104,8 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
         for (HighScorePlayer rowData : selectedRows) {
             playerList.remove(rowData.getPlayer());
         }
-        //HighScoreTable.editTableViews(playerList, FilePath.WHOLE_TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
-        HighScoreTable.editTableViews(playerList, "src/main/resources/textfiles/highscore/player.txt");
+        HighScoreTable.editTableViews(playerList, FilePath.WHOLE_TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
+        //HighScoreTable.editTableViews(playerList, "src/main/resources/textfiles/highscore/player.txt");
         HighScoreTable.populateTableViews(playerList, tableView, restTableView);
 
         // Rollback the CSS classes

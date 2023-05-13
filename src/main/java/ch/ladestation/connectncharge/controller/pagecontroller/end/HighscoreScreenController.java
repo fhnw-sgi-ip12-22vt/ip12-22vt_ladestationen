@@ -113,17 +113,17 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     private void fetchDataAndPopulateTableViews() {
-        /*List<Player> playerList =
-            TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());*/
         List<Player> playerList =
-            TextFileEditor.readPlayerDataFromFile("src/main/resources/textfiles/highscore/player.txt");
+            TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
+        /*List<Player> playerList =
+            TextFileEditor.readPlayerDataFromFile("src/main/resources/textfiles/highscore/player.txt");*/
         if (playerName != null && endTime != null) {
             Player currentPlayer = new Player(playerName, endTime);
             playerList.add(currentPlayer);
         }
 
         HighScoreTable.populateTableViews(playerList, tableView, restTableView);
-        //HighScoreTable.editTableViews(playerList, FilePath.WHOLE_TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
-        HighScoreTable.editTableViews(playerList, "src/main/resources/textfiles/highscore/player.txt");
+        HighScoreTable.editTableViews(playerList, FilePath.WHOLE_TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
+        //HighScoreTable.editTableViews(playerList, "src/main/resources/textfiles/highscore/player.txt");
     }
 }
