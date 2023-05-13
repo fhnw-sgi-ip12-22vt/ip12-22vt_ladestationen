@@ -31,7 +31,6 @@ public final class MyTimer {
                     if (secondsElapsed <= MAX_SECONDS_PER_ROUND) {
                         secondsElapsed++;
                         // Perform any desired actions based on the elapsed time
-                        System.out.println("Seconds Elapsed:" + secondsElapsed);
                         Platform.runLater(() -> {
                             timerLabel.setText("Zeit: " + timeFormat(secondsElapsed));
                         });
@@ -49,7 +48,6 @@ public final class MyTimer {
         MyTimer.secondsElapsed = 0;
         MyTimer.isTimerRunning = false;
         MyTimer.additionalTime = 0;
-        System.out.println("stopp: " + secondsElapsed);
     }
 
     public static void setTimerLabel(Label timerLabel) {

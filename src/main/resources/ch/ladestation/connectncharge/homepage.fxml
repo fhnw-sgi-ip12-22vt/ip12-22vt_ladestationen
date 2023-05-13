@@ -55,7 +55,7 @@
                         <Font size="14.0" />
                     </font>
                 </Button>
-                <Label prefHeight="60.0" prefWidth="158.0" text="Menü">
+                <Label layoutX="19.0" prefHeight="60.0" prefWidth="158.0" text="Menü">
                     <font>
                         <Font name="System Bold" size="32.0" />
                     </font>

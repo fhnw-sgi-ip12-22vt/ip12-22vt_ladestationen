@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
@@ -14,6 +13,13 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.end.HighscoreScreenController">
     <children>
+        <Button fx:id="btnPlayAgain" layoutX="70.0" layoutY="122.0" maxWidth="190.0" mnemonicParsing="false" onAction="#showGamePage" prefHeight="50.0" prefWidth="190.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen" visible="false" />
+        <Button fx:id="btnBonus" layoutX="70.0" layoutY="238.0" mnemonicParsing="false" onAction="#showBonusPage" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Bonus spielen" textFill="WHITE" visible="false" />
+        <ImageView fx:id="imgHome" fitHeight="69.0" fitWidth="69.0" layoutX="128.0" layoutY="339.0" onMouseClicked="#showHomeScreen" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../../../images/home.png" />
+            </image>
+        </ImageView>
         <!-- Add a TableView to display the high scores -->
         <TableView fx:id="tableView" layoutX="323.0" layoutY="51.0" prefHeight="199.0" prefWidth="458.0">
             <!-- Define the columns -->
@@ -28,23 +34,13 @@
                         <PropertyValueFactory property="playerName" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="timeColumn" editable="false" maxWidth="139.0" prefWidth="139.0" resizable="false" text="Zeit">
+                <TableColumn fx:id="timeColumn" editable="false" maxWidth="137.0" prefWidth="137.0" resizable="false" text="Zeit">
                     <cellValueFactory>
                         <PropertyValueFactory property="score" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
         </TableView>
-        <Button fx:id="btnPlayAgain" layoutX="70.0" layoutY="122.0" maxWidth="190.0" mnemonicParsing="false" onAction="#showGamePage" prefHeight="50.0" prefWidth="190.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen" visible="false" />
-        <Button fx:id="btnBonus" layoutX="70.0" layoutY="238.0" mnemonicParsing="false" onAction="#showBonusPage" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Bonus spielen" textFill="WHITE" visible="false" />
-        <ImageView fx:id="imgHome" fitHeight="69.0" fitWidth="69.0" layoutX="128.0" layoutY="339.0" onMouseClicked="#showHomeScreen" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../images/home.png" />
-            </image>
-        </ImageView>
         <Line endX="281.0" layoutX="501.0" layoutY="13.0" startX="-179.0" startY="1.0" stroke="WHITE" strokeWidth="2.0" />
         <Line endX="-153.0" endY="447.12841796875" layoutX="475.0" layoutY="21.0" startX="-153.0" startY="-5.585784912109375" stroke="WHITE" strokeWidth="2.0" />
         <Line endX="281.0" layoutX="501.0" layoutY="468.0" startX="-179.0" stroke="WHITE" strokeWidth="2.0" />
@@ -55,7 +51,6 @@
                 <Font size="28.0" />
             </font>
         </Label>
-        <ScrollPane fx:id="restHighscore" layoutX="322.0" layoutY="264.0" prefHeight="205.0" prefWidth="460.0" style="-fx-background-color: transplant;" visible="false" />
       <TableView fx:id="restTableView" layoutX="323.0" layoutY="249.0" prefHeight="219.0" prefWidth="458.0">
          <columns>
             <TableColumn fx:id="restRankColumn" editable="false" maxWidth="85.0" prefWidth="85.0" resizable="false" text="Rang">
@@ -68,15 +63,12 @@
                   <PropertyValueFactory property="playerName" />
                </cellValueFactory>
             </TableColumn>
-            <TableColumn fx:id="restTimeColumn" editable="false" maxWidth="139.0" prefWidth="139.0" resizable="false" text="Zeit">
+            <TableColumn fx:id="restTimeColumn" editable="false" maxWidth="137.0" prefWidth="137.0" resizable="false" text="Zeit">
                <cellValueFactory>
                   <PropertyValueFactory property="score" />
                </cellValueFactory>
             </TableColumn>
          </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
       </TableView>
     </children>
 </AnchorPane>
