@@ -26,11 +26,6 @@ public class AppStarter extends Application {
         LOGGER.logInfo("App started");
 
         controller.setGPUI(gPUI);
-<<<<<<<HEAD
-        controller.loadLevels();
-        controller.loadNextLevel();
-=======
->>>>>>>origin / development
 
         LOGGER.logInfo("App started");
 
