@@ -151,9 +151,13 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     private void endGame() {
+        stopTime();
         saveEndTime();
     }
 
+    private void stopTime() {
+        MyTimer.stop();
+    }
     @FXML
     public void showCost() {
 

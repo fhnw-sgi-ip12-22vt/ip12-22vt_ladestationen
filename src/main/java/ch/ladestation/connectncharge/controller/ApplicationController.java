@@ -17,7 +17,7 @@ public class ApplicationController extends ControllerBase<Game> {
     private final Logger logger = Logger.getLogger(getClass().getName());
     private Edge blinkingEdge;
     private Map<Integer, List<Object>> levels;
-    private int currentLevel = 2;
+    private int currentLevel = 1;
     private static final int MAX_LEVEL = 5;
     private GamePUI gamePUI;
     private Thread blinkThread;
