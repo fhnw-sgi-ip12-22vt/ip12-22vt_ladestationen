@@ -38,16 +38,21 @@ public final class StageHandler {
         stage.setTitle(STAGE_TITLE);
         stage.setScene(scene);
         stage.setResizable(false);
-        stage.initStyle(StageStyle.UNDECORATED);
+        if (!stage.isShowing()) {
+            stage.initStyle(StageStyle.UNDECORATED);
+        }
+        stage.toFront();
+        stage.setX(0);
+        stage.setY(0);
+        stage.setWidth(Screen.getPrimary().getBounds().getWidth());
+        stage.setHeight(Screen.getPrimary().getBounds().getHeight());
 
-        Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
-        stage.setX(screenBounds.getMinX());
-        stage.setY(screenBounds.getMinY());
-        stage.setWidth(screenBounds.getWidth());
-        stage.setHeight(screenBounds.getHeight());
+        if (stage.getScene() != null) {
+            stage.setMaximized(true);
+            stage.setFullScreen(true);
+        }
 
         stage.show();
-        stage.setMaximized(true);
     }
 
     public static String getLastFxmlPath() {

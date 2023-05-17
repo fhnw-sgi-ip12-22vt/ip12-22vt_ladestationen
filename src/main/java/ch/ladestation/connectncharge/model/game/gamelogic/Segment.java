@@ -60,6 +60,10 @@ public abstract class Segment extends Component {
         logInfo(msg);
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
     public Color getColor() {
         return color;
     }

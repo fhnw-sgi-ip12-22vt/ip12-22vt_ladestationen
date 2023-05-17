@@ -70,28 +70,42 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
             synchronized (ledStrip) {
-                changeLEDSegmentState(oldValue, false);
-                changeLEDSegmentState(newValue, true);
+                changeMultipleLEDSegmentState(oldValue, false);
+                changeMultipleLEDSegmentState(newValue, true);
                 ledStrip.render();
             }
         }));
 
         onChangeOf(model.terminals).execute(((oldValue, newValue) -> {
             synchronized (ledStrip) {
-                changeLEDSegmentState(oldValue, false);
-                changeLEDSegmentState(newValue, true);
+                changeMultipleLEDSegmentState(oldValue, false);
+                changeMultipleLEDSegmentState(newValue, true);
+                ledStrip.render();
+            }
+        }));
+
+        onChangeOf(model.isTippOn).execute(((oldValue, newValue) -> {
+            synchronized (ledStrip) {
+                changeLEDSegmentState(model.tippEdge, newValue);
                 ledStrip.render();
             }
         }));
     }
 
-    private void changeLEDSegmentState(Segment[] newValue, boolean state) {
+    private void changeMultipleLEDSegmentState(Segment[] newValue, boolean state) {
         for (var seg : newValue) {
-            int from = seg.getStartIndex();
-            int to = seg.getEndIndex();
-            for (var i = from; i <= to; ++i) {
-                ledStrip.setPixel(i, state ? seg.getColor() : new Color(0, 0, 0));
-            }
+            changeLEDSegmentState(seg, state);
+        }
+    }
+
+    private void changeLEDSegmentState(Segment seg, boolean state) {
+        if (seg == null) {
+            return;
+        }
+        int from = seg.getStartIndex();
+        int to = seg.getEndIndex();
+        for (var i = from; i <= to; ++i) {
+            ledStrip.setPixel(i, state ? seg.getColor() : new Color(0, 0, 0));
         }
     }
 
@@ -140,7 +154,8 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         controller.edgePressed(edge);
         //controller.updateScore();
         logger.info("edge " + edge.getSegmentIndex() + " between " + edge.getFromNodeId() + " & "
-            + edge.getToNodeId() + " was pressed");
+            + edge.getToNodeId()
+            + " was pressed");
     }
 
     /**

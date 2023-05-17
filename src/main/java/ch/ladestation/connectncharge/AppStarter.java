@@ -23,9 +23,14 @@ public class AppStarter extends Application {
         controller = new ApplicationController(new Game());
         var gPUI = new GamePUI(controller, pi4J);
 
+        LOGGER.logInfo("App started");
+
         controller.setGPUI(gPUI);
+<<<<<<<HEAD
         controller.loadLevels();
         controller.loadNextLevel();
+=======
+>>>>>>>origin / development
 
         LOGGER.logInfo("App started");
 

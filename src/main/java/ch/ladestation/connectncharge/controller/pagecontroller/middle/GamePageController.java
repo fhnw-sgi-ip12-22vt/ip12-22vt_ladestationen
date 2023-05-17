@@ -39,8 +39,9 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private Label timerLabel;
     private static String publicEndTime;
-
     private String leaveGamePath;
+
+    private ApplicationController controller;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -53,6 +54,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @Override
     public void setController(ApplicationController controller) {
         init(controller);
+        this.controller = controller;
     }
 
     private void startTimer() {
@@ -67,7 +69,27 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
+<<<<<<< HEAD:src/main/java/ch/ladestation/connectncharge/controller/pagecontroller/middle/GamePageController.java
         MyTimer.addTime(MyTimer.ADD_TIME, addTimeButton);
+=======
+        String tippText;
+        if (!startTime.equals(LocalTime.of(1, 0))) {
+            LocalTime newTime = startTime.plusSeconds(additionalTime);
+            if (newTime.isAfter(LocalTime.of(1, 0))) {
+                startTime = LocalTime.of(1, 0);
+            } else {
+                startTime = newTime;
+            }
+            timerLabel.setText("Zeit: " + startTime.format(DateTimeFormatter.ofPattern("mm:ss")));
+        }
+        additionalTime += 15;
+        /*seconds = seconds % 60 == 0 ? 0 : seconds + 15;
+        minutes += additionalTime % 60 == 0 ? 1 : 0;
+        tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
+        addTimeButton.setText("Tipp +" + String.format("%dm %ds", additionalTime / 60, additionalTime % 60));
+
+        controller.handleTipp();
+>>>>>>> origin/development:src/main/java/ch/ladestation/connectncharge/controller/pagecontroller/GamePageController.java
     }
 
     @FXML
@@ -163,6 +185,9 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @Override
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.currentScore).convertedBy(String::valueOf).update(costs.textProperty());
+        onChangeOf(model.isTippOn).execute(((oldValue, newValue) -> {
+            addTimeButton.setDisable(newValue);
+        }));
     }
 
     @Override
