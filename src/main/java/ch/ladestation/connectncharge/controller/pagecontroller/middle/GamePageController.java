@@ -1,35 +1,28 @@
-package ch.ladestation.connectncharge.controller.pagecontroller;
+package ch.ladestation.connectncharge.controller.pagecontroller.middle;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.controller.PageController;
-import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
+import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
+import ch.ladestation.connectncharge.model.game.gameinfo.MyTimer;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.model.Hint;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>, Initializable, PageController {
 
-    private static final String FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
-    private static final String CSS_PATH = "/css/style.css";
-    private static LocalTime publicEndTime;
     @FXML
     private AnchorPane endGampePopupPane;
     @FXML
@@ -48,26 +41,18 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private Label timerLabel;
     @FXML
     private Label tippLabel;
-    private Timeline timeline;
-    private int additionalTime = 15;
-    private int seconds = 0, minutes = 0;
-    private LocalTime startTime = LocalTime.of(0, 0);
-    private ApplicationController controller;
 
-    public static LocalTime getPublicEndTime() {
-        return publicEndTime;
-    }
+    private static String publicEndTime;
+    private String leaveGamePath;
+
+    private ApplicationController controller;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startTimer();
         stackMenu.setVisible(true);
         stackMenu.setOpacity(1);
-    }
-
-    @FXML
-    public void showHomePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
+        MyTimer.addTime(0, addTimeButton);
     }
 
     @Override
@@ -77,48 +62,18 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     private void startTimer() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss");
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            startTime = startTime.plusSeconds(1);
+        MyTimer.setTimerLabel(timerLabel);
+        MyTimer.start();
+    }
 
-            if (startTime.isAfter(LocalTime.of(0, 59, 59))) {
-                timeline.stop();
-                endGame();
-                startTime = LocalTime.of(1, 0);
-                try {
-                    StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml");
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            if (startTime.equals(LocalTime.of(1, 0))) {
-                timerLabel.setText("Zeit: 60:00");
-
-            } else {
-                timerLabel.setText("Zeit: " + startTime.format(formatter));
-            }
-        }));
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+    @FXML
+    public void showHomePage(ActionEvent event) throws IOException {
+        StageHandler.openStage(leaveGamePath);
     }
 
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
-        if (!startTime.equals(LocalTime.of(1, 0))) {
-            LocalTime newTime = startTime.plusSeconds(additionalTime);
-            if (newTime.isAfter(LocalTime.of(1, 0))) {
-                startTime = LocalTime.of(1, 0);
-            } else {
-                startTime = newTime;
-            }
-            timerLabel.setText("Zeit: " + startTime.format(DateTimeFormatter.ofPattern("mm:ss")));
-        }
-        additionalTime += 15;
-        /*seconds = seconds % 60 == 0 ? 0 : seconds + 15;
-        minutes += additionalTime % 60 == 0 ? 1 : 0;
-        tippText = minutes > 0 ? "Tipp +" + minutes + "min. " + seconds + "sek." : "Tipp +" + seconds + "sek.";*/
-        addTimeButton.setText("Tipp +" + String.format("%dm %ds", additionalTime / 60, additionalTime % 60));
-
+        MyTimer.addTime(MyTimer.ADD_TIME, addTimeButton);
         controller.handleTipp();
     }
 
@@ -129,6 +84,19 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleEndGameButton(ActionEvent event) {
+        Button button = (Button) event.getSource();
+        String buttonId = button.getId();
+
+        if (buttonId.contains("highScore")) {
+            leaveGamePath = FilePath.HIGHSCORE.getFilePath();
+        } else if (buttonId.contains("bonusRound")) {
+            leaveGamePath = FilePath.HOMEPAGE.getFilePath();
+        } else if (buttonId.contains("admin")) {
+            leaveGamePath = FilePath.ADMINPAGE.getFilePath();
+        } else {
+            leaveGamePath = FilePath.HOMEPAGE.getFilePath();
+        }
+
         endGampePopupPane.setVisible(true);
         endGampePopupPane.setOpacity(1);
         shadowPane.setVisible(true);
@@ -140,6 +108,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         showHomePage(event);
         endGampePopupPane.setVisible(false);
         endGampePopupPane.setOpacity(0);
+        MyTimer.stop();
     }
 
     @FXML
@@ -160,18 +129,12 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml");
+        StageHandler.setLastFxmlPath(FilePath.GAMEPAGE.getFilePath());
+        StageHandler.openStage(FilePath.HELPPAGE.getFilePath());
     }
 
     @FXML
-    private void handleAdminButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/gamepage.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
-    }
-
-    @FXML
-    private void handleShadowAnchorPaneClick(ActionEvent event) {
+    private void handleShadowAnchorPaneClick(ActionEvent event) { //TODO
         endGampePopupPane.setVisible(false);
         endGampePopupPane.setOpacity(0);
         shadowPane.setVisible(false);
@@ -189,12 +152,15 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     private void saveEndTime() {
-        publicEndTime = startTime;
+        publicEndTime = timerLabel.getText().replaceAll("Zeit: ", "");
+    }
+
+    public static String getPublicEndTime() {
+        return publicEndTime;
     }
 
     private void endGame() {
-        saveEndTime(); // Rufe die saveEndTime-Methode auf
-        // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
+        saveEndTime();
     }
 
     @FXML

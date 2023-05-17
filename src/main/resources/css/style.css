@@ -23,7 +23,7 @@
     -fx-background-size: cover;
 }
 
-.root-pane .button{
+.root-pane .hidden-button {
     -fx-background-color: transparent;
 }
 
@@ -34,6 +34,7 @@
     -fx-min-height: 60px;
     -fx-max-width: 50px;
     -fx-max-height: 60px;
+    -fx-font-size: 20px;
 }
 
 .root-pane .grid-background {
@@ -83,9 +84,9 @@
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
     -fx-min-width: 175px;
-    -fx-min-height: 45px;
+    -fx-min-height: 50px;
     -fx-max-width: 175px;
-    -fx-max-height: 45px;
+    -fx-max-height: 50px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
     -fx-font-size: 19;
@@ -106,10 +107,10 @@
 .root-pane .del-button {
     -fx-background-color: #f4e158;
     -fx-background-radius: 11px;
-    -fx-min-width: 55px;
-    -fx-min-height: 40px;
-    -fx-max-width: 55px;
-    -fx-max-height: 40px;
+    -fx-min-width: 80px;
+    -fx-min-height: 50px;
+    -fx-max-width: 80px;
+    -fx-max-height: 50px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
     -fx-font-size: 18;
@@ -118,9 +119,9 @@
 .root-pane .standard-second-button {
     -fx-background-color: transparent;
     -fx-min-width: 175px;
-    -fx-min-height: 43px;
+    -fx-min-height: 50px;
     -fx-max-width: 175px;
-    -fx-max-height: 43px;
+    -fx-max-height: 50px;
     -fx-padding: 0;
     -fx-font-family: 'Lato Light';
     -fx-font-size: 19;
@@ -128,6 +129,47 @@
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
     -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .zurueck {
+    -fx-background-color: #4FDE43;
+    -fx-background-radius: 10px;
+    -fx-min-width: 175px;
+    -fx-min-height: 50px;
+    -fx-max-width: 175px;
+    -fx-max-height: 50px;
+    -fx-padding: 10;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 18;
+}
+
+.root-pane .abbrechen {
+    -fx-background-color: transparent;
+    -fx-min-width: 175px;
+    -fx-min-height: 50px;
+    -fx-max-width: 175px;
+    -fx-max-height: 50px;
+    -fx-padding: 0;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 19;
+    -fx-border-color: #DA1F1F;
+    -fx-border-width: 3px;
+    -fx-border-radius: 10px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.root-pane .admin-abbrechen {
+    -fx-background-color: #1E1E1E;
+    -fx-background-radius: 10px;
+    -fx-min-width: 180px;
+    -fx-min-height: 50px;
+    -fx-max-width: 180px;
+    -fx-max-height: 50px;
+    -fx-font-size: 19;
+    -fx-border-color: #F4E158;
+    -fx-border-width: 3px;
+    -fx-border-radius: 11px;
+    -fx-text-fill: #F4E158;
 }
 
 .root-pane .leaderboard-home-bonus-button {
@@ -183,7 +225,7 @@
     -fx-text-fill: #FFFFFF;
 }
 
-.root-pane .rangliste-button {
+.root-pane .highscore-button {
     -fx-background-color: #969696;
     -fx-background-radius: 11px;
     -fx-border-color: #E9E9E9;
@@ -301,6 +343,7 @@
     -fx-min-height: 45px;
     -fx-max-width: 45px;
     -fx-max-height: 45px;
+    -fx-background-image: url(".././images/HelpIcon.png");
 }
 
 .root-pane .standard-xclose-button {
@@ -355,12 +398,13 @@
     -fx-background-color: transparent;
 }
 
-.root-pane .help-text{
+.root-pane .help-text {
     -fx-background-color: #ffffff;
     -fx-text-fill: #000000;
     -fx-background-radius: 10px;
     -fx-font-size: 20px;
 }
+
 .root-pane .table-view {
     -fx-table-view-scroll-x: false;
 }
@@ -374,8 +418,6 @@
     -fx-background-size: cover;
     -fx-background-radius: 15px;
 }
-
-
 
 .popup-pane .pane-shadow {
     -fx-min-width: 800px;
@@ -406,96 +448,88 @@
 }
 
 .admin-popup-pane-no-button {
-    -fx-background-color: #EDEDED;
-    -fx-min-width: 95px;
+    -fx-background-color: transparent;
+    -fx-min-width: 175px;
     -fx-min-height: 50px;
-    -fx-max-width: 95px;
+    -fx-max-width: 175px;
     -fx-max-height: 50px;
-    -fx-padding: 10;
+    -fx-padding: 0;
     -fx-font-family: 'Lato Light';
     -fx-font-size: 19;
     -fx-border-color: #DA1F1F;
     -fx-border-width: 3px;
-    -fx-border-radius: 11px;
-    -fx-text-fill: #DA1F1F;
-}
-
-.admin-popup-pane-yes-button {
-    -fx-background-color: #9EF097;
-    -fx-min-width: 95px;
-    -fx-min-height: 50px;
-    -fx-max-width: 95px;
-    -fx-max-height: 50px;
-    -fx-padding: 10;
-    -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
-    -fx-border-width: 3px;
-    -fx-border-radius: 11px;
+    -fx-border-radius: 10px;
     -fx-text-fill: #000000;
 }
 
-.leaderboard-choose-button {
-    -fx-background-color: #F4E158;
-    -fx-background-radius: 11px;
-    -fx-min-width: 180px;
-    -fx-min-height: 52px;
-    -fx-max-width: 180px;
-    -fx-max-height: 52px;
+.admin-popup-pane-yes-button {
+    -fx-background-color: #4FDE43;
+    -fx-background-radius: 10px;
+    -fx-min-width: 175px;
+    -fx-min-height: 50px;
+    -fx-max-width: 175px;
+    -fx-max-height: 50px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 18;
+}
+
+.leaderboard-choose-button {
+    -fx-background-color: transparents;
+    -fx-background-radius: 10px;
+    -fx-min-width: 175px;
+    -fx-min-height: 50px;
+    -fx-max-width: 175px;
+    -fx-max-height: 50px;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 17;
     -fx-border-color: #F4E158;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
-    -fx-text-fill: #00000;
+    -fx-text-fill: #F4E158;
 }
 
 .leaderboard-choose-button-selected {
-    -fx-background-color: #000000;
-    -fx-background-radius: 11px;
-    -fx-min-width: 180px;
-    -fx-min-height: 52px;
-    -fx-max-width: 180px;
-    -fx-max-height: 52px;
-    -fx-padding: 10;
+    -fx-background-color: #F4E158;
+    -fx-background-radius: 10px;
+    -fx-min-width: 175px;
+    -fx-min-height: 50px;
+    -fx-max-width: 175px;
+    -fx-max-height: 50px;
+    -fx-text-fill: #000000;
+    -fx-border-radius: 10px;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
-    -fx-border-color: #F4E158;
-    -fx-border-width: 3px;
-    -fx-border-radius: 11px;
-    -fx-text-fill: #F4E158;
+    -fx-font-size: 17;
 }
 
 .leaderboard-un-choose-button {
+    -fx-background-color: #969696;
+    -fx-background-radius: 11px;
+    -fx-border-color: #E9E9E9;
+    -fx-border-radius: 11px;
+    -fx-border-width: 2px;
+    -fx-min-width: 175px;
+    -fx-min-height: 50px;
+    -fx-max-width: 175px;
+    -fx-max-height: 50px;
+    -fx-font-family: 'Lato Light';
+    -fx-font-size: 17;
+}
+
+.leaderboard-un-choose-button-selected {
     -fx-background-color: #F4E158;
     -fx-background-radius: 11px;
-    -fx-min-width: 180px;
-    -fx-min-height: 52px;
-    -fx-max-width: 180px;
-    -fx-max-height: 52px;
+    -fx-min-width: 175px;
+    -fx-min-height: 50px;
+    -fx-max-width: 175px;
+    -fx-max-height: 50px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
     -fx-border-color: #F4E158;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
     -fx-text-fill: #00000;
-}
-
-.leaderboard-un-choose-button-selected {
-    -fx-background-color: #000000;
-    -fx-background-radius: 11px;
-    -fx-min-width: 180px;
-    -fx-min-height: 52px;
-    -fx-max-width: 180px;
-    -fx-max-height: 52px;
-    -fx-padding: 10;
-    -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
-    -fx-border-color: #F4E158;
-    -fx-border-width: 3px;
-    -fx-border-radius: 11px;
-    -fx-text-fill: #F4E158;
 }
 
 .menu-pane .info-text {
@@ -503,7 +537,7 @@
     -fx-min-height: 43px;
     -fx-max-width: 165px;
     -fx-max-height: 43px;
-    -fx-alignment: left;
+    -fx-alignment: CENTER_LEFT;
 }
 
 .menu-pane .info-icon-size {

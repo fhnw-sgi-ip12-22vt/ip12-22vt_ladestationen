@@ -1,9 +1,10 @@
-package ch.ladestation.connectncharge.controller.pagecontroller;
+package ch.ladestation.connectncharge.controller.pagecontroller.beginning;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.controller.PageController;
-import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
+import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -23,36 +24,42 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
     @FXML
     private AnchorPane shadowPane;
 
-    private static ApplicationController controller;
-
-
     @FXML
     public void handleNextButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/countdownpage.fxml");
+        StageHandler.openStage(FilePath.COUNTDOWNPAGE.getFilePath());
     }
 
     @FXML
     private void handleHelpButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/helppage.fxml");
+        StageHandler.setLastFxmlPath(FilePath.EDGECLICKSCREEN.getFilePath());
+        StageHandler.openStage(FilePath.HELPPAGE.getFilePath());
     }
 
     @FXML
     private void handleAdminButton(ActionEvent event) throws IOException {
-        StageHandler.setLastFxmlPath("/ch/ladestation/connectncharge/edgeclickscreen.fxml");
-        StageHandler.openStage("/ch/ladestation/connectncharge/adminpage.fxml");
+        StageHandler.setLastFxmlPath(FilePath.EDGECLICKSCREEN.getFilePath());
+        StageHandler.openStage(FilePath.ADMINPAGE.getFilePath());
+    }
+
+    @FXML
+    private void handleHighScoreButton(ActionEvent event) throws IOException {
+        StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
     }
 
     @FXML
     private void handleStackMenuClick(ActionEvent event) {
         menuPane.setVisible(true);
         menuPane.setOpacity(1);
+        shadowPane.setVisible(true);
+        shadowPane.setOpacity(1);
     }
 
     @FXML
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
     }
 
     @FXML
@@ -88,5 +95,18 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+    }
+
+    @Override
+    public void setupModelToUiBindings(Game model) {
+        onChangeOf(model.gameStarted).execute(((oldValue, newValue) -> {
+            if (!oldValue && newValue) {
+                try {
+                    StageHandler.openStage(FilePath.COUNTDOWNPAGE.getFilePath());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }));
     }
 }

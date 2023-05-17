@@ -1,9 +1,10 @@
-package ch.ladestation.connectncharge.controller.pagecontroller;
+package ch.ladestation.connectncharge.controller.pagecontroller.admin;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.controller.PageController;
-import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
+import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -19,16 +20,16 @@ public class AdminHomeController implements ViewMixin<Game, ControllerBase<Game>
     private Button backButton;
 
     @FXML
-    private Button normalButton; // Fügen Sie diese Zeile hinzu, um den normalButton zu verknüpfen
+    private Button normalButton;
 
     @FXML
     private void handleBackButton(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/homepage.fxml");
+        StageHandler.openStage(FilePath.HOMEPAGE.getFilePath());
     }
 
     @FXML
-    private void handleNormalButton(ActionEvent event) throws IOException { // Fügen Sie diese Methode hinzu
-        StageHandler.openStage("/ch/ladestation/connectncharge/adminnormalleaderboard.fxml");
+    private void handleNormalButton(ActionEvent event) throws IOException {
+        StageHandler.openStage(FilePath.ADMINNORMALLEADERBOARD.getFilePath());
     }
 
     @Override

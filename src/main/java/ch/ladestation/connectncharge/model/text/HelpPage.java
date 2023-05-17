@@ -1,4 +1,4 @@
-package ch.ladestation.connectncharge.model;
+package ch.ladestation.connectncharge.model.text;
 
 public enum HelpPage {
     WELCOME("Herzlich willkommen im Hilfe-Menü!\n\n"

@@ -1,8 +1,9 @@
 package ch.ladestation.connectncharge;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.util.Pi4JContext;
 import ch.ladestation.connectncharge.util.mvcbase.MvcLogger;
@@ -46,6 +47,6 @@ public class AppStarter extends Application {
         StageHandler.setStage(stage);
         StageHandler.setController(controller);
         //StageHandler.setController(new ApplicationController(new Game()));
-        StageHandler.openStage("/ch/ladestation/connectncharge/loadingpage.fxml");
+        StageHandler.openStage(FilePath.LOADINGPAGE.getFilePath());
     }
 }
