@@ -38,7 +38,6 @@ public class ApplicationController extends ControllerBase<Game> {
 
         model.gameStarted.onChange(((oldValue, newValue) -> {
             if (oldValue && !newValue && !model.isFinished.getValue()) {
-                //deactivateAllNodes();
                 increaseCurrentLevel();
                 loadNextLevel();
                 setValue(model.isCountdownFinished, false);
@@ -81,8 +80,6 @@ public class ApplicationController extends ControllerBase<Game> {
             solution.stream().map((sol) -> gamePUI.lookUpEdge(sol.get(0), sol.get(1))).toArray(Edge[]::new);
         setSolution(solutionEdges);
 
-        deactivateAllEdges();
-        deactivateAllNodes();
         model.blinkingEdge = (Edge) gamePUI.lookUpSegmentIdToSegment(90);
         startBlinkingEdge();
 
@@ -347,9 +344,9 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void playAgain() {
         setValue(model.isFinished, false);
+        deactivateAllEdges();
+        deactivateAllNodes();
         setValue(model.gameStarted, false);
-        increaseCurrentLevel();
-        loadNextLevel();
     }
 
     public void setEndTime(String endTime) {
