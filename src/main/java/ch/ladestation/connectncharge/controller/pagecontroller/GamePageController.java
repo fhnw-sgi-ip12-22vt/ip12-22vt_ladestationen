@@ -101,7 +101,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
-        String tippText;
         if (!startTime.equals(LocalTime.of(1, 0))) {
             LocalTime newTime = startTime.plusSeconds(additionalTime);
             if (newTime.isAfter(LocalTime.of(1, 0))) {
@@ -119,6 +118,12 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
         controller.handleTipp();
     }
+
+    public void closeHintPopup(){
+        hintPopupPane.setVisible(false);
+        tippLabel.setText("");
+    }
+
 
     @FXML
     private void handleEndGameButton(ActionEvent event) {
