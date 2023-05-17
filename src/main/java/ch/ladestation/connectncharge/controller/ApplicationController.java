@@ -24,6 +24,7 @@ public class ApplicationController extends ControllerBase<Game> {
     private boolean isToBeRemoved = false;
     private Edge tippEdge;
     private ScheduledExecutorService blinkingEdgeScheduler;
+    public boolean firstBootup = true;
 
     public ApplicationController(Game model) {
         super(model);
