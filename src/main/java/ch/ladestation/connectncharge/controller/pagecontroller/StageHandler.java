@@ -4,7 +4,6 @@ import ch.ladestation.connectncharge.AppStarter;
 import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.model.text.FilePath;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
