@@ -43,6 +43,9 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private Label timerLabel;
 
+    @FXML
+    private Label tippLabel;
+
     private Timeline timeline;
     private int additionalTime = 15;
     private int seconds = 0, minutes = 0;
