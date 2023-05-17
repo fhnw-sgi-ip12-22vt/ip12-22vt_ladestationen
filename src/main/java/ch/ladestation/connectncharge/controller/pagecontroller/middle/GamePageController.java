@@ -70,6 +70,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
         MyTimer.addTime(MyTimer.ADD_TIME, addTimeButton);
+        controller.handleTipp();
     }
 
     @FXML
