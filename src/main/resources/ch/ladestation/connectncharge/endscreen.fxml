@@ -31,7 +31,7 @@
             <Image url="@../../../images/trophy.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnHighscore" layoutX="423.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleNameInputButton" prefHeight="43.0" prefWidth="175.0" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Rangliste" textFill="WHITE">
+      <Button fx:id="btnHighscore" layoutX="423.0" layoutY="267.0" mnemonicParsing="false" onAction="#handleNameInputButton" prefHeight="43.0" prefWidth="175.0" styleClass="highscore-button" stylesheets="@../../../css/style.css" text="Rangliste" textFill="WHITE">
          <font>
             <Font size="19.0" />
          </font>

@@ -13,8 +13,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.end.HighscoreScreenController">
     <children>
-        <Button fx:id="btnPlayAgain" layoutX="70.0" layoutY="122.0" maxWidth="190.0" mnemonicParsing="false" onAction="#showGamePage" prefHeight="50.0" prefWidth="190.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen" visible="false" />
-        <Button fx:id="btnBonus" layoutX="70.0" layoutY="238.0" mnemonicParsing="false" onAction="#showBonusPage" styleClass="rangliste-button" stylesheets="@../../../css/style.css" text="Bonus spielen" textFill="WHITE" visible="false" />
+        <Button fx:id="btnPlayAgain" layoutX="70.0" layoutY="122.0" maxWidth="190.0" mnemonicParsing="false" onAction="#showGamePage" prefHeight="50.0" prefWidth="190.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen" />
+        <Button fx:id="btnBonus" layoutX="70.0" layoutY="238.0" mnemonicParsing="false" onAction="#showBonusPage" styleClass="highscore-button" stylesheets="@../../../css/style.css" text="Bonus spielen" textFill="WHITE" />
         <ImageView fx:id="imgHome" fitHeight="69.0" fitWidth="69.0" layoutX="128.0" layoutY="339.0" onMouseClicked="#showHomeScreen" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../images/home.png" />
