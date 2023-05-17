@@ -48,7 +48,7 @@ public final class StageHandler {
 
         if (stage.getScene() != null) {
             stage.setMaximized(true);
-            stage.setFullScreen(true);
+            //stage.setFullScreen(true);
         }
 
         stage.show();

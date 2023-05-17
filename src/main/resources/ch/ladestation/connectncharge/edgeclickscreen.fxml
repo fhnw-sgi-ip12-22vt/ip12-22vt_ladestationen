@@ -34,7 +34,7 @@
                 <Image url="@../../../gifs/AnimationILU.gif" />
             </image>
         </ImageView>
-      <Button layoutX="187.0" minHeight="363.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="363.0" prefWidth="400.0" />
+      <Button layoutX="187.0" minHeight="363.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="363.0" prefWidth="400.0" visible="false" />
       <AnchorPane fx:id="shadowPane" layoutX="10.0" layoutY="10.0" onMouseClicked="#handleShadowAnchorPaneClick" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #00022e89;" styleClass="pane-shadow" stylesheets="@../../../css/style.css" visible="false" />
         <AnchorPane fx:id="menuPane" layoutX="550.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="274.0" style="-fx-background-radius: 25px;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
             <children>

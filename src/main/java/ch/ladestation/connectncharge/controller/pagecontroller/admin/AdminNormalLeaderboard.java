@@ -55,7 +55,7 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        playerList = TextFileEditor.readPlayerDataFromFile(FilePath.TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
+        playerList = TextFileEditor.readPlayerDataFromFile(FilePath.WHOLE_TEXT_FILE_PLAYER_PATH_LINUX.getFilePath());
         //playerList = TextFileEditor.readPlayerDataFromFile("src/main/resources/textfiles/highscore/player.txt");
         HighScoreTable.initColumns(rankColumn, nameColumn, timeColumn);
         HighScoreTable.initColumns(restRankColumn, restNameColumn, restTimeColumn);

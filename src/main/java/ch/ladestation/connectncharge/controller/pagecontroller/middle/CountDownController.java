@@ -27,6 +27,8 @@ public class CountDownController implements ViewMixin<Game, ControllerBase<Game>
     @FXML
     private Label countDownText;
 
+    private ApplicationController controller;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startCountDown();
@@ -52,6 +54,7 @@ public class CountDownController implements ViewMixin<Game, ControllerBase<Game>
                     Platform.runLater(() -> {
                         try {
                             StageHandler.openStage(FilePath.GAMEPAGE.getFilePath());
+                            controller.setCountdownFinished();
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -66,6 +69,7 @@ public class CountDownController implements ViewMixin<Game, ControllerBase<Game>
     @Override
     public void setController(ApplicationController controller) {
         init(controller);
+        this.controller = controller;
     }
 
     @Override

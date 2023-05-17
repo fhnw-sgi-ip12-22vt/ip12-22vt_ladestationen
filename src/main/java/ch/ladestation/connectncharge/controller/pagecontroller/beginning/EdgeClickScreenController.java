@@ -92,4 +92,17 @@ public class EdgeClickScreenController implements ViewMixin<Game, ControllerBase
     public void initialize(URL location, ResourceBundle resources) {
 
     }
+
+    @Override
+    public void setupModelToUiBindings(Game model) {
+        onChangeOf(model.gameStarted).execute(((oldValue, newValue) -> {
+            if (!oldValue && newValue) {
+                try {
+                    StageHandler.openStage(FilePath.COUNTDOWNPAGE.getFilePath());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }));
+    }
 }

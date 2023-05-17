@@ -11,6 +11,7 @@ public class Game {
     public final ObservableArray<Node> terminals = new ObservableArray<>(new Node[0]);
     public final ObservableValue<Integer> currentScore = new ObservableValue<>(0);
     public final ObservableValue<Boolean> gameStarted = new ObservableValue<>(false);
+    public final ObservableValue<Boolean> isCountdownFinished = new ObservableValue<>(false);
     public Edge tippEdge = null;
     public final ObservableValue<Boolean> isTippOn = new ObservableValue<>(false);
 }

@@ -73,7 +73,7 @@ public final class TextFileEditor {
             try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                 String line;
                 while ((line = reader.readLine()) != null && !line.replaceAll(" ", "").equals("")
-                    && !line.contains(",")) {
+                    && line.contains(",")) {
                     players.add(new Player(line.split(",")[0], line.split(",")[1]));
                 }
             } catch (IOException e) {
