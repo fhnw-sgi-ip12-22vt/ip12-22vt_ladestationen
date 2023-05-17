@@ -3,7 +3,7 @@ package ch.ladestation.connectncharge.controller;
 import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.game.gamelogic.Node;
-import ch.ladestation.connectncharge.model.Hint;
+import ch.ladestation.connectncharge.model.game.gamelogic.Hint;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
