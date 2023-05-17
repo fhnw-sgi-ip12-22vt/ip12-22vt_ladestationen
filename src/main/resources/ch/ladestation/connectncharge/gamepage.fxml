@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.GamePageController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.middle.GamePageController">
     <children>
         <Label alignment="CENTER" layoutX="529.0" layoutY="195.0" prefHeight="70.0" prefWidth="178.0" text="Kosten" textFill="WHITE">
             <font>
@@ -21,7 +21,7 @@
                 <Font name="Arial Black" size="12.0" />
             </font>
         </Button>
-        <Button fx:id="addTimeButton" layoutX="43.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleAddTimeButton" prefHeight="38.0" prefWidth="130.0" styleClass="standard-first-button" text="Tipp +15sek">
+        <Button fx:id="addTimeButton" layoutX="43.0" layoutY="400.0" mnemonicParsing="false" onAction="#handleAddTimeButton" prefHeight="38.0" prefWidth="130.0" styleClass="standard-first-button" text="Tipp +00:15">
             <font>
                 <Font name="Arial Black" size="12.0" />
             </font>
@@ -45,62 +45,85 @@
         </Label>
         <StackPane layoutX="740.0" layoutY="15.0" prefHeight="38.0" prefWidth="76.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css">
             <children>
-                <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="standard-menu-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
+                <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" stylesheets="@../../../css/style.css" textFill="#ffffff00">
+               <styleClass>
+                  <String fx:value="standard-menu-button" />
+                  <String fx:value="hidden-button" />
+               </styleClass></Button>
             </children>
         </StackPane>
         <AnchorPane fx:id="shadowPane" onMouseClicked="#handleShadowAnchorPaneClick" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #00022e89;" styleClass="pane-shadow" stylesheets="@../../../css/style.css" visible="false" />
         <AnchorPane fx:id="menuPane" layoutX="550.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="274.0" style="-fx-background-radius: 25px;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
             <children>
-                <Button layoutX="42.0" layoutY="138.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="168.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Bonus Spiel">
+                <Button fx:id="menuCloseButton" layoutX="191.0" layoutY="15.0" minWidth="30.0" mnemonicParsing="false" onAction="#handleMenuCloseButton" prefHeight="38.0" prefWidth="60.0" stylesheets="@../../../css/style.css">
                     <font>
-                        <Font name="Arial Bold" size="18.0" />
+                        <Font size="14.0" />
                     </font>
-                </Button>
-                <Button layoutX="42.0" layoutY="95.0" maxHeight="43.0" maxWidth="165.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="165.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Rangliste">
-                    <font>
-                        <Font name="Arial Bold" size="18.0" />
-                    </font>
-                </Button>
-                <Button layoutX="42.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleAdminButton" prefHeight="38.0" prefWidth="168.0" styleClass="info-text" stylesheets="@../../../css/style.css" text="Admin">
-                    <font>
-                        <Font name="System Bold" size="18.0" />
-                    </font>
+               <styleClass>
+                  <String fx:value="standard-xclose-button" />
+                  <String fx:value="hidden-button" />
+               </styleClass>
                 </Button>
                 <Label layoutX="19.0" prefHeight="60.0" prefWidth="158.0" text="Menü">
                     <font>
                         <Font name="System Bold" size="32.0" />
                     </font>
                 </Label>
-                <Button fx:id="menuCloseButton" layoutX="191.0" layoutY="15.0" minWidth="30.0" mnemonicParsing="false" onAction="#handleMenuCloseButton" prefHeight="38.0" prefWidth="60.0" styleClass="standard-xclose-button" stylesheets="@../../../css/style.css">
+                <Button fx:id="highScoreButton" layoutX="42.0" layoutY="95.0" maxHeight="43.0" maxWidth="165.0" mnemonicParsing="false" onAction="#handleEndGameButton" prefHeight="43.0" prefWidth="165.0" stylesheets="@../../../css/style.css" text="Rangliste">
                     <font>
-                        <Font size="14.0" />
+                        <Font name="Arial Bold" size="18.0" />
                     </font>
+               <styleClass>
+                  <String fx:value="info-text" />
+                  <String fx:value="hidden-button" />
+               </styleClass>
                 </Button>
-                <Button layoutX="14.0" layoutY="103.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                <Button fx:id="highScoreIcon" layoutX="14.0" layoutY="103.0" minWidth="46.0" mnemonicParsing="false" onAction="#handleEndGameButton" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                     <styleClass>
                         <String fx:value="info-icon-cup" />
                         <String fx:value="info-icon-size" />
+                  <String fx:value="hidden-button" />
                     </styleClass>
                 </Button>
-                <Button layoutX="14.0" layoutY="430.0" minWidth="46.0" mnemonicParsing="false" onAction="#handleAdminButton" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                <Button fx:id="bonusRoundButton" layoutX="42.0" layoutY="138.0" mnemonicParsing="false" onAction="#handleEndGameButton" prefHeight="38.0" prefWidth="168.0" stylesheets="@../../../css/style.css" text="Bonus Spiel">
                     <font>
-                        <Font name="System Bold" size="18.0" />
+                        <Font name="Arial Bold" size="18.0" />
                     </font>
-                    <styleClass>
-                        <String fx:value="info-icon-admin" />
-                        <String fx:value="info-icon-size" />
-                    </styleClass>
+               <styleClass>
+                  <String fx:value="info-text" />
+                  <String fx:value="hidden-button" />
+               </styleClass>
                 </Button>
-                <Button layoutX="14.0" layoutY="146.0" minWidth="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                <Button fx:id="bonusRoundIcon" layoutX="14.0" layoutY="146.0" minWidth="46.0" mnemonicParsing="false" onAction="#handleEndGameButton" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
                     <font>
                         <Font name="System Bold" size="18.0" />
                     </font>
                     <styleClass>
                         <String fx:value="info-icon-medalstar" />
                         <String fx:value="info-icon-size" />
+                  <String fx:value="hidden-button" />
+                    </styleClass>
+                </Button>
+                <Button fx:id="adminButton" layoutX="42.0" layoutY="422.0" mnemonicParsing="false" onAction="#handleEndGameButton" prefHeight="38.0" prefWidth="168.0" stylesheets="@../../../css/style.css" text="Admin">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+               <styleClass>
+                  <String fx:value="info-text" />
+                  <String fx:value="hidden-button" />
+               </styleClass>
+                </Button>
+                <Button fx:id="adminIcon" layoutX="14.0" layoutY="430.0" minWidth="46.0" mnemonicParsing="false" onAction="#handleEndGameButton" prefHeight="43.0" prefWidth="46.0" stylesheets="@../../../css/style.css">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                    <styleClass>
+                        <String fx:value="info-icon-admin" />
+                        <String fx:value="info-icon-size" />
+                  <String fx:value="hidden-button" />
                     </styleClass>
                 </Button>
             </children>

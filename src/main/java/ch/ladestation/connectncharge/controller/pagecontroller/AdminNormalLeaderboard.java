@@ -1,9 +1,7 @@
 package ch.ladestation.connectncharge.controller.pagecontroller;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.controller.PageController;
-import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -81,5 +79,6 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
     }
 
     public void handleShadowAnchorPaneClick(MouseEvent mouseEvent) {
+
     }
 }

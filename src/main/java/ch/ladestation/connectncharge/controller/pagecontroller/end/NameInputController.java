@@ -1,9 +1,10 @@
-package ch.ladestation.connectncharge.controller.pagecontroller;
+package ch.ladestation.connectncharge.controller.pagecontroller.end;
 
 import ch.ladestation.connectncharge.controller.ApplicationController;
-import ch.ladestation.connectncharge.controller.PageController;
-import ch.ladestation.connectncharge.controller.StageHandler;
-import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
+import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -101,11 +102,11 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
 
     @FXML
     public void showNamePage(ActionEvent event) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/nameinput.fxml");
+        StageHandler.openStage(FilePath.NAMEINPUT.getFilePath());
     }
 
     public void goBackToEndScreen(MouseEvent mouseEvent) throws IOException {
-        StageHandler.openStage("/ch/ladestation/connectncharge/endscreen.fxml");
+        StageHandler.openStage(FilePath.ENDSCREEN.getFilePath());
     }
 
     @Override
@@ -134,8 +135,12 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
 
 
     public void goToHighscoreScreen(ActionEvent actionEvent) throws IOException {
-        currentName = txtNameInput.getText();
-        StageHandler.openStage("/ch/ladestation/connectncharge/highscore.fxml");
+        if (txtNameInput.getText().length() <= 2) {
+            lblWarning.setText("mindestens 3 Zeichen");
+        } else {
+            currentName = txtNameInput.getText();
+            StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
+        }
     }
 
     public void keyPressed(ActionEvent actionEvent) {
@@ -258,7 +263,6 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
     public void toggleSpace(ActionEvent actionEvent) {
         String currentText = txtNameInput.getText();
         txtNameInput.setText(currentText + "  ");
-
     }
 
     public void showKeyboard() {

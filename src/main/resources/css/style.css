@@ -23,7 +23,7 @@
     -fx-background-size: cover;
 }
 
-.root-pane .button{
+.root-pane .hidden-button {
     -fx-background-color: transparent;
 }
 
@@ -343,6 +343,7 @@
     -fx-min-height: 45px;
     -fx-max-width: 45px;
     -fx-max-height: 45px;
+    -fx-background-image: url(".././images/HelpIcon.png");
 }
 
 .root-pane .standard-xclose-button {
@@ -397,12 +398,13 @@
     -fx-background-color: transparent;
 }
 
-.root-pane .help-text{
+.root-pane .help-text {
     -fx-background-color: #ffffff;
     -fx-text-fill: #000000;
     -fx-background-radius: 10px;
     -fx-font-size: 20px;
 }
+
 .root-pane .table-view {
     -fx-table-view-scroll-x: false;
 }
@@ -416,8 +418,6 @@
     -fx-background-size: cover;
     -fx-background-radius: 15px;
 }
-
-
 
 .popup-pane .pane-shadow {
     -fx-min-width: 800px;
@@ -482,7 +482,7 @@
     -fx-max-width: 175px;
     -fx-max-height: 50px;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
     -fx-border-color: #F4E158;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
@@ -499,7 +499,7 @@
     -fx-text-fill: #000000;
     -fx-border-radius: 10px;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
 }
 
 .leaderboard-un-choose-button {
@@ -513,7 +513,7 @@
     -fx-max-width: 175px;
     -fx-max-height: 50px;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
 }
 
 .leaderboard-un-choose-button-selected {
@@ -525,7 +525,7 @@
     -fx-max-height: 50px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
     -fx-border-color: #F4E158;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
@@ -537,7 +537,7 @@
     -fx-min-height: 43px;
     -fx-max-width: 165px;
     -fx-max-height: 43px;
-    -fx-alignment: left;
+    -fx-alignment: CENTER_LEFT;
 }
 
 .menu-pane .info-icon-size {

@@ -1,4 +1,4 @@
-package ch.ladestation.connectncharge.model;
+package ch.ladestation.connectncharge.model.game.gameinfo;
 
 public class HighScorePlayer {
     private int rank;

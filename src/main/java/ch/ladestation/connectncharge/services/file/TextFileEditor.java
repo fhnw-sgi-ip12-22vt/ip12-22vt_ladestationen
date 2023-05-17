@@ -1,6 +1,6 @@
 package ch.ladestation.connectncharge.services.file;
 
-import ch.ladestation.connectncharge.model.Player;
+import ch.ladestation.connectncharge.model.game.gameinfo.Player;
 import ch.ladestation.connectncharge.util.mvcbase.MvcLogger;
 
 import java.io.*;
@@ -72,12 +72,12 @@ public final class TextFileEditor {
         if (!createPlayerFile(filePath)) {
             try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
                 String line;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+                while ((line = reader.readLine()) != null && !line.replaceAll(" ", "").equals("")
+                    && line.contains(",")) {
                     players.add(new Player(line.split(",")[0], line.split(",")[1]));
                 }
             } catch (IOException e) {
-                System.out.println("An error occurred while reading the file: " + e.getMessage());
+                LOGGER.logError("An error occurred while reading the file: " + e.getMessage());
             }
         }
         return players;
@@ -86,24 +86,21 @@ public final class TextFileEditor {
     /**
      * This methode creates the save file for the players.
      *
-     * @param fileName
+     * @param filePath
      * @return a true if a new file is created and false when a file is already existing.
      */
-    private static boolean createPlayerFile(String fileName) {
-        String filePath =
-            File.separator + "home" + File.separator + "pi" + File.separator + fileName;
-
+    private static boolean createPlayerFile(String filePath) {
         File file = new File(filePath);
         try {
             if (file.createNewFile()) {
-                System.out.println("File created successfully.");
+                LOGGER.logInfo("File created successfully.");
                 return true;
             } else {
-                System.out.println("File already exists.");
+                LOGGER.logInfo("File already exists.");
                 return false;
             }
         } catch (IOException e) {
-            System.out.println("An error occurred while creating the file: " + e.getMessage());
+            LOGGER.logError("An error occurred while creating the file: " + e.getMessage());
         }
         return false;
     }

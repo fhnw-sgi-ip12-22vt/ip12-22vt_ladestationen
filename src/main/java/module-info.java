@@ -29,4 +29,12 @@ module ch.ladestation.connectncharge {
     exports com.github.mbelling.ws281x;
     exports ch.ladestation.connectncharge.controller.pagecontroller;
     opens ch.ladestation.connectncharge.controller.pagecontroller to javafx.fxml;
+    exports ch.ladestation.connectncharge.controller.pagecontroller.admin;
+    opens ch.ladestation.connectncharge.controller.pagecontroller.admin to javafx.fxml;
+    exports ch.ladestation.connectncharge.controller.pagecontroller.beginning;
+    opens ch.ladestation.connectncharge.controller.pagecontroller.beginning to javafx.fxml;
+    exports ch.ladestation.connectncharge.controller.pagecontroller.middle;
+    opens ch.ladestation.connectncharge.controller.pagecontroller.middle to javafx.fxml;
+    exports ch.ladestation.connectncharge.controller.pagecontroller.end;
+    opens ch.ladestation.connectncharge.controller.pagecontroller.end to javafx.fxml;
 }

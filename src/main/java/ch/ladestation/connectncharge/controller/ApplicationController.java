@@ -1,8 +1,8 @@
 package ch.ladestation.connectncharge.controller;
 
-import ch.ladestation.connectncharge.model.Edge;
-import ch.ladestation.connectncharge.model.Game;
-import ch.ladestation.connectncharge.model.Node;
+import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
+import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.game.gamelogic.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
@@ -19,7 +19,6 @@ public class ApplicationController extends ControllerBase<Game> {
     private Map<Integer, List<Object>> levels;
     private int currentLevel = 1;
     private static final int MAX_LEVEL = 5;
-    private Node[] terms;
     private GamePUI gamePUI;
     private Thread blinkThread;
     private boolean isToBeRemoved = false;
@@ -37,7 +36,7 @@ public class ApplicationController extends ControllerBase<Game> {
 
         model.gameStarted.onChange(((oldValue, newValue) -> {
             if (oldValue && !newValue) {
-                deactivateAllNodes();
+                //deactivateAllNodes();
                 loadNextLevel();
             }
         }));
@@ -47,6 +46,13 @@ public class ApplicationController extends ControllerBase<Game> {
                 model.tippEdge.setColor(Color.GREEN);
             }
         }));
+
+
+        model.isCountdownFinished.onChange((oldValue, newValue) -> {
+            if (!oldValue && newValue) {
+                instanceTerminals();
+            }
+        });
     }
 
     public void setGPUI(GamePUI gamePUI) {
@@ -65,14 +71,9 @@ public class ApplicationController extends ControllerBase<Game> {
     public void loadNextLevel() {
         List<Object> level = levels.get(currentLevel);
 
-        List<Integer> terminals = (List<Integer>) level.get(0);
         List<List<Integer>> solution = (List<List<Integer>>) level.get(1);
 
-        int[] terms = terminals.stream().mapToInt(j -> j).toArray();
-
-        var terminalNodes = Arrays.stream(terms).mapToObj(gamePUI::lookUpSegmentIdToSegment).map(seg -> (Node) seg)
-            .toArray(Node[]::new);
-        setTerminals(terminalNodes);
+        //instanceTerminals();
 
         var solutionEdges =
             solution.stream().map((sol) -> gamePUI.lookUpEdge(sol.get(0), sol.get(1))).toArray(Edge[]::new);
@@ -84,6 +85,19 @@ public class ApplicationController extends ControllerBase<Game> {
             startBlinkingEdge((Edge) gamePUI.lookUpSegmentIdToSegment(90));
         });
         blinkThread.start();
+    }
+
+    private void instanceTerminals() {
+        List<Object> level = levels.get(currentLevel);
+        List<Integer> terminals = (List<Integer>) level.get(0);
+        int[] terms = terminals.stream().mapToInt(j -> j).toArray();
+        var terminalNodes = terminals.stream().map(gamePUI::lookUpSegmentIdToSegment).map(seg -> (Node) seg)
+            .toArray(Node[]::new);
+        setTerminals(terminalNodes);
+    }
+
+    public void setCountdownFinished() {
+        setValue(model.isCountdownFinished, true);
     }
 
     private void increaseCurrentLevel() {
@@ -98,7 +112,6 @@ public class ApplicationController extends ControllerBase<Game> {
         if (!model.gameStarted.getValue()) {
             if (edge == this.blinkingEdge) {
                 setValue(model.gameStarted, true);
-                setValues(model.terminals, this.terms);
                 blinkThread.interrupt();
             }
             return;
@@ -220,10 +233,10 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setTerminals(Node[] terms) {
-        if (!model.gameStarted.getValue()) {
+        /*if (!model.gameStarted.getValue()) {
             this.terms = terms;
             return;
-        }
+        }*/
         setValues(model.terminals, terms);
     }
 
