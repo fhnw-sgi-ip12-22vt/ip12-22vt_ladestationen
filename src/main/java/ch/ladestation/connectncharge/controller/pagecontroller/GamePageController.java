@@ -4,6 +4,7 @@ import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.PageController;
 import ch.ladestation.connectncharge.controller.StageHandler;
 import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.model.Hint;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.animation.Animation;
@@ -26,6 +27,9 @@ import java.util.ResourceBundle;
 
 public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>, Initializable, PageController {
 
+    private static final String FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
+    private static final String CSS_PATH = "/css/style.css";
+    private static LocalTime publicEndTime;
     @FXML
     private AnchorPane endGampePopupPane;
     @FXML
@@ -42,21 +46,17 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private Label costs;
     @FXML
     private Label timerLabel;
-
     @FXML
     private Label tippLabel;
-
     private Timeline timeline;
     private int additionalTime = 15;
     private int seconds = 0, minutes = 0;
-
-
-    private static final String FXML_PATH = "/ch/ladestation/connectncharge/helppage.fxml";
-    private static final String CSS_PATH = "/css/style.css";
     private LocalTime startTime = LocalTime.of(0, 0);
-    private static LocalTime publicEndTime;
-
     private ApplicationController controller;
+
+    public static LocalTime getPublicEndTime() {
+        return publicEndTime;
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -122,11 +122,10 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         controller.handleTipp();
     }
 
-    public void closeHintPopup(){
+    public void closeHintPopup() {
         hintPopupPane.setVisible(false);
         tippLabel.setText("");
     }
-
 
     @FXML
     private void handleEndGameButton(ActionEvent event) {
@@ -193,10 +192,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         publicEndTime = startTime;
     }
 
-    public static LocalTime getPublicEndTime() {
-        return publicEndTime;
-    }
-
     private void endGame() {
         saveEndTime(); // Rufe die saveEndTime-Methode auf
         // endGame() muss noch aufgerufen werden nach dem das Spiel beendet wurde
@@ -216,6 +211,15 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         onChangeOf(model.currentScore).convertedBy(String::valueOf).update(costs.textProperty());
         onChangeOf(model.isTippOn).execute(((oldValue, newValue) -> {
             addTimeButton.setDisable(newValue);
+        }));
+        onChangeOf(model.activeHint).execute(((oldValue, newValue) -> {
+            if (newValue == Hint.HINT_EMPTY_HINT) {
+                closeHintPopup();
+                return;
+            }
+
+            tippLabel.setText(newValue.getText());
+            hintPopupPane.setVisible(true);
         }));
     }
 

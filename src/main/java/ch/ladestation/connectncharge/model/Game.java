@@ -2,7 +2,6 @@ package ch.ladestation.connectncharge.model;
 
 import ch.ladestation.connectncharge.util.mvcbase.ObservableArray;
 import ch.ladestation.connectncharge.util.mvcbase.ObservableValue;
-import com.github.mbelling.ws281x.Color;
 
 
 public class Game {
@@ -14,9 +13,7 @@ public class Game {
     public final ObservableValue<Boolean> gameStarted = new ObservableValue<>(false);
     public Edge tippEdge = null;
     public final ObservableValue<Boolean> isTippOn = new ObservableValue<>(false);
-
-    public final Hint hintPickEdge = new Hint("Diese leuchtende Kante muss du noch auswählen!", Color.ORANGE);
-    public final Hint hintHasCycle = new Hint("Achtung du hast einen Kreis! Entferne eine Kante!", Color.RED);
-    public final Hint hintRemoveEdge = new Hint("Entferne deine vorherige Kante!", Color.GRAY);
+    public final ObservableValue<Boolean> hasCycle = new ObservableValue<>(false);
+    public final ObservableValue<Hint> activeHint = new ObservableValue<>(Hint.HINT_EMPTY_HINT);
 
 }

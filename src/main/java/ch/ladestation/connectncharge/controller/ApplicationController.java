@@ -2,6 +2,7 @@ package ch.ladestation.connectncharge.controller;
 
 import ch.ladestation.connectncharge.model.Edge;
 import ch.ladestation.connectncharge.model.Game;
+import ch.ladestation.connectncharge.model.Hint;
 import ch.ladestation.connectncharge.model.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
@@ -14,11 +15,11 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public class ApplicationController extends ControllerBase<Game> {
+    private static final int MAX_LEVEL = 5;
     private final Logger logger = Logger.getLogger(getClass().getName());
     private Edge blinkingEdge;
     private Map<Integer, List<Object>> levels;
     private int currentLevel = 1;
-    private static final int MAX_LEVEL = 5;
     private Node[] terms;
     private GamePUI gamePUI;
     private Thread blinkThread;
@@ -28,10 +29,22 @@ public class ApplicationController extends ControllerBase<Game> {
     public ApplicationController(Game model) {
         super(model);
         model.activatedEdges.onChange((oldValue, newValue) -> {
-            if (model.gameStarted.getValue()) {
-                updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
-                checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
-                // Todo: Checks for Cycle
+            if (!model.gameStarted.getValue()) {
+                return;
+            }
+
+            updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+            checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+
+            setValue(model.hasCycle, hasCycle());
+
+        });
+
+        model.hasCycle.onChange((oldValue, newValue) -> {
+            if (newValue) {
+                activateCycleHint();
+            } else {
+                clearActiveHint();
             }
         });
 
@@ -45,6 +58,13 @@ public class ApplicationController extends ControllerBase<Game> {
         model.isTippOn.onChange(((oldValue, newValue) -> {
             if (oldValue && !newValue) {
                 model.tippEdge.setColor(Color.GREEN);
+                clearActiveHint();
+            } else {
+                if (isToBeRemoved) {
+                    activateRemoveEdgeHint();
+                } else {
+                    activateAddEdgeHint();
+                }
             }
         }));
     }
@@ -111,6 +131,23 @@ public class ApplicationController extends ControllerBase<Game> {
         removeTippEdge();
         toggleEdge(edge);
     }
+
+    public void activateCycleHint() {
+        setValue(model.activeHint, Hint.HINT_CYCLE);
+    }
+
+    public void activateAddEdgeHint() {
+        setValue(model.activeHint, Hint.HINT_PICK_EDGE);
+    }
+
+    public void activateRemoveEdgeHint() {
+        setValue(model.activeHint, Hint.HINT_REMOVE_EDGE);
+    }
+
+    public void clearActiveHint() {
+        setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
+    }
+
 
     private void toggleEdge(Edge edge) {
         if (edge != null) {
