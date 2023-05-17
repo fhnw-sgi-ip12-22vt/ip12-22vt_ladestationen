@@ -23,7 +23,7 @@
     -fx-background-size: cover;
 }
 
-.root-pane .button {
+.root-pane .hidden-button {
     -fx-background-color: transparent;
 }
 
@@ -482,7 +482,7 @@
     -fx-max-width: 175px;
     -fx-max-height: 50px;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
     -fx-border-color: #F4E158;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;
@@ -499,7 +499,7 @@
     -fx-text-fill: #000000;
     -fx-border-radius: 10px;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
 }
 
 .leaderboard-un-choose-button {
@@ -513,7 +513,7 @@
     -fx-max-width: 175px;
     -fx-max-height: 50px;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
 }
 
 .leaderboard-un-choose-button-selected {
@@ -525,7 +525,7 @@
     -fx-max-height: 50px;
     -fx-padding: 10;
     -fx-font-family: 'Lato Light';
-    -fx-font-size: 19;
+    -fx-font-size: 17;
     -fx-border-color: #F4E158;
     -fx-border-width: 3px;
     -fx-border-radius: 11px;

@@ -60,11 +60,6 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
         fetchDataAndPopulateTableViews();
     }
 
-    @FXML
-    public void showHighscorePage(ActionEvent event) throws IOException {
-        StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
-    }
-
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }

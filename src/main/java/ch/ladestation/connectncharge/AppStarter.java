@@ -47,6 +47,6 @@ public class AppStarter extends Application {
         StageHandler.setStage(stage);
         StageHandler.setController(controller);
         //StageHandler.setController(new ApplicationController(new Game()));
-        StageHandler.openStage(FilePath.ADMINNORMALLEADERBOARD.getFilePath());
+        StageHandler.openStage(FilePath.GAMEPAGE.getFilePath());
     }
 }

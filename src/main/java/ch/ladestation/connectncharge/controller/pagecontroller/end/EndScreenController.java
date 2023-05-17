@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -24,13 +25,17 @@ import java.util.ResourceBundle;
 
 public class EndScreenController implements Initializable, ViewMixin<Game, ControllerBase<Game>>, PageController {
     @FXML
+    private AnchorPane menuPane;
+    @FXML
+    private AnchorPane shadowPane;
+    @FXML
     private Button btnHighscore;
     @FXML
     private Button btnPlayAgain;
     @FXML
-    private Label lblTime;
-    @FXML
     private Button btnMenu;
+    @FXML
+    private Label lblTime;
 
     @FXML
     private Parent root;
@@ -62,8 +67,27 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     }
 
     @FXML
-    public void handleMenuClick(ActionEvent actionEvent) {
+    private void handleStackMenuClick(ActionEvent event) {
+        menuPane.setVisible(true);
+        menuPane.setOpacity(1);
+        shadowPane.setVisible(true);
+        shadowPane.setOpacity(1);
+    }
 
+    @FXML
+    private void handleShadowAnchorPaneClick(ActionEvent event) {
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
+        menuPane.setVisible(false);
+        menuPane.setOpacity(0);
+    }
+
+    @FXML
+    private void handleMenuCloseButton(ActionEvent event) {
+        menuPane.setVisible(false);
+        menuPane.setOpacity(0);
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
     }
 
     public void showNameInputScreen(ActionEvent actionEvent) throws IOException {
@@ -72,7 +96,13 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
 
     @FXML
     private void handleAdminButton(ActionEvent event) throws IOException {
+        StageHandler.setLastFxmlPath(FilePath.HOMEPAGE.getFilePath());
         StageHandler.openStage(FilePath.ADMINPAGE.getFilePath());
+    }
+
+    @FXML
+    private void handleHighScoreButton(ActionEvent event) throws IOException {
+        StageHandler.openStage(FilePath.HIGHSCORE.getFilePath());
     }
 
     @Override

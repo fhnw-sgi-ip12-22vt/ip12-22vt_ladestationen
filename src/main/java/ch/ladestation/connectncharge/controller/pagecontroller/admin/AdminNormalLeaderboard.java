@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,6 +27,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Game>>, PageController, Initializable {
+    @FXML
+    private AnchorPane shadowPane;
+    @FXML
+    private AnchorPane verifyPopup;
     @FXML
     private Button backButton;
     @FXML
@@ -79,16 +84,14 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
         chooseAllButton.getStyleClass().remove("leaderboard-choose-button");
         chooseAllButton.getStyleClass().add("leaderboard-choose-button-selected");
 
-        unchooseAllButton.getStyleClass().remove("leaderboard-un-choose-button-selected");
-        unchooseAllButton.getStyleClass().add("leaderboard-un-choose-button");
+        unchooseAllButton.setDisable(false);
     }
 
     @FXML
     private void handleUnChooseAllButton(ActionEvent event) {
         tableView.getSelectionModel().clearSelection();
         restTableView.getSelectionModel().clearSelection();
-        unchooseAllButton.getStyleClass().remove("leaderboard-un-choose-button");
-        unchooseAllButton.getStyleClass().add("leaderboard-un-choose-button-selected");
+        unchooseAllButton.setDisable(true);
 
         chooseAllButton.getStyleClass().remove("leaderboard-choose-button-selected");
         chooseAllButton.getStyleClass().add("leaderboard-choose-button");
@@ -96,6 +99,11 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
 
     @FXML
     private void handleTrashButton(ActionEvent event) {
+        verifyPopup.setVisible(true);
+        shadowPane.setVisible(true);
+    }
+    @FXML
+    private void confirmDelete(ActionEvent event) {
         ObservableList<HighScorePlayer> selectedRows = tableView.getSelectionModel().getSelectedItems();
         for (HighScorePlayer rowData : selectedRows) {
             playerList.remove(rowData.getPlayer());
@@ -112,8 +120,15 @@ public class AdminNormalLeaderboard implements ViewMixin<Game, ControllerBase<Ga
         chooseAllButton.getStyleClass().remove("leaderboard-choose-button-selected");
         chooseAllButton.getStyleClass().add("leaderboard-choose-button");
 
-        unchooseAllButton.getStyleClass().remove("leaderboard-un-choose-button-selected");
-        unchooseAllButton.getStyleClass().add("leaderboard-choose-button");
+        unchooseAllButton.setDisable(true);
+        verifyPopup.setVisible(false);
+        shadowPane.setVisible(false);
+    }
+
+    @FXML
+    private void declineDelete(ActionEvent event) {
+        verifyPopup.setVisible(false);
+        shadowPane.setVisible(false);
     }
 
     @Override
