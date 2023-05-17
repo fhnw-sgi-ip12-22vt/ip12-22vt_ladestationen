@@ -53,6 +53,7 @@ public class ApplicationController extends ControllerBase<Game> {
         model.isCountdownFinished.onChange((oldValue, newValue) -> {
             if (!oldValue && newValue) {
                 instanceTerminals();
+                toggleIgnoreInputs();
             }
         });
     }
@@ -87,6 +88,10 @@ public class ApplicationController extends ControllerBase<Game> {
 
     }
 
+    public void toggleIgnoreInputs() {
+        model.ignoringInputs = !model.ignoringInputs;
+    }
+
     private void instanceTerminals() {
         List<Object> level = levels.get(currentLevel);
         List<Integer> terminals = (List<Integer>) level.get(0);
@@ -114,7 +119,11 @@ public class ApplicationController extends ControllerBase<Game> {
                 setValue(model.isEdgeBlinking, false);
                 blinkingEdgeScheduler.shutdown();
                 setValue(model.gameStarted, true);
+                toggleIgnoreInputs();
             }
+            return;
+        }
+        if (model.ignoringInputs) {
             return;
         }
         if (edge != null && model.isTippOn.getValue()) {
