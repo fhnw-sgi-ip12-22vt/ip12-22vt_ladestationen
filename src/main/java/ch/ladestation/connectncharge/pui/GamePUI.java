@@ -84,12 +84,12 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
             }
         }));
 
-        onChangeOf(model.isTippOn).execute(((oldValue, newValue) -> {
+        onChangeOf(model.isEdgeBlinking).execute((oldValue, newValue) -> {
             synchronized (ledStrip) {
-                changeLEDSegmentState(model.tippEdge, newValue);
+                changeLEDSegmentState(model.blinkingEdge, newValue);
                 ledStrip.render();
             }
-        }));
+        });
     }
 
     private void changeMultipleLEDSegmentState(Segment[] newValue, boolean state) {

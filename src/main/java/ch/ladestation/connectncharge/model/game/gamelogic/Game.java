@@ -13,5 +13,7 @@ public class Game {
     public final ObservableValue<Boolean> gameStarted = new ObservableValue<>(false);
     public final ObservableValue<Boolean> isCountdownFinished = new ObservableValue<>(false);
     public Edge tippEdge = null;
+    public Edge blinkingEdge = null;
+    public final ObservableValue<Boolean> isEdgeBlinking = new ObservableValue<>(true);
     public final ObservableValue<Boolean> isTippOn = new ObservableValue<>(false);
 }
