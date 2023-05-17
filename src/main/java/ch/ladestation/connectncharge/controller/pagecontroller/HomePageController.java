@@ -32,12 +32,16 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
     private void handleStackMenuClick(ActionEvent event) {
         menuPane.setVisible(true);
         menuPane.setOpacity(1);
+        shadowPane.setVisible(true);
+        shadowPane.setOpacity(1);
     }
 
     @FXML
     private void handleMenuCloseButton(ActionEvent event) {
         menuPane.setVisible(false);
         menuPane.setOpacity(0);
+        shadowPane.setVisible(false);
+        shadowPane.setOpacity(0);
     }
 
     @FXML
@@ -54,7 +58,7 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @FXML
     private void handleShadowAnchorPaneClick(ActionEvent event) {
-        shadowPane.setVisible(false);
+        shadowPane.setVisible(true);
         shadowPane.setOpacity(0);
         menuPane.setVisible(false);
         menuPane.setOpacity(0);

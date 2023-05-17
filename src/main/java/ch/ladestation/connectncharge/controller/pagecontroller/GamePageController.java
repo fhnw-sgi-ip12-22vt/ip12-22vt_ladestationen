@@ -164,7 +164,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     @FXML
-    private void handleShadowAnchorPaneClick(ActionEvent event) {
+    private void handleShadowAnchorPaneClick(ActionEvent event) { //TODO
         endGampePopupPane.setVisible(false);
         endGampePopupPane.setOpacity(0);
         shadowPane.setVisible(false);
