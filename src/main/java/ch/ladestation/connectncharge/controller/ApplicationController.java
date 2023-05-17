@@ -9,23 +9,25 @@ import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import com.github.mbelling.ws281x.Color;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class ApplicationController extends ControllerBase<Game> {
+    private static final int MAX_LEVEL = 5;
     private final Logger logger = Logger.getLogger(getClass().getName());
-    private Edge blinkingEdge;
     private Map<Integer, List<Object>> levels;
     private int currentLevel = 1;
-    private static final int MAX_LEVEL = 5;
     private GamePUI gamePUI;
-    private Thread blinkThread;
     private boolean isToBeRemoved = false;
     private Edge tippEdge;
+    private ScheduledExecutorService blinkingEdgeScheduler;
 
     public ApplicationController(Game model) {
         super(model);
+
         model.activatedEdges.onChange((oldValue, newValue) -> {
             if (model.gameStarted.getValue()) {
                 updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
@@ -81,11 +83,9 @@ public class ApplicationController extends ControllerBase<Game> {
 
         deactivateAllEdges();
         deactivateAllNodes();
+        model.blinkingEdge = (Edge) gamePUI.lookUpSegmentIdToSegment(90);
+        startBlinkingEdge();
 
-        blinkThread = new Thread(() -> {
-            startBlinkingEdge((Edge) gamePUI.lookUpSegmentIdToSegment(90));
-        });
-        blinkThread.start();
     }
 
     private void instanceTerminals() {
@@ -111,9 +111,10 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void edgePressed(Edge edge) {
         if (!model.gameStarted.getValue()) {
-            if (edge == this.blinkingEdge) {
+            if (edge == model.blinkingEdge) {
+                setValue(model.isEdgeBlinking, false);
+                blinkingEdgeScheduler.shutdown();
                 setValue(model.gameStarted, true);
-                blinkThread.interrupt();
             }
             return;
         }
@@ -164,16 +165,9 @@ public class ApplicationController extends ControllerBase<Game> {
         setValues(model.terminals, new Node[0]);
     }
 
-    public void startBlinkingEdge(Edge edge) {
-        if (model.gameStarted.getValue()) {
-            return;
-        }
-        this.blinkingEdge = edge;
-        async(() -> {
-            edgeToggledByApp(edge);
-        });
-        pauseExecution(Duration.ofSeconds(1));
-        async(() -> startBlinkingEdge(edge));
+    public void startBlinkingEdge() {
+        blinkingEdgeScheduler = Executors.newScheduledThreadPool(1);
+        blinkingEdgeScheduler.scheduleAtFixedRate(() -> toggleValue(model.isEdgeBlinking), 0, 1, TimeUnit.SECONDS);
     }
 
 
@@ -259,12 +253,11 @@ public class ApplicationController extends ControllerBase<Game> {
         List<Edge> edgesToRemove;
 
         edgesToSelect = Arrays.stream(model.solution.getValues())
-                .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues())
-                        .toList().contains(solEdge)).toList();
+            .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues()).toList().contains(solEdge)).toList();
 
         edgesToRemove = Arrays.stream(model.activatedEdges.getValues())
-                .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues())
-                        .toList().contains(activatedEdge)).toList();
+            .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
+            .toList();
 
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
@@ -346,7 +339,6 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     private void saveUserScore() {
-    }
 
     private void finishGame() throws IOException {
         setValue(model.isFinished, true);
