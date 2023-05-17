@@ -70,6 +70,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     @FXML
     private void handleAddTimeButton(ActionEvent event) {
         MyTimer.addTime(MyTimer.ADD_TIME, addTimeButton);
+        controller.handleTipp();
     }
 
     @FXML
@@ -142,7 +143,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     private void saveEndTime() {
-        publicEndTime = timerLabel.getText().replaceAll("Zeit: ", "");
+        controller.setEndTime(timerLabel.getText().replaceAll("Zeit: ", ""));
     }
 
     public static String getPublicEndTime() {
@@ -168,6 +169,16 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         onChangeOf(model.isTippOn).execute(((oldValue, newValue) -> {
             addTimeButton.setDisable(newValue);
         }));
+        onChangeOf(model.isFinished).execute((oldValue, newValue) -> {
+            if (!oldValue && newValue) {
+                try {
+                    endGame();
+                    StageHandler.openStage(FilePath.ENDSCREEN.getFilePath());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
     }
 
     @Override
