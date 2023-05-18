@@ -18,12 +18,10 @@ public class AppStarter extends Application {
     private static ApplicationController controller;
 
     public static void main(String[] args) {
-        Context pi4J = Pi4JContext.createContext();
+        /*Context pi4J = Pi4JContext.createContext();
 
         controller = new ApplicationController(new Game());
         var gPUI = new GamePUI(controller, pi4J);
-
-        LOGGER.logInfo("App started");
 
         controller.setGPUI(gPUI);
 
@@ -38,15 +36,15 @@ public class AppStarter extends Application {
             controller.shutdown();
             pi4J.shutdown();
             LOGGER.logInfo("App stopped");
-        }));
+        }));*/
         launch();
     }
 
     @Override
     public void start(Stage stage) throws IOException {
         StageHandler.setStage(stage);
-        StageHandler.setController(controller);
-        //StageHandler.setController(new ApplicationController(new Game()));
+        //StageHandler.setController(controller);
+        StageHandler.setController(new ApplicationController(new Game()));
         StageHandler.openStage(FilePath.LOADINGPAGE.getFilePath());
     }
 }

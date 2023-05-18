@@ -15,13 +15,13 @@
     <children>
         <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
         <Circle fx:id="r" fill="#f4e158" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-        <Label layoutX="100.0" layoutY="40.0" prefHeight="120.0" prefWidth="695.0" stylesheets="@../../../css/style.css" text="Hallo! Möchtest du Teil eines spannenden Abenteuers werden?" textFill="WHITE" wrapText="true">
+        <Label layoutX="100.0" layoutY="11.0" prefHeight="177.0" prefWidth="695.0" stylesheets="@../../../css/style.css" text="Hallo ich bin Felix. Möchtest du Teil eines Spannenden Abenteuers werden? " textFill="WHITE" wrapText="true">
             <font>
-                <Font size="40.0" />
+                <Font size="34.0" />
             </font>
         </Label>
         <Circle fill="#ff730000" layoutX="400.0" layoutY="557.0" radius="200.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
-        <Text fill="WHITE" layoutX="100.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="story-label" text="In meiner Feriensiedlung gibt es 30 Ferienhäuser, von denen ich 13 mit einer modernen E-Ladestation ausstatten möchte. Doch dafür müssen diese 13 Ferienhäuser mit einem zusätzliches Stromkabel verbunden werden, um ein umweltfreundliches Urlaubserlebnis zu schaffen!" wrappingWidth="406.3999938964845">
+        <Text fill="WHITE" layoutX="100.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="story-label" text="In meiner traumhaft schönen Feriensiedlung gibt es 30 Ferienhäuser, von denen ich 13 mit einer modernen E-Ladestation ausstatten möchte, um den Gästen ein umweltfreundliches Urlaubserlebnis zu schaffen.Doch dazu müssen diese 13 Ferienwohnungen mit einem zusätzlichen Stromkabel verbunden werden." wrappingWidth="406.3999938964845">
             <font>
                 <Font size="15.0" />
             </font>

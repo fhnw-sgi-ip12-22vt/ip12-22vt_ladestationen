@@ -418,6 +418,11 @@
     -fx-background-size: cover;
     -fx-background-radius: 15px;
 }
+.popup-pane-hint {
+    -fx-background-color: #ffffff;
+    -fx-background-size: cover;
+    -fx-background-radius: 15px;
+}
 
 .popup-pane .pane-shadow {
     -fx-min-width: 800px;
