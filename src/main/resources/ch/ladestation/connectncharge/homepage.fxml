@@ -21,7 +21,7 @@
             </font>
         </Label>
         <Circle fill="#ff730000" layoutX="400.0" layoutY="557.0" radius="200.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="2.0" />
-        <Text fill="WHITE" layoutX="100.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="story-label" text="In meiner traumhaft schönen Feriensiedlung gibt es 30 Ferienhäuser, von denen ich 13 mit einer modernen E-Ladestation ausstatten möchte, um den Gästen ein umweltfreundliches Urlaubserlebnis zu schaffen.Doch dazu müssen diese 13 Ferienwohnungen mit einem zusätzlichen Stromkabel verbunden werden." wrappingWidth="406.3999938964845">
+        <Text fill="WHITE" layoutX="100.0" layoutY="191.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="story-label" text="In meiner traumhaft schönen Feriensiedlung gibt es 30 Ferienhäuser, von denen ich 13 mit einer modernen E-Ladestation ausstatten möchte, um den Gästen ein umweltfreundliches Urlaubserlebnis zu schaffen. Doch dazu müssen diese 13 Ferienwohnungen mit einem zusätzlichen Stromkabel verbunden werden." wrappingWidth="406.3999938964845">
             <font>
                 <Font size="15.0" />
             </font>
