@@ -247,15 +247,19 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setTippEdge() {
-        List<Edge> edgesToSelect;
-        List<Edge> edgesToRemove;
+        List<Edge> edgesToSelect = null;
+        List<Edge> edgesToRemove = null;
 
-        edgesToSelect = Arrays.stream(model.solution.getValues())
-            .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues()).toList().contains(solEdge)).toList();
+        if (model.solution.getValues().length != 0 && model.activatedEdges.getValues().length != 0) {
+            edgesToSelect = Arrays.stream(model.solution.getValues())
+                .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues()).toList().contains(solEdge))
+                .toList();
 
-        edgesToRemove = Arrays.stream(model.activatedEdges.getValues())
-            .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
-            .toList();
+            edgesToRemove = Arrays.stream(model.activatedEdges.getValues())
+                .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
+                .toList();
+
+        }
 
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
@@ -271,7 +275,11 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     private Edge getRandomEdge(List<Edge> edges) {
-        return edges.stream().skip(new Random().nextInt(edges.size())).findFirst().get();
+        if (edges.size() != 0) {
+            return edges.stream().skip(new Random().nextInt(edges.size())).findFirst().get();
+        } else {
+            throw new RuntimeException("edges size were 0");
+        }
     }
 
     public void removeTippEdge() {
