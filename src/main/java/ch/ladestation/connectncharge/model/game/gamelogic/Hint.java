@@ -4,10 +4,19 @@ import com.github.mbelling.ws281x.Color;
 
 public enum Hint {
 
-    HINT_PICK_EDGE("Diese leuchtende Kante muss du noch auswählen!", Color.ORANGE),
-    HINT_CYCLE("Achtung du hast einen Kreis! Entferne eine Kante!", Color.RED),
-    HINT_REMOVE_EDGE("Entferne die Leuchtende Kante!", Color.GRAY),
-    HINT_EMPTY_HINT("EMPTY_HINT", Color.BLACK);
+    HINT_PICK_EDGE("Diese orange leuchtende Kante ist in der Lösung enthalten.", Color.ORANGE),
+    HINT_CYCLE("Du hast ein Kreis gebildet.\n" +
+        "Das heisst, dass dadurch mindestens eine dieser Kanten überflüssig ist und du diese entfernen kannst.",
+        Color.RED),
+    HINT_REMOVE_EDGE("Diese orange leuchtende Kante ist nicht in der Lösung enthalten.", Color.GRAY),
+    HINT_EMPTY_HINT("EMPTY_HINT", Color.BLACK),
+
+    HINT_SOLUTION_NOT_FOUND(
+        "Du hast zwar alle Häuser miteinander verbunden. " +
+            "Jedoch ist dies noch nicht das kostengünstigste Verteilungsnetz.",
+        Color.GRAY),
+
+    HINT_NOT_ALL_NODES_CONNECTED("Du hast noch nicht alle Häuser miteinander verbunden.", Color.GRAY);
 
     private String text;
     private Color color;
