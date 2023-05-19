@@ -51,13 +51,20 @@ public class ApplicationController extends ControllerBase<Game> {
             }
         }));
 
-
         model.isCountdownFinished.onChange((oldValue, newValue) -> {
             if (!oldValue && newValue) {
                 instanceTerminals();
                 toggleIgnoreInputs();
             }
         });
+
+        model.isFinished.onChange(((oldValue, newValue) -> {
+            if (!oldValue && newValue) {
+                model.ignoringInputs = true;
+            } else if (oldValue && !newValue) {
+                model.ignoringInputs = false;
+            }
+        }));
     }
 
     public void setGPUI(GamePUI gamePUI) {
@@ -256,19 +263,15 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setTippEdge() {
-        List<Edge> edgesToSelect = null;
-        List<Edge> edgesToRemove = null;
+        List<Edge> edgesToSelect;
+        List<Edge> edgesToRemove;
 
-        if (model.solution.getValues().length != 0 && model.activatedEdges.getValues().length != 0) {
-            edgesToSelect = Arrays.stream(model.solution.getValues())
-                .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues()).toList().contains(solEdge))
-                .toList();
+        edgesToSelect = Arrays.stream(model.solution.getValues())
+            .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues()).toList().contains(solEdge)).toList();
 
-            edgesToRemove = Arrays.stream(model.activatedEdges.getValues())
-                .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
-                .toList();
-
-        }
+        edgesToRemove = Arrays.stream(model.activatedEdges.getValues())
+            .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
+            .toList();
 
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
@@ -284,11 +287,7 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     private Edge getRandomEdge(List<Edge> edges) {
-        if (edges.size() != 0) {
-            return edges.stream().skip(new Random().nextInt(edges.size())).findFirst().get();
-        } else {
-            throw new RuntimeException("edges size were 0");
-        }
+        return edges.stream().skip(new Random().nextInt(edges.size())).findFirst().get();
     }
 
     public void removeTippEdge() {
