@@ -152,7 +152,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     private void saveEndTime() {
-        publicEndTime = timerLabel.getText().replaceAll("Zeit: ", "");
+        controller.setEndTime(timerLabel.getText().replaceAll("Zeit: ", ""));
     }
 
     public static String getPublicEndTime() {
@@ -160,9 +160,13 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     private void endGame() {
+        stopTime();
         saveEndTime();
     }
 
+    private void stopTime() {
+        MyTimer.stop();
+    }
     @FXML
     public void showCost() {
 
@@ -178,6 +182,16 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         onChangeOf(model.isTippOn).execute(((oldValue, newValue) -> {
             addTimeButton.setDisable(newValue);
         }));
+        onChangeOf(model.isFinished).execute((oldValue, newValue) -> {
+            if (!oldValue && newValue) {
+                try {
+                    endGame();
+                    StageHandler.openStage(FilePath.ENDSCREEN.getFilePath());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
         onChangeOf(model.activeHint).execute(((oldValue, newValue) -> {
             if (newValue == Hint.HINT_EMPTY_HINT) {
                 closeHintPopup();

@@ -13,17 +13,12 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #1E1E1E;" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.end.EndScreenController">
    <children>
-      <ImageView fx:id="gifImageView" fitHeight="200.0" fitWidth="400.0" layoutX="200.0" layoutY="40.0">
-         <image>
-            <Image url="@../../../gifs/TrophyIlus.gif" />
-         </image>
-      </ImageView>
       <Text fill="WHITE" layoutX="215.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="end-screen-label" text="Dein Score:">
          <font>
             <Font name="System Bold" size="35.0" />
          </font>
       </Text>
-      <Button fx:id="btnPlayAgain" layoutX="194.0" layoutY="267.0" mnemonicParsing="false" onAction="#handlePlayAgainButton" prefHeight="43.0" prefWidth="175.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen:">
+      <Button fx:id="btnPlayAgain" layoutX="194.0" layoutY="267.0" mnemonicParsing="false" onAction="#handlePlayAgainButton" prefHeight="43.0" prefWidth="175.0" styleClass="play-again-button" stylesheets="@../../../css/style.css" text="Nochmal spielen">
          <font>
             <Font size="19.0" />
          </font>

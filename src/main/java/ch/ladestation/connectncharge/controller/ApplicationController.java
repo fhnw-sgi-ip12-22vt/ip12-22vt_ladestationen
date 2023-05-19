@@ -10,23 +10,26 @@ import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import com.github.mbelling.ws281x.Color;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public class ApplicationController extends ControllerBase<Game> {
+    private static final int MAX_LEVEL = 5;
     private final Logger logger = Logger.getLogger(getClass().getName());
-    private Edge blinkingEdge;
     private Map<Integer, List<Object>> levels;
     private int currentLevel = 1;
-    private static final int MAX_LEVEL = 5;
     private GamePUI gamePUI;
-    private Thread blinkThread;
     private boolean isToBeRemoved = false;
     private Edge tippEdge;
+    private ScheduledExecutorService blinkingEdgeScheduler;
+    public boolean firstBootup = true;
 
     public ApplicationController(Game model) {
         super(model);
+
         model.activatedEdges.onChange((oldValue, newValue) -> {
             if (!model.gameStarted.getValue()) {
                 return;
@@ -48,9 +51,10 @@ public class ApplicationController extends ControllerBase<Game> {
         });
 
         model.gameStarted.onChange(((oldValue, newValue) -> {
-            if (oldValue && !newValue) {
-                //deactivateAllNodes();
+            if (oldValue && !newValue && !model.isFinished.getValue()) {
+                increaseCurrentLevel();
                 loadNextLevel();
+                setValue(model.isCountdownFinished, false);
             }
         }));
 
@@ -67,12 +71,20 @@ public class ApplicationController extends ControllerBase<Game> {
             }
         }));
 
-
         model.isCountdownFinished.onChange((oldValue, newValue) -> {
             if (!oldValue && newValue) {
                 instanceTerminals();
+                toggleIgnoreInputs();
             }
         });
+
+        model.isFinished.onChange(((oldValue, newValue) -> {
+            if (!oldValue && newValue) {
+                model.ignoringInputs = true;
+            } else if (oldValue && !newValue) {
+                model.ignoringInputs = false;
+            }
+        }));
     }
 
     public void setGPUI(GamePUI gamePUI) {
@@ -93,26 +105,25 @@ public class ApplicationController extends ControllerBase<Game> {
 
         List<List<Integer>> solution = (List<List<Integer>>) level.get(1);
 
-        //instanceTerminals();
-
         var solutionEdges =
             solution.stream().map((sol) -> gamePUI.lookUpEdge(sol.get(0), sol.get(1))).toArray(Edge[]::new);
         setSolution(solutionEdges);
 
-        deactivateAllEdges();
+        model.blinkingEdge = (Edge) gamePUI.lookUpSegmentIdToSegment(90);
+        startBlinkingEdge();
 
-        blinkThread = new Thread(() -> {
-            startBlinkingEdge((Edge) gamePUI.lookUpSegmentIdToSegment(90));
-        });
-        blinkThread.start();
+    }
+
+    public void toggleIgnoreInputs() {
+        model.ignoringInputs = !model.ignoringInputs;
     }
 
     private void instanceTerminals() {
         List<Object> level = levels.get(currentLevel);
         List<Integer> terminals = (List<Integer>) level.get(0);
         int[] terms = terminals.stream().mapToInt(j -> j).toArray();
-        var terminalNodes = terminals.stream().map(gamePUI::lookUpSegmentIdToSegment).map(seg -> (Node) seg)
-            .toArray(Node[]::new);
+        var terminalNodes =
+            terminals.stream().map(gamePUI::lookUpSegmentIdToSegment).map(seg -> (Node) seg).toArray(Node[]::new);
         setTerminals(terminalNodes);
     }
 
@@ -130,10 +141,15 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void edgePressed(Edge edge) {
         if (!model.gameStarted.getValue()) {
-            if (edge == this.blinkingEdge) {
+            if (edge == model.blinkingEdge) {
+                setValue(model.isEdgeBlinking, false);
+                blinkingEdgeScheduler.shutdown();
                 setValue(model.gameStarted, true);
-                blinkThread.interrupt();
+                toggleIgnoreInputs();
             }
+            return;
+        }
+        if (model.ignoringInputs) {
             return;
         }
         if (edge != null && model.isTippOn.getValue()) {
@@ -200,16 +216,9 @@ public class ApplicationController extends ControllerBase<Game> {
         setValues(model.terminals, new Node[0]);
     }
 
-    public void startBlinkingEdge(Edge edge) {
-        if (model.gameStarted.getValue()) {
-            return;
-        }
-        this.blinkingEdge = edge;
-        async(() -> {
-            edgeToggledByApp(edge);
-        });
-        pauseExecution(Duration.ofSeconds(1));
-        async(() -> startBlinkingEdge(edge));
+    public void startBlinkingEdge() {
+        blinkingEdgeScheduler = Executors.newScheduledThreadPool(1);
+        blinkingEdgeScheduler.scheduleAtFixedRate(() -> toggleValue(model.isEdgeBlinking), 0, 1, TimeUnit.SECONDS);
     }
 
 
@@ -222,7 +231,11 @@ public class ApplicationController extends ControllerBase<Game> {
 
         if (allTerminalsConnected()) {
             if (score <= solutionScore) {
-                finishGame();
+                try {
+                    finishGame();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -377,12 +390,20 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     private void saveUserScore() {
-
     }
 
-    private void finishGame() {
-        saveUserScore();
-        increaseCurrentLevel();
+    private void finishGame() throws IOException {
+        setValue(model.isFinished, true);
+    }
+
+    public void playAgain() {
+        setValue(model.isFinished, false);
+        deactivateAllEdges();
+        deactivateAllNodes();
         setValue(model.gameStarted, false);
+    }
+
+    public void setEndTime(String endTime) {
+        setValue(model.endTime, endTime);
     }
 }
