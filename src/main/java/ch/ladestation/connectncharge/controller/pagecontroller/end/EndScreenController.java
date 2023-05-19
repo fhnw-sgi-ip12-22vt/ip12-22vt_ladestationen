@@ -3,7 +3,6 @@ package ch.ladestation.connectncharge.controller.pagecontroller.end;
 import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
-import ch.ladestation.connectncharge.controller.pagecontroller.middle.GamePageController;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
@@ -43,8 +42,9 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     private Stage stage;
     @FXML
     private Scene scene;
+    ApplicationController controller;
 
-    private final String endTime = String.valueOf(GamePageController.getPublicEndTime());
+    //private final String endTime = String.valueOf(controller.scoreForEndScreen());
 
     @FXML
     public void showEndPage(ActionEvent event) throws IOException {
@@ -53,11 +53,13 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
 
     @FXML
     public void handlePlayAgainButton(ActionEvent actionEvent) throws IOException {
+        controller.playAgain();
         showGameScreen(actionEvent);
+
     }
 
     public void showGameScreen(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage(FilePath.GAMEPAGE.getFilePath());
+        StageHandler.openStage(FilePath.EDGECLICKSCREEN.getFilePath());
 
     }
 
@@ -107,12 +109,13 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lblTime.setText(endTime);
+
     }
 
     @Override
     public void setController(ApplicationController controller) {
         init(controller);
+        this.controller = controller;
     }
 
     @Override
@@ -128,5 +131,10 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     @Override
     public List<String> getStylesheets() {
         return null;
+    }
+
+    @Override
+    public void setupModelToUiBindings(Game model) {
+        onChangeOf(model.endTime).convertedBy(String::valueOf).update(lblTime.textProperty());
     }
 }

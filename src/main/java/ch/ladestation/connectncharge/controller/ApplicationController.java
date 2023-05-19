@@ -24,6 +24,7 @@ public class ApplicationController extends ControllerBase<Game> {
     private boolean isToBeRemoved = false;
     private Edge tippEdge;
     private ScheduledExecutorService blinkingEdgeScheduler;
+    public boolean firstBootup = true;
 
     public ApplicationController(Game model) {
         super(model);
@@ -37,9 +38,10 @@ public class ApplicationController extends ControllerBase<Game> {
         });
 
         model.gameStarted.onChange(((oldValue, newValue) -> {
-            if (oldValue && !newValue) {
-                //deactivateAllNodes();
+            if (oldValue && !newValue && !model.isFinished.getValue()) {
+                increaseCurrentLevel();
                 loadNextLevel();
+                setValue(model.isCountdownFinished, false);
             }
         }));
 
@@ -76,13 +78,10 @@ public class ApplicationController extends ControllerBase<Game> {
 
         List<List<Integer>> solution = (List<List<Integer>>) level.get(1);
 
-        //instanceTerminals();
-
         var solutionEdges =
             solution.stream().map((sol) -> gamePUI.lookUpEdge(sol.get(0), sol.get(1))).toArray(Edge[]::new);
         setSolution(solutionEdges);
 
-        deactivateAllEdges();
         model.blinkingEdge = (Edge) gamePUI.lookUpSegmentIdToSegment(90);
         startBlinkingEdge();
 
@@ -96,8 +95,8 @@ public class ApplicationController extends ControllerBase<Game> {
         List<Object> level = levels.get(currentLevel);
         List<Integer> terminals = (List<Integer>) level.get(0);
         int[] terms = terminals.stream().mapToInt(j -> j).toArray();
-        var terminalNodes = terminals.stream().map(gamePUI::lookUpSegmentIdToSegment).map(seg -> (Node) seg)
-            .toArray(Node[]::new);
+        var terminalNodes =
+            terminals.stream().map(gamePUI::lookUpSegmentIdToSegment).map(seg -> (Node) seg).toArray(Node[]::new);
         setTerminals(terminalNodes);
     }
 
@@ -188,7 +187,11 @@ public class ApplicationController extends ControllerBase<Game> {
 
         if (allTerminalsConnected()) {
             if (score <= solutionScore) {
-                finishGame();
+                try {
+                    finishGame();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
@@ -253,15 +256,19 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setTippEdge() {
-        List<Edge> edgesToSelect;
-        List<Edge> edgesToRemove;
+        List<Edge> edgesToSelect = null;
+        List<Edge> edgesToRemove = null;
 
-        edgesToSelect = Arrays.stream(model.solution.getValues())
-            .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues()).toList().contains(solEdge)).toList();
+        if (model.solution.getValues().length != 0 && model.activatedEdges.getValues().length != 0) {
+            edgesToSelect = Arrays.stream(model.solution.getValues())
+                .filter(solEdge -> !Arrays.stream(model.activatedEdges.getValues()).toList().contains(solEdge))
+                .toList();
 
-        edgesToRemove = Arrays.stream(model.activatedEdges.getValues())
-            .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
-            .toList();
+            edgesToRemove = Arrays.stream(model.activatedEdges.getValues())
+                .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
+                .toList();
+
+        }
 
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
@@ -277,7 +284,11 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     private Edge getRandomEdge(List<Edge> edges) {
-        return edges.stream().skip(new Random().nextInt(edges.size())).findFirst().get();
+        if (edges.size() != 0) {
+            return edges.stream().skip(new Random().nextInt(edges.size())).findFirst().get();
+        } else {
+            throw new RuntimeException("edges size were 0");
+        }
     }
 
     public void removeTippEdge() {
@@ -343,12 +354,20 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     private void saveUserScore() {
-
     }
 
-    private void finishGame() {
-        saveUserScore();
-        increaseCurrentLevel();
+    private void finishGame() throws IOException {
+        setValue(model.isFinished, true);
+    }
+
+    public void playAgain() {
+        setValue(model.isFinished, false);
+        deactivateAllEdges();
+        deactivateAllNodes();
         setValue(model.gameStarted, false);
+    }
+
+    public void setEndTime(String endTime) {
+        setValue(model.endTime, endTime);
     }
 }

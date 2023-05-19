@@ -69,6 +69,7 @@ public class HomePageController implements ViewMixin<Game, ControllerBase<Game>>
     @Override
     public void setController(ApplicationController controller) {
         init(controller);
+        controller.loadLevels();
     }
 
     @Override
