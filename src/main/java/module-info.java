@@ -16,6 +16,7 @@ module ch.ladestation.connectncharge {
     // Pi4J Modules
     requires com.pi4j.plugin.mock;
     requires com.pi4j.plugin.linuxfs;
+    requires javafx.media;
     uses com.pi4j.extension.Extension;
     uses com.pi4j.provider.Provider;
 

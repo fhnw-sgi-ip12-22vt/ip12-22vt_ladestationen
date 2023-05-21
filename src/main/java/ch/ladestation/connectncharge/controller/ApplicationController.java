@@ -4,6 +4,7 @@ import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.game.gamelogic.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
+import ch.ladestation.connectncharge.pui.Sounder;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import com.github.mbelling.ws281x.Color;
@@ -145,8 +146,10 @@ public class ApplicationController extends ControllerBase<Game> {
         if (edge != null) {
             if (!edge.isOn()) {
                 activateEdge(edge);
+                Sounder.playActivate();
             } else {
                 deactivateEdge(edge);
+                Sounder.playDeactivate();
             }
         }
     }
