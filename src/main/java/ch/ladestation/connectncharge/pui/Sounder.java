@@ -7,25 +7,25 @@ import javafx.scene.media.MediaPlayer;
  * plays sounds when user Interacts
  */
 public final class Sounder {
-    private static final MediaPlayer DEACTIVATE_PLAYER;
-    private static final MediaPlayer ACTIVATE_PLAYER;
+    private static final Media DEACTIVATE_MEDIA;
+    private static final Media ACTIVATE_MEDIA;
 
     static {
-        String resourcePath = Sounder.class.getResource("/deactivate.wav").toString();
-        DEACTIVATE_PLAYER = new MediaPlayer(new Media(resourcePath));
+        String resourcePath = Sounder.class.getResource("/deactivate.mp3").toString();
+        DEACTIVATE_MEDIA = new Media(resourcePath);
 
-        resourcePath = Sounder.class.getResource("/activate.wav").toString();
-        ACTIVATE_PLAYER = new MediaPlayer(new Media(resourcePath));
+        resourcePath = Sounder.class.getResource("/activate.mp3").toString();
+        ACTIVATE_MEDIA = new Media(resourcePath);
     }
 
     private Sounder() {
     }
 
     public static void playActivate() {
-        ACTIVATE_PLAYER.play();
+        new MediaPlayer(ACTIVATE_MEDIA).play();
     }
 
     public static void playDeactivate() {
-        DEACTIVATE_PLAYER.play();
+        new MediaPlayer(DEACTIVATE_MEDIA).play();
     }
 }
