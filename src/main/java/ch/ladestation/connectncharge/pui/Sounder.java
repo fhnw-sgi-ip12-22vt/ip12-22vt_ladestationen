@@ -22,10 +22,14 @@ public final class Sounder {
     }
 
     public static void playActivate() {
-        new MediaPlayer(ACTIVATE_MEDIA).play();
+        var med = new MediaPlayer(ACTIVATE_MEDIA);
+        med.setOnEndOfMedia(med::dispose);
+        med.play();
     }
 
     public static void playDeactivate() {
-        new MediaPlayer(DEACTIVATE_MEDIA).play();
+        var med = new MediaPlayer(DEACTIVATE_MEDIA);
+        med.setOnEndOfMedia(med::dispose);
+        med.play();
     }
 }
