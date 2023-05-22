@@ -15,17 +15,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class ApplicationController extends ControllerBase<Game> {
     private static final int MAX_LEVEL = 5;
     private final Logger logger = Logger.getLogger(getClass().getName());
+    public boolean firstBootup = true;
     private Map<Integer, List<Object>> levels;
     private int currentLevel = 1;
     private GamePUI gamePUI;
     private boolean isToBeRemoved = false;
     private Edge tippEdge;
     private ScheduledExecutorService blinkingEdgeScheduler;
-    public boolean firstBootup = true;
 
     public ApplicationController(Game model) {
         super(model);
@@ -373,26 +374,38 @@ public class ApplicationController extends ControllerBase<Game> {
         Set<Node> visited = new HashSet<>();
         Map<Node, Node> parent = new HashMap<>();
 
-        // Create a stack to perform depth-first search starting from the first node in
-        // the first selected edge
-        Stack<Node> stack = new Stack<>();
-        Node startNode = selectedEdges.get(0).getFromNode();
-        stack.push(startNode);
-        parent.put(startNode, null);
-        while (!stack.empty()) {
-            Node currNode = stack.pop();
-            visited.add(currNode);
-            List<Node> neighbors = adjList.get(currNode);
-            for (Node neighbor : neighbors) {
-                // If the neighbor node has not been visited, add it to the stack and set its
-                // parent to the current node
-                if (!visited.contains(neighbor)) {
-                    stack.push(neighbor);
-                    parent.put(neighbor, currNode);
-                } else if (parent.get(currNode) != neighbor) {
-                    return true;
+        //get all the edges that haven't been visited yet
+        var islands = selectedEdges.stream()
+            .flatMap(e -> Stream.of(e.getFromNode(), e.getToNode()))
+            .distinct()
+            .toList();
+        while (islands.size() > 0) {
+            // Create a stack to perform depth-first search starting from the first node in
+            // the first selected edge
+            Stack<Node> stack = new Stack<>();
+            Node startNode = islands.get(0);
+            stack.push(startNode);
+            parent.put(startNode, null);
+            while (!stack.empty()) {
+                Node currNode = stack.pop();
+                visited.add(currNode);
+                List<Node> neighbors = adjList.get(currNode);
+                for (Node neighbor : neighbors) {
+                    // If the neighbor node has not been visited, add it to the stack and set its
+                    // parent to the current node
+                    if (!visited.contains(neighbor)) {
+                        stack.push(neighbor);
+                        parent.put(neighbor, currNode);
+                    } else if (parent.get(currNode) != neighbor) {
+                        return true;
+                    }
                 }
             }
+            islands = selectedEdges.stream()
+                .flatMap(e -> Stream.of(e.getFromNode(), e.getToNode()))
+                .filter(n -> !visited.contains(n))
+                .distinct()
+                .toList();
         }
 
         // No cycle is formed
