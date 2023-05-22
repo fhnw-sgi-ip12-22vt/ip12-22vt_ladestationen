@@ -167,6 +167,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private void stopTime() {
         MyTimer.stop();
     }
+
     @FXML
     public void showCost() {
 
@@ -205,6 +206,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     @Override
     public void initializeParts() {
+        hintPopupPane.setVisible(false);
     }
 
     @Override

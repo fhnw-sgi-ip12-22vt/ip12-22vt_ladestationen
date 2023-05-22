@@ -45,7 +45,9 @@ public class ApplicationController extends ControllerBase<Game> {
         model.hasCycle.onChange((oldValue, newValue) -> {
             if (newValue) {
                 activateCycleHint();
-            } else {
+            } else if (allTerminalsConnected()) {
+                activateSolutionNotFoundHint();
+            } else if (model.activeHint.getValue() != Hint.HINT_SOLUTION_NOT_FOUND) {
                 clearActiveHint();
             }
         });
@@ -62,12 +64,6 @@ public class ApplicationController extends ControllerBase<Game> {
             if (oldValue && !newValue) {
                 model.tippEdge.setColor(Color.GREEN);
                 clearActiveHint();
-            } else {
-                if (isToBeRemoved) {
-                    activateRemoveEdgeHint();
-                } else {
-                    activateAddEdgeHint();
-                }
             }
         }));
 
@@ -173,6 +169,10 @@ public class ApplicationController extends ControllerBase<Game> {
         setValue(model.activeHint, Hint.HINT_REMOVE_EDGE);
     }
 
+    public void activateSolutionNotFoundHint() {
+        setValue(model.activeHint, Hint.HINT_SOLUTION_NOT_FOUND);
+    }
+
     public void clearActiveHint() {
         setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
     }
@@ -236,7 +236,12 @@ public class ApplicationController extends ControllerBase<Game> {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            } else if (model.activeHint.getValue() != Hint.HINT_CYCLE) {
+                activateSolutionNotFoundHint();
             }
+        } else if (model.activeHint.getValue() == Hint.HINT_SOLUTION_NOT_FOUND
+            && model.activeHint.getValue() != Hint.HINT_CYCLE) {
+            clearActiveHint();
         }
     }
 
@@ -296,7 +301,6 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void handleTipp() {
         setTippEdge();
-        // Todo: HINWEIS
     }
 
     public void setTippEdge() {
@@ -318,8 +322,14 @@ public class ApplicationController extends ControllerBase<Game> {
         }
 
         tippEdge.setColor(Color.ORANGE);
-
         model.tippEdge = tippEdge;
+
+        if (isToBeRemoved) {
+            activateRemoveEdgeHint();
+        } else {
+            activateAddEdgeHint();
+        }
+
         setValue(model.isTippOn, true);
     }
 
