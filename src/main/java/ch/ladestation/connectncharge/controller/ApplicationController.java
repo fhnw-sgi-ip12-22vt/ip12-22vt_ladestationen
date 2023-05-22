@@ -45,9 +45,9 @@ public class ApplicationController extends ControllerBase<Game> {
 
         model.hasCycle.onChange((oldValue, newValue) -> {
             if (newValue) {
-                activateCycleHint();
+                addHint(Hint.HINT_CYCLE);
             } else {
-                clearActiveHint();
+                removeHint(Hint.HINT_CYCLE);
             }
         });
 
@@ -60,9 +60,11 @@ public class ApplicationController extends ControllerBase<Game> {
         }));
 
         model.isTippOn.onChange(((oldValue, newValue) -> {
-            if (oldValue && !newValue) {
+            if (newValue) {
+                addHint(isToBeRemoved ? Hint.HINT_REMOVE_EDGE : Hint.HINT_PICK_EDGE);
+            } else if (oldValue) {
                 model.tippEdge.setColor(Color.GREEN);
-                clearActiveHint();
+                removeHint(isToBeRemoved ? Hint.HINT_REMOVE_EDGE : Hint.HINT_PICK_EDGE);
             }
         }));
 
@@ -80,6 +82,15 @@ public class ApplicationController extends ControllerBase<Game> {
                 model.ignoringInputs = false;
             }
         }));
+
+        model.activeHints.onChange((oldValue, newValue) -> {
+            if (!Arrays.stream(model.activeHints.getValues()).toList().isEmpty()) {
+                setValue(model.activeHint,
+                    Arrays.stream(model.activeHints.getValues()).min(Comparator.comparingInt(Hint::getPriority)).get());
+            } else {
+                setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
+            }
+        });
     }
 
     public void setGPUI(GamePUI gamePUI) {
@@ -156,33 +167,6 @@ public class ApplicationController extends ControllerBase<Game> {
         toggleEdge(edge);
     }
 
-    public void activateCycleHint() {
-        setValue(model.activeHint, Hint.HINT_CYCLE);
-    }
-
-    public void activateAddEdgeHint() {
-        setValue(model.activeHint, Hint.HINT_PICK_EDGE);
-    }
-
-    public void activateRemoveEdgeHint() {
-        setValue(model.activeHint, Hint.HINT_REMOVE_EDGE);
-    }
-
-    public void activateSolutionNotFoundHint() {
-        setValue(model.activeHint, Hint.HINT_SOLUTION_NOT_FOUND);
-    }
-
-    public void clearActiveHint() {
-        if (hasCycle()) {
-            activateCycleHint();
-        } else if (allTerminalsConnected()) {
-            activateSolutionNotFoundHint();
-        } else {
-            setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
-        }
-    }
-
-
     private void toggleEdge(Edge edge) {
         if (edge != null) {
             if (!edge.isOn()) {
@@ -191,10 +175,6 @@ public class ApplicationController extends ControllerBase<Game> {
                 deactivateEdge(edge);
             }
         }
-    }
-
-    public void edgeToggledByApp(Edge edge) {
-        toggleEdge(edge);
     }
 
     private void activateEdge(Edge edge) {
@@ -241,14 +221,11 @@ public class ApplicationController extends ControllerBase<Game> {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            } else if ((model.activeHint.getValue() != Hint.HINT_CYCLE
-                && model.activeHint.getValue() != Hint.HINT_REMOVE_EDGE)
-                || (model.activeHint.getValue() != Hint.HINT_CYCLE
-                && model.activeHint.getValue() != Hint.HINT_PICK_EDGE)) {
-                activateSolutionNotFoundHint();
+            } else {
+                addHint(Hint.HINT_SOLUTION_NOT_FOUND);
             }
         } else {
-            clearActiveHint();
+            removeHint(Hint.HINT_SOLUTION_NOT_FOUND);
         }
     }
 
@@ -295,10 +272,6 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setTerminals(Node[] terms) {
-        /*if (!model.gameStarted.getValue()) {
-            this.terms = terms;
-            return;
-        }*/
         setValues(model.terminals, terms);
     }
 
@@ -323,6 +296,7 @@ public class ApplicationController extends ControllerBase<Game> {
 
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
+            isToBeRemoved = false;
         } else {
             tippEdge = getRandomEdge(edgesToRemove);
             isToBeRemoved = true;
@@ -330,12 +304,6 @@ public class ApplicationController extends ControllerBase<Game> {
 
         tippEdge.setColor(isToBeRemoved ? Color.RED : Color.ORANGE);
         model.tippEdge = tippEdge;
-
-        if (isToBeRemoved) {
-            activateRemoveEdgeHint();
-        } else {
-            activateAddEdgeHint();
-        }
 
         setValue(model.isTippOn, true);
     }
@@ -413,9 +381,6 @@ public class ApplicationController extends ControllerBase<Game> {
         return false;
     }
 
-    private void saveUserScore() {
-    }
-
     private void finishGame() throws IOException {
         setValue(model.isFinished, true);
     }
@@ -429,5 +394,23 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void setEndTime(String endTime) {
         setValue(model.endTime, endTime);
+    }
+
+    public void addHint(Hint hint) {
+        if (!Arrays.stream(model.activeHints.getValues()).toList().contains(hint)) {
+            Hint[] oldValues = model.activeHints.getValues();
+            Hint[] newValues = new Hint[oldValues.length + 1];
+            System.arraycopy(oldValues, 0, newValues, 0, oldValues.length);
+            newValues[newValues.length - 1] = hint;
+            setValues(model.activeHints, newValues);
+        }
+    }
+
+    public void removeHint(Hint hint) {
+        if (Arrays.stream(model.activeHints.getValues()).toList().contains(hint)) {
+            Hint[] oldValues = model.activeHints.getValues();
+            Hint[] newValues = Arrays.stream(oldValues).filter(curr -> curr != hint).toArray(Hint[]::new);
+            setValues(model.activeHints, newValues);
+        }
     }
 }
