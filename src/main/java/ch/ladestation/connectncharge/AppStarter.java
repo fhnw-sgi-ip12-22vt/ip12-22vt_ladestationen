@@ -13,6 +13,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Main Application class
+ */
 public class AppStarter extends Application {
     private static final MvcLogger LOGGER = new MvcLogger();
     private static ApplicationController controller;
