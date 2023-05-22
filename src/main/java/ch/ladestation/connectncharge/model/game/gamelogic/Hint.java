@@ -8,7 +8,7 @@ public enum Hint {
     HINT_CYCLE("Du hast ein Kreis gebildet.\n"
         + "Das heisst, dass dadurch mindestens eine dieser Kanten überflüssig ist und du diese entfernen kannst.",
         Color.RED),
-    HINT_REMOVE_EDGE("Diese orange leuchtende Kante ist nicht in der Lösung enthalten.", Color.GRAY),
+    HINT_REMOVE_EDGE("Diese rote leuchtende Kante ist nicht in der Lösung enthalten.", Color.GRAY),
     HINT_EMPTY_HINT("EMPTY_HINT", Color.BLACK),
 
     HINT_SOLUTION_NOT_FOUND(

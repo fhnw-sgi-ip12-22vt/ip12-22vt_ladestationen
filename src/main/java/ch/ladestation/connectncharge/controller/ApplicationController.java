@@ -46,9 +46,7 @@ public class ApplicationController extends ControllerBase<Game> {
         model.hasCycle.onChange((oldValue, newValue) -> {
             if (newValue) {
                 activateCycleHint();
-            } else if (allTerminalsConnected()) {
-                activateSolutionNotFoundHint();
-            } else if (model.activeHint.getValue() != Hint.HINT_SOLUTION_NOT_FOUND) {
+            } else {
                 clearActiveHint();
             }
         });
@@ -175,7 +173,13 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void clearActiveHint() {
-        setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
+        if (hasCycle()) {
+            activateCycleHint();
+        } else if (allTerminalsConnected()) {
+            activateSolutionNotFoundHint();
+        } else {
+            setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
+        }
     }
 
 
@@ -237,11 +241,13 @@ public class ApplicationController extends ControllerBase<Game> {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
-            } else if (model.activeHint.getValue() != Hint.HINT_CYCLE) {
+            } else if ((model.activeHint.getValue() != Hint.HINT_CYCLE
+                && model.activeHint.getValue() != Hint.HINT_REMOVE_EDGE)
+                || (model.activeHint.getValue() != Hint.HINT_CYCLE
+                && model.activeHint.getValue() != Hint.HINT_PICK_EDGE)) {
                 activateSolutionNotFoundHint();
             }
-        } else if (model.activeHint.getValue() == Hint.HINT_SOLUTION_NOT_FOUND
-            && model.activeHint.getValue() != Hint.HINT_CYCLE) {
+        } else {
             clearActiveHint();
         }
     }
@@ -322,7 +328,7 @@ public class ApplicationController extends ControllerBase<Game> {
             isToBeRemoved = true;
         }
 
-        tippEdge.setColor(Color.ORANGE);
+        tippEdge.setColor(isToBeRemoved ? Color.RED : Color.ORANGE);
         model.tippEdge = tippEdge;
 
         if (isToBeRemoved) {
@@ -375,10 +381,8 @@ public class ApplicationController extends ControllerBase<Game> {
         Map<Node, Node> parent = new HashMap<>();
 
         //get all the edges that haven't been visited yet
-        var islands = selectedEdges.stream()
-            .flatMap(e -> Stream.of(e.getFromNode(), e.getToNode()))
-            .distinct()
-            .toList();
+        var islands =
+            selectedEdges.stream().flatMap(e -> Stream.of(e.getFromNode(), e.getToNode())).distinct().toList();
         while (islands.size() > 0) {
             // Create a stack to perform depth-first search starting from the first node in
             // the first selected edge
@@ -401,11 +405,8 @@ public class ApplicationController extends ControllerBase<Game> {
                     }
                 }
             }
-            islands = selectedEdges.stream()
-                .flatMap(e -> Stream.of(e.getFromNode(), e.getToNode()))
-                .filter(n -> !visited.contains(n))
-                .distinct()
-                .toList();
+            islands = selectedEdges.stream().flatMap(e -> Stream.of(e.getFromNode(), e.getToNode()))
+                .filter(n -> !visited.contains(n)).distinct().toList();
         }
 
         // No cycle is formed
