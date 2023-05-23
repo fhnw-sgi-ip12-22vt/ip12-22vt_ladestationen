@@ -4,9 +4,6 @@ import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.game.gamelogic.Node;
 import ch.ladestation.connectncharge.util.mvcbase.ObservableArray;
-import ch.ladestation.connectncharge.util.mvcbase.ObservableValue;
-import javafx.collections.ArrayChangeListener;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,9 +11,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -29,7 +24,7 @@ class ApplicationControllerTest {
         int[][] trivialCycle = {{1, 2}, {2, 3}, {3, 1}};
         int[][] trivialNoCycle = {{1, 2}, {2, 3}};
         int[][] graph1noCycle = {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 80}, {80, 81}, {81, 82}, {5, 6}, {6, 7}, {8, 9}};
-        int[][] graph2yesCycle = {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 77}, {77, 88}, {6, 7}, {7, 8}, {4, 1},};
+        int[][] graph2yesCycle = {{1, 2}, {2, 3}, {3, 4}, {4, 5}, {5, 6}, {6, 77}, {77, 88}, {6, 7}, {7, 8}, {4, 1}};
         int[][] graph3multipleDisconectedCycles = {{1, 2}, {2, 3}, {3, 4}, {4, 1}, {11, 22}, {22, 33}, {33, 11}};
         int[][] graph4treeAndDisconnectedCycle =
             {{1, 11}, {11, 10}, {1, 12}, {12, 13}, {13, 14},
@@ -46,7 +41,7 @@ class ApplicationControllerTest {
             Arguments.of(graph2yesCycle, true),
             Arguments.of(graph3multipleDisconectedCycles, true),
             //Arguments.of(graph4treeAndDisconnectedCycle, true),
-            Arguments.of(graph5bigCycle,true)
+            Arguments.of(graph5bigCycle, true)
         );
     }
 
