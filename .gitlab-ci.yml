@@ -7,7 +7,7 @@ variables:
     --no-transfer-progress
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
 
-image: maven:17-jdk
+image: maven:latest
 
 cache:
   paths:
