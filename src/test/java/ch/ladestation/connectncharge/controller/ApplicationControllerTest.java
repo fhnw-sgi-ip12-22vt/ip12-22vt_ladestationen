@@ -62,11 +62,11 @@ class ApplicationControllerTest {
 
         cut.awaitCompletion();
 
-        verify(mockedListener).update(new Edge[0], new Edge[] {edge});
         verify(edge, times(1)).on();
         verify(edge, times(0)).setOn(false);
         verify(edge, times(0)).off();
         assertArrayEquals(new Edge[] {edge}, model.activatedEdges.getValues());
+        verify(mockedListener).update(new Edge[0], new Edge[] {edge});
     }
 
     @ParameterizedTest
