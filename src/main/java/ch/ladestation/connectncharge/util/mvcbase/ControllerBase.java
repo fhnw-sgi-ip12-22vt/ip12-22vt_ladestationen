@@ -163,42 +163,42 @@ public abstract class ControllerBase<M> {
     }
 
     /**
-     * Convenience method to toggle a ObservableValue<Boolean>
+     * Convenience method to toggle a {@code ObservableValue<Boolean>}
      */
     protected void toggleValue(ObservableValue<Boolean> observableValue) {
         async(() -> observableValue.setValue(!observableValue.getValue()));
     }
 
     /**
-     * Convenience method to toggle a ObservableArray<Boolean> at position x
+     * Convenience method to toggle a {@code ObservableArray<Boolean>} at position x
      */
     protected void toggle(ObservableArray<Boolean> observableArray, int position) {
         async(() -> observableArray.setValue(position, !observableArray.getValue(position)));
     }
 
     /**
-     * Convenience method to increase a ObservableValue<Integer> by 1
+     * Convenience method to increase a {@code ObservableValue<Integer>} by 1
      */
     protected void increaseValue(ObservableValue<Integer> observableValue) {
         async(() -> observableValue.setValue(observableValue.getValue() + 1));
     }
 
     /**
-     * Convenience method to increase a ObservableArray<Integer> by 1 at position x
+     * Convenience method to increase a {@code ObservableArray<Integer>} by 1 at position x
      */
     protected void increase(ObservableArray<Integer> observableArray, int position) {
         async(() -> observableArray.setValue(position, observableArray.getValue(position) + 1));
     }
 
     /**
-     * Convenience method to decrease a ObservableValue<Integer> by 1
+     * Convenience method to decrease a {@code ObservableValue<Integer>} by 1
      */
     protected void decreaseValue(ObservableValue<Integer> observableValue) {
         async(() -> observableValue.setValue(observableValue.getValue() - 1));
     }
 
     /**
-     * Convenience method to decrease a ObservableArray<Integer> by 1 at position x
+     * Convenience method to decrease a {@code ObservableArray<Integer>} by 1 at position x
      */
     protected void decrease(ObservableArray<Integer> observableArray, int position) {
         async(() -> observableArray.setValue(position, observableArray.getValue(position) - 1));
