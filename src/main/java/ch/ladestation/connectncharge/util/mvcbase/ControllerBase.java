@@ -112,8 +112,10 @@ public abstract class ControllerBase<M> {
 
     /**
      * Only the other base classes 'ViewMixin' and 'PUI_Base' need access, therefore it's 'package private'
+     * ...except when trying to mock this. so nvm.
+     * @return the model of this controller
      */
-    M getModel() {
+    public M getModel() {
         return model;
     }
 
