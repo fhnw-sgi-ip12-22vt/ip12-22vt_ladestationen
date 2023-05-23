@@ -12,8 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -62,24 +60,14 @@ class ApplicationControllerTest {
         cut.setGameStarted(true);
         cut.edgePressed(edge);
 
-        awaitCompletion(cut);
 
-        verify(edge, times(1)).on();
-        verify(edge, times(0)).setOn(false);
-        verify(edge, times(0)).off();
-        assertArrayEquals(new Edge[] {edge}, model.activatedEdges.getValues());
-        verify(mockedListener).update(new Edge[0], new Edge[] {edge});
-    }
-
-    private void awaitCompletion(ApplicationController cut) {
-        CountDownLatch latch = new CountDownLatch(1);
-        cut.runLater(m -> latch.countDown());
-        try {
-            //noinspection ResultOfMethodCallIgnored
-            latch.await(5, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            throw new IllegalStateException("CountDownLatch was interrupted");
-        }
+        cut.runLater(m -> {
+            verify(edge, times(1)).on();
+            verify(edge, times(0)).setOn(false);
+            verify(edge, times(0)).off();
+            assertArrayEquals(new Edge[] {edge}, model.activatedEdges.getValues());
+            verify(mockedListener).update(new Edge[0], new Edge[] {edge});
+        });
     }
 
     @ParameterizedTest
