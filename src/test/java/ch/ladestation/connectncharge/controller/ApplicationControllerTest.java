@@ -40,7 +40,7 @@ class ApplicationControllerTest {
             Arguments.of(graph1noCycle, false),
             Arguments.of(graph2yesCycle, true),
             Arguments.of(graph3multipleDisconectedCycles, true),
-            //Arguments.of(graph4treeAndDisconnectedCycle, true),
+            Arguments.of(graph4treeAndDisconnectedCycle, true),
             Arguments.of(graph5bigCycle, true)
         );
     }
