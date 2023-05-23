@@ -298,12 +298,12 @@ public class ApplicationController extends ControllerBase<Game> {
         setValue(model.isTippOn, false);
     }
 
-    private boolean hasCycle() {
+    public static boolean hasCycle(Edge[] edgeArray) {
         // Create an adjacency list to store the nodes and their neighbors
         Map<Node, List<Node>> adjList = new HashMap<>();
 
         // Create a list of selected edges
-        List<Edge> selectedEdges = Arrays.stream(model.activatedEdges.getValues()).toList();
+        List<Edge> selectedEdges = Arrays.stream(edgeArray).toList();
 
         // If there are less than 2 selected edges, no cycle can be formed
         if (selectedEdges.size() < 2) {
