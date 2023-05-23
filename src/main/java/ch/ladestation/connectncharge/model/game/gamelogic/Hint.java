@@ -13,7 +13,7 @@ public enum Hint {
         + "Das heisst, dass dadurch mindestens eine dieser Kanten überflüssig ist und du diese entfernen kannst.",
         Color.RED, 2),
     HINT_SOLUTION_NOT_FOUND("Du hast zwar alle Häuser miteinander verbunden."
-        + "Jedoch ist dies noch nicht das kostengünstigste Verteilungsnetz.", Color.GRAY, 3);
+        + " Jedoch ist dies noch nicht das kostengünstigste Verteilungsnetz.", Color.GRAY, 3);
 
     private String text;
     private Color color;

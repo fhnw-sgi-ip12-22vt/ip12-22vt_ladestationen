@@ -158,6 +158,12 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         controller.setEndTime(timerLabel.getText().replaceAll("Zeit: ", ""));
     }
 
+    /**
+     *
+     * This method is getter for publicEndTime.
+     *
+     * @return publicEndTime
+     */
     public static String getPublicEndTime() {
         return publicEndTime;
     }
@@ -209,18 +215,13 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
             tippLabel.setText(newValue.getText());
             hintPopupPane.setStyle("-fx-background-color: #" + initColorRGB(newValue) + ";");
-            System.out.println(
-                "newValue.getColor().toString().toLowerCase(): #" + initColorRGB(newValue));
             hintPopupPane.setVisible(true);
         }));
     }
 
     private String initColorRGB(Hint newValue) {
-        Color javafxColor = Color.rgb(
-            newValue.getColor().getRed(),
-            newValue.getColor().getGreen(),
-            newValue.getColor().getBlue()
-        );
+        Color javafxColor =
+            Color.rgb(newValue.getColor().getRed(), newValue.getColor().getGreen(), newValue.getColor().getBlue());
 
         StringBuilder stringBuilder = new StringBuilder(javafxColor.toString().toLowerCase());
         stringBuilder.delete(0, 2);

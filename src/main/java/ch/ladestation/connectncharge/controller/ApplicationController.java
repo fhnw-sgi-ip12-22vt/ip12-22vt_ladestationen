@@ -28,6 +28,10 @@ public class ApplicationController extends ControllerBase<Game> {
     private Edge tippEdge;
     private ScheduledExecutorService blinkingEdgeScheduler;
 
+    /**
+     * This is the constructor of the ApplicationController
+     * @param model
+     */
     public ApplicationController(Game model) {
         super(model);
 
@@ -93,6 +97,10 @@ public class ApplicationController extends ControllerBase<Game> {
         });
     }
 
+    /**
+     * 
+     * @param gamePUI
+     */
     public void setGPUI(GamePUI gamePUI) {
         this.gamePUI = gamePUI;
     }
