@@ -18,13 +18,12 @@ import java.util.logging.Logger;
 public class ApplicationController extends ControllerBase<Game> {
     private static final int MAX_LEVEL = 5;
     private final Logger logger = Logger.getLogger(getClass().getName());
+    public boolean firstBootup = true;
     private Map<Integer, List<Object>> levels;
     private int currentLevel = 1;
     private GamePUI gamePUI;
     private boolean isToBeRemoved = false;
-    private Edge tippEdge;
     private ScheduledExecutorService blinkingEdgeScheduler;
-    public boolean firstBootup = true;
 
     public ApplicationController(Game model) {
         super(model);
@@ -45,12 +44,6 @@ public class ApplicationController extends ControllerBase<Game> {
             }
         }));
 
-        model.isTippOn.onChange(((oldValue, newValue) -> {
-            if (oldValue && !newValue) {
-                model.tippEdge.setColor(Color.GREEN);
-            }
-        }));
-
         model.isCountdownFinished.onChange((oldValue, newValue) -> {
             if (!oldValue && newValue) {
                 instanceTerminals();
@@ -67,10 +60,67 @@ public class ApplicationController extends ControllerBase<Game> {
         }));
     }
 
+    public static boolean hasCycle(Edge[] edgeArray) {
+        // Create an adjacency list to store the nodes and their neighbors
+        Map<Node, List<Node>> adjList = new HashMap<>();
+
+        // Create a list of selected edges
+        List<Edge> selectedEdges = Arrays.stream(edgeArray).toList();
+
+        // If there are less than 2 selected edges, no cycle can be formed
+        if (selectedEdges.size() < 2) {
+            return false;
+        }
+
+        // Create the adjacency list by adding the nodes and their neighbors from the
+        // selected edges
+        for (Edge edge : selectedEdges) {
+            Node node1 = edge.getFromNode();
+            Node node2 = edge.getToNode();
+            if (!adjList.containsKey(node1)) {
+                adjList.put(node1, new ArrayList<>());
+            }
+            if (!adjList.containsKey(node2)) {
+                adjList.put(node2, new ArrayList<>());
+            }
+            adjList.get(node1).add(node2);
+            adjList.get(node2).add(node1);
+        }
+
+        // Create a set to keep track of visited nodes and a map to keep track of their
+        // parent node in the DFS tree
+        Set<Node> visited = new HashSet<>();
+        Map<Node, Node> parent = new HashMap<>();
+
+        // Create a stack to perform depth-first search starting from the first node in
+        // the first selected edge
+        Stack<Node> stack = new Stack<>();
+        Node startNode = selectedEdges.get(0).getFromNode();
+        stack.push(startNode);
+        parent.put(startNode, null);
+        while (!stack.empty()) {
+            Node currNode = stack.pop();
+            visited.add(currNode);
+            List<Node> neighbors = adjList.get(currNode);
+            for (Node neighbor : neighbors) {
+                // If the neighbor node has not been visited, add it to the stack and set its
+                // parent to the current node
+                if (!visited.contains(neighbor)) {
+                    stack.push(neighbor);
+                    parent.put(neighbor, currNode);
+                } else if (parent.get(currNode) != neighbor) {
+                    return true;
+                }
+            }
+        }
+
+        // No cycle is formed
+        return false;
+    }
+
     public void setGPUI(GamePUI gamePUI) {
         this.gamePUI = gamePUI;
     }
-
 
     public void loadLevels() {
         try {
@@ -188,7 +238,6 @@ public class ApplicationController extends ControllerBase<Game> {
         blinkingEdgeScheduler.scheduleAtFixedRate(() -> toggleValue(model.isEdgeBlinking), 0, 1, TimeUnit.SECONDS);
     }
 
-
     public void updateScore(int score) {
         setValue(model.currentScore, score);
     }
@@ -262,11 +311,11 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void handleTipp() {
-        setTippEdge();
+        computeTippEdge();
         // Todo: HINWEIS
     }
 
-    public void setTippEdge() {
+    public void computeTippEdge() {
         List<Edge> edgesToSelect;
         List<Edge> edgesToRemove;
 
@@ -277,6 +326,8 @@ public class ApplicationController extends ControllerBase<Game> {
             .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
             .toList();
 
+        Edge tippEdge;
+
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
         } else {
@@ -284,9 +335,12 @@ public class ApplicationController extends ControllerBase<Game> {
             isToBeRemoved = true;
         }
 
-        tippEdge.setColor(Color.ORANGE);
+        setTippEdge(tippEdge);
+    }
 
-        model.tippEdge = tippEdge;
+    public void setTippEdge(Edge edge) {
+        model.tippEdge = edge;
+        model.tippEdge.setColor(Color.ORANGE);
         setValue(model.isTippOn, true);
     }
 
@@ -296,64 +350,9 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void removeTippEdge() {
         setValue(model.isTippOn, false);
-    }
-
-    public static boolean hasCycle(Edge[] edgeArray) {
-        // Create an adjacency list to store the nodes and their neighbors
-        Map<Node, List<Node>> adjList = new HashMap<>();
-
-        // Create a list of selected edges
-        List<Edge> selectedEdges = Arrays.stream(edgeArray).toList();
-
-        // If there are less than 2 selected edges, no cycle can be formed
-        if (selectedEdges.size() < 2) {
-            return false;
+        if (model.tippEdge != null) {
+            model.tippEdge.setColor(Color.GREEN);
         }
-
-        // Create the adjacency list by adding the nodes and their neighbors from the
-        // selected edges
-        for (Edge edge : selectedEdges) {
-            Node node1 = edge.getFromNode();
-            Node node2 = edge.getToNode();
-            if (!adjList.containsKey(node1)) {
-                adjList.put(node1, new ArrayList<>());
-            }
-            if (!adjList.containsKey(node2)) {
-                adjList.put(node2, new ArrayList<>());
-            }
-            adjList.get(node1).add(node2);
-            adjList.get(node2).add(node1);
-        }
-
-        // Create a set to keep track of visited nodes and a map to keep track of their
-        // parent node in the DFS tree
-        Set<Node> visited = new HashSet<>();
-        Map<Node, Node> parent = new HashMap<>();
-
-        // Create a stack to perform depth-first search starting from the first node in
-        // the first selected edge
-        Stack<Node> stack = new Stack<>();
-        Node startNode = selectedEdges.get(0).getFromNode();
-        stack.push(startNode);
-        parent.put(startNode, null);
-        while (!stack.empty()) {
-            Node currNode = stack.pop();
-            visited.add(currNode);
-            List<Node> neighbors = adjList.get(currNode);
-            for (Node neighbor : neighbors) {
-                // If the neighbor node has not been visited, add it to the stack and set its
-                // parent to the current node
-                if (!visited.contains(neighbor)) {
-                    stack.push(neighbor);
-                    parent.put(neighbor, currNode);
-                } else if (parent.get(currNode) != neighbor) {
-                    return true;
-                }
-            }
-        }
-
-        // No cycle is formed
-        return false;
     }
 
     private void saveUserScore() {
