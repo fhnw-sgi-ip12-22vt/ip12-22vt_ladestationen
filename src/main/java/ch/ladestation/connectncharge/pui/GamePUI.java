@@ -37,9 +37,17 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     private Map<Integer, Segment> segmentIdLUT;
 
     public GamePUI(ApplicationController controller, Context pi4J) {
-        super(controller, pi4J);
+        this(controller, pi4J,null);
     }
 
+    public GamePUI(ApplicationController controller, Context pi4J,Ws281xLedStrip ledStrip){
+        super(controller,pi4J);
+        if(ledStrip != null){
+            this.ledStrip = ledStrip;
+        }else{
+            this.ledStrip = setupLEDStrip();
+        }
+    }
     /**
      * Will set up and initialise the LED-Strip
      *
@@ -52,7 +60,6 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
 
     @Override
     public void initializeParts() {
-        this.ledStrip = setupLEDStrip();
         this.chips = setupGPIOExtensionICs(pi4J);
         this.edges = new ArrayList<>();
         this.nodes = new ArrayList<>();
