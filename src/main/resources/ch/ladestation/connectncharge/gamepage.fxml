@@ -53,9 +53,9 @@
             </children>
         </StackPane>
         <AnchorPane fx:id="shadowPane" onMouseClicked="#handleShadowAnchorPaneClick" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #00022e89;" styleClass="pane-shadow" stylesheets="@../../../css/style.css" visible="false" />
-        <AnchorPane fx:id="hintPopupPane" layoutX="122.0" layoutY="15.0" minHeight="102.0" prefHeight="102.0" prefWidth="555.0" style="-fx-border-radius: 15x;" styleClass="popup-pane-hint" stylesheets="@../../../css/style.css" visible="false">
+        <AnchorPane fx:id="hintPopupPane" layoutX="169.0" layoutY="26.0" minHeight="102.0" prefHeight="102.0" prefWidth="445.0" style="-fx-border-radius: 15x;" styleClass="popup-pane-hint" stylesheets="@../../../css/style.css">
             <children>
-                <Label fx:id="tippLabel" layoutX="10.0" layoutY="12.0" prefHeight="78.0" prefWidth="534.0" text="Du hast ein Kreis gebildet. Das heisst, dass dadurch mindestens eine dieser Kanten überflüssig ist und du diese entfernen kannst." wrapText="true">
+                <Label fx:id="tippLabel" layoutX="7.0" layoutY="7.0" prefHeight="88.0" prefWidth="454.0" text="Du hast ein Kreis gebildet. Das heisst, dass dadurch mindestens eine dieser Kanten überflüssig ist und du diese entfernen kannst." wrapText="true">
                     <font>
                         <Font name="Arial" size="18.0" />
                     </font>

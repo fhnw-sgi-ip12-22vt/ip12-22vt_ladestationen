@@ -35,6 +35,11 @@
             </image>
         </ImageView>
       <Button layoutX="184.0" layoutY="37.0" minHeight="363.0" mnemonicParsing="false" onAction="#handleNextButton" prefHeight="363.0" prefWidth="400.0" styleClass="hidden-button" visible="false" />
+      <Label layoutX="164.0" layoutY="387.0" prefHeight="66.0" prefWidth="472.0" text="Drücke die leuchtende Kante, um das Spiel zu starten." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
       <AnchorPane fx:id="shadowPane" layoutX="-16.0" layoutY="-13.0" onMouseClicked="#handleShadowAnchorPaneClick" prefHeight="503.0" prefWidth="826.0" style="-fx-background-color: #00022e89;" styleClass="pane-shadow" stylesheets="@../../../css/style.css" visible="false" />
         <AnchorPane fx:id="menuPane" layoutX="550.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="274.0" style="-fx-background-radius: 25px;" styleClass="menu-pane" stylesheets="@../../../css/style.css" visible="false">
             <children>
@@ -111,10 +116,5 @@
                 </Button>
             </children>
         </AnchorPane>
-      <Label layoutX="164.0" layoutY="387.0" prefHeight="66.0" prefWidth="472.0" text="Drücke die leuchtende Kante, um das Spiel zu starten." textAlignment="CENTER" textFill="WHITE" wrapText="true">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
     </children>
 </AnchorPane>

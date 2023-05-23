@@ -42,7 +42,7 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     private Stage stage;
     @FXML
     private Scene scene;
-    ApplicationController controller;
+    private ApplicationController controller;
 
     //private final String endTime = String.valueOf(controller.scoreForEndScreen());
 
@@ -54,13 +54,7 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     @FXML
     public void handlePlayAgainButton(ActionEvent actionEvent) throws IOException {
         controller.playAgain();
-        showGameScreen(actionEvent);
-
-    }
-
-    public void showGameScreen(ActionEvent actionEvent) throws IOException {
         StageHandler.openStage(FilePath.EDGECLICKSCREEN.getFilePath());
-
     }
 
     @FXML

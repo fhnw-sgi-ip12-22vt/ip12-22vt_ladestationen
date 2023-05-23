@@ -49,6 +49,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     private String endTime = GamePageController.getPublicEndTime();
     private String playerName = NameInputController.getCurrentName();
 
+    ApplicationController controller;
 
     @FXML
     public void initialize() {
@@ -56,8 +57,8 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
         HighScoreTable.initColumns(restRankColumn, restNameColumn, restTimeColumn);
         HighScoreTable.initRowHeight(tableView);
         HighScoreTable.initRowHeight(restTableView);
-        iniButtons();
         fetchDataAndPopulateTableViews();
+        iniButtons();
     }
 
     public void setPlayerName(String playerName) {
@@ -69,7 +70,8 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     public void showGamePage(ActionEvent actionEvent) throws IOException {
-        StageHandler.openStage(FilePath.GAMEPAGE.getFilePath());
+        controller.playAgain();
+        StageHandler.openStage(FilePath.EDGECLICKSCREEN.getFilePath());
     }
 
     public void showBonusPage(ActionEvent actionEvent) {
@@ -104,6 +106,8 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
         if (playerName != null && endTime != null) {
             btnBonus.setVisible(true);
             btnPlayAgain.setVisible(true);
+            GamePageController.setPublicEndTime(null);
+            NameInputController.setCurrentName(null);
         }
     }
 

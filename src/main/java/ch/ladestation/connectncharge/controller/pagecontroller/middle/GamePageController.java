@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -102,8 +101,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         endGampePopupPane.setOpacity(1);
         shadowPane.setVisible(true);
         shadowPane.setOpacity(1);
-
-        controller.quitGame();
     }
 
     @FXML
@@ -112,6 +109,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         endGampePopupPane.setVisible(false);
         endGampePopupPane.setOpacity(0);
         MyTimer.stop();
+        controller.quitGame();
     }
 
     @FXML
@@ -156,10 +154,15 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     private void saveEndTime() {
         controller.setEndTime(timerLabel.getText().replaceAll("Zeit: ", ""));
+        publicEndTime = timerLabel.getText().replaceAll("Zeit: ", "");
     }
 
     public static String getPublicEndTime() {
         return publicEndTime;
+    }
+
+    public static void setPublicEndTime(String publicEndTimeParam) {
+        publicEndTime = publicEndTimeParam;
     }
 
     private void endGame() {
@@ -208,23 +211,8 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
             }
 
             tippLabel.setText(newValue.getText());
-            hintPopupPane.setStyle("-fx-background-color: #" + initColorRGB(newValue) + ";");
-            System.out.println(
-                "newValue.getColor().toString().toLowerCase(): #" + initColorRGB(newValue));
             hintPopupPane.setVisible(true);
         }));
-    }
-
-    private String initColorRGB(Hint newValue) {
-        Color javafxColor = Color.rgb(
-            newValue.getColor().getRed(),
-            newValue.getColor().getGreen(),
-            newValue.getColor().getBlue()
-        );
-
-        StringBuilder stringBuilder = new StringBuilder(javafxColor.toString().toLowerCase());
-        stringBuilder.delete(0, 2);
-        return stringBuilder.toString();
     }
 
     @Override
