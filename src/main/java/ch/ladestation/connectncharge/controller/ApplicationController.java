@@ -386,17 +386,17 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void playAgain() {
-        setValue(model.isFinished, false);
+        //setValue(model.isFinished, false);
         deactivateAllEdges();
         deactivateAllNodes();
         setValue(model.gameStarted, false);
     }
 
     public void quitGame() {
-        setValue(model.isFinished, false);
+        //setValue(model.isFinished, false);
         deactivateAllEdges();
         deactivateAllNodes();
-        setValue(model.gameStarted, true);
+        //setValue(model.gameStarted, true);
     }
 
     public void setEndTime(String endTime) {

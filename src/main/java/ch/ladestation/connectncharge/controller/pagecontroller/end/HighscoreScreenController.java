@@ -85,6 +85,7 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     @Override
     public void setController(ApplicationController controller) {
         init(controller);
+        this.controller = controller;
     }
 
     @Override

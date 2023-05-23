@@ -10,7 +10,7 @@ public enum Hint {
     HINT_PICK_EDGE("Diese orange leuchtende Kante ist in der Lösung enthalten.", Color.ORANGE, 1),
     HINT_REMOVE_EDGE("Diese rote leuchtende Kante ist nicht in der Lösung enthalten.", Color.GRAY, 1),
     HINT_CYCLE("Du hast ein Kreis gebildet.\n"
-        + " Das heisst, dass dadurch mindestens eine dieser Kanten überflüssig ist und du diese entfernen kannst.",
+        + "Das heisst, dass dadurch mindestens eine dieser Kanten überflüssig ist und du diese entfernen kannst.",
         Color.RED, 2),
     HINT_SOLUTION_NOT_FOUND("Du hast zwar alle Häuser miteinander verbunden."
         + " Jedoch ist dies noch nicht das kostengünstigste Verteilungsnetz.", Color.GRAY, 3);
