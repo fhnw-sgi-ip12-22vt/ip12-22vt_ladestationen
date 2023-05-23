@@ -38,19 +38,22 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     private Map<Integer, Segment> segmentIdLUT;
     private DigitalInput[] interruptPins;
     private Spi spiInterface;
+    private Game modelInstance;
 
     public GamePUI(ApplicationController controller, Context pi4J) {
-        this(controller, pi4J,null);
+        this(controller, pi4J, null);
     }
 
-    public GamePUI(ApplicationController controller, Context pi4J,Ws281xLedStrip ledStrip){
-        super(controller,pi4J);
-        if(ledStrip != null){
+    public GamePUI(ApplicationController controller, Context pi4J, Ws281xLedStrip ledStrip) {
+        super(controller, pi4J);
+        if (ledStrip != null) {
             this.ledStrip = ledStrip;
-        }else{
+        } else {
             this.ledStrip = setupLEDStrip();
         }
+        setupOwnModelToUiBindings(this.modelInstance);
     }
+
     /**
      * Will set up and initialise the LED-Strip
      *
@@ -76,8 +79,23 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         addInterruptsToPinViews(controller);
     }
 
+    /**
+     * this is only used to store the model instance to call
+     * {@link GamePUI#setupOwnModelToUiBindings(Game)} later, because
+     * otherwise it is impossible to mock the LED-strip class.
+     * <p>
+     * If the mock is passed to the Ctor
+     * it cannot be assigned to {@code this.ledstrip} in time before super calls
+     * setupModelToUiBindings(). So instead call it later but store the model until then.
+     *
+     * @param model
+     */
     @Override
     public void setupModelToUiBindings(Game model) {
+        this.modelInstance = model;
+    }
+
+    public void setupOwnModelToUiBindings(Game model) {
         onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
             synchronized (ledStrip) {
                 changeMultipleLEDSegmentState(oldValue, false);
@@ -122,7 +140,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         int from = seg.getStartIndex();
         int to = seg.getEndIndex();
         for (var i = from; i <= to; ++i) {
-            ledStrip.setPixel(i, state ? seg.getColor() : new Color(0, 0, 0));
+            ledStrip.setPixel(i, state ? seg.getColor() : Color.BLACK);
         }
     }
 
@@ -177,6 +195,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
 
     /**
      * get the spi interface of the MCP23S17 chips
+     *
      * @return the pi4j {@link Spi} object
      */
     public Spi getSpiInterface() {
@@ -202,7 +221,8 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         var interruptPinChip3 = pi4J.create(interruptPinConfig.address(25).id("interrupt3"));
         var interruptPinChip4 = pi4J.create(interruptPinConfig.address(27).id("interrupt4"));
 
-        interruptPins = new DigitalInput[] {interruptPinChip0, interruptPinChip1, interruptPinChip2, interruptPinChip3, interruptPinChip4};
+        interruptPins = new DigitalInput[] {interruptPinChip0, interruptPinChip1, interruptPinChip2, interruptPinChip3,
+            interruptPinChip4};
         List<MCP23S17> interruptChips;
         try {
             interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
@@ -216,6 +236,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
 
     /**
      * Get the pins to which the chips are connected
+     *
      * @return an array of {@link DigitalInput} objects
      */
     public DigitalInput[] getInterruptPins() {
