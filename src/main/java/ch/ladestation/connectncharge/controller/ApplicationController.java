@@ -22,7 +22,7 @@ public class ApplicationController extends ControllerBase<Game> {
     private final Logger logger = Logger.getLogger(getClass().getName());
     public boolean firstBootup = true;
     private Map<Integer, List<Object>> levels;
-    private int currentLevel = 1;
+    private int currentLevel = 2;
     private GamePUI gamePUI;
     private boolean isToBeRemoved = false;
     private Edge tippEdge;
@@ -90,6 +90,10 @@ public class ApplicationController extends ControllerBase<Game> {
             } else {
                 setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
             }
+        });
+
+        model.endTime.onChange((oldValue, newValue) -> {
+            System.out.println("model.endTime: " + model.endTime);
         });
     }
 
@@ -386,7 +390,7 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void playAgain() {
-        //setValue(model.isFinished, false);
+        setValue(model.isFinished, false);
         deactivateAllEdges();
         deactivateAllNodes();
         setValue(model.gameStarted, false);

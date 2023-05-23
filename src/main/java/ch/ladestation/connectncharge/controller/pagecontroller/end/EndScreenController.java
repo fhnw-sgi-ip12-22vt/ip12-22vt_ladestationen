@@ -125,8 +125,7 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
 
     @Override
     public void setupModelToUiBindings(Game model) {
-        //onChangeOf(model.endTime).convertedBy(String::valueOf).update(lblTime.textProperty());
-        System.out.println("model.endTime: " + model.endTime);
+        onChangeOf(model.endTime).convertedBy(String::valueOf).update(lblTime.textProperty());
         System.out.println("lblTime.textProperty(): " + lblTime.textProperty());
     }
 }
