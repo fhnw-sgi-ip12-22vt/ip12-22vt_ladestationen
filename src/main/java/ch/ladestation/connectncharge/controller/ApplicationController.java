@@ -69,15 +69,15 @@ public class ApplicationController extends ControllerBase<Game> {
         model.isCountdownFinished.onChange((oldValue, newValue) -> {
             if (!oldValue && newValue) {
                 instanceTerminals();
-                toggleIgnoreInputs();
+                stopIgnoringInputs();
             }
         });
 
         model.isFinished.onChange(((oldValue, newValue) -> {
             if (!oldValue && newValue) {
-                model.ignoringInputs = true;
+                startIgnoringInputs();
             } else if (oldValue && !newValue) {
-                model.ignoringInputs = false;
+                stopIgnoringInputs();
             }
         }));
 
@@ -89,6 +89,14 @@ public class ApplicationController extends ControllerBase<Game> {
                 setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
             }
         });
+    }
+
+    private void startIgnoringInputs() {
+        model.ignoringInputs = true;
+    }
+
+    private void stopIgnoringInputs() {
+        model.ignoringInputs = false;
     }
 
     public static boolean hasCycle(Edge[] edgeArray) {
@@ -177,13 +185,9 @@ public class ApplicationController extends ControllerBase<Game> {
             solution.stream().map((sol) -> gamePUI.lookUpEdge(sol.get(0), sol.get(1))).toArray(Edge[]::new);
         setSolution(solutionEdges);
 
-        model.blinkingEdge = (Edge) gamePUI.lookUpSegmentIdToSegment(90);
-        startBlinkingEdge();
 
-    }
+        startBlinkingEdge((Edge) gamePUI.lookUpSegmentIdToSegment(90));
 
-    public void toggleIgnoreInputs() {
-        model.ignoringInputs = !model.ignoringInputs;
     }
 
     private void instanceTerminals() {
@@ -213,7 +217,7 @@ public class ApplicationController extends ControllerBase<Game> {
                 setValue(model.isEdgeBlinking, false);
                 blinkingEdgeScheduler.shutdown();
                 setGameStarted(true);
-                toggleIgnoreInputs();
+                startIgnoringInputs();
             }
             return;
         }
@@ -267,7 +271,8 @@ public class ApplicationController extends ControllerBase<Game> {
         setValues(model.terminals, new Node[0]);
     }
 
-    public void startBlinkingEdge() {
+    public void startBlinkingEdge(Edge edg) {
+        model.blinkingEdge = edg;
         blinkingEdgeScheduler = Executors.newScheduledThreadPool(1);
         blinkingEdgeScheduler.scheduleAtFixedRate(() -> toggleValue(model.isEdgeBlinking), 0, 1, TimeUnit.SECONDS);
     }

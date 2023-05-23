@@ -3,7 +3,11 @@ package ch.ladestation.connectncharge.controller;
 import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.game.gamelogic.Node;
+import ch.ladestation.connectncharge.pui.GamePUI;
+import ch.ladestation.connectncharge.util.Pi4JContext;
 import ch.ladestation.connectncharge.util.mvcbase.ObservableArray;
+import com.github.mbelling.ws281x.Ws281xLedStrip;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -115,4 +119,44 @@ class ApplicationControllerTest {
         return ret.toArray(Edge[]::new);
     }
 
+    @Test
+    @DisplayName("Test if accepting a hint edge (add edge) removes the hint")
+    public void testHintGoesAway() {
+
+        //given
+        var model = new Game();
+        var controller = new ApplicationController(model);
+
+        var mockLedStrip = mock(Ws281xLedStrip.class);
+        GamePUI pui = new GamePUI(controller, Pi4JContext.createMockContext(), mockLedStrip);
+        controller.setGPUI(pui);
+
+        controller.loadLevels();
+
+        assertArrayEquals(new Edge[0], model.solution.getValues());
+
+        controller.loadNextLevel();
+        controller.awaitCompletion();
+        controller.edgePressed(model.blinkingEdge);
+        controller.awaitCompletion();
+        controller.setCountdownFinished();
+
+
+        controller.awaitCompletion();
+
+        assertTrue(model.gameStarted.getValue());
+        assertTrue(model.isCountdownFinished.getValue());
+        var sol = model.solution.getValues();
+        assertTrue(sol.length > 0);
+        assertFalse(model.ignoringInputs);
+        var almost = new Edge[sol.length - 1];
+        for (int i = 1; i < sol.length; i++) {
+            controller.edgePressed(sol[i]);
+            almost[i - 1] = sol[i];
+        }
+        controller.awaitCompletion();
+        controller.awaitCompletion();
+
+
+    }
 }
