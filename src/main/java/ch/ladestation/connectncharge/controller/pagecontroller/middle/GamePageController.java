@@ -5,8 +5,8 @@ import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.model.game.gameinfo.MyTimer;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
-import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.model.game.gamelogic.Hint;
+import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -83,7 +84,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     }
 
     @FXML
-    private void handleEndGameButton(ActionEvent event) {
+    private void handleQuitGameButton(ActionEvent event) {
         Button button = (Button) event.getSource();
         String buttonId = button.getId();
 
@@ -101,6 +102,8 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         endGampePopupPane.setOpacity(1);
         shadowPane.setVisible(true);
         shadowPane.setOpacity(1);
+
+        controller.quitGame();
     }
 
     @FXML
@@ -177,6 +180,11 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         return costs;
     }
 
+    /**
+     * This method updates the ui elements reactively from the model.
+     *
+     * @param model
+     */
     @Override
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.currentScore).convertedBy(String::valueOf).update(costs.textProperty());
@@ -200,8 +208,23 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
             }
 
             tippLabel.setText(newValue.getText());
+            hintPopupPane.setStyle("-fx-background-color: #" + initColorRGB(newValue) + ";");
+            System.out.println(
+                "newValue.getColor().toString().toLowerCase(): #" + initColorRGB(newValue));
             hintPopupPane.setVisible(true);
         }));
+    }
+
+    private String initColorRGB(Hint newValue) {
+        Color javafxColor = Color.rgb(
+            newValue.getColor().getRed(),
+            newValue.getColor().getGreen(),
+            newValue.getColor().getBlue()
+        );
+
+        StringBuilder stringBuilder = new StringBuilder(javafxColor.toString().toLowerCase());
+        stringBuilder.delete(0, 2);
+        return stringBuilder.toString();
     }
 
     @Override

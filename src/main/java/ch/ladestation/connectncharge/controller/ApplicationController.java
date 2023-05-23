@@ -2,8 +2,8 @@ package ch.ladestation.connectncharge.controller;
 
 import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
-import ch.ladestation.connectncharge.model.game.gamelogic.Node;
 import ch.ladestation.connectncharge.model.game.gamelogic.Hint;
+import ch.ladestation.connectncharge.model.game.gamelogic.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
@@ -381,11 +381,18 @@ public class ApplicationController extends ControllerBase<Game> {
         return false;
     }
 
-    private void finishGame() throws IOException {
+    public void finishGame() throws IOException {
         setValue(model.isFinished, true);
     }
 
     public void playAgain() {
+        setValue(model.isFinished, false);
+        deactivateAllEdges();
+        deactivateAllNodes();
+        setValue(model.gameStarted, false);
+    }
+
+    public void quitGame() {
         setValue(model.isFinished, false);
         deactivateAllEdges();
         deactivateAllNodes();

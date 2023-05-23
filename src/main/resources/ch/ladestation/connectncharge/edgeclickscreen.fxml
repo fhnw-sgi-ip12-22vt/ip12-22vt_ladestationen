@@ -14,7 +14,7 @@
     <children>
         <Circle fill="#f4e158" layoutX="800.0" radius="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="loading-button" />
         <Circle fx:id="r" fill="#f4e158" radius="100.0" stroke="BLACK" strokeType="INSIDE" />
-        <Label layoutX="131.0" layoutY="100.0" prefHeight="66.0" prefWidth="491.0" text="Drücke die leuchtende Kante, um das Spiel zu starten" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+        <Label layoutX="113.0" layoutY="67.0" prefHeight="66.0" prefWidth="574.0" text="Verbinde anschliessend die 13 blau aufleuchtenden Häuser mit dem kürzesten und kostengünstigsten Weg." textAlignment="CENTER" textFill="WHITE" wrapText="true">
             <font>
                 <Font size="20.0" />
             </font>
@@ -29,7 +29,7 @@
                 <Button fx:id="stackMenu" mnemonicParsing="false" onAction="#handleStackMenuClick" opacity="0.0" prefHeight="59.0" prefWidth="54.0" styleClass="hidden-button" stylesheets="@../../../css/style.css" textFill="#ffffff00" />
             </children>
         </StackPane>
-        <ImageView fx:id="gifImageView" fitHeight="215.0" fitWidth="500.0" layoutX="127.0" layoutY="186.0">
+        <ImageView fx:id="gifImageView" fitHeight="215.0" fitWidth="500.0" layoutX="150.0" layoutY="172.0">
             <image>
                 <Image url="@../../../gifs/AnimationILU.gif" />
             </image>
@@ -111,5 +111,10 @@
                 </Button>
             </children>
         </AnchorPane>
+      <Label layoutX="164.0" layoutY="387.0" prefHeight="66.0" prefWidth="472.0" text="Drücke die leuchtende Kante, um das Spiel zu starten." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

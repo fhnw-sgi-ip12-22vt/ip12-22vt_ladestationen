@@ -66,6 +66,10 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         addInterruptsToPinViews(controller);
     }
 
+    /**
+     * This method binds the model reactively to the ledstrips.
+     * @param model
+     */
     @Override
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
