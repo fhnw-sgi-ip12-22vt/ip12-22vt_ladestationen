@@ -1420,8 +1420,7 @@ public final class MCP23S17 extends Component {
         var chipSelectConfig = DigitalOutput.newConfigBuilder(pi4j)
             .id("CS" + 2)
             .name("dummy chip select")
-            .address(2)
-            .provider("pigpio-digital-output");
+            .address(2);
 
         var chipSelect = pi4j.create(chipSelectConfig);
 
@@ -1609,4 +1608,13 @@ public final class MCP23S17 extends Component {
             }
         });
     }
+
+    /**
+     * get the pi4j {@link Spi} object
+     * @return the pi4j {@link Spi} object
+     */
+    public Spi getSpi() {
+        return spi;
+    }
+
 }
