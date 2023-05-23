@@ -14,6 +14,7 @@ import com.github.mbelling.ws281x.Ws281xLedStrip;
 import com.pi4j.context.Context;
 import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.PullResistance;
+import com.pi4j.io.spi.Spi;
 import com.pi4j.io.spi.SpiBus;
 
 import java.io.IOException;
@@ -35,9 +36,22 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     private List<Node> nodes;
     private Map<Integer, Map<Integer, Edge>> pinToEdgeLUT;
     private Map<Integer, Segment> segmentIdLUT;
+    private DigitalInput[] interruptPins;
+    private Spi spiInterface;
+    private Game modelInstance;
 
     public GamePUI(ApplicationController controller, Context pi4J) {
+        this(controller, pi4J, null);
+    }
+
+    public GamePUI(ApplicationController controller, Context pi4J, Ws281xLedStrip ledStrip) {
         super(controller, pi4J);
+        if (ledStrip != null) {
+            this.ledStrip = ledStrip;
+        } else {
+            this.ledStrip = setupLEDStrip();
+        }
+        setupOwnModelToUiBindings(this.modelInstance);
     }
 
     /**
@@ -52,7 +66,6 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
 
     @Override
     public void initializeParts() {
-        this.ledStrip = setupLEDStrip();
         this.chips = setupGPIOExtensionICs(pi4J);
         this.edges = new ArrayList<>();
         this.nodes = new ArrayList<>();
@@ -67,11 +80,26 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     }
 
     /**
-     * This method binds the model reactively to the ledstrips.
+     * this is only used to store the model instance to call
+     * {@link GamePUI#setupOwnModelToUiBindings(Game)} later, because
+     * otherwise it is impossible to mock the LED-strip class.
+     * <p>
+     * If the mock is passed to the Ctor
+     * it cannot be assigned to {@code this.ledstrip} in time before super calls
+     * setupModelToUiBindings(). So instead call it later but store the model until then.
+     *
      * @param model
      */
     @Override
     public void setupModelToUiBindings(Game model) {
+        this.modelInstance = model;
+    }
+
+    /**
+     * This method binds the model reactively to the ledstrips.
+     * @param model
+     */
+    public void setupOwnModelToUiBindings(Game model) {
         onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
             synchronized (ledStrip) {
                 changeMultipleLEDSegmentState(oldValue, false);
@@ -116,7 +144,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         int from = seg.getStartIndex();
         int to = seg.getEndIndex();
         for (var i = from; i <= to; ++i) {
-            ledStrip.setPixel(i, state ? seg.getColor() : new Color(0, 0, 0));
+            ledStrip.setPixel(i, state ? seg.getColor() : Color.BLACK);
         }
     }
 
@@ -170,6 +198,15 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     }
 
     /**
+     * get the spi interface of the MCP23S17 chips
+     *
+     * @return the pi4j {@link Spi} object
+     */
+    public Spi getSpiInterface() {
+        return spiInterface;
+    }
+
+    /**
      * Will set up and initialise the MCP23S17 GPIO-Extension ICs
      *
      * @return two fully configured lists of {@link MCP23S17.PinView} objects.
@@ -180,7 +217,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     private List<MCP23S17> setupGPIOExtensionICs(Context pi4J) {
         var interruptPinConfig =
             DigitalInput.newConfigBuilder(pi4J).id("interrupt0").name("a MCP interrupt").address(22)
-                .pull(PullResistance.PULL_UP).provider("pigpio-digital-input");
+                .pull(PullResistance.PULL_UP);
 
         var interruptPinChip0 = pi4J.create(interruptPinConfig);
         var interruptPinChip1 = pi4J.create(interruptPinConfig.address(23).id("interrupt1"));
@@ -188,17 +225,26 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         var interruptPinChip3 = pi4J.create(interruptPinConfig.address(25).id("interrupt3"));
         var interruptPinChip4 = pi4J.create(interruptPinConfig.address(27).id("interrupt4"));
 
-        DigitalInput[] interruptPins =
-            {interruptPinChip0, interruptPinChip1, interruptPinChip2, interruptPinChip3, interruptPinChip4};
+        interruptPins = new DigitalInput[] {interruptPinChip0, interruptPinChip1, interruptPinChip2, interruptPinChip3,
+            interruptPinChip4};
         List<MCP23S17> interruptChips;
         try {
             interruptChips = MCP23S17.multipleNewOnSameBusWithTiedInterrupts(
-
                 pi4J, SpiBus.BUS_1, interruptPins, 5, true);
         } catch (IOException e) {
             throw new RuntimeException("Fatal error when instantiating MCP23S17 chips: " + e.getMessage());
         }
+        spiInterface = interruptChips.get(0).getSpi();
         return interruptChips;
+    }
+
+    /**
+     * Get the pins to which the chips are connected
+     *
+     * @return an array of {@link DigitalInput} objects
+     */
+    public DigitalInput[] getInterruptPins() {
+        return interruptPins;
     }
 
     public void instanceSegments() {
