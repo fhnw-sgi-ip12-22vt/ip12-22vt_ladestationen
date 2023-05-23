@@ -2,6 +2,7 @@ package ch.ladestation.connectncharge.controller;
 
 import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
+import ch.ladestation.connectncharge.model.game.gamelogic.Hint;
 import ch.ladestation.connectncharge.model.game.gamelogic.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
@@ -14,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class ApplicationController extends ControllerBase<Game> {
     private static final int MAX_LEVEL = 5;
@@ -29,10 +31,22 @@ public class ApplicationController extends ControllerBase<Game> {
         super(model);
 
         model.activatedEdges.onChange((oldValue, newValue) -> {
-            if (model.gameStarted.getValue()) {
-                updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
-                checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
-                // Todo: Checks for Cycle
+            if (!model.gameStarted.getValue()) {
+                return;
+            }
+
+            updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+            checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+
+            setValue(model.hasCycle, hasCycle());
+
+        });
+
+        model.hasCycle.onChange((oldValue, newValue) -> {
+            if (newValue) {
+                addHint(Hint.HINT_CYCLE);
+            } else {
+                removeHint(Hint.HINT_CYCLE);
             }
         });
 
@@ -41,6 +55,14 @@ public class ApplicationController extends ControllerBase<Game> {
                 increaseCurrentLevel();
                 loadNextLevel();
                 setValue(model.isCountdownFinished, false);
+            }
+        }));
+
+        model.isTippOn.onChange(((oldValue, newValue) -> {
+            if (newValue) {
+                addHint(isToBeRemoved ? Hint.HINT_REMOVE_EDGE : Hint.HINT_PICK_EDGE);
+            } else if (oldValue) {
+                removeHint(isToBeRemoved ? Hint.HINT_REMOVE_EDGE : Hint.HINT_PICK_EDGE);
             }
         }));
 
@@ -58,6 +80,15 @@ public class ApplicationController extends ControllerBase<Game> {
                 model.ignoringInputs = false;
             }
         }));
+
+        model.activeHints.onChange((oldValue, newValue) -> {
+            if (!Arrays.stream(model.activeHints.getValues()).toList().isEmpty()) {
+                setValue(model.activeHint,
+                    Arrays.stream(model.activeHints.getValues()).min(Comparator.comparingInt(Hint::getPriority)).get());
+            } else {
+                setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
+            }
+        });
     }
 
     public static boolean hasCycle(Edge[] edgeArray) {
@@ -205,10 +236,6 @@ public class ApplicationController extends ControllerBase<Game> {
         }
     }
 
-    public void edgeToggledByApp(Edge edge) {
-        toggleEdge(edge);
-    }
-
     private void activateEdge(Edge edge) {
         edge.on();
         Edge[] oldValues = model.activatedEdges.getValues();
@@ -252,7 +279,11 @@ public class ApplicationController extends ControllerBase<Game> {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            } else {
+                addHint(Hint.HINT_SOLUTION_NOT_FOUND);
             }
+        } else {
+            removeHint(Hint.HINT_SOLUTION_NOT_FOUND);
         }
     }
 
@@ -299,10 +330,6 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setTerminals(Node[] terms) {
-        /*if (!model.gameStarted.getValue()) {
-            this.terms = terms;
-            return;
-        }*/
         setValues(model.terminals, terms);
     }
 
@@ -312,7 +339,6 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void handleTipp() {
         computeTippEdge();
-        // Todo: HINWEIS
     }
 
     public void computeTippEdge() {
@@ -330,6 +356,7 @@ public class ApplicationController extends ControllerBase<Game> {
 
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
+            isToBeRemoved = false;
         } else {
             tippEdge = getRandomEdge(edgesToRemove);
             isToBeRemoved = true;
@@ -340,7 +367,7 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void setTippEdge(Edge edge) {
         model.tippEdge = edge;
-        model.tippEdge.setColor(Color.ORANGE);
+        model.tippEdge.setColor(isToBeRemoved ? Color.RED : Color.ORANGE);
         setValue(model.isTippOn, true);
     }
 
@@ -355,10 +382,7 @@ public class ApplicationController extends ControllerBase<Game> {
         }
     }
 
-    private void saveUserScore() {
-    }
-
-    private void finishGame() throws IOException {
+    public void finishGame() throws IOException {
         setValue(model.isFinished, true);
     }
 
@@ -369,7 +393,32 @@ public class ApplicationController extends ControllerBase<Game> {
         setGameStarted(false);
     }
 
+    public void quitGame() {
+        setValue(model.isFinished, false);
+        deactivateAllEdges();
+        deactivateAllNodes();
+        setGameStarted(false);
+    }
+
     public void setEndTime(String endTime) {
         setValue(model.endTime, endTime);
+    }
+
+    public void addHint(Hint hint) {
+        if (!Arrays.stream(model.activeHints.getValues()).toList().contains(hint)) {
+            Hint[] oldValues = model.activeHints.getValues();
+            Hint[] newValues = new Hint[oldValues.length + 1];
+            System.arraycopy(oldValues, 0, newValues, 0, oldValues.length);
+            newValues[newValues.length - 1] = hint;
+            setValues(model.activeHints, newValues);
+        }
+    }
+
+    public void removeHint(Hint hint) {
+        if (Arrays.stream(model.activeHints.getValues()).toList().contains(hint)) {
+            Hint[] oldValues = model.activeHints.getValues();
+            Hint[] newValues = Arrays.stream(oldValues).filter(curr -> curr != hint).toArray(Hint[]::new);
+            setValues(model.activeHints, newValues);
+        }
     }
 }

@@ -95,6 +95,10 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
         this.modelInstance = model;
     }
 
+    /**
+     * This method binds the model reactively to the ledstrips.
+     * @param model
+     */
     public void setupOwnModelToUiBindings(Game model) {
         onChangeOf(model.activatedEdges).execute(((oldValue, newValue) -> {
             synchronized (ledStrip) {
