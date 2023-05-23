@@ -15,26 +15,27 @@ cache:
 
 stages:
   - build
-  - test
+  - documentation
 
-pages:
+test:
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS package
-    - mvn site
-    - mv target/site public
   rules:
     - when: always
   artifacts:
     paths:
       - "target/*.jar"
-      - public
     reports:
       junit: "target/surefire-reports/*.xml"
 
-test:
-  stage: test
+pages:
+  stage: documentation
   script:
-    - mvn test
-    # When the test files are available
-    #- mvn test -Dtest=ch.ladestation.connectncharge.controller.*,ch.ladestation.connectncharge.model.*
+    - mvn $MAVEN_CLI_OPTS package site
+    - mv target/site public
+  rules:
+    - when: always
+  artifacts:
+    paths:
+      - public

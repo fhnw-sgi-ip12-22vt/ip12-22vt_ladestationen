@@ -1,4 +1,4 @@
-open module ch.ladestation.connectncharge {
+open module connectncharge {
     requires javafx.controls;
     requires javafx.fxml;
 
