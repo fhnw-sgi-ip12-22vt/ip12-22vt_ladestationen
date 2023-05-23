@@ -269,9 +269,9 @@
 
 .root-pane .keyboardlayout {
     -fx-text-fill: #000000;
-    -fx-min-width: 45px;
+    -fx-min-width: 62px;
     -fx-min-height: 45px;
-    -fx-max-width: 45px;
+    -fx-max-width: 62px;
     -fx-max-height: 45px;
     -fx-background-radius: 5px;
     -fx-background-color: #FFFFFF;
