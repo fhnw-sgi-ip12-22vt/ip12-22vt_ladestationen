@@ -6,6 +6,7 @@ import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
 import ch.ladestation.connectncharge.model.game.gameinfo.MyTimer;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.text.FilePath;
+import ch.ladestation.connectncharge.model.game.gamelogic.Hint;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import ch.ladestation.connectncharge.util.mvcbase.ViewMixin;
 import javafx.event.ActionEvent;
@@ -38,6 +39,9 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private Label costs;
     @FXML
     private Label timerLabel;
+    @FXML
+    private Label tippLabel;
+
     private static String publicEndTime;
     private String leaveGamePath;
 
@@ -71,6 +75,11 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private void handleAddTimeButton(ActionEvent event) {
         MyTimer.addTime(MyTimer.ADD_TIME, addTimeButton);
         controller.handleTipp();
+    }
+
+    public void closeHintPopup() {
+        hintPopupPane.setVisible(false);
+        tippLabel.setText("");
     }
 
     @FXML
@@ -158,6 +167,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private void stopTime() {
         MyTimer.stop();
     }
+
     @FXML
     public void showCost() {
 
@@ -183,10 +193,20 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
                 }
             }
         });
+        onChangeOf(model.activeHint).execute(((oldValue, newValue) -> {
+            if (newValue == Hint.HINT_EMPTY_HINT) {
+                closeHintPopup();
+                return;
+            }
+
+            tippLabel.setText(newValue.getText());
+            hintPopupPane.setVisible(true);
+        }));
     }
 
     @Override
     public void initializeParts() {
+        hintPopupPane.setVisible(false);
     }
 
     @Override

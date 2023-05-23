@@ -3,6 +3,7 @@ package ch.ladestation.connectncharge.controller;
 import ch.ladestation.connectncharge.model.game.gamelogic.Edge;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.game.gamelogic.Node;
+import ch.ladestation.connectncharge.model.game.gamelogic.Hint;
 import ch.ladestation.connectncharge.pui.GamePUI;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
@@ -14,26 +15,39 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
+import java.util.stream.Stream;
 
 public class ApplicationController extends ControllerBase<Game> {
     private static final int MAX_LEVEL = 5;
     private final Logger logger = Logger.getLogger(getClass().getName());
+    public boolean firstBootup = true;
     private Map<Integer, List<Object>> levels;
     private int currentLevel = 1;
     private GamePUI gamePUI;
     private boolean isToBeRemoved = false;
     private Edge tippEdge;
     private ScheduledExecutorService blinkingEdgeScheduler;
-    public boolean firstBootup = true;
 
     public ApplicationController(Game model) {
         super(model);
 
         model.activatedEdges.onChange((oldValue, newValue) -> {
-            if (model.gameStarted.getValue()) {
-                updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
-                checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
-                // Todo: Checks for Cycle
+            if (!model.gameStarted.getValue()) {
+                return;
+            }
+
+            updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+            checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
+
+            setValue(model.hasCycle, hasCycle());
+
+        });
+
+        model.hasCycle.onChange((oldValue, newValue) -> {
+            if (newValue) {
+                addHint(Hint.HINT_CYCLE);
+            } else {
+                removeHint(Hint.HINT_CYCLE);
             }
         });
 
@@ -46,8 +60,11 @@ public class ApplicationController extends ControllerBase<Game> {
         }));
 
         model.isTippOn.onChange(((oldValue, newValue) -> {
-            if (oldValue && !newValue) {
+            if (newValue) {
+                addHint(isToBeRemoved ? Hint.HINT_REMOVE_EDGE : Hint.HINT_PICK_EDGE);
+            } else if (oldValue) {
                 model.tippEdge.setColor(Color.GREEN);
+                removeHint(isToBeRemoved ? Hint.HINT_REMOVE_EDGE : Hint.HINT_PICK_EDGE);
             }
         }));
 
@@ -65,6 +82,15 @@ public class ApplicationController extends ControllerBase<Game> {
                 model.ignoringInputs = false;
             }
         }));
+
+        model.activeHints.onChange((oldValue, newValue) -> {
+            if (!Arrays.stream(model.activeHints.getValues()).toList().isEmpty()) {
+                setValue(model.activeHint,
+                    Arrays.stream(model.activeHints.getValues()).min(Comparator.comparingInt(Hint::getPriority)).get());
+            } else {
+                setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
+            }
+        });
     }
 
     public void setGPUI(GamePUI gamePUI) {
@@ -151,10 +177,6 @@ public class ApplicationController extends ControllerBase<Game> {
         }
     }
 
-    public void edgeToggledByApp(Edge edge) {
-        toggleEdge(edge);
-    }
-
     private void activateEdge(Edge edge) {
         edge.on();
         Edge[] oldValues = model.activatedEdges.getValues();
@@ -199,7 +221,11 @@ public class ApplicationController extends ControllerBase<Game> {
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
+            } else {
+                addHint(Hint.HINT_SOLUTION_NOT_FOUND);
             }
+        } else {
+            removeHint(Hint.HINT_SOLUTION_NOT_FOUND);
         }
     }
 
@@ -246,10 +272,6 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setTerminals(Node[] terms) {
-        /*if (!model.gameStarted.getValue()) {
-            this.terms = terms;
-            return;
-        }*/
         setValues(model.terminals, terms);
     }
 
@@ -259,7 +281,6 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void handleTipp() {
         setTippEdge();
-        // Todo: HINWEIS
     }
 
     public void setTippEdge() {
@@ -275,14 +296,15 @@ public class ApplicationController extends ControllerBase<Game> {
 
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
+            isToBeRemoved = false;
         } else {
             tippEdge = getRandomEdge(edgesToRemove);
             isToBeRemoved = true;
         }
 
-        tippEdge.setColor(Color.ORANGE);
-
+        tippEdge.setColor(isToBeRemoved ? Color.RED : Color.ORANGE);
         model.tippEdge = tippEdge;
+
         setValue(model.isTippOn, true);
     }
 
@@ -326,33 +348,37 @@ public class ApplicationController extends ControllerBase<Game> {
         Set<Node> visited = new HashSet<>();
         Map<Node, Node> parent = new HashMap<>();
 
-        // Create a stack to perform depth-first search starting from the first node in
-        // the first selected edge
-        Stack<Node> stack = new Stack<>();
-        Node startNode = selectedEdges.get(0).getFromNode();
-        stack.push(startNode);
-        parent.put(startNode, null);
-        while (!stack.empty()) {
-            Node currNode = stack.pop();
-            visited.add(currNode);
-            List<Node> neighbors = adjList.get(currNode);
-            for (Node neighbor : neighbors) {
-                // If the neighbor node has not been visited, add it to the stack and set its
-                // parent to the current node
-                if (!visited.contains(neighbor)) {
-                    stack.push(neighbor);
-                    parent.put(neighbor, currNode);
-                } else if (parent.get(currNode) != neighbor) {
-                    return true;
+        //get all the edges that haven't been visited yet
+        var islands =
+            selectedEdges.stream().flatMap(e -> Stream.of(e.getFromNode(), e.getToNode())).distinct().toList();
+        while (islands.size() > 0) {
+            // Create a stack to perform depth-first search starting from the first node in
+            // the first selected edge
+            Stack<Node> stack = new Stack<>();
+            Node startNode = islands.get(0);
+            stack.push(startNode);
+            parent.put(startNode, null);
+            while (!stack.empty()) {
+                Node currNode = stack.pop();
+                visited.add(currNode);
+                List<Node> neighbors = adjList.get(currNode);
+                for (Node neighbor : neighbors) {
+                    // If the neighbor node has not been visited, add it to the stack and set its
+                    // parent to the current node
+                    if (!visited.contains(neighbor)) {
+                        stack.push(neighbor);
+                        parent.put(neighbor, currNode);
+                    } else if (parent.get(currNode) != neighbor) {
+                        return true;
+                    }
                 }
             }
+            islands = selectedEdges.stream().flatMap(e -> Stream.of(e.getFromNode(), e.getToNode()))
+                .filter(n -> !visited.contains(n)).distinct().toList();
         }
 
         // No cycle is formed
         return false;
-    }
-
-    private void saveUserScore() {
     }
 
     private void finishGame() throws IOException {
@@ -368,5 +394,23 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void setEndTime(String endTime) {
         setValue(model.endTime, endTime);
+    }
+
+    public void addHint(Hint hint) {
+        if (!Arrays.stream(model.activeHints.getValues()).toList().contains(hint)) {
+            Hint[] oldValues = model.activeHints.getValues();
+            Hint[] newValues = new Hint[oldValues.length + 1];
+            System.arraycopy(oldValues, 0, newValues, 0, oldValues.length);
+            newValues[newValues.length - 1] = hint;
+            setValues(model.activeHints, newValues);
+        }
+    }
+
+    public void removeHint(Hint hint) {
+        if (Arrays.stream(model.activeHints.getValues()).toList().contains(hint)) {
+            Hint[] oldValues = model.activeHints.getValues();
+            Hint[] newValues = Arrays.stream(oldValues).filter(curr -> curr != hint).toArray(Hint[]::new);
+            setValues(model.activeHints, newValues);
+        }
     }
 }

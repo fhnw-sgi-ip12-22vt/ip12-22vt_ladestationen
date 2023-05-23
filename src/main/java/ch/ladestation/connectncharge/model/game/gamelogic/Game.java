@@ -4,7 +4,6 @@ import ch.ladestation.connectncharge.util.mvcbase.ObservableArray;
 import ch.ladestation.connectncharge.util.mvcbase.ObservableValue;
 
 
-
 public class Game {
     public static final String HOUSE_FLAG = "H";
     public final ObservableArray<Edge> solution = new ObservableArray<>(new Edge[0]);
@@ -22,4 +21,8 @@ public class Game {
     public final ObservableValue<Boolean> isTippOn = new ObservableValue<>(false);
 
     public ObservableValue<String> endTime = new ObservableValue<>("");
+    public final ObservableValue<Boolean> hasCycle = new ObservableValue<>(false);
+    public final ObservableValue<Hint> activeHint = new ObservableValue<>(Hint.HINT_EMPTY_HINT);
+    public final ObservableArray<Hint> activeHints = new ObservableArray<>(new Hint[0]);
+
 }
