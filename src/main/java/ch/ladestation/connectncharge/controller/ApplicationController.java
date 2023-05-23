@@ -124,7 +124,7 @@ public class ApplicationController extends ControllerBase<Game> {
             if (edge == model.blinkingEdge) {
                 setValue(model.isEdgeBlinking, false);
                 blinkingEdgeScheduler.shutdown();
-                setValue(model.gameStarted, true);
+                setGameStarted(true);
                 toggleIgnoreInputs();
             }
             return;
@@ -139,6 +139,10 @@ public class ApplicationController extends ControllerBase<Game> {
         }
         removeTippEdge();
         toggleEdge(edge);
+    }
+
+    public void setGameStarted(boolean state) {
+        setValue(model.gameStarted, state);
     }
 
     private void toggleEdge(Edge edge) {
@@ -363,7 +367,7 @@ public class ApplicationController extends ControllerBase<Game> {
         setValue(model.isFinished, false);
         deactivateAllEdges();
         deactivateAllNodes();
-        setValue(model.gameStarted, false);
+        setGameStarted(false);
     }
 
     public void setEndTime(String endTime) {
