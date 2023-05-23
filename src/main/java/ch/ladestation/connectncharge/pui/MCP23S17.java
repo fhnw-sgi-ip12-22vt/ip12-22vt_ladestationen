@@ -1439,7 +1439,7 @@ public final class MCP23S17 extends Component {
                 firstIC.handlePortBInterrupt();
                 firstIC.delay(10);
                 ++i;
-            } while (interrupts[0].state().isLow());
+            } while (interrupts[0].state().isLow() && i < 100);
 
             if (i > 1) {
                 firstIC.logInfo("read " + i + " times to clear interrupt.");
@@ -1462,7 +1462,7 @@ public final class MCP23S17 extends Component {
                     currentIC.handlePortBInterrupt();
                     currentIC.delay(10);
                     ++j;
-                } while (interrupt.state().isLow());
+                } while (interrupt.state().isLow() && j < 100);
                 if (j > 1) {
                     currentIC.logInfo("read " + j + " times to clear interrupt.");
                 }
