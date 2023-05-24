@@ -2,6 +2,10 @@ package ch.ladestation.connectncharge.pui;
 
 import java.util.logging.Logger;
 
+
+/**
+ * Abstraction of a component
+ */
 public abstract class Component {
     /**
      * Logger instance

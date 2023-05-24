@@ -117,7 +117,7 @@
     <properties>
         <launcher.class>ch.ladestation.connectncharge/${project.groupId}.AppStarter</launcher.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.8.2</junit.version>
+        <junit.version>5.9.2</junit.version>
 
         <pi.username>pi</pi.username>
         <pi.password>Ladestation</pi.password>
@@ -134,7 +134,7 @@
 
         <!-- Project Dependency Versions-->
         <javafx.version>17.0.2</javafx.version>
-        <pi4j.version>2.2.0</pi4j.version>
+        <pi4j.version>2.3.0</pi4j.version>
         <slf4j.version>1.7.32</slf4j.version>
         <junit.version>5.9.0</junit.version>
         <rpi-ws281x-java.version>2.0.0-SNAPSHOT</rpi-ws281x-java.version>
@@ -175,7 +175,7 @@
         <!-- Checkstyle version -->
         <maven-checkstyle.version>3.2.1</maven-checkstyle.version>
         <checkstyle.version>10.3.4</checkstyle.version>
-        <mockito-core.version>3.12.4</mockito-core.version>
+        <mockito-core.version>5.3.1</mockito-core.version>
         <controlsfx.version>11.1.1</controlsfx.version>
         <bootstrapfx-core.version>0.4.0</bootstrapfx-core.version>
         <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
@@ -286,6 +286,12 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
             <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>

@@ -22,10 +22,9 @@ public class ApplicationController extends ControllerBase<Game> {
     private final Logger logger = Logger.getLogger(getClass().getName());
     public boolean firstBootup = true;
     private Map<Integer, List<Object>> levels;
-    private int currentLevel = 2;
+    private int currentLevel = 1;
     private GamePUI gamePUI;
     private boolean isToBeRemoved = false;
-    private Edge tippEdge;
     private ScheduledExecutorService blinkingEdgeScheduler;
 
     public ApplicationController(Game model) {
@@ -39,7 +38,7 @@ public class ApplicationController extends ControllerBase<Game> {
             updateScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
             checkScore(Arrays.stream(newValue).mapToInt(Edge::getCost).sum());
 
-            setValue(model.hasCycle, hasCycle());
+            setValue(model.hasCycle, hasCycle(newValue));
 
         });
 
@@ -63,7 +62,6 @@ public class ApplicationController extends ControllerBase<Game> {
             if (newValue) {
                 addHint(isToBeRemoved ? Hint.HINT_REMOVE_EDGE : Hint.HINT_PICK_EDGE);
             } else if (oldValue) {
-                model.tippEdge.setColor(Color.GREEN);
                 removeHint(isToBeRemoved ? Hint.HINT_REMOVE_EDGE : Hint.HINT_PICK_EDGE);
             }
         }));
@@ -71,15 +69,15 @@ public class ApplicationController extends ControllerBase<Game> {
         model.isCountdownFinished.onChange((oldValue, newValue) -> {
             if (!oldValue && newValue) {
                 instanceTerminals();
-                toggleIgnoreInputs();
+                stopIgnoringInputs();
             }
         });
 
         model.isFinished.onChange(((oldValue, newValue) -> {
             if (!oldValue && newValue) {
-                model.ignoringInputs = true;
+                startIgnoringInputs();
             } else if (oldValue && !newValue) {
-                model.ignoringInputs = false;
+                stopIgnoringInputs();
             }
         }));
 
@@ -97,10 +95,82 @@ public class ApplicationController extends ControllerBase<Game> {
         });
     }
 
+    private void startIgnoringInputs() {
+        model.ignoringInputs = true;
+    }
+
+    private void stopIgnoringInputs() {
+        model.ignoringInputs = false;
+    }
+
+    public static boolean hasCycle(Edge[] edgeArray) {
+        // Create an adjacency list to store the nodes and their neighbors
+        Map<Node, List<Node>> adjList = new HashMap<>();
+
+        // Create a list of selected edges
+        List<Edge> selectedEdges = Arrays.stream(edgeArray).toList();
+
+        // If there are less than 2 selected edges, no cycle can be formed
+        if (selectedEdges.size() < 2) {
+            return false;
+        }
+
+        // Create the adjacency list by adding the nodes and their neighbors from the
+        // selected edges
+        for (Edge edge : selectedEdges) {
+            Node node1 = edge.getFromNode();
+            Node node2 = edge.getToNode();
+            if (!adjList.containsKey(node1)) {
+                adjList.put(node1, new ArrayList<>());
+            }
+            if (!adjList.containsKey(node2)) {
+                adjList.put(node2, new ArrayList<>());
+            }
+            adjList.get(node1).add(node2);
+            adjList.get(node2).add(node1);
+        }
+
+        // Create a set to keep track of visited nodes and a map to keep track of their
+        // parent node in the DFS tree
+        Set<Node> visited = new HashSet<>();
+        Map<Node, Node> parent = new HashMap<>();
+
+        //get all the edges that haven't been visited yet
+        var islands =
+            selectedEdges.stream().flatMap(e -> Stream.of(e.getFromNode(), e.getToNode())).distinct().toList();
+        while (islands.size() > 0) {
+            // Create a stack to perform depth-first search starting from the first node in
+            // the first selected edge
+            Stack<Node> stack = new Stack<>();
+            Node startNode = islands.get(0);
+            stack.push(startNode);
+            parent.put(startNode, null);
+            while (!stack.empty()) {
+                Node currNode = stack.pop();
+                visited.add(currNode);
+                List<Node> neighbors = adjList.get(currNode);
+                for (Node neighbor : neighbors) {
+                    // If the neighbor node has not been visited, add it to the stack and set its
+                    // parent to the current node
+                    if (!visited.contains(neighbor)) {
+                        stack.push(neighbor);
+                        parent.put(neighbor, currNode);
+                    } else if (parent.get(currNode) != neighbor) {
+                        return true;
+                    }
+                }
+            }
+            islands = selectedEdges.stream().flatMap(e -> Stream.of(e.getFromNode(), e.getToNode()))
+                .filter(n -> !visited.contains(n)).distinct().toList();
+        }
+
+        // No cycle is formed
+        return false;
+    }
+
     public void setGPUI(GamePUI gamePUI) {
         this.gamePUI = gamePUI;
     }
-
 
     public void loadLevels() {
         try {
@@ -119,13 +189,9 @@ public class ApplicationController extends ControllerBase<Game> {
             solution.stream().map((sol) -> gamePUI.lookUpEdge(sol.get(0), sol.get(1))).toArray(Edge[]::new);
         setSolution(solutionEdges);
 
-        model.blinkingEdge = (Edge) gamePUI.lookUpSegmentIdToSegment(90);
-        startBlinkingEdge();
 
-    }
+        startBlinkingEdge((Edge) gamePUI.lookUpSegmentIdToSegment(90));
 
-    public void toggleIgnoreInputs() {
-        model.ignoringInputs = !model.ignoringInputs;
     }
 
     private void instanceTerminals() {
@@ -154,8 +220,8 @@ public class ApplicationController extends ControllerBase<Game> {
             if (edge == model.blinkingEdge) {
                 setValue(model.isEdgeBlinking, false);
                 blinkingEdgeScheduler.shutdown();
-                setValue(model.gameStarted, true);
-                toggleIgnoreInputs();
+                setGameStarted(true);
+                startIgnoringInputs();
             }
             return;
         }
@@ -169,6 +235,10 @@ public class ApplicationController extends ControllerBase<Game> {
         }
         removeTippEdge();
         toggleEdge(edge);
+    }
+
+    public void setGameStarted(boolean state) {
+        setValue(model.gameStarted, state);
     }
 
     private void toggleEdge(Edge edge) {
@@ -205,11 +275,11 @@ public class ApplicationController extends ControllerBase<Game> {
         setValues(model.terminals, new Node[0]);
     }
 
-    public void startBlinkingEdge() {
+    public void startBlinkingEdge(Edge edg) {
+        model.blinkingEdge = edg;
         blinkingEdgeScheduler = Executors.newScheduledThreadPool(1);
         blinkingEdgeScheduler.scheduleAtFixedRate(() -> toggleValue(model.isEdgeBlinking), 0, 1, TimeUnit.SECONDS);
     }
-
 
     public void updateScore(int score) {
         setValue(model.currentScore, score);
@@ -284,10 +354,10 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void handleTipp() {
-        setTippEdge();
+        computeTippEdge();
     }
 
-    public void setTippEdge() {
+    public void computeTippEdge() {
         List<Edge> edgesToSelect;
         List<Edge> edgesToRemove;
 
@@ -298,6 +368,8 @@ public class ApplicationController extends ControllerBase<Game> {
             .filter((activatedEdge) -> !Arrays.stream(model.solution.getValues()).toList().contains(activatedEdge))
             .toList();
 
+        Edge tippEdge;
+
         if (!edgesToSelect.isEmpty()) {
             tippEdge = getRandomEdge(edgesToSelect);
             isToBeRemoved = false;
@@ -306,9 +378,12 @@ public class ApplicationController extends ControllerBase<Game> {
             isToBeRemoved = true;
         }
 
-        tippEdge.setColor(isToBeRemoved ? Color.RED : Color.ORANGE);
-        model.tippEdge = tippEdge;
+        setTippEdge(tippEdge);
+    }
 
+    public void setTippEdge(Edge edge) {
+        model.tippEdge = edge;
+        model.tippEdge.setColor(isToBeRemoved ? Color.RED : Color.ORANGE);
         setValue(model.isTippOn, true);
     }
 
@@ -318,71 +393,9 @@ public class ApplicationController extends ControllerBase<Game> {
 
     public void removeTippEdge() {
         setValue(model.isTippOn, false);
-    }
-
-    private boolean hasCycle() {
-        // Create an adjacency list to store the nodes and their neighbors
-        Map<Node, List<Node>> adjList = new HashMap<>();
-
-        // Create a list of selected edges
-        List<Edge> selectedEdges = Arrays.stream(model.activatedEdges.getValues()).toList();
-
-        // If there are less than 2 selected edges, no cycle can be formed
-        if (selectedEdges.size() < 2) {
-            return false;
+        if (model.tippEdge != null) {
+            model.tippEdge.setColor(Color.GREEN);
         }
-
-        // Create the adjacency list by adding the nodes and their neighbors from the
-        // selected edges
-        for (Edge edge : selectedEdges) {
-            Node node1 = edge.getFromNode();
-            Node node2 = edge.getToNode();
-            if (!adjList.containsKey(node1)) {
-                adjList.put(node1, new ArrayList<>());
-            }
-            if (!adjList.containsKey(node2)) {
-                adjList.put(node2, new ArrayList<>());
-            }
-            adjList.get(node1).add(node2);
-            adjList.get(node2).add(node1);
-        }
-
-        // Create a set to keep track of visited nodes and a map to keep track of their
-        // parent node in the DFS tree
-        Set<Node> visited = new HashSet<>();
-        Map<Node, Node> parent = new HashMap<>();
-
-        //get all the edges that haven't been visited yet
-        var islands =
-            selectedEdges.stream().flatMap(e -> Stream.of(e.getFromNode(), e.getToNode())).distinct().toList();
-        while (islands.size() > 0) {
-            // Create a stack to perform depth-first search starting from the first node in
-            // the first selected edge
-            Stack<Node> stack = new Stack<>();
-            Node startNode = islands.get(0);
-            stack.push(startNode);
-            parent.put(startNode, null);
-            while (!stack.empty()) {
-                Node currNode = stack.pop();
-                visited.add(currNode);
-                List<Node> neighbors = adjList.get(currNode);
-                for (Node neighbor : neighbors) {
-                    // If the neighbor node has not been visited, add it to the stack and set its
-                    // parent to the current node
-                    if (!visited.contains(neighbor)) {
-                        stack.push(neighbor);
-                        parent.put(neighbor, currNode);
-                    } else if (parent.get(currNode) != neighbor) {
-                        return true;
-                    }
-                }
-            }
-            islands = selectedEdges.stream().flatMap(e -> Stream.of(e.getFromNode(), e.getToNode()))
-                .filter(n -> !visited.contains(n)).distinct().toList();
-        }
-
-        // No cycle is formed
-        return false;
     }
 
     public void finishGame() throws IOException {
@@ -393,14 +406,14 @@ public class ApplicationController extends ControllerBase<Game> {
         setValue(model.isFinished, false);
         deactivateAllEdges();
         deactivateAllNodes();
-        setValue(model.gameStarted, false);
+        setGameStarted(false);
     }
 
     public void quitGame() {
         //setValue(model.isFinished, false);
         deactivateAllEdges();
         deactivateAllNodes();
-        //setValue(model.gameStarted, true);
+        setGameStarted(false);
     }
 
     public void setEndTime(String endTime) {
