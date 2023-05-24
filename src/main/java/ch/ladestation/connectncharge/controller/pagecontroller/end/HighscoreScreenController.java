@@ -70,15 +70,18 @@ public class HighscoreScreenController implements ViewMixin<Game, ControllerBase
     }
 
     public void showGamePage(ActionEvent actionEvent) throws IOException {
-        controller.playAgain();
+        if (playerName != null && endTime != null) {
+            controller.playAgain();
+        }
         StageHandler.openStage(FilePath.EDGECLICKSCREEN.getFilePath());
     }
 
     public void showBonusPage(ActionEvent actionEvent) {
-        //TODO
+
     }
 
     public void showHomeScreen(MouseEvent mouseEvent) throws IOException {
+        controller.playAgain();
         StageHandler.openStage(FilePath.HOMEPAGE.getFilePath());
     }
 
