@@ -17,6 +17,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 
+/**
+ * This Class is the controller of the element with the components.
+ */
 public class ApplicationController extends ControllerBase<Game> {
     private static final int MAX_LEVEL = 5;
     private final Logger logger = Logger.getLogger(getClass().getName());
@@ -29,6 +32,7 @@ public class ApplicationController extends ControllerBase<Game> {
 
     /**
      * This is the constructor of the ApplicationController
+     *
      * @param model
      */
     public ApplicationController(Game model) {
@@ -107,6 +111,12 @@ public class ApplicationController extends ControllerBase<Game> {
         model.ignoringInputs = false;
     }
 
+    /**
+     * This method checks if the edge array is in a cycle.
+     *
+     * @param edgeArray
+     * @return boolean
+     */
     public static boolean hasCycle(Edge[] edgeArray) {
         // Create an adjacency list to store the nodes and their neighbors
         Map<Node, List<Node>> adjList = new HashMap<>();
@@ -173,6 +183,7 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     /**
+     * This method is a setter for the gamePUI.
      *
      * @param gamePUI
      */
@@ -180,6 +191,9 @@ public class ApplicationController extends ControllerBase<Game> {
         this.gamePUI = gamePUI;
     }
 
+    /**
+     * This method loads all the levels from the text files in a Map<Integer, List<Object>>.
+     */
     public void loadLevels() {
         try {
             levels = TextFileEditor.readLevels();
@@ -188,6 +202,9 @@ public class ApplicationController extends ControllerBase<Game> {
         }
     }
 
+    /**
+     * This method loads the next level.
+     */
     public void loadNextLevel() {
         List<Object> level = levels.get(currentLevel);
 
@@ -211,6 +228,9 @@ public class ApplicationController extends ControllerBase<Game> {
         setTerminals(terminalNodes);
     }
 
+    /**
+     * This setter method declares the attribute isCountdownFinished to true.
+     */
     public void setCountdownFinished() {
         setValue(model.isCountdownFinished, true);
     }
@@ -223,6 +243,11 @@ public class ApplicationController extends ControllerBase<Game> {
         }
     }
 
+    /**
+     * This method checks if the edge is pressed.
+     *
+     * @param edge
+     */
     public void edgePressed(Edge edge) {
         if (!model.gameStarted.getValue()) {
             if (edge == model.blinkingEdge) {
@@ -245,6 +270,11 @@ public class ApplicationController extends ControllerBase<Game> {
         toggleEdge(edge);
     }
 
+    /**
+     * This method initialize the attribute gameStarted to the param.
+     *
+     * @param state
+     */
     public void setGameStarted(boolean state) {
         setValue(model.gameStarted, state);
     }
@@ -283,16 +313,31 @@ public class ApplicationController extends ControllerBase<Game> {
         setValues(model.terminals, new Node[0]);
     }
 
+    /**
+     * This method makes the given edge blinking.
+     *
+     * @param edg
+     */
     public void startBlinkingEdge(Edge edg) {
         model.blinkingEdge = edg;
         blinkingEdgeScheduler = Executors.newScheduledThreadPool(1);
         blinkingEdgeScheduler.scheduleAtFixedRate(() -> toggleValue(model.isEdgeBlinking), 0, 1, TimeUnit.SECONDS);
     }
 
+    /**
+     * This method updates the attribute currentScore.
+     *
+     * @param score
+     */
     public void updateScore(int score) {
         setValue(model.currentScore, score);
     }
 
+    /**
+     * This method checks the score for the correct solution.
+     *
+     * @param score
+     */
     public void checkScore(int score) {
         int solutionScore = Arrays.stream(model.solution.getValues()).mapToInt(Edge::getCost).sum();
 
@@ -353,10 +398,20 @@ public class ApplicationController extends ControllerBase<Game> {
         return false;
     }
 
+    /**
+     * This method sets the attribute terminals.
+     *
+     * @param terms
+     */
     public void setTerminals(Node[] terms) {
         setValues(model.terminals, terms);
     }
 
+    /**
+     * This method sets the attribute solution.
+     *
+     * @param edges
+     */
     public void setSolution(Edge[] edges) {
         setValues(model.solution, edges);
     }
@@ -365,6 +420,9 @@ public class ApplicationController extends ControllerBase<Game> {
         computeTippEdge();
     }
 
+    /**
+     * This method computes the tipp edge.
+     */
     public void computeTippEdge() {
         List<Edge> edgesToSelect;
         List<Edge> edgesToRemove;
@@ -399,6 +457,9 @@ public class ApplicationController extends ControllerBase<Game> {
         return edges.stream().skip(new Random().nextInt(edges.size())).findFirst().get();
     }
 
+    /**
+     * This method remove this tip edge.
+     */
     public void removeTippEdge() {
         setValue(model.isTippOn, false);
         if (model.tippEdge != null) {
@@ -410,6 +471,9 @@ public class ApplicationController extends ControllerBase<Game> {
         setValue(model.isFinished, true);
     }
 
+    /**
+     * This method starts the game again.
+     */
     public void playAgain() {
         setValue(model.isFinished, false);
         deactivateAllEdges();
