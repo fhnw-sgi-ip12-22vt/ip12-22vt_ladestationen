@@ -302,5 +302,8 @@ public class NameInputController implements Initializable, ViewMixin<Game, Contr
     public static String getCurrentName() {
         return currentName;
     }
+    public static void setCurrentName(String currentNameParam) {
+        currentName = currentNameParam;
+    }
 
 }
