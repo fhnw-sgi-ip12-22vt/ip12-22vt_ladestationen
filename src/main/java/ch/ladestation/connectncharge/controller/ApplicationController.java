@@ -93,6 +93,10 @@ public class ApplicationController extends ControllerBase<Game> {
                 setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
             }
         });
+
+        model.endTime.onChange((oldValue, newValue) -> {
+            System.out.println("model.endTime: " + model.endTime);
+        });
     }
 
     private void startIgnoringInputs() {
@@ -414,7 +418,7 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void quitGame() {
-        setValue(model.isFinished, false);
+        //setValue(model.isFinished, false);
         deactivateAllEdges();
         deactivateAllNodes();
         setGameStarted(false);

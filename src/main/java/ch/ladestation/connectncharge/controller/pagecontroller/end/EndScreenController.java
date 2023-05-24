@@ -3,6 +3,7 @@ package ch.ladestation.connectncharge.controller.pagecontroller.end;
 import ch.ladestation.connectncharge.controller.ApplicationController;
 import ch.ladestation.connectncharge.controller.pagecontroller.PageController;
 import ch.ladestation.connectncharge.controller.pagecontroller.StageHandler;
+import ch.ladestation.connectncharge.controller.pagecontroller.middle.GamePageController;
 import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.text.FilePath;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
@@ -42,25 +43,14 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     private Stage stage;
     @FXML
     private Scene scene;
-    ApplicationController controller;
+    private ApplicationController controller;
 
     //private final String endTime = String.valueOf(controller.scoreForEndScreen());
 
     @FXML
-    public void showEndPage(ActionEvent event) throws IOException {
-        StageHandler.openStage(FilePath.ENDSCREEN.getFilePath());
-    }
-
-    @FXML
     public void handlePlayAgainButton(ActionEvent actionEvent) throws IOException {
         controller.playAgain();
-        showGameScreen(actionEvent);
-
-    }
-
-    public void showGameScreen(ActionEvent actionEvent) throws IOException {
         StageHandler.openStage(FilePath.EDGECLICKSCREEN.getFilePath());
-
     }
 
     @FXML
@@ -109,7 +99,7 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        lblTime.setText(GamePageController.getPublicEndTime());
     }
 
     @Override
@@ -136,5 +126,6 @@ public class EndScreenController implements Initializable, ViewMixin<Game, Contr
     @Override
     public void setupModelToUiBindings(Game model) {
         onChangeOf(model.endTime).convertedBy(String::valueOf).update(lblTime.textProperty());
+        System.out.println("lblTime.textProperty(): " + lblTime.textProperty());
     }
 }

@@ -15,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,6 +47,14 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     private ApplicationController controller;
 
+    /**
+     * initialize
+     *
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         startTimer();
@@ -60,6 +67,19 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     public void setController(ApplicationController controller) {
         init(controller);
         this.controller = controller;
+    }
+
+    /**
+     * This method is getter for publicEndTime.
+     *
+     * @return publicEndTime
+     */
+    public static String getPublicEndTime() {
+        return publicEndTime;
+    }
+
+    public static void setPublicEndTime(String publicEndTimeParam) {
+        publicEndTime = publicEndTimeParam;
     }
 
     private void startTimer() {
@@ -76,11 +96,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     private void handleAddTimeButton(ActionEvent event) {
         MyTimer.addTime(MyTimer.ADD_TIME, addTimeButton);
         controller.handleTipp();
-    }
-
-    public void closeHintPopup() {
-        hintPopupPane.setVisible(false);
-        tippLabel.setText("");
     }
 
     @FXML
@@ -102,8 +117,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         endGampePopupPane.setOpacity(1);
         shadowPane.setVisible(true);
         shadowPane.setOpacity(1);
-
-        controller.quitGame();
     }
 
     @FXML
@@ -112,6 +125,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         endGampePopupPane.setVisible(false);
         endGampePopupPane.setOpacity(0);
         MyTimer.stop();
+        controller.quitGame();
     }
 
     @FXML
@@ -154,27 +168,14 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         shadowPane.setOpacity(0);
     }
 
-    private void saveEndTime() {
-        controller.setEndTime(timerLabel.getText().replaceAll("Zeit: ", ""));
-    }
-
-    /**
-     *
-     * This method is getter for publicEndTime.
-     *
-     * @return publicEndTime
-     */
-    public static String getPublicEndTime() {
-        return publicEndTime;
-    }
-
     private void endGame() {
-        stopTime();
+        MyTimer.stop();
         saveEndTime();
     }
 
-    private void stopTime() {
-        MyTimer.stop();
+    private void saveEndTime() {
+        publicEndTime = timerLabel.getText().replaceAll("Zeit: ", "");
+        controller.setEndTime(publicEndTime);
     }
 
     @FXML
@@ -202,6 +203,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
                 try {
                     endGame();
                     StageHandler.openStage(FilePath.ENDSCREEN.getFilePath());
+                    //controller.finishGame();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -214,18 +216,13 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
             }
 
             tippLabel.setText(newValue.getText());
-            hintPopupPane.setStyle("-fx-background-color: #" + initColorRGB(newValue) + ";");
             hintPopupPane.setVisible(true);
         }));
     }
 
-    private String initColorRGB(Hint newValue) {
-        Color javafxColor =
-            Color.rgb(newValue.getColor().getRed(), newValue.getColor().getGreen(), newValue.getColor().getBlue());
-
-        StringBuilder stringBuilder = new StringBuilder(javafxColor.toString().toLowerCase());
-        stringBuilder.delete(0, 2);
-        return stringBuilder.toString();
+    private void closeHintPopup() {
+        hintPopupPane.setVisible(false);
+        tippLabel.setText("");
     }
 
     @Override
