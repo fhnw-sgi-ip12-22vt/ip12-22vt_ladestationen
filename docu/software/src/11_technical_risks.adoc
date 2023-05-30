@@ -1,0 +1,41 @@
+[[section-technical-risks]]
+== Risiken und technische Schulden
+
+[role="arc42help"]
+****
+////
+.Inhalt
+Eine nach Prioritäten geordnete Liste der erkannten Architekturrisiken und/oder technischen Schulden.
+
+.Motivation
+"Risikomanagement ist Projektmanagement für Erwachsene."
+-- Tim Lister, Atlantic Systems Guild
+
+Unter diesem Motto sollten Sie Architekturrisiken und/oder technische Schulden gezielt ermitteln, bewerten und Ihren Management-Stakeholdern (z.B. Projektleitung, Product-Owner) transparent machen.
+
+.Form
+Liste oder Tabelle von Risiken und/oder technischen Schulden, eventuell mit vorgeschlagenen Maßnahmen zur Risikovermeidung, Risikominimierung oder dem Abbau der technischen Schulden.
+
+
+.Weiterführende Informationen
+
+Siehe https://docs.arc42.org/section-11/[Risiken und technische Schulden] in der online-Dokumentation (auf Englisch!).
+////
+[cols="2,2,2" options="header"]
+|===
+|*Risiko* |*Eventualfallplanung* | *Risikominderung*
+//Row 1
+|Der Spielspass ist nicht vorhanden
+|Bei Ausstellungen könnten die Spieler nach kurzer Zeit aufhören zu spielen, weil es keinen Anreiz gibt, weiterzumachen.
+|Im Vorfeld sollten zahlreiche Usability-Tests durchgeführt werden, um festzustellen, welche Spielkomponenten Spass machen.
+//Row 2
+|Wärmeentwicklung im Gehäuse zu gross
+|Eine schlechte Belüftung des Gehäuses führt zu einem drastischen Temperaturanstieg, der zu einem Ausfall der Hardware führen könnte.
+|Das Risiko einer Überhitzung kann durch den Einbau von Lüftern minimiert werden.
+//Row 3
+|Teile des Produkts gehen nach kurzer Zeit defekt
+|Der Spieler drückt auf die Kante und dabei könnte die Kante aus ihrer Halterung brechen.
+|Durch die Verwendung robuster Materialien und die Prüfung der Robustheit der Komponenten kann das Risiko minimiert werden.
+|===
+****
+

@@ -1,0 +1,23 @@
+== Testfall T04-07
+
+[[T04-07]]
+=== Testfall-ID
+T04-07
+
+=== Requirement
+F04.R005
+
+=== Kurzbeschreibung
+Prüfen, ob Connect 'n Charge 13 LEDs pro Runde auf dem Board anzeigt
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Eine Spielrunde wurde gestartet.
+
+==== Eingabe
+-
+
+==== Ausgabe
+1) 13 LEDs für die Knoten leuchten auf dem Board auf.
+

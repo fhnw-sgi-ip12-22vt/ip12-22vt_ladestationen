@@ -1,0 +1,82 @@
+[[section-introduction-and-goals]]
+==	Einführung und Ziele
+
+=== Aufgabenstellung
+
+[role="arc42help"]
+****
+Die Aufgabenstellung dieses Projekts ist es, dass ein Spiel für Schüler aus der Sekundarstufe I entwickelt werden muss, um das Prinzip der Energieeinsparung durch die Nutzung der Graphentheorie spielerisch erklärt werden kann. 
+Weitere Informationen über die Aufgabenstellung ist unter dem link:docu/software/others/IP12-22vt_Ladestationen.pdf[IP12-22vt_Ladestationen.pdf] vorhanden.
+ 
+Mit der Hilfe der Graphentheorie muss ein Graph die gewählten Knoten mit den passenden Kanten auf das Brettspiel «Ladestation» verbunden werden. Dennoch ist jede Kante mit Kosten bestattet und dementsprechend muss die gesamte Vernetzung der Knoten am günstigsten sein. 
+Der kostengünstigste Weg bringt eine deutliche Einsparung von wichtigen Ressourcen in Form von Verkabelungen und von Stromstärke.
+****
+
+=== Qualitätsziele
+
+[role="arc42help"]
+****
+Eine erfolgreiche Lösung ist ein langfristiges Mittel, das den Schülerinnen und Schülern das Prinzip des Energiesparens näher bringt und sie verstehen lässt, während sie gleichzeitig Spass haben können.
+
+[cols="1,2,2,3,3" options="header"]
+|===
+|*ID* |*Name* | *Beschreibung* |*Messung* |*Soll-Wert* 
+//Row 1
+|Z01
+|Wissen zur Ressourceneinsparung
+|Die Schüler müssen den Umgang mit der Ressourceneinsparung kennen und verstehen.
+|Usability-Tests werden durchgeführt.
+|Anschliessend wird der Schüler auf das Wissen geprüft. Indem bei einem Interview erwartet wird, dass der der Schüler mindestens 3 der 5 Themen zur Ressourceneinsparung selbst erklären kann.
+//Row 2
+|Z02
+|Spass am Spiel
+|Die Schülerinnen und Schüler müssen mit Spass lernen können.
+|Usability-Tests werden durchgeführt.
+|Mithilfe der Bewertung auf der Mean Opinion Score (MOS) hat der Schüler/die Schülerin die Möglichkeit, seine/ihre Meinung über das Produkt auszudrücken. Die höchste Bewertung auf der MOS ist 5 und die tiefste Punktzahl ist 1.
+//Row 3
+|Z03
+|Langlebig
+|Das Produkt kann vom Kunden langfristig genutzt werden.
+a|Probenutzung mit Kunde in einem gewissen Zeitraum:
+
+* Wo kann das Produkt kaputt gehen?
+
+* Befindet sich das Produkt im richtigen Umfeld? (Ortbesuch)
+
+* Die Manipulationen werden vom Kunde absichtlich am Produkt vorgenommen → Stabilität wird geprüft.
+|Das Produkt ist robust genug, um eine grosse Menge an Spieler von einer Zeitspanne von zwei Jahren zu widerstehen. Zusätzlich bieten wir mehrere Spielrunden an, um sicherzustellen, dass das Produkt die Spieler über einen längeren Zeitraum unterhält.
+|===
+****
+
+=== Stakeholder 
+
+[role="arc42help"]
+****
+*Produkt Stakeholders*
+[cols="1,1,2,2" options="header"]
+|===
+|Stakeholder |Ansprechsperson |Charakterisierung und Hintergrund |Bedürfnisse
+//row1
+| Benutzer 
+| Fabio Ferrali 
+| Fabio Ferrali besucht die Bezirksschule. Er liebt Videospiele und spielt gerne Volleyball mit seinen Kollegen. Fabio ist jedoch nicht an der Energiekrise interessiert. 
+| Fabio ist nicht an der heutigen Energiekrise interessiert und möchte vor allem spielen.
+//row2
+| Besucher der Ausstellung 
+| Samuel Burkhardt
+| Samuel Burkhardt ist ein 23-jähriger Student an der FHNW, wo er Informatik studiert. Er ist sehr interessiert an neuen Technologien.
+| Als Teilnehmer der Ausstellung der IP12 ist Samuel an Informationen und Lösungen interessiert, die ihm helfen, seinen persönlichen Energieverbrauch zu reduzieren und somit auch seinen Beitrag zum Umweltschutz zu leisten.
+//row3
+| FHNW 
+| Lucia Di Caro
+| Mathematische Dozentin an der FHNW. Kundin des Projekts. 
+| Ihr Produkt soll Primeo bei ihrer Ausstellung unterstützen.
+//row4
+| Primeo Kosmos 
+| Wolfgang Szabò 
+| Manager der Ausstellung Primeo Kosmos. 
+| Braucht ein Ausstellungsstück.
+|===
+****
+
+

@@ -1,0 +1,29 @@
+== Testfall T04-05
+
+[[T04-05]]
+=== Testfall-ID
+T04-05
+
+=== Requirement
+F04.R004
+
+=== Kurzbeschreibung
+Prüfen, ob ein Besucher eine Runde verlassen kann, wenn er auf "Ja" beim Popup klickt.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Eine Spielrunde wurde gestartet.
+
+==== Eingabe
+
+1) Auf den Button "Spiel verlassen".
+
+4) Auf den Button "Ja" drücken.
+
+==== Ausgabe
+2) Ein Popup zur Bestätigung mit der Nachricht "Möchtest du diese Spielrunde verlassen" wird angezeigt.
+
+3) Zeit wird angehalten und alle Kanten und Knoten werden nicht mehr beleuchtet.
+
+5) Die Anzeigt wechselt zu "Home-Page".

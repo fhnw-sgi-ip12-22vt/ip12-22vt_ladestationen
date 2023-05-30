@@ -1,0 +1,27 @@
+== Testfall T05-03
+
+[[T05-003]]
+=== Testfall-ID
+T05-03
+
+=== Requirement
+F005.R001
+
+=== Kurzbeschreibung
+Prüfen, ob ein Admin nur gewisse Ränge in der Rangliste löschen kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Admin3NormalRangliste-Page-Page".
+* Die Rangliste hat 10 Einträge.
+
+==== Eingabe
+1) Auf den ersten Rang drücken
+
+3) Auf den Mülleimer-Icon, welcher sicher unter den Button "Alle auswählen" befindet, drücken.
+
+==== Ausgabe
+2) Der erste Rang in der Rangliste wird mit einem hellen grauen Balken markiert.
+
+4) Der erste Rang in der Rangliste wird gelöscht.

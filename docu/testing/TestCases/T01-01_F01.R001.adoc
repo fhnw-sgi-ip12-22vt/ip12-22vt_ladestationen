@@ -1,0 +1,24 @@
+== Testfall T01-01
+
+[[T01-01]]
+=== Testfall-ID
+T01-01
+
+=== Requirement
+F01.R001
+
+=== Kurzbeschreibung
+Prüfen, ob das Licht durch das Betätigen der Schaltfläche auf einer Kante mit zwei Buttons eingeschaltet werden kann.
+
+=== Voraussetzung
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Eine Spielrunde wurde gestartet.
+* Keine Kante wurde bisher gedrückt und dementsprechend leuchten nicht.
+
+==== Eingabe
+1) Auf der langen waagerechten Kante, welche mit einer roten Linie im Bild umrandet wurde, drücken.
+
+image::images/img.png[]
+
+==== Ausgabe
+2) Die gedrückte Kante leuchtet in einem blauen Farbton auf.

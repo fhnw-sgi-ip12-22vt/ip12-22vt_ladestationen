@@ -1,0 +1,24 @@
+== Testfall T05-02
+
+[[T05-02]]
+=== Testfall-ID
+T05-02
+
+=== Requirement
+F005.R001
+
+=== Kurzbeschreibung
+Prüfen, ob ein Admin den gesamten Highscore abwählen kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Admin3NormalRangliste-Page-Page".
+* Die Rangliste hat 10 Einträge.
+* Alle Einträge wurden ausgewählt.
+
+==== Eingabe
+1) Auf der Button "Alle abwählen", welche sich oben rechts befinden, drücken.
+
+==== Ausgabe
+2) Alle Einträge in der Rangliste werden nicht mehr markiert.

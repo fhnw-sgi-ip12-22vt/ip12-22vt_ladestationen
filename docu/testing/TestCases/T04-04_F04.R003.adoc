@@ -1,0 +1,23 @@
+== Testfall T04-04
+
+[[T04-04]]
+=== Testfall-ID
+T04-04
+
+=== Requirement
+F04.R003
+
+=== Kurzbeschreibung
+Prüfen, ob ein Besucher die Bonus-Runde am Anfang starten kann
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Highscore-Page".
+
+==== Eingabe
+
+1) Auf den Button "Bonus" klicken.
+
+==== Ausgabe
+2) Das Bonus-Level wird gestartet.

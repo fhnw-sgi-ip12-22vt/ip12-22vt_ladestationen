@@ -1,0 +1,347 @@
+= Testprotokoll
+
+// https://de.parasoft.com/blog/how-to-write-test-cases-for-software-examples-tutorial/
+// Beschreiben Sie hier, wann Sie was testen wollen.
+== TD-1 - 1. Testdurchlauf (12.05.2022 - 11.01.2023)
+[cols="1,2,1,2,1,1,2" options="header"]
+|===
+|Testing ID |Name |Feature |Datum |Tester |Ergebnisse |Kommentar
+
+|TC 1.0
+|Verdrahtungsprüfung der GPIO-Extension-ICs
+|F01 - Physisches Modell
+|02.12.2022
+|Marius Gebhardt & Shenia Scherer
+|Bestanden
+|
+
+|TC 1.1
+|Ein- und Ausschalten der Kanten
+|F01.R001 & R002 - Physisches Modell
+|10.01.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|TC 1.2
+|Die Ansteuerung der LED-Strips funktioniert mit dem 74HCT125N Logic-Level-Shifter-IC
+|F01 - Physisches Modell
+|10.01.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|===
+
+== TD-2 - 2. Testdurchlauf (22.03.2023 - 29.03.2023)
+
+[cols="1,2,1,2,1,1,2" options="header"]
+|===
+|Testing ID |Name |Feature |Datum |Tester |Ergebnisse |Kommentar
+
+|TC 1.3
+|Alle LEDs des LED-Strips sind ansteuerbar
+|F01 - Physisches Modell
+|23.03.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|TC 1.4
+|Die Ansteuersignale für den LED-Strip werden von der Hardware nicht verfälscht
+|F01 - Physisches Modell
+|29.03.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|TC 1.5
+|Ansteuerung der LED-Strips mit Python
+|F01 - Physisches Modell
+|29.03.2023
+|Marius Gebhardt & Gabriele Ferrali
+|Bestanden
+|
+
+|===
+
+== TD-3 - 3. Testdurchlauf (08.05.2023 - 12.05.2023)
+
+[cols="1,2,1,2,1,1,2" options="header"]
+|===
+|Testing ID |Name |Feature |Datum |Tester |Ergebnisse |Kommentar
+
+|TC 1.6
+|Button-Debounce-Test
+|F01 - Physisches Modell
+|08.05.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|TC 1.7
+|Synchronisation von Button-Eingaben und LED-Ausgaben
+|F01 - Physisches Modell
+|08.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|TC 1.8
+|Stresstest der Hardware-Komponenten
+|F01 - Physisches Modell
+|09.05.2023
+|Gabriele Ferrali
+|Nicht bestanden
+|Überlastungsprobleme bei Led-Strip ansteuerung
+
+|T01-08V2
+|Stresstest der Hardware-Komponenten - Nachbesserung
+|F01 - Physisches Modell
+|10.05.2023
+|Gabriele Ferrali
+|Bestanden
+|Überlastungsprobleme bei Led-Strip ansteuerung behoben
+
+|T02-01
+|Connect 'n Charge-Spieltest
+|F02 - Spiel Connect 'n Charge
+|09.05.2023
+|Marius Gebhardt & Gabriele Ferrali
+|Nicht bestanden
+|Fehler in der Spiellogik
+
+|T02-01V2
+|Connect 'n Charge-Spieltest - Nachbesserung
+|F02 - Spiel Connect 'n Charge
+|10.05.2023
+|Marius Gebhardt & Gabriele Ferrali
+|Bestanden
+|Spiellogik Fehler behoben
+
+|T02-02
+|Überprüfung der Connect 'n Charge Spiellogik
+|F02 - Spiel Connect 'n Charge
+|10.05.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|TT03-01
+|Anzeigetest des Hauptmenüs
+|F03 - Anzeige
+|10.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T03-02
+|Anzeigetest der Spielansicht
+|F03 - Anzeige
+|11.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T03-03
+|Anzeigetest der Punkteanzeige
+|F03 - Anzeige
+|11.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T03-04
+|Anzeigetest der Rangliste
+|F03 - Anzeige
+|12.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T03-05
+|Anzeigetest der Zusatzinformationen
+|F03 - Anzeige
+|12.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T03-06
+|Anzeigetest der Tipps
+|F03 - Anzeige
+|12.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T03-07
+|Test des Startscreens
+|F03 - Anzeige
+|12.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T03-08
+|Test Spiel starten
+|F03 - Anzeige
+|12.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T06-01
+|Robustheit
+|F06 - Robustheit
+|10.05.2023
+|Shenia Scherer
+|Bestanden
+|Usability Tests wurden durchgeführt. Es entstanden keine technische Probleme.
+
+|===
+
+== TD-4 - 4. Testdurchlauf (17.05.2023 - 24.05.2023)
+
+[cols="1,2,1,2,1,1,2" options="header"]
+|===
+|Testing ID |Name |Feature |Datum |Tester |Ergebnisse |Kommentar
+
+
+|T04-01
+|Test der Rundengeneration in Verteilungsnetzen
+|F04 - Runden von Verteilungsnetze
+|17.05.2023
+|Gabriele Ferrali
+|Bestanden
+|
+
+|T04-02
+|Test der Verbindung in Verteilungsnetzen
+|F04 - Runden von Verteilungsnetze
+|17.05.2023
+|Gabriele Ferrali
+|Bestanden
+|
+
+|T04-03
+|Test der Rundenübergänge in Verteilungsnetzen
+|F04 - Runden von Verteilungsnetze
+|17.05.2023
+|Gabriele Ferrali
+|Bestanden
+|
+
+|T04-04
+|Stresstest der Rundenlogik in Verteilungsnetzen
+|F04 - Runden von Verteilungsnetze
+|19.05.2023
+|Marius Gebhardt & Gabriele Ferrali
+|Bestanden
+|
+
+|T04-05
+|Test der Fehlertoleranz in Runden von Verteilungsnetzen
+|F04 - Runden von Verteilungsnetze
+|19.05.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|T04-06
+|Performance-Test der Verteilungsnetzrunden
+|F04 - Runden von Verteilungsnetze
+|19.05.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|T04-07
+|Test der User-Interaktion in Runden von Verteilungsnetzen
+|F04 - Runden von Verteilungsnetze
+|19.05.2023
+|Gabriele Ferrali
+|Bestanden
+|
+
+|T05-01
+|Test der Highscore-Erstellung
+|F05 - Highscore
+|17.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T05-02
+|Test der Highscore-Anzeige
+|F05 - Highscore
+|17.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T05-03
+|Test der Highscore-Aktualisierung
+|F05 - Highscore
+|17.05.2023
+|Shenia Scherer
+|Bestanden
+|
+
+|T05-04
+|Stresstest des Highscore-Systems
+|F05 - Highscore
+|19.05.2023
+|Marius Gebhardt
+|Nicht bestanden
+|Speicherung fehlgeschlagen
+
+|T05-04V2
+|Stresstest des Highscore-Systems - Nachbesserung
+|F05 - Highscore
+|20.05.2023
+|Marius Gebhardt
+|Bestanden
+|Speicherungs Fehler behoben
+
+|T05-05
+|Test der Fehlertoleranz des Highscore-Systems
+|F05 - Highscore
+|19.05.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|T05-06
+|Performance-Test des Highscore-Systems
+|F05 - Highscore
+|19.05.2023
+|Marius Gebhardt
+|Bestanden
+|
+
+|T07-01
+|Test der Anzeige von Zusatzinformationen
+|F07 - Zusatzinfos
+|19.05.2023
+|Gabriele Ferrali
+|Bestanden
+|
+
+|T08-01
+|Test der Anzeige und Funktionalität von Tipps
+|F08 - Tipps
+|19.05.2023
+|Gabriele Ferrali
+|Nicht bestanden
+|Anzeigefehler in Tipps
+
+|T08-01V2
+|Test der Anzeige und Funktionalität von Tipps - Nachbesserung
+|F08 - Tipps
+|20.05.2023
+|Gabriele Ferrali
+|Bestanden
+|Anzeigefehler in Tipps behoben
+
+|===

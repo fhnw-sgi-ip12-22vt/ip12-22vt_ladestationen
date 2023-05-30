@@ -1,0 +1,21 @@
+TC 1.3: F01 Alle LEDs des LED-Strips sind ansteuerbar
+
+*Beschreibung:* Es wird getestet ob die Datenverbindung der LED-Strips keine Unterbrechungen hat und somit alle LEDs individuell Ansteuerbar sind.
+
+*Annahmen und Voraussetzungen:* Das Datenkabel der LED-Strips ist mit dem RaspberryPi verbunden.
+
+Der RaspberryPi hat ein Programm, dass alle LEDs nacheinander einschalten kann.
+
+Alle Komponenten sind mit 5VDC Spannung versorgt.
+
+Alle LEDs sind am Anfang aus.
+
+*Testdaten:* -
+
+*Auszuführende Schritte:*
+
+. Starten des Programms auf dem RaspberryPi +
+*erwartetes Ergebnis:* Die LEDs gehen nacheinander an.
+
+. Warten bis keine weiteren LEDs angehen +
+*erwartetes Ergebnis:* Alle LEDs leuchten.

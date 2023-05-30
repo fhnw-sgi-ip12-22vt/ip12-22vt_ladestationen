@@ -1,0 +1,26 @@
+TC 1.4: F01 Die Ansteuersignale für den LED-Strip werden von der Hardware nicht verfälscht
+
+*Beschreibung:* Es wird beim Treffen mit dem Elektronik-Experten getestet, dass das Ansteuerungssignal durch die Hardware nicht
+beeinflusst wird und somit der Fehler auf der Softwareseite liegt.
+
+*Annahmen und Voraussetzungen:*
+Das Datenkabel der LED-Strips ist via dem 74HCT125N IC mit dem RaspberryPi verbunden.
+
+Das Oszilloskop ist mit dem Signalkabel zwischen dem IC und dem RaspberryPi sowie mit dem
+Signalkabel zwischen dem IC und dem LED-Strip verbunden.
+
+Der RaspberryPi hat ein Programm, dass alle LEDs nacheinander einschalten kann.
+
+Alle Komponenten sind mit 5VDC Spannung versorgt.
+
+Alle LEDs sind am Anfang aus.
+
+*Testdaten:* 29.03.2023
+
+*Auszuführende Schritte:*
+
+. Starten des Programms auf dem RaspberryPi +
+*erwartetes Ergebnis:* Die LEDs gehen nacheinander an.
+
+. Beobachten der Signale auf dem Oszilloskop +
+*erwartetes Ergebnis:* Die Signale sind vor und nach dem IC gleich.

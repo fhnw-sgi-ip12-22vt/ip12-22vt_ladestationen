@@ -1,0 +1,28 @@
+== Testfall T03-05
+
+[[T03-05]]
+=== Testfall-ID
+T03-05
+
+=== Requirement
+F03.R003
+
+=== Kurzbeschreibung
+Prüfen, ob die Hilfe während des Spiels angezeigt werden kann
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Eine Spielrunde wurde begonnen.
+* Das Spiel zeigt die Anzeige "Spiel-Page" mit der laufenden Spielzeit und den aktuellen Kantenkostenstand.
+
+==== Eingabe
+
+1) Drücke links oben auf die Hilfe, welche mit dem Fragezeichen Symbole "?" symbolisiert ist.
+
+==== Ausgabe
+2) Die laufende Spielzeit wird angehalten und die Spielkanten werden nicht mehr beleuchtet.
+
+3) Die Anzeige "Hilfe-Page" wird auf dem Touch-Screen dargestellt.
+
+4) Ein Text über die Spielregeln ist auf "Home-Page" ersichtlich.

@@ -1,0 +1,27 @@
+TC 1.0: Verdrahtungsprüfung der GPIO-Extension-ICs
+
+*Beschreibung:* Bei diesem Test soll geprüft werden, dass alle Drähte des Flachbandkabels mit einem und genau einem Pin des MCP23S17 ICs verbunden sind.
+
+*Annahmen und Voraussetzungen:* Die Pins der ICs müssen mit dem Flachbandkabel verbunden sein (gelötet oder gesteckt). Es muss ein Durchgangsprüfgerät wie z.B. ein Multimeter zur Verfügung stehen.
+
+*Testdaten:* -
+
+*Auszuführende Schritte:*
+
+. Power und Ground Pin zueinander auf elektrische Verbindung testen +
+*erwartetes Ergebnis:* Es besteht keine elektrische Verbindung
+
+. Testen der elektrischen Verbindung zwischen dem Drahtende und dem zugehörigen Pin +
+*erwartetes Ergebnis:* Es besteht eine elektrische Verbindung
+
+. Testen der elektrischen Verbindung zwischen dem Drahtende und den Nachbar-Pin(s) des Zugehörigen Pins +
+*erwartetes Ergebnis:* Es besteht keine elektrische Verbindung
+
+. Testen der elektrischen Verbindung zwischen dem Drahtende und den gegenüberliegenden Pin des Zugehörigen Pins +
+*erwartetes Ergebnis:* Es besteht keine elektrische Verbindung
+
+. Für alle 16 GPIO-Pins sowie die 4 Datenpins wiederholen.
+
+*erwartetes Ergebnis:* Alle Pins sind ausreichend von ihren Nachbarn und Gegenübern isoliert. Kurzschluss gibt es keinen.
+
+

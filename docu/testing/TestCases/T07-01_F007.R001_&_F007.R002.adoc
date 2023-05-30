@@ -1,0 +1,21 @@
+== Testfall T07-01
+
+[[T07-01]]
+=== Testfall-ID
+T07-01
+
+=== Requirements
+ F007.R001 und F07.R002
+
+=== Kurzbeschreibung
+Prüfen, ob ein Benutzer mit den QR-Code die Webseite mit den Zusatzinfos lesen kann.
+
+=== Voraussetzung
+
+* Der QR-Code ist auf Connect 'n Charge daran angebracht.
+
+==== Eingabe
+1) Mit ein Smartphone den QR-Code scannen und öffnen
+
+==== Ausgabe
+2) Die Webseite mit den Zusatzinfos wird angezeigt.

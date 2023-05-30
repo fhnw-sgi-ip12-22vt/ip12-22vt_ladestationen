@@ -1,0 +1,13 @@
+== Test 4
+
+[%autowidth]
+|===
+|Datum | 23.03.2023
+|Verantwortlich | Marius Gebhardt & Marvin Vogel
+|===
+
+include::TestCases/1_3_F01_LEDStripsDataLine.adoc[]
+
+*Status:* Erfolgreich
+
+*Bemerkungen:* Bei zwei Verbindungen zwischen einzelnen LED-Strip-Segmenten musste nachgebessert werden.

@@ -1,0 +1,40 @@
+== Testfall T03-01
+
+[[T03-01]]
+=== Testfall-ID
+T03-01
+
+=== Requirement
+F03.R001
+
+=== Kurzbeschreibung
+Prüfen, ob das Spiel durch die Berührung des Touch-Screen gestartet werden kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist im Ruhemodus, indem es die Loading-Page mit dem Logo "Connect n' Charge" anzeigt.
+
+==== Eingabe
+
+1) Auf dem Touch-Screen drücken.
+
+4) Auf dem Button "Start", welcher wie ein zerschnittener Kreis aussieht, drücken.
+
+5) Auf die blickende Kante drücken.
+
+==== Ausgabe
+2) Die Loading-Page verschwindet.
+
+3) Die Home-Page wird nun angezeigt.
+
+6) Die Anzeige "Starten-Page" wird angezeigt.
+
+7) Eine Spielkante blickt in ein Interval auf und ab.
+
+8) Auf dem Touch-Screen wird die Countdown-Page angezeigt.
+
+9) Als eine Animation werden die Werte, welche 3,2,1 und Los sind, angezeigt.
+
+10) Nachdem letzten Wert "Los" wird die Anzeige "Spiel-Page" angezeigt und somit hat diese Spielrunde begonnen.
+
