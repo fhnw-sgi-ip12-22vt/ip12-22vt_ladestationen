@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="800.0" styleClass="root-pane" stylesheets="@../../../css/style.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.ladestation.connectncharge.controller.pagecontroller.admin.AdminNormalLeaderboard">
+   <children>
+      <ImageView fitHeight="67.0" fitWidth="59.0" layoutX="14.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/Arrow_left_long.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="45.0" fitWidth="57.0" layoutX="667.0" layoutY="188.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../images/trash.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="trashButton" layoutX="667.0" layoutY="186.0" mnemonicParsing="false" onAction="#handleTrashButton" opacity="0.0" prefHeight="45.0" prefWidth="45.0" />
+      <Button fx:id="backButton" layoutX="11.0" layoutY="13.0" mnemonicParsing="false" onAction="#handleBackButton" opacity="0.0" prefHeight="59.0" prefWidth="74.0" />
+      <Button fx:id="chooseAllButton" layoutX="606.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleChooseAllButton" styleClass="leaderboard-choose-button" stylesheets="@../../../css/style.css" text="Alle auswählen" />
+      <Button fx:id="unchooseAllButton" disable="true" layoutX="606.0" layoutY="107.0" mnemonicParsing="false" onAction="#handleUnChooseAllButton" styleClass="leaderboard-choose-button" stylesheets="@../../../css/style.css" text="Alle abwählen" />
+      <TableView fx:id="tableView" layoutX="129.0" layoutY="50.0" prefHeight="214.0" prefWidth="458.0">
+         <!-- Define the columns -->
+         <columns>
+            <TableColumn fx:id="rankColumn" editable="false" maxWidth="85.0" prefWidth="85.0" resizable="false" text="Rang">
+               <cellValueFactory>
+                  <PropertyValueFactory property="rank" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="nameColumn" editable="false" maxWidth="215.0" prefWidth="215.0" resizable="false" text="Name">
+               <cellValueFactory>
+                  <PropertyValueFactory property="playerName" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="timeColumn" editable="false" maxWidth="137.0" prefWidth="137.0" resizable="false" text="Zeit">
+               <cellValueFactory>
+                  <PropertyValueFactory property="score" />
+               </cellValueFactory>
+            </TableColumn>
+         </columns>
+      </TableView>
+      <Line endX="281.0" layoutX="307.0" layoutY="12.0" startX="-179.0" startY="1.0" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-153.0" endY="447.12841796875" layoutX="281.0" layoutY="20.0" startX="-153.0" startY="-5.585784912109375" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="-153.0" endY="447.12841796875" layoutX="741.0" layoutY="19.0" startX="-153.0" startY="-5.585784912109375" stroke="WHITE" strokeWidth="2.0" />
+      <Line endX="281.0" layoutX="307.0" layoutY="50.0" startX="-179.0" startY="1.0" stroke="WHITE" strokeWidth="2.0" />
+      <Label layoutX="251.0" layoutY="14.0" text="Normal Rangliste" textFill="WHITE">
+         <font>
+            <Font size="28.0" />
+         </font>
+      </Label>
+      <Line endX="281.0" layoutX="307.0" layoutY="469.0" startX="-179.0" stroke="WHITE" strokeWidth="2.0" />
+      <TableView fx:id="restTableView" layoutX="129.0" layoutY="250.0" prefHeight="219.0" prefWidth="458.0">
+         <columns>
+            <TableColumn fx:id="restRankColumn" editable="false" maxWidth="85.0" prefWidth="85.0" resizable="false" text="Rang">
+               <cellValueFactory>
+                  <PropertyValueFactory property="rank" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="restNameColumn" editable="false" maxWidth="215.0" prefWidth="215.0" resizable="false" text="Name">
+               <cellValueFactory>
+                  <PropertyValueFactory property="playerName" />
+               </cellValueFactory>
+            </TableColumn>
+            <TableColumn fx:id="restTimeColumn" editable="false" maxWidth="137.0" prefWidth="137.0" resizable="false" text="Zeit">
+               <cellValueFactory>
+                  <PropertyValueFactory property="score" />
+               </cellValueFactory>
+            </TableColumn>
+         </columns>
+      </TableView>
+      <AnchorPane fx:id="shadowPane" layoutX="10.0" layoutY="10.0" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color: #00022e89;" styleClass="pane-shadow" stylesheets="@../../../css/style.css" visible="false" />
+      <!--<AnchorPane layoutX="142.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" styleClass="admin-popup-pane" stylesheets="@../../../css/style.css" visible="false">
+      <AnchorPane fx:id="shadowPane" layoutX="-3.0" layoutY="-4.0" onMouseClicked="#handleShadowAnchorPaneClick" prefHeight="487.0" prefWidth="806.0" style="-fx-background-color: #00022e89;" styleClass="pane-shadow" stylesheets="@../../../css/style.css" visible="false" />-->
+      <AnchorPane fx:id="verifyPopup" layoutX="142.0" layoutY="107.0" prefHeight="200.0" prefWidth="200.0" styleClass="admin-popup-pane" stylesheets="@../../../css/style.css" visible="false">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="68.0" layoutY="29.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="378.0" text="Sind Sie sicher, dass Sie diese Einträge löschen wollen?" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" contentDisplay="CENTER" layoutX="307.0" layoutY="150.0" maxHeight="286.0" mnemonicParsing="false" onAction="#declineDelete" prefHeight="42.0" prefWidth="95.0" styleClass="admin-popup-pane-no-button" text="NEIN" textAlignment="JUSTIFY" />
+            <Button layoutX="30.0" layoutY="152.0" mnemonicParsing="false" onAction="#confirmDelete" prefHeight="42.0" prefWidth="106.0" styleClass="admin-popup-pane-yes-button" text="JA" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
