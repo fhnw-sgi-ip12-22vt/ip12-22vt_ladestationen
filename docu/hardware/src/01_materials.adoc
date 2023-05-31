@@ -1,84 +1,87 @@
 [[section-solution-strategy]]
 == Materialliste
+
 In diesem Bereich werden die getroffenen Massnahmen und Richtlinien in Bezug auf das Projekt und das abschliessende Resultat vorgestellt.
 
 === Materialliste
+
 [cols="1,1,2" options="header"]
 |===
 |*Preis insgesamt* |*Anzahl* | *Material*
 //Row 0
-|- +
+|-  +
 (von FHNW)
 |1x
 |RaspberryPi Modell B +
-link:hardware/resources/raspberry-pi-4-product-brief.pdf[Datasheet]
+link:https://www.dropbox.com/s/h311kb202zdr0iu/raspberry-pi-4-product-brief.pdf?dl=0[Datasheet]
+
 //Row 1
 |80CHF
 |1x
 |RaspberryPi-Display 7" +
-link:hardware/resources/7-inch-display-mechanical-drawing.pdf[Technische Zeichnung] +
-link:hardware/resources/7-inch-display-product-brief.pdf[Spezifikationen]
+link:https://www.dropbox.com/s/zit6mlaptj78g0j/7-inch-display-mechanical-drawing.pdf?dl=0[Technische Zeichnung] +
+link:https://www.dropbox.com/s/eitilingrnuml3c/7-inch-display-product-brief.pdf?dl=0[Spezifikationen]
 
 //Row 2
 |56CHF
 |14m 10cm
 |LED-Strip +
 WS2812b, White PCB, 60LED/m +
- link:resources/WS2812B.PDF[Datasheet]
+link:https://www.dropbox.com/s/rwvfng9l3smpthl/WS2812B.PDF?dl=0[Datasheet]
 //Row 3
 |20CHF
 |1x
 |Schaltnetzteil +
 DC 5V 20A 100W +
-link:hardware/resources/S-100.PDF[Datasheet]
+link:https://www.dropbox.com/s/85towcmibt02q84/SchwarzKlappGriff-AliExpress.pdf?dl=0[Datasheet]
 //Row 3
 |24CHF
 |100x
 |TACT SWITCH, 12 x 12mm, 4PIN/THT +
-link:hardware/resources/PHAP5-50VA2A2S2N3_eng_tds.pdf[Datasheet]
+link:https://www.dropbox.com/s/ciaejwaa9pj6fzz/PHAP5-50VA2A2S2N3_eng_tds.pdf?dl=0[Datasheet]
 //Row 4
 |28CHF
 |5m
 |Flachbandkabel +
 40-Polig 1,27mm PITCH Grau +
-link:hardware/resources/Flachbandkabel-AliExpress.pdf[Spezifikationen]
+link:https://www.dropbox.com/s/g0kdnlyrcie310z/Flachbandkabel-AliExpress.pdf?dl=0[Spezifikationen]
 link:https://de.aliexpress.com/item/1005004314500329.html[Store-Link]
 //Row 5
 |02CHF
 |3x
 |Flachbandstecker +
 20PIN 2X10 +
-link:hardware/resources/FlachbandStecker-AliExpress.pdf[Spezifikationen]
+link:https://www.dropbox.com/s/fd90757up8yijgu/FlachbandStecker-AliExpress.pdf?dl=0[Spezifikationen]
 link:https://de.aliexpress.com/item/1005004340849985.html[Store-Link]
 //Row 6
 |02CHF
 |3x
 |Flachbandsockel +
 20PIN 2X10 +
-link:hardware/resources/FlachbandSockel-AliExpress.pdf[Spezifikationen]
+link:https://www.dropbox.com/s/opf4kqer3xhq2je/FlachbandSockel-AliExpress.pdf?dl=0[Spezifikationen]
 link:https://de.aliexpress.com/item/1005004266492521.html[Store-Link]
 //Row 6
 |34CHF
 |10x
 |Europlatinen zum löten +
 Artikelnummer: 711-5 +
-link:hardware/resources/Laborkarte-711-5.pdf[Datasheet]
+link:https://www.dropbox.com/s/0ih5ivof7717e8x/Laborkarte-711-5.pdf?dl=0[Datasheet]
 //Row 6
 |09CHF
 |5x
 |GPIO-Extension-ICs +
 MCP23S17 +
- link:resources/datenblatt-651444-microchip-technology-mcp23s17-esp-schnittstellen-ic-e-a-erweiterungen-por-spi-10-mhz-spdip-28.pdf[Datasheet] +
+link:https://www.dropbox.com/s/vn44cymsouw378m/datenblatt-651444-microchip-technology-mcp23s17-esp-schnittstellen-ic-e-a-erweiterungen-por-spi-10-mhz-spdip-28.pdf?dl=0[Datasheet] +
 Achtung: Im Produkt wurden auf Empfehlung des Experten round-hole-Sockel verwendet,
 die er uns schenkte. Er meinte diese haben eine zu geringe Qualität und Zuverlässigkeit
 //Row 6
 |02CHF
 |20x
 |IC Sockel für GPIO-Extension-ICs +
-link:hardware/resources/datenblatt-1304137-econ-connect-icfg287-icf287-ic-fassung-rastermass-762-mm-polzahl-num-28-1-st.pdf[Datasheet]
+link:https://www.dropbox.com/s/ung6endeffecooe/datenblatt-1304137-econ-connect-icfg287-icf287-ic-fassung-rastermass-762-mm-polzahl-num-28-1-st.pdf?dl=0[Datasheet]
 
 //Row 6
-|- +
+|-  +
 (gratis gekriegt)
 |-
 |Holz für den Rahmen
@@ -95,20 +98,20 @@ Farbe, Modelleisenbahngras, Leim
 |04CHF
 |3x
 |Lüfter für Kühlung +
-link:hardware/resources/LuefterSpecs-AliExpress.pdf[Spezifikationen]
+link:https://www.dropbox.com/s/i2fc5edfouv53y7/LuefterSpecs-AliExpress.pdf?dl=0[Spezifikationen]
 link:https://de.aliexpress.com/item/1005002624496206.html[Store-Link]
 //Row 6
 |04CHF
 |1x
 |Logic level converter IC +
 3.3V zu 5V, SN74HCT125
-link:hardware/resources/sn74hct125.pdf[Datasheet]
+link:https://www.dropbox.com/s/xds745duzoubhpp/sn74hct125.pdf?dl=0[Datasheet]
 //Row 6
 |03CHF
 |2x
 |IC-Sockel für Logic Level Converter +
 DIP 14 (Round Hole) +
-link:hardware/resources/SockelDIP14.png[Abbildung]
+link:https://www.dropbox.com/s/uu4jfl6bueh419c/SockelDIP14.png?dl=0[Abbildung]
 link:https://de.aliexpress.com/item/4000526447982.html[Store-Link]
 
 //Row 6
@@ -116,37 +119,38 @@ link:https://de.aliexpress.com/item/4000526447982.html[Store-Link]
 |1x
 |Platine mit Audio-Verstärker-IC +
 TDA2030A AMP 6-12V 1*18W +
-link:hardware/resources/AudioVerstaerker-AliExpress.pdf[Spezifikationen]
+link:https://www.dropbox.com/s/p2t1ks2llswas93/AudioVerstaerker-AliExpress.pdf?dl=0[Spezifikationen]
 link:https://de.aliexpress.com/item/1005004275703235.html[Store-Link]
 
 
 |30CHF
 |4x
 |Schwarze Klappgriffe 124mm +
-link:hardware/resources/Griff.png[Abbildung]
+link:https://www.dropbox.com/s/6z7liy9ct28k88b/Griff.png?dl=0[Abbildung]
 link:https://de.aliexpress.com/item/1005002110297346.html[Store-Link]
 
 |02CHF
 |1x
 |Gerätebuchse Männlich +
 IEC320 C14 +
-link:hardware/resources/BuchseBild.jpg[Abbildung]
+link:https://www.dropbox.com/s/0cpkhhmabf7i007/BuchseBild.jpg?dl=0[Abbildung]
 link:https://de.aliexpress.com/item/33049765696.html[Store-Link]
 
 |09CHF
 |1x
 |Gerätesteckerkabel +
-link:hardware/resources/KabelBild.jpg[Abbildung]
+link:https://www.dropbox.com/s/yn78z749nc06jxp/KabelBild.jpg?dl=0[Abbildung]
 link:https://de.aliexpress.com/item/4000184379220.html[Store-Link]
 
 |20CHF
 |300x
 |Holzschrauben +
 2x10 +
-link:hardware/resources/Schrauben.png[Abbildung]
+link:https://www.dropbox.com/s/in27xoa9jjk8v4e/Schrauben.png?dl=0[Abbildung]
 |===
 
 === Materialliste 3D-Druck
+
 [cols="1,1,2" options="header"]
 |===
 |*Grösse* |*Anzahl* | *Bezeichnung*

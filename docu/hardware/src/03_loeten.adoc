@@ -52,12 +52,12 @@ Hier ist eine Tabelle mit den Längen und Mengen der Kanten, die wir gedruckt ha
 [cols="1,1" options="header"]
 |===
 |*Länge (mm)* |*Menge*
-|60	| 3 
-|70	| 5 
-|75	| 2 
-|80	| 5 
-|90	| 1 
-|95	| 1 
+|60    | 3 
+|70    | 5 
+|75    | 2 
+|80    | 5 
+|90    | 1 
+|95    | 1 
 |100 | 4 
 |105 | 2 
 |110 | 3 
@@ -99,7 +99,7 @@ Die Befestigung der Kanten auf dem Brett erfolgt mit zwei Schrauben. Es ist wich
 Bei den kürzeren Kanten gibt es nur auf einer Seite einen Abstandshalter. Bitte achten Sie darauf, dass diese Kanten auf der Seite mit dem Abstandshalter fest befestigt sind. Auf der Seite ohne Abstandshalter sollte die Schraube nicht so fest angezogen werden, um eine gute Klickbarkeit zu gewährleisten.
 
 
-link:hardware/resources/3D-Modelle/KanntenUnterlagen.zip[Kannten Unterlagen]
+link:https://www.dropbox.com/s/7f07q9qhrwtda8x/Kanten%20Unterlage.zip?dl=0[Kannten Unterlagen]
 
 ****
 
@@ -119,7 +119,7 @@ Nach dem Aufkleben jeder Abdeckung sollte überprüft werden, ob die Kante immer
 
 Diese gedruckten Abdeckungen bieten nicht nur zusätzlichen Schutz für Ihre LEDs, sondern sorgen auch dafür, dass die Beleuchtung angenehmer für die Augen ist und das gesamte Gerät ein einheitlicheres und ansprechenderes Aussehen erhält.
 
-link:hardware/resources/3D-Modelle/Abdekung.stl[Abdekungen]
+link:https://www.dropbox.com/s/m2ibksc6g6xjo3j/Abdekung.stl?dl=0[Abdekungen]
 
 ****
 
@@ -134,7 +134,7 @@ Sobald die Häuser zusammengesetzt sind, werden sie über den Knotenpunkten (LED
 
 Die Häuser haben eine Grundfläche von 4x5 cm, was eine ausreichende Abdeckung für die meisten LED-Streifen bietet. Es gibt jedoch ein spezielles Haus, das alle LED-Streifen mit Strom versorgt. Aufgrund seiner zusätzlichen Funktionen ist dieses Haus etwas größer und hat eine Grundfläche von 5x6 cm.
 
-link:hardware/resources/3D-Modelle[Haus]
+link:https://www.dropbox.com/scl/fo/ffzzvpsbpb3xyhrroawti/h?dl=0&rlkey=zjcudvh6ljqiarc7np7v7qgyf[Haus]
 
 ****
 

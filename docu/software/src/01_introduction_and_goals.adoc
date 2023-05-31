@@ -1,12 +1,12 @@
 [[section-introduction-and-goals]]
-==	Einführung und Ziele
+== Einführung und Ziele
 
 === Aufgabenstellung
 
 [role="arc42help"]
 ****
 Die Aufgabenstellung dieses Projekts ist es, dass ein Spiel für Schüler aus der Sekundarstufe I entwickelt werden muss, um das Prinzip der Energieeinsparung durch die Nutzung der Graphentheorie spielerisch erklärt werden kann. 
-Weitere Informationen über die Aufgabenstellung ist unter dem link:docu/software/others/IP12-22vt_Ladestationen.pdf[IP12-22vt_Ladestationen.pdf] vorhanden.
+Weitere Informationen über die Aufgabenstellung ist unter dem link:https://www.dropbox.com/s/0ajk0gmgg55e9ou/IP12-22vt_Ladestationen.pdf?dl=0[IP12-22vt_Ladestationen.pdf] vorhanden.
  
 Mit der Hilfe der Graphentheorie muss ein Graph die gewählten Knoten mit den passenden Kanten auf das Brettspiel «Ladestation» verbunden werden. Dennoch ist jede Kante mit Kosten bestattet und dementsprechend muss die gesamte Vernetzung der Knoten am günstigsten sein. 
 Der kostengünstigste Weg bringt eine deutliche Einsparung von wichtigen Ressourcen in Form von Verkabelungen und von Stromstärke.
@@ -78,5 +78,3 @@ a|Probenutzung mit Kunde in einem gewissen Zeitraum:
 | Braucht ein Ausstellungsstück.
 |===
 ****
-
-

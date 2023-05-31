@@ -23,9 +23,9 @@ otarget/
 ./site/
 .idea/
 .mvn/
-/bin/
-.metadata/
-/target/
+connectncharge/bin/
+connectncharge/metadata/
+connectncharge/target/
 
 ### NetBeans ###
 /nbproject/private/
