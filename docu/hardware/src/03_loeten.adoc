@@ -11,7 +11,7 @@ image::../images/Loeten/ButtonPlatine.png["Platinen Vorbereitung", align="center
 
 Button auf Europlatine
 
-image::./images/Loeten/ButtonLoeten.PNG["Button loeten", align="center"]
+image::../images/Loeten/ButtonLoeten.PNG["Button loeten", align="center"]
 
 Button verschraubt auf Spielfläche.
 
