@@ -7,7 +7,7 @@ Alle Buttons werden auf Europlatinen gelötet, die dann von unten mit 2.5x10 Hol
 
 Um die Europlatinenstücke pro Button vorzubereiten müssen sie gemäss Bild zugeschnitten werden und die Kupferleiter durchgefeilt werden, um zu verhindern, dass der Schraubenkopf einen Kurzschluss des Buttons zur folge hat.
 
-image::./images/Loeten/ButtonPlatine.png["Platinen Vorbereitung", align="center"]
+image::../images/Loeten/ButtonPlatine.png["Platinen Vorbereitung", align="center"]
 
 Button auf Europlatine
 
@@ -15,7 +15,7 @@ image::./images/Loeten/ButtonLoeten.PNG["Button loeten", align="center"]
 
 Button verschraubt auf Spielfläche.
 
-image::./images/Loeten/ButtonLoetenVonUnten.PNG["Button loeten von unten", align="center"]
+image::../images/Loeten/ButtonLoetenVonUnten.PNG["Button loeten von unten", align="center"]
 ****
 
 === LEDs
@@ -24,7 +24,7 @@ Die LEDStrips müssen zugeschnitten werden. Viele müssen pro Kante zugeschnitte
 
 Für das zuschneiden kann folgende Grafik als Referenz verwendet werden:
 
-image::./images/Loeten/Pfad.png["LED-Strip Pfad", align="center"]
+image::../images/Loeten/Pfad.png["LED-Strip Pfad", align="center"]
 
 Sie zeigt alle LED-Segmente (Kanten und Häuser) der Reihe nach durchnummeriert. Zwei parallele rote Striche von einer Kante über ein Haus auf eine nächste Kante bedeutet, dass dort ein Durchgängiger LED-Strip verwendet wird. Andernfalls wird geschnitten. 
 
@@ -37,7 +37,7 @@ Fürs zuschneiden müssen die LED-Strips an die Kanten gehalten werden und korre
 
 Bei einem defekten LED, kann ganz einfach dieses LED ausgewechselt werden und mit den restlichen LED-Strip verbunden werden wie im Bild ersichtlich ist.
 
-image::./images/Loeten/LEDLoeten.PNG["LEDStrip splicen", align="center"]
+image::../images/Loeten/LEDLoeten.PNG["LEDStrip splicen", align="center"]
 ****
 
 === Led Unterlagen
@@ -45,7 +45,7 @@ image::./images/Loeten/LEDLoeten.PNG["LEDStrip splicen", align="center"]
 
 Die Led Unterlagen sind unter den Led Srips und sind dafür zu ständig, damit man die Buttons gut klicken kann. Wir haben sie mit dem Prusa MK3s Drucker und weißem Filament gedruckt, es können aber auch andere drucker verwendet werden.
 
-image::./images/Kanten.jpeg["Kanten", align="center"]
+image::../images/Kanten.jpeg["Kanten", align="center"]
 
 Hier ist eine Tabelle mit den Längen und Mengen der Kanten, die wir gedruckt haben:
 
@@ -100,6 +100,8 @@ Bei den kürzeren Kanten gibt es nur auf einer Seite einen Abstandshalter. Bitte
 
 
 link:https://www.dropbox.com/s/7f07q9qhrwtda8x/Kanten%20Unterlage.zip?dl=0[Kannten Unterlagen]
+
+link:../hardware/resources/3D-Modelle/KanntenUnterlagen.zip[Kannten Unterlagen]
 
 ****
 
