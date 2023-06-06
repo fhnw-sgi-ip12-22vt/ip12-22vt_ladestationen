@@ -28,14 +28,14 @@ Die Spieltipps beinhalten Hinweise auf potenzielle Fehler, die ein Bereich des S
 Dieser Abschnitt bietet einen high-level-overview. Für Details muss der xref:../../hardware/Hardware.adoc[Hardwareteil] der Doku konsultiert werden. +
 Für die Hardware wurde folgender Lösungsweg gewählt:
 
-. Fräsen der Spielplatte mit einer CNC gemäss xref:../hardware/Hardware.adoc#anleitung-über-das-gehäuse[Abschnitt Anleitung über das Gehäuse]
-. Vorbereiten der Platinen, einsetzen der Buttons, Verschraubung auf die Spielplatte gemäss xref:../hardware/Hardware.adoc#buttons[Abschnitt Buttons]
-. Bestücken und Einbauen der Platine siehe xref:../hardware/Hardware.adoc#pcb[Abschnitt PCB]
-. Drucken, Vorbereiten und Verschrauben der Kanten (LED-Unterlagen) gemäss xref:../hardware/Hardware.adoc#led-unterlagen[Abschnitt Led Unterlagen]
-. Kleben der LEDs auf die gedruckten und verschraubten Kanten, sowie verlöten derselben gemäss xref:../hardware/Hardware.adoc#leds[Abschnitt LEDs] (vorher unbedingt Querschnittliche Konzepte <<LED-Strip-Pfad>> lesen)
-. Fertigbauen des Gehäuses gemäss xref:../hardware/Hardware.adoc#anleitung-über-das-gehäuse[Abschnitt Anleitung über das Gehäuse]
+. Fräsen der Spielplatte mit einer CNC gemäss xref:../../hardware/src/02_boxmanual.adoc[Abschnitt Anleitung über das Gehäuse]
+. Vorbereiten der Platinen, einsetzen der Buttons, Verschraubung auf die Spielplatte gemäss xref:../../hardware/src/03_loeten.adoc[Abschnitt Buttons]
+. Bestücken und Einbauen der Platine siehe xref:../../hardware/src/03_loeten.adoc#pcb--platine[Abschnitt PCB]
+. Drucken, Vorbereiten und Verschrauben der Kanten (LED-Unterlagen) gemäss xref:../../hardware/src/03_loeten.adoc#led-unterlagen[Abschnitt Led Unterlagen]
+. Kleben der LEDs auf die gedruckten und verschraubten Kanten, sowie verlöten derselben gemäss xref:../../hardware/src/03_loeten.adoc#leds[Abschnitt LEDs] (vorher unbedingt Querschnittliche Konzepte <<LED-Strip-Pfad>> lesen)
+. Fertigbauen des Gehäuses gemäss xref:../../hardware/src/02_boxmanual.adoc[Abschnitt Anleitung über das Gehäuse]
 . Verkabelung gemäss Bild (direkt nach der Liste)
-. Deployment gemäss https://www.cs.technik.fhnw.ch/confluence20/pages/viewpage.action?pageId=96798304#Handbuch%22Connect'nCharge%22-Deployment[Handbuch]
+. Deployment gemäss link:../../Handbuch-ConnectnCharge.pdf[Handbuch]
 
 image::../images/verkabelung.png[Verkabelung PCB]
 
