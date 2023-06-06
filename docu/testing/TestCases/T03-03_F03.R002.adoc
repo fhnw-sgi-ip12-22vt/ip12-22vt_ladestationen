@@ -1,0 +1,26 @@
+== Testfall T03-03
+
+[[T03-03]]
+=== Testfall-ID
+T03-03
+
+=== Requirement
+F03.R002
+
+=== Kurzbeschreibung
+Prüfen, ob der Besucher am Ende des Spiels seinen Namen eingeben kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Der Spieler hat in einer Spielrunde den kostengünstigsten Graphen gefunden und die Spielrunde fertiggestellt.
+* Das Spiel ist bei der Fertig-Page.
+
+==== Eingabe
+
+1) Auf den Button "Name eintragen" drücken.
+
+3) Im Eingabefeld "Name" den Namen "Tester01" eintragen.
+
+==== Ausgabe
+2) Das Spiel wechselt die Anzeige zur "Nameeingabe-Page".

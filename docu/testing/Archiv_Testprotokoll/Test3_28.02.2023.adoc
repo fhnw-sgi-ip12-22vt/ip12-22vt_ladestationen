@@ -1,0 +1,17 @@
+== Test 3
+
+[%autowidth]
+|===
+|Datum | 28.03.2023
+|Verantwortlich | Marius Gebhardt
+|===
+
+include::TestCases/1_2_F01_AnsteuerungMitLogicLevelShifter.adoc[]
+
+*Status:* Fehlgeschlagen
+
+*Bemerkungen:* Der LED-Strip wurde gleich unzuverlässig angesteuert wie vor dem Hinzufügen
+des 74HCT125N Logic-Level-Shifters. Die Spannungsdifferenz (3.3V vs. 5V) kann also als
+Fehlerursache der unzuverlässigen Ansteuerung der LED-Strips ausgeschlossen werden.
+Der IC wird trotzdem in das finale Produkt eingebaut um diese Potentielle Fehlerquelle auszuschliessen,
+und weil nur so eine Ansteuerung gemäss den Spezifikationen der LED-Strips gewährleistet werden kann.

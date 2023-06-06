@@ -1,0 +1,14 @@
+== Test 1
+
+[%autowidth]
+|===
+|Datum | 02.12.2022
+|Verantwortlich | Marius Gebhardt
+|===
+
+include::TestCases/1_0_F01_GPIOExtensionICVerdrahtungsprüfung.adoc[]
+
+*Status:* Erfolgreich
+
+*Bemerkungen:* Beim löten der ICs ist aufgefallen, dass Aufwand, Ertrag und besonders Fehleranfälligkeit
+in keinem Verhältnis zueinander stehen. Deshalb wurde entschlossen, ein Custom-PCB Ätzen zu lassen anstatt Rasterlochplatinen zu verwenden.

@@ -1,0 +1,22 @@
+== Testfall T05-06
+
+[[T05-006]]
+=== Testfall-ID
+T05-06
+
+=== Requirement
+F005.R002
+
+=== Kurzbeschreibung
+Prüfen, ob ein Admin bei der Authentifikation abbrechen kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Admincode-Page".
+
+==== Eingabe
+1) Auf der Button "abbrechen", drücken.
+
+==== Ausgabe
+2) Das Spiel wird wieder auf der "Home-Page" zurückgebracht.

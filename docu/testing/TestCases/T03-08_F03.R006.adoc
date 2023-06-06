@@ -1,0 +1,24 @@
+== Testfall T03-08
+
+[[T03-08]]
+=== Testfall-ID
+T03-08
+
+=== Requirement
+F03.R006
+
+=== Kurzbeschreibung
+Prüfen, ob Connect 'n Charge während des Spiels die gestoppte Zeit des Spielers anzeigen kann
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Eine Spielrunde wurde gestartet.
+* Das Spiel ist bei der Anzeige "Spiel-Page".
+
+==== Eingabe
+
+-
+
+==== Ausgabe
+1) Durch den Start des Spiel kann die verbrachte Zeit an der Spielrunde unter den Kosten der Anzeige "Spiel-Page" gesichtet werden.

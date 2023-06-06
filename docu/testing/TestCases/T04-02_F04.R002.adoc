@@ -1,0 +1,26 @@
+== Testfall T04-02
+
+[[T04-02]]
+=== Testfall-ID
+T04-02
+
+=== Requirement
+F04.R002
+
+=== Kurzbeschreibung
+Prüfen, ob ein Besucher nach Abschluss einer Runde automatisch eine neue Runde beginnen kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Die erste Spielrunde wurde fertiggespielt.
+* Das Spiel ist bei der Anzeige "Fertig-Page".
+
+==== Eingabe
+
+1) Auf dem Button "Nochmal spielen"
+
+==== Ausgabe
+2) Die Anzeige wechselt zu "Countdown-Page" und zeigt die Countdown-Animation an.
+
+3) Die Anzeige wechselt zu "Countdown-Page" und zeigt die Countdown-Animation an.

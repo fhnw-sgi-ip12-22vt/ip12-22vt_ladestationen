@@ -1,0 +1,19 @@
+[[section-glossary]]
+== Glossar TODO: <Glossar>
+
+[cols="1,3,2" options="header"]
+|===
+|*Begriff* |*Beschreibung* | *Quelle*
+//Row 1
+|CAD
+|CAD steht für "computer-aided design" und bezieht sich auf die Verwendung von Computer-Software, um Konstruktions- und Designaufgaben zu unterstützen.
+|https://de.wikipedia.org/wiki/CAD 26.04.2023
+//Row 2
+|PCB
+|PCB steht für "printed circuit board" und ist eine Leiterplatte um elektrische Verbindungen zwischen Komponenten wie ICs herzustellen.
+|https://en.wikipedia.org/wiki/Printed_circuit_board 11.05.2023
+//Row 3
+|IC
+|IC steht für "integrated circuit" und ist ein Bauteil, dass elektrische Signale verarbeitet.
+|https://en.wikipedia.org/wiki/Integrated_circuit 11.05.2023
+|===

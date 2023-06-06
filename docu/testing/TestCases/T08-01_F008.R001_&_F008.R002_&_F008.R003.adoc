@@ -1,0 +1,23 @@
+== Testfall T08-01
+
+[[T08-01]]
+=== Testfall-ID
+T08-01
+
+=== Requirements
+F008.R001, F008.R002 und F008.R003
+
+=== Kurzbeschreibung
+Prüfen, ob ein Benutzer Tipps anfordern kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Eine Spielrunde wurde gestartet.
+* Das Spiel ist bei der Anzeige "Spiel-Page".
+
+==== Eingabe
+1) Auf den unten links platzierte gelbe Button "Tipp +15sec" drücken.
+
+==== Ausgabe
+2) Eine Kante leuchtet auf und +15sec werden bei der Zeit dazu gerechnet.

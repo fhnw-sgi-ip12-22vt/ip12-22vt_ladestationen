@@ -1,0 +1,29 @@
+== Testfall T04-01
+
+[[T04-01]]
+=== Testfall-ID
+T04-01
+
+=== Requirement
+F04.R001
+
+=== Kurzbeschreibung
+Prüfen, ob ein Besucher eine Runde lösen kann
+
+=== Voraussetzung
+Der Besucher hat das Spiel gestartet und ist bei Runde 1 angekommen
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Die erste Spielrunde wurde gestartet.
+* Das Spiel ist bei der Anzeige "Spiel-Page".
+* Es wurden alle Kanten bis auf einer Kante gedrückt, um den kostengünstigsten Spannbaum des Graphen zu erstellen.
+
+==== Eingabe
+
+1) Die letzte Kante des kostengünstigsten Spannbaums wurde gedrückt.
+
+==== Ausgabe
+
+2) Die Runde wird beendet.
+
+3) Die Zeit wird gestoppt.

@@ -1,0 +1,14 @@
+== Test 6
+
+[%autowidth]
+|===
+|Datum | 29.03.2023
+|Verantwortlich | Marius Gebhardt & Gabriele Ferrali
+|===
+
+include::TestCases/1_5_F01_LEDStripAnsteuerungOhneJava.adoc[]
+
+*Status:* Erfolgreich +
+
+*Bemerkungen:*
+Die Ansteuerung mit Python hatte 4 oder weniger fehlgeschlagene Ansteuerungen.

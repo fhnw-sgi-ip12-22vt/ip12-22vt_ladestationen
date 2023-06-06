@@ -1,0 +1,36 @@
+TC 1.1: F01.R001 & R002 Ein- und Ausschalten der Kanten
+
+*Beschreibung:* Bei diesem Test werden Requirement R001 und R002 des Features F01 getestet.
+
+*F01.R001*	Ein Besucher kann das Licht mittels dem Druck einer Schaltfläche anschalten. +
+*F01.R002*	Ein Besucher kann das Licht mittels dem Druck einer Schaltfläche ausschalten.
+
+*Annahmen und Voraussetzungen:* Die LED-Strips, die die Kanten visualisieren sind mit dem RaspberryPi verbunden.
+
+Die GPIO-Extension-ICs sind mit dem RaspberryPi verbunden.
+
+Alle Komponenten sind mit 5VDC Spannung versorgt.
+
+Das Programm zum auslesen der Buttons und ansteuern der LED-Strips läuft auf dem RaspberryPi.
+
+Alle Kanten sind am Anfang aus.
+
+*Testdaten:* -
+
+*Auszuführende Schritte:*
+
+. Drücken der ersten Kante
+
+. Loslassen der ersten Kante +
+*erwartetes Ergebnis:* Die Kante leuchtet.
+
+. Wiederholen für alle Kanten +
+*erwartetes Ergebnis:* Alle Kanten leuchten
+
+. Drücken der ersten Kante
+
+. Loslassen der ersten Kante +
+*erwartetes Ergebnis:* Die Kante leuchtet nicht mehr.
+
+. Wiederholen für alle Kanten +
+*erwartetes Ergebnis:* Alle Kanten leuchten nicht mehr.

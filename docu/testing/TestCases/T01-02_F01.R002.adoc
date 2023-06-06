@@ -1,0 +1,26 @@
+== Testfall T01-02
+
+[[T01-02]]
+=== Testfall-ID
+T01-02
+
+=== Requirement
+F01.R002
+
+=== Kurzbeschreibung
+Prüfen, ob das Licht durch Betätigen der Schaltfläche auf einer Kante mit zwei Buttons ausgeschaltet werden kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Eine Spielrunde wurde gestartet.
+* Nur die lange waagerechte Kante, welche mit einer roten Linie im Bild umrandet wurde, wurde gedrückt und somit leuchtet sie in einem blauen Farbton auf.
+
+image::images/img.png[]
+
+==== Eingabe
+
+1) Auf der leuchtenden Kante drücken.
+
+==== Ausgabe
+2) Das blaue Licht der Kante schaltet sich aus.

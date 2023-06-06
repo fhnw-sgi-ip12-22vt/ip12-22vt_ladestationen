@@ -1,0 +1,26 @@
+== Testfall T05-04
+
+[[T05-004]]
+=== Testfall-ID
+T05-04
+
+=== Requirement
+F005.R001
+
+=== Kurzbeschreibung
+Prüfen, ob ein Admin nur gewisse Ränge Highscore abwählen kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Admin3NormalRangliste-Page-Page".
+
+==== Eingabe
+1) Auf den ersten Rang drücken
+
+3) Wieder auf den ersten Rang drücken
+
+==== Ausgabe
+2) Der erste Rang in der Rangliste wird mit einem hellen grauen Balken markiert.
+
+4) Der erste Rang in der Rangliste wird nicht mehr markiert.

@@ -1,0 +1,26 @@
+image::images/pi4j-header.png[]
+
+// horizontal line
+***
+
+[role="arc42help"]
+
+
+:numbered:
+
+<<<<
+// 1. Anforderungen und Ziele
+include::src/01_materials.adoc[]
+
+<<<<
+// 2. Anforderungen und Ziele
+include::src/02_boxmanual.adoc[]
+
+<<<<
+// 2. Anforderungen und Ziele
+include::src/03_loeten.adoc[]
+
+<<<<
+// 2. Anforderungen und Ziele
+include::src/04_glossary.adoc[]
+

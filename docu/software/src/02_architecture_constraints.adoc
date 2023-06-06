@@ -1,0 +1,69 @@
+[[section-architecture-constraints]]
+== Randbedingungen
+[role="arc42help"]
+=== Technische Randbedingungen
+****
+[cols="1,2" options="header"]
+|===
+|*Randbedingung* |*Erläuterung*
+//Row 1
+|Implementierung in Java 17 und Java FXML
+|Die Programmiersprache Java wird im Projekt 1 und 2 verwendet, da die Programmierkurse im Studium mit Java durchgeführt werden. Zusätzlich muss die Version 17 in Java angewendet werden, damit neuere Funktionen in Java benutzt werden können.
+//Row 2
+|Hardware Komponente
+|Die link:../../hardware/Hardware.adoc[Hardwarekomponenten] sind angeschlossen und einsatzbereit. Wichtig: der Noppen des Flachbandkabelsteckers der den Pi-GPIO header mit dem custom PCB verbinded muss gen Mitte des RaspberryPis zeigen*
+//Row 3
+|Pi4j (V2.2.1)
+|Die Pi4j Library ist eine frei verfügbare Library für das Ein-/Auslesen der GPIO Pins. Mehr über Pi4j gibt es https://pi4j.com/about/new-in-v2/[hier]. 
+
+|CrowPi OS (V0.2.0)
+|Das CrowPi-OS image, adaptiert für die Verwendung mit Pi4j, wird auf dem Pi installiert und provided eine Umgebung die für die Ausführung von pi4j und JavaFX apps ausgelegt ist. Mehr dazu https://pi4j.com/getting-started/crowpi/crowpi-os/[hier].
+//Row 4
+|Junit (V5.9.0)
+|JUnit ist eine verbreitete Unit-Testing-Bibliothek für Java-Anwendungen, die zahlreiche Funktionen bietet, um die Logik in den Whitbox-Klassen zu testen. Mehr über JUnit gibt es https://junit.org/junit5/docs/current/user-guide/[hier]. 
+//Row 5
+|Checkstyle  (V10.3.4)
+|Checkstyle ist ein statisches Analysewerkzeug für Java-Code, das Entwicklern hilft, Code-Konventionen und Best Practices einzuhalten. Mehr über Checkstyle gibt es https://checkstyle.sourceforge.io/[hier]. 
+|===
+****
+
+=== Organisatorische  Randbedingungen
+****
+[cols="1,2" options="header"]
+|===
+|*Randbedingung* |*Erläuterung*
+//Row 1
+|Team
+|Schenia Scherer, Alexander Spiridonow, Pascal Stich, Marvin Vogel, Gabriele Ferrali, Marius Gebhardt und Zeljko Grujic sind für das Produkt "Connect 'n Charge" verantwortlich.
+//Row 2
+|Zeitplan
+|Die Projekte 1 und 2 sind in zwei Phasen unterteilt. Die erste Phase ist Projekt 1 und umfasst die Planung des Projekts und den Bau des Prototyps. Von September 2022 bis Januar 2023 wird die erste Phase behandelt.
+//Row 3
+|Vorgehensmodell
+|Das Vorgehensmodell basiert auf dem Rational Unified Process (RUP), denn in jeder Phase werden auch einzelne Iterationen durchgeführt.
+//Row 4
+|Entwicklungswerkzeuge
+|Für den Java-Code wird die IDE IntelliJ oder VisualCode verwendet. Die Projektdokumentation muss unter Confluence abgelegt werden, damit auch andere Gruppenmitglieder einen leichten Zugang zu den Bearbeitungen haben.
+//Row 5
+|Testwerkzeuge und -prozesse
+|Die Software wird mit JUNIT-Test abgedeckt und zusätzlich werden mit Testfallspezifikationen die interaktiven Handlungen für das Spiel getestet.
+|===
+****
+
+=== Konventionen  Randbedingungen
+****
+[cols="1,2" options="header"]
+|===
+|*Randbedingung* |*Erläuterung*
+//Row 1
+|Architekturdokumentation
+|Terminologie und Gliederung nach dem deutschen arc42-Template in der Version 6.0
+//Row 2
+|Kodierrichtlinien für Java
+|Java Coding Conventions werden von CheckStyle überprüft und eingehalten.
+//Row 3
+|Sprache (Deutsch vs. Englisch)
+|Die gesamte Software wird in Englisch geschrieben, um Widersprüche in der Namenszeichnung zu vermeiden.
+|===
+****
+

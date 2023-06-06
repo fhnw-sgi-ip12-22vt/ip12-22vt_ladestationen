@@ -1,0 +1,53 @@
+[[section-solution-strategy]]
+== Anleitung über das Gehäuse
+
+=== Materialen
+****
+In diesem Abschnitt wird das Spielgehäuse im Zusammenhang mit dem Projekt und den einzelnen Bauabschnitten vorgestellt. Die DWG-Dateien im Ordner "resources/Holzgehaeuse" können mit der Software Autodesk geöffnet werden, um mehr Infomationen über das Gehäuse zu bekommen.
+
+image::../images/Holzgehaeuse/allesOhneBedeckung.PNG["allesOhneBedeckung", align="center"]
+[cols="1,1,2" options="header"]
+|===
+|*ID* |*Anzahl und Material* |*Grösse*
+//Row 1
+|P-1
+|1x Bodenplatte 
+|21mm x 1000mm x 800mm
+//Row 2
+|P-2
+|1x Deckelplatte 
+|7mm x 1000mm x 660mm
+//Row 3
+|P-3
+|2x seitelichen (links & rechts) Holzplatten
+|22mm x 800mm x 160mm
+//Row 3
+|P-4
+|3x seitelichen (vorne & hinten) Holzplatten
+|22mm x 1000mm x 160mm
+|===
+****
+
+=== Anleitung zum Aufbau des Spiels
+
+==== Deckelplatte vorbereiten
+****
+Zunächst müssen die Löcher für die Knoten in der Oberplatte (P-2) angebracht werden. Obwohl die Masse nicht direkt angegeben sind, können Sie mithilfe des CAD-Modells in der Datei "/resources/Holzgehaeuse/OberPlatteLoecher.dwg" mit höherer Genauigkeit nachgemessen werden.
+
+image::../images/Holzgehaeuse/DeckemitLoecher.PNG["Decke mit Loecher", align="center"]
+****
+==== Displaybrett vorbereiten
+****
+Um den Touchscreen später genau einzubauen, müssen Sie  bitte ein P-4-Holzplate nehmen und bearbeiten. Die genauen Masse entsprechen der Abbildung. Zusätzlich steht Ihnen die Datei "/resources/Holzgehaeuse/3D Modell IP12 v3.dwg" zur Verfügung.
+
+image::../images/Holzgehaeuse/Screenbrett.PNG["Screenbrett", align="center"]
+****
+
+==== Frontbrett vorbereiten
+****
+Das Frontbrett wird unter dem Displaybrett befestigt und es ist wichtig, dabei die Masse gemäss der CAD-Datei "/resources/Holzgehaeuse/3D Modell IP12 v3.dwg" zu berücksichtigen. Die Masse sind auch auf dem unteren Bild ersichtlich.
+
+image::../images/Holzgehaeuse/VorneUnterScreenBrett.PNG["Screenbrett", align="center"]
+****
+
+

@@ -1,0 +1,25 @@
+== Testfall T03-04
+
+[[T03-04]]
+=== Testfall-ID
+T03-04
+
+=== Requirement
+F03.R003
+
+=== Kurzbeschreibung
+Prüfen, ob die Hilfe am Anfang des Spiels angezeigt werden kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Home-Page".
+
+==== Eingabe
+
+1) Drücke links oben auf die Hilfe, welche mit dem Fragezeichen Symbole "?" symbolisiert ist.
+
+==== Ausgabe
+2) Die Anzeige "Hilfe-Page" wird auf dem Touch-Screen dargestellt.
+
+3) Ein Text über die Spielregeln ist auf "Home-Page" ersichtlich.

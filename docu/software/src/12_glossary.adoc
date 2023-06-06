@@ -1,0 +1,96 @@
+[[section-glossary]]
+== Glossar
+
+[cols="1,3,2" options="header"]
+|===
+|*Begriff* |*Beschreibung* | *Quelle*
+//Row 1
+|Physisch
+|Bezieht sich auf die materielle Welt, die man mit den Sinnen wahrnehmen kann, im Gegensatz zur immateriellen Welt, wie z.B. Gedanken oder Ideen.
+|https://de.wikipedia.org/wiki/Physisch
+//Row 2
+|Highscore
+|Eine Liste der besten Ergebnisse oder Leistungen in einem bestimmten Spiel oder einer Anwendung, normalerweise geordnet nach Leistung, meistens in Form von Punkten oder Zeiten.
+|https://de.wikipedia.org/wiki/Highscore
+//Row 3
+|Graphentheorie
+|Ein Teilgebiet der Mathematik, das sich mit Graphen beschäftigt. Ein Graph besteht aus Knoten (auch "Vertices" genannt) und Kanten, die die Beziehungen zwischen den Knoten darstellen. Graphentheorie wird in vielen Bereichen der Wissenschaft und Technik verwendet.
+|https://de.wikipedia.org/wiki/Graphentheorie
+//Row 5
+|Verkabelungsmethode
+|Eine Methode zur Verlegung von Kabeln und Leitungen
+|https://de.wikipedia.org/wiki/Verkabelung
+//Row 6
+|Stromnetz
+|Eine Anlage, die die Erzeugung, Übertragung, Verteilung und Verbrauch von elektrischem Strom ermöglicht
+|https://de.wikipedia.org/wiki/Stromnetz
+//Row 6
+|Lerneffekt
+|Der Erfolg einer Lernmassnahme, der durch die Anwendung von Kenntnissen oder Fähigkeiten gemessen wird.
+|https://de.wikipedia.org/wiki/Lerneffekt
+//Row 6
+|Usability-Tests
+|Methoden zur Erfassung von Benutzererfahrungen und -feedback, um die Benutzbarkeit von Produkten zu bewerten.
+|https://de.wikipedia.org/wiki/Usability-Testing
+//Row 6
+|Manipulation
+|Beeinflussung von Entscheidungen oder Ergebnissen durch unethische oder unangemessene Mittel.
+|https://de.wikipedia.org/wiki/Manipulation
+//Row 6
+|Stabilität
+|Die Fähigkeit eines Systems, sich nach Störungen oder Veränderungen wieder in den ursprünglichen Zustand zu stabilisieren.
+|https://de.wikipedia.org/wiki/Stabilit%C3%A4t
+//Row 6
+|Stakeholder
+|Personen oder Gruppen, die durch die Existenz und Tätigkeit eines Unternehmens, Projekts oder Systems betroffen sind.
+|https://de.wikipedia.org/wiki/Stakeholder
+//Row 6
+|Bezirksschule
+|Schulform, in welche die Hauptschulen und Werkrealschulen einer Region gebündelt sind
+|https://de.wikipedia.org/wiki/Bezirksschule
+//Row 6
+|LED
+|Light-Emitting Diode (LED), eine elektronische Lichtquelle, die Licht durch elektronische Anregung von Halbleitersubstanzen ausstrahlt.
+|https://de.wikipedia.org/wiki/LED
+//Row 6
+|Touchscreen
+|Ein Eingabegerät, das durch Berührung des Bildschirms mit dem Finger oder einem speziellen Stift gesteuert wird.
+|https://de.wikipedia.org/wiki/Touchscreen
+//Row 6
+|Timer	
+|Ein elektronisches oder mechanisches Gerät, das die Verzögerung oder Dauer einer bestimmten Aktion steuert.
+|https://de.wikipedia.org/wiki/Zeitgeber
+//Row 6
+|Administrator
+|Person, die verantwortlich für die Verwaltung und Wartung von Computersystemen und -netzwerken ist.
+|https://de.wikipedia.org/wiki/Systemadministrator
+//Row 6
+|Feedback
+|Rückmeldung, die über den Erfolg oder Misserfolg einer Aktion oder die Zufriedenheit mit einem Produkt oder einer Dienstleistung gegeben wird.
+|https://de.wikipedia.org/wiki/Feedback
+//Row 6
+|QR-Code
+|Quick Response Code (QR-Code), ein zweidimensionaler Strichcode, der schnell von einem Barcode-Scanner gelesen werden kann.
+|https://de.wikipedia.org/wiki/QR-Code
+//Row 6
+|NFC (NFC-Sticker)
+|Near Field Communication (NFC), ein Funkprotokoll zur kontaktlosen Übertragung von Daten auf kurze Distanz.
+|https://de.wikipedia.org/wiki/Near_Field_Communication
+//Row 6
+|Steinerbaum
+|ein Baum, dessen Knoten mit einem graphtheoretischen Graphen assoziiert sind,der eine bestimmte Eigenschaft erfüllt.
+|https://de.wikipedia.org/wiki/Steiner_Baum
+
+|CNC
+|"Computerized Numerical Control": Fertigung von Teilen durch Computergesteuerte Machinen.
+|https://de.wikipedia.org/wiki/CNC-Maschine
+
+|MVC
+|"Model - View - Controler": Architekturmuster, dass Applikationen in die Komponenten Datenmodell, Ansicht und Programmsteuerung unterteilt.
+|https://de.wikipedia.org/wiki/Model_View_Controller
+
+|CI/CD
+|Continuous Integration, Continuous Deployment ist eine Software-Entwicklungs-Methodik bei der immer so schnell wie möglich
+automatisch getestet und deployed wird. Dies hilft die Qualität zu verbessern nach dem "Fail fast"-Prinzip.
+|https://de.wikipedia.org/wiki/CI/CD
+|===

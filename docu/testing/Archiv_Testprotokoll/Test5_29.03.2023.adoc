@@ -1,0 +1,22 @@
+== Test 5
+
+[%autowidth]
+|===
+|Datum | 29.03.2023
+|Verantwortlich | Marius Gebhardt & Gabriele Ferrali
+|===
+
+include::TestCases/1_4_F01_LEDStripsOszilloskop.adoc[]
+
+*Status:* Erfolgreich +
+BILD +
+*Bemerkungen:*
+Die Signale zeigten keinen offensichtlichen Unterschied, der Fehler liegt also bei der Software. +
+Ausserdem hat der Elektronik-Experte uns folgende Empfehlungen gegeben:
+
+* Dickeres Kabel zwischen PSU und LED-Strip um Spannungsabfall zu vermeiden.
+
+Folgende Daten wurden zusätzlich gemessen:
+
+* Nennstrom wenn alle 845 LEDs blau leuchten: 4.9 Ampere (~5mA pro LED)
+* Spannung wenn alle 845 LEDs blau leuchten am untersten Strip: 3.6V
