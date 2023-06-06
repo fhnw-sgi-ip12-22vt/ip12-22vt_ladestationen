@@ -98,7 +98,7 @@ Die Befestigung der Kanten auf dem Brett erfolgt mit zwei Schrauben. Es ist wich
 
 Bei den kürzeren Kanten gibt es nur auf einer Seite einen Abstandshalter. Bitte achten Sie darauf, dass diese Kanten auf der Seite mit dem Abstandshalter fest befestigt sind. Auf der Seite ohne Abstandshalter sollte die Schraube nicht so fest angezogen werden, um eine gute Klickbarkeit zu gewährleisten.
 
-link:../resources/3D-Modelle/KantenUnterlagen.zip[Kanten Unterlagen Zip]
+link:../resources/3D-Modelle/KantenUnterlage.zip[Kanten Unterlage Zip]
 ****
 
 === Abdeckungen
