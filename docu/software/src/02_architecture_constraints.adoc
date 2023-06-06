@@ -11,13 +11,13 @@
 |Die Programmiersprache Java wird im Projekt 1 und 2 verwendet, da die Programmierkurse im Studium mit Java durchgeführt werden. Zusätzlich muss die Version 17 in Java angewendet werden, damit neuere Funktionen in Java benutzt werden können.
 //Row 2
 |Hardware Komponente
-|Die link:../hardware/Hardware.adoc[Hardwarekomponenten] sind angeschlossen und einsatzbereit. Wichtig: der Noppen des Flachbandkabelsteckers der den Pi-GPIO header mit dem custom PCB verbinded muss gen Mitte des RaspberryPis zeigen*
+|Die link:../../hardware/Hardware.adoc[Hardwarekomponenten] sind angeschlossen und einsatzbereit. Wichtig: der Noppen des Flachbandkabelsteckers der den Pi-GPIO header mit dem custom PCB verbinded muss gen Mitte des RaspberryPis zeigen*
 //Row 3
 |Pi4j (V2.2.1)
 |Die Pi4j Library ist eine frei verfügbare Library für das Ein-/Auslesen der GPIO Pins. Mehr über Pi4j gibt es https://pi4j.com/about/new-in-v2/[hier]. 
 
 |CrowPi OS (V0.2.0)
-|Das CrowPi-OS image, adaptiert für die Verwendung mit Pi4j, wird auf dem Pi installiert und provided eine Umgebung die für die Ausführung von pi4j und JavaFX apps ausgelegt ist. Mehr dazu https://pi4j.com/getting-started/crowpi/crowpi-os/[hier]. Der image file ist in diesem link:../hardware/resources/crowpi-0.2.0.img.zip[repository abgelegt].
+|Das CrowPi-OS image, adaptiert für die Verwendung mit Pi4j, wird auf dem Pi installiert und provided eine Umgebung die für die Ausführung von pi4j und JavaFX apps ausgelegt ist. Mehr dazu https://pi4j.com/getting-started/crowpi/crowpi-os/[hier].
 //Row 4
 |Junit (V5.9.0)
 |JUnit ist eine verbreitete Unit-Testing-Bibliothek für Java-Anwendungen, die zahlreiche Funktionen bietet, um die Logik in den Whitbox-Klassen zu testen. Mehr über JUnit gibt es https://junit.org/junit5/docs/current/user-guide/[hier]. 
