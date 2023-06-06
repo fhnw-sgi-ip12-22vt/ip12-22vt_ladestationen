@@ -32,7 +32,7 @@ Ausserdem ist es wichtig zu beachten, dass einige dieser Teile verschleissen kö
 - **Platine mit Audio-Verstärker-IC (TDA2030A AMP 6-12V 1*18W):** Diese wird verwendet, um Audioausgabe zu ermöglichen.
 - **Gerätebuchse und Gerätesteckerkabel:** Diese werden für die Stromversorgung des Systems verwendet.
 
-Weitere technische Informationen finden Sie in der Hardware Doku unter folgendem [link](#).
+Weitere technische Informationen finden Sie in der Hardware Doku unter folgendem [link](docu/hardware/Hardware.adoc).
 
 ## Spiel starten und parametrisieren
 
@@ -55,7 +55,7 @@ Bitte beachten Sie, dass das Spiel nur mit einer stabilen Stromversorgung einwan
 Stellen Sie sicher, dass die Stromversorgung während des Spielbetriebs nicht unterbrochen wird, um eine Unterbrechung oder Verzögerung im Spielverlauf zu vermeiden.
 
 Für technischere Informationen und Details zum Deployment im Entwicklungs-Umfeld, zur Datenmigration und zur Installation auf neuer Hardware, verweisen wir auf das zugehörige Handbuch.
-[Handbuch](#)
+[Handbuch](docu/Handbuch-ConnectnCharge.pdf)
 
 
 ## Übersetzungen
