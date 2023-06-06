@@ -53,7 +53,7 @@ link:../resources/PHAP5-50VA2A2S2N3_eng_tds.pdf[Datasheet]
 40-Polig 1,27mm PITCH Grau +
 //link:https://www.dropbox.com/s/g0kdnlyrcie310z/Flachbandkabel-AliExpress.pdf?dl=0[Spezifikationen]
 //link:https://de.aliexpress.com/item/1005004314500329.html[Store-Link]
-link:hardware/resources/Flachbandkabel-AliExpress.pdf[Spezifikationen]
+link:../resources/Flachbandkabel-AliExpress.pdf[Spezifikationen]
 link:https://de.aliexpress.com/item/1005004314500329.html[Store-Link]
 
 //Row 5
@@ -63,7 +63,7 @@ link:https://de.aliexpress.com/item/1005004314500329.html[Store-Link]
 20PIN 2X10 +
 //link:https://www.dropbox.com/s/fd90757up8yijgu/FlachbandStecker-AliExpress.pdf?dl=0[Spezifikationen]
 //link:https://de.aliexpress.com/item/1005004340849985.html[Store-Link]
-link:hardware/resources/FlachbandStecker-AliExpress.pdf[Spezifikationen]
+link:../resources/FlachbandStecker-AliExpress.pdf[Spezifikationen]
 link:https://de.aliexpress.com/item/1005004340849985.html[Store-Link]
 
 //Row 6
