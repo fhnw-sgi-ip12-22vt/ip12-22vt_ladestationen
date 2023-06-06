@@ -1,0 +1,25 @@
+== Testfall T03-07
+
+[[T03-07]]
+=== Testfall-ID
+T03-07
+
+=== Requirement
+F03.R005
+
+=== Kurzbeschreibung
+Prüfen, ob Connect 'n Charge am Ende des Spiels den Highscore anzeigen kann
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Fertig-Page" und der Name "Tester01" wurde im Textfeld eingetragen.
+
+==== Eingabe
+
+1) Auf dem Button "Fertig" drücken.
+
+==== Ausgabe
+2) Die Anzeige "Nameeingabe-Page" wechselt mit der Anzeige "Highscore-Page".
+
+3) Bei der Tabelle ist die Rangliste mit dem gelb markierten Namen "Tester01" zusehen.

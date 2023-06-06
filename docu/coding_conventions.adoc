@@ -1,0 +1,54 @@
+= Coding Conventions
+
+== Verwendete Konventionen
+
+Einhaltung der Code Conventions:
+
+- Namenskonventionen: Packagenamen sind immer klein, Klassen sind CamelCase, Variablen sind drinkingCamelCase, Konstanten und Enums sind in UPPER_CASE.
+- 1 Tabulator/4 Leerschläge Einrückung pro Block, Leerzeichen wie in der Checkstyle-Datei beschrieben.
+- Keine Mehrfachdeklarationen pro Zeile.
+- Öffnende Klammer auf der vorherigen Zeile, schliessende auf eine neue Zeile.
+- Zeilen sind max. 120 Zeichen lang.
+- Verkettungen sind umgebrochen auf neue Zeilen mit 8 Leerzeichen Einrückung.
+
+Vokabular: Alle Personen, die Code schreiben, verwenden die gleichen Wörter für die Benennung von Variablen, Klassen usw.
+Die Standartsprache ist Englisch.
+
+Code Komplexität:
+
+- Klassengrösse, nicht grösser als 500 Zeilen.
+- Methodengrösse, kleiner als 60 Zeilen.
+
+Dokumentation: JavaDoc und Kommentare in den Codeblöcken. Generell sollte gelten:
+
+- Jede Klasse hat mindestens einen Klassenheader, welcher die Zuständigkeit der Klasse beschreibt.
+- Jede Methode verfügt über einen Methodenheader, welcher die Funktion der Methode sowie die von den Variablen beschreibt.
+
+Organisation: Die Software ist in fachlichen Packages organisiert. Das Projekt ist mit MVC gebaut.
+
+Trennung von Zuständigkeiten (Separation of concerns):
+
+- Jede Klasse/Methode hat eine Aufgabe.
+
+Checkstyle besitzt nicht die Fähigkeit zu überprüfen, ob der Code auskommentierten Code enthält und wird deswegen nicht geprüft.
+
+== Sicherstellung der Einhaltung der Konventionen
+=== Continuous Integration/Continuous Deployment (CI/CD)
+
+In unserem Projekt setzen wir auf Continuous Integration/Continuous Deployment (CI/CD) mit GitLab.
+
+Durch die Verwendung von CI/CD können wir sicherstellen, dass unser Code ständig getestet und in regelmässigen Abständen veröffentlicht wird. Dies hilft uns, mögliche Fehler im Code frühzeitig zu erkennen und zu beheben, bevor sie zu einem grösseren Problem werden.
+
+Wir haben uns für die Verwendung von CI/CD entschieden, weil die meisten von uns bereits Erfahrung damit haben, da wir das Modul "Software Construction" (SWC) besuchen.
+Die Verwendung von CI/CD in unserem Projekt ermöglicht es uns auch, sicherzustellen, dass unser Code immer auf dem neuesten Stand ist und dass alle Änderungen in einer kontrollierten Umgebung getestet werden.
+
+=== Code-Checken mit Checkstyle
+
+Um sicherzustellen, dass unser Code den gängigen Code-Qualitätsrichtlinien entspricht, haben wir Checkstyle implementiert.
+Durch die Verwendung von Checkstyle können wir potenzielle Code-Smells erkennen und entfernen, bevor sie zu einem grösseren Problem werden.
+
+Checkstyle wird während des Builds geprüft und wenn es mindestens eine Warnung findet, schlägt der Build fehl und die Pipeline wird gestoppt.
+Dies stellt sicher, dass wir alle definierten Code-Smells entfernen und eine hohe Code-Qualität beibehalten.
+
+Wir haben uns für Checkstyle entschieden, weil es eine einfache und effektive Möglichkeit bietet, Code-Smells zu erkennen und zu entfernen.
+Ausserdem haben wir uns dafür entschieden, weil wir es bereits im Modul SWC verwendet haben und daher mit seiner Verwendung vertraut sind.

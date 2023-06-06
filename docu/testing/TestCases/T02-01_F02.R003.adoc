@@ -1,0 +1,27 @@
+== Testfall T02-01
+
+[[T02-01]]
+=== Testfall-ID
+T02-01
+
+=== Requirement
+F02.R003
+
+=== Kurzbeschreibung
+Prüfen, ob die Zeit im Hintergrund gestartet werden kann am Anfang einer Runde.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Starten-Page".
+
+
+==== Eingabe
+
+1) Auf der blickende Kante klicken.
+
+==== Ausgabe
+2) Die Anzeige "Countdown-Page" mit der Animation 3, 2, 1, Los wird angezeigt.
+
+3) Nach der Countdown-Animation wird die Anzeige "Spiel-Page" angezeigt, dabei wird automatisch die Zeit, welche unter den Kosten ersichtlich ist, gestartet.
+

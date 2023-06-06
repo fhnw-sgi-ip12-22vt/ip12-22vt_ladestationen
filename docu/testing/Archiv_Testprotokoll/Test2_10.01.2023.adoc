@@ -1,0 +1,15 @@
+== Test 2
+
+[%autowidth]
+|===
+|Datum | 10.01.2023
+|Verantwortlich | Marius Gebhardt
+|===
+
+include::TestCases/1_1_F01_LichtEinschaltenUndAusschalten.adoc[]
+
+*Status:* Erfolgreich
+
+*Bemerkungen:* Der LED-Strip flackert manchmal unerwartet auf. Vermutlich hängt das mit Risiko +
+`Unzuverlässige Ansteuerung des LED strips mit Logical high 3.3 Volt` +
+zusammen (Siehe Risikoliste).

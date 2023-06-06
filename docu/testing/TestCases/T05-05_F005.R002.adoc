@@ -1,0 +1,31 @@
+== Testfall T05-05
+
+[[T05-005]]
+=== Testfall-ID
+T05-05
+
+=== Requirement
+F005.R002
+
+=== Kurzbeschreibung
+Prüfen, ob ein Admin sich mittels einem Passwort authentifizieren kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Passwort zur Authentifikation ist "123456".
+* Das Spiel ist bei der Anzeige "Home-Page".
+
+==== Eingabe
+1) Auf der Button mit den drei waagerechte Striche, welche sich oben rechts befinden, drücken.
+
+3) Auf der Kategorie "Admin" drücken.
+
+5) In diesen 6 Felder muss die Zahlenkombination "123456" eingetragen sein.
+
+==== Ausgabe
+2) Ein Sidebar-Menu wird mit den drei Kategorien (Bonus, Rangliste und Admin) angezeigt.
+
+4) Die Anzeige "Admincode-Page" wird angezeigt.
+
+6) Die Anzeige "Admin3NormalRangliste-Page" wird erscheinen.

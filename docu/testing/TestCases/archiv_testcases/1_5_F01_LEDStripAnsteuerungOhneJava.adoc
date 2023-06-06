@@ -1,0 +1,27 @@
+TC 1.5: F01 Ansteuerung der LED-Strips mit Python
+
+*Beschreibung:* Es wird beim Treffen mit dem Elektronik-Experten getestet, ob die Ansteuerung mit einer tried-and-tested Python
+library zuverlässiger Funktioniert als mit Java.
+
+*Annahmen und Voraussetzungen:*
+Das Datenkabel der LED-Strips ist via dem 74HCT125N IC mit dem RaspberryPi verbunden.
+
+Der RaspberryPi hat die Python-library
+https://github.com/adafruit/Adafruit_CircuitPython_NeoPixel[adafruit/Adafruit_CircuitPython_NeoPixel]
+installiert.
+
+Der RaspberryPi hat ein Python-Programm, dass alle LEDs nacheinander einschalten kann.
+
+Alle Komponenten sind mit 5VDC Spannung versorgt.
+
+Alle LEDs sind am Anfang aus.
+
+*Testdaten:* 29.03.2023
+
+*Auszuführende Schritte:*
+
+. Starten des Programms auf dem RaspberryPi +
+*erwartetes Ergebnis:* Die LEDs gehen nacheinander an.
+
+. Warten bis alle LEDs an sind und zählen der fehlgeschlagenen Ansteuerungen +
+*erwartetes Ergebnis:* Bei 845 Ansteuerungen sind weniger als 15 fehlgeschlagen (Ansteuerungszuverlässigkeit > 98%)

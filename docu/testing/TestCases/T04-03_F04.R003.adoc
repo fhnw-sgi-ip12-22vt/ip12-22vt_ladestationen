@@ -1,0 +1,27 @@
+== Testfall T04-03
+
+[[T04-03]]
+=== Testfall-ID
+T04-03
+
+=== Requirement
+F04.R003
+
+=== Kurzbeschreibung
+Prüfen, ob ein Besucher die Bonus-Runde am Anfang starten kann
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Home-Page".
+
+==== Eingabe
+
+1) Auf den Button mit den drei waagerechten Striche drücken.
+
+3) Auf den Button "Bonus" klicken.
+
+==== Ausgabe
+2) Ein Menüfenster erscheint auf der rechten Seite.
+
+4) Das Bonus-Level wird gestartet.

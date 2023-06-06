@@ -1,0 +1,33 @@
+= Systemidee
+
+== Kernaufgabe des Systems
+****
+Das Ziel des Projekts Ladestation ist, dass die Graphentheorie mit den Knoten, Kanten und Kantengewichten in ein Verteilungsnetz in Form eines Spiels dargestellt wird. Das Spiel sollte den Schülern zeigen, wie sie durch die Nutzung der Graphentheorie den günstigsten Weg zur Verbindung aller Knoten des Netzes finden können. Durch die Nutzung des kostengünstigsten Weges kann dementsprechend wichtige Ressourcen in Form von Verkabelungen und Stromstärke eingespart werden. Mit der Einsparung dieser Ressourcen kann auch somit einen essenziellen Beitrag für die Stromkrise gesorgt werden, denn je länger ein Kabel ist, desto grösser wird ein Widerstand und somit werden auch mehr Ressourcen verbraucht. 
+****
+
+== Kategorie von System
+****
+Im Projekt «Ladestation» wird der Raspberry-PI für das Durchlaufen der Software verwendet, um unterschiedliche Prozesse auszuführen. Dabei ist das Spiel vom Projekt in einem geschlossenen System, welches nur mit den vorhandenen Inputs (Knöpfe) und Outputs (LEDs) arbeiten muss. Demzufolge ist die Systemkategorie des Projekts «Ladestation» ein [.underline]*eingebettetes System*.
+****
+
+== Wesentliche Qualitätsanforderungen
+****
+Dieses Spiel sollte an Veranstaltungen in Primeo Energie eingesetzt werden, demzufolge muss das Spiel [.underline]*ROBUST* von der Hardware aufgebaut sein, denn pro Jahr wird es bei dieser Ausstellung ungefähr 20'000 Besucher geben und eine [.underline]*LANGLEBIGKEIT* von zwei bis drei Jahren sollte das Spiel haben. Bei den Materialien der Hardware sollte auch auf die [.underline]*UMWELTFREUNDLICHKEIT* geachtet werden, um noch eine bessere Aussagekraft an der Ausstellung in Primeo Energie zu haben. Die Software für das Spiel muss [.underline]*STABIL* bei der Produktion laufen, damit keine unerwünschten Fehler beim Nutzer auftreten können. Zusätzlich sollte die Software so umgesetzt werden, dass zukünftige [.underline]*ERWEITERUNGEN* am Spiel [.underline]*LEICHT* implementiert werden können.
+Eine Gruppe von sechs Schüler wird ungefähr drei bis vier Minuten Zeit haben, um sich mit dem Spiel «Ladestation» zu beschäftigen. Infolgedessen müssen die Schüler den Zusammenhang zwischen der Energiekrise und der Graphentheorie verstehen können. Das Spiel sollte [.underline]*PHYSISCH* spielbar sein, um das Interesse der Schüler wecken zu können. Einen weiteren wichtigen Punkt für das Spiel ist, dass das Spiel [.underline]*SELBSTERKLÄREND* ist.
+****
+
+== Relevante Stakeholder
+=== Produkt Stakeholders
+****
+Das hauptsächliche Zielpublikum an dieser Ausstellung sind Schulklassen auf der ersten Sekundarstufe I, also kommen die Jugendliche zwischen 15 und 16 Jahren infrage, denn der Kunde https://www.primeo-energie.ch/ueber-uns/kosmos.html[Primeo Energie Kosmos] hat als Produkt verlangt, dass die Schüler spielerisch erfahren, was im Umgang mit Energie in ihrem Alltag wichtig ist. 
+****
+=== Projektstakeholders
+****
+An der FHNW sind Lucia Di Caro, Barbara Scheuner, Robert von Burg, Stefan Meichtry, Samuel Fricker, Andrea Kennel, Müller Thekla und Norbert Seyff die Projektholders des Projekts "Ladestation".
+****
+
+== Schnittstellen zu externen Systemen
+****
+Externe Systeme werden es im Projekt «Ladestationen» nicht geben, denn das Spiel an sich sollte ohne weitere externe Systeme funktionieren.
+Das Spiel muss einfach an einer Stromsteckdose angeschlossen werden, um dann von den Schülern benutzt zu werden. Die Schüler werden nur die verlangten Eingaben machen müssen, um einen Progress im Spiel erreichen zu können.
+****

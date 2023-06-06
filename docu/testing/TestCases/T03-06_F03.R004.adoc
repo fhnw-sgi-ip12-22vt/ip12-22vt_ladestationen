@@ -1,0 +1,32 @@
+== Testfall T03-06
+
+[[T03-06]]
+=== Testfall-ID
+T03-06
+
+=== Requirement
+F03.R004
+
+=== Kurzbeschreibung
+Prüfen, ob Connect 'n Charge während des Spiels den aktuellen Wert des Besuchers anzeigen kann
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Eine Spielrunde wurde begonnen.
+* Das Spiel zeigt die Anzeige "Spiel-Page" mit der laufenden Spielzeit und den aktuellen Kantenkostenstand von 0 an.
+
+==== Eingabe
+
+1) Auf einer Spielkante, welche noch nicht leuchtet, drücken.
+
+4) Auf der selben Spielkante nochmals klicken.
+
+==== Ausgabe
+2) Die grosse Zahl "0" in der Mitte der Anzeige "Spiel-Page" erhöht sich um die Kantenkosten der gedrückten Kante.
+
+3) Die gedrückte Kante leuchtet auf.
+
+5) Die grosse Zahl in der Mitte der Anzeige "Spiel-Page" verringert sich um die Kantenkosten der gedrückten Kante und sind die Kosten wieder auf 0.
+
+6) Die gedrückte Kante leuchtet nicht mehr.

@@ -1,0 +1,24 @@
+TC 1.2: F01 Die Ansteuerung der LED-Strips funktioniert mit dem 74HCT125N Logic-Level-Shifter-IC
+
+*Beschreibung:* Es wird getestet ob der LED-Strip über den 74HCT125N Logic-Level-Shifter-IC ansteuerbar ist und
+ob die Ansteuerungs-Zuverlässigkeit damit besser wird.
+
+*Annahmen und Voraussetzungen:*
+Das Datenkabel der LED-Strips ist via dem 74HCT125N IC mit dem RaspberryPi verbunden.
+
+Der RaspberryPi hat ein Programm, dass alle LEDs einschalten kann und danach allen LEDs jede 500ms den Befehl gibt "leuchte weiss".
+(Mehrere Anteuerungen auzuführen ist wichtig um die Ansteuerungszuverlässigkeit testen zu können).
+
+Alle Komponenten sind mit 5VDC Spannung versorgt.
+
+Alle LEDs sind am Anfang aus.
+
+*Testdaten:* 28.02.2023
+
+*Auszuführende Schritte:*
+
+. Starten des Programms auf dem RaspberryPi +
+*erwartetes Ergebnis:* Die LEDs gehen alle an.
+
+. Für mindestens 50 Sekunden (100 Ansteuerungen) die LED-Strips beobachten +
+*erwartetes Ergebnis:* Die LED-Strips wurden mindestens 98 von 100 mal zuverlässig angesteuert (98%).

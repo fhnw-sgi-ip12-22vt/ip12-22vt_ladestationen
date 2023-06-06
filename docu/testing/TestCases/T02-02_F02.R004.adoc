@@ -1,0 +1,25 @@
+== Testfall T02-01
+
+[[T02-01]]
+=== Testfall-ID
+T02-01
+
+=== Requirement
+F02.R001
+
+=== Kurzbeschreibung
+Prüfen, ob die Zeit am Ende einer Runde gestoppt werden kann.
+
+=== Voraussetzung
+
+* Das Spiel ist mit dem Stromkreislauf verbunden.
+* Das Spiel ist bei der Anzeige "Spiel-Page".
+* Es wurden alle Kanten bis auf einer Kante gedrückt, um den kostengünstigsten Spannbaum des Graphen zu erstellen.
+
+
+==== Eingabe
+
+1) Auf der letzte nicht leuchtende Kante des kostengünstigsten Spannbaums drücken.
+
+==== Ausgabe
+2) Die perfekte Lösung wurde erreicht, somit wird die Anzeige "Fertig-Page" mit der gestoppten Zeit automatisch angezeigt.
