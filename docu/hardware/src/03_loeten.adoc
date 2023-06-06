@@ -118,8 +118,6 @@ Nach dem Aufkleben jeder Abdeckung sollte überprüft werden, ob die Kante immer
 
 Diese gedruckten Abdeckungen bieten nicht nur zusätzlichen Schutz für Ihre LEDs, sondern sorgen auch dafür, dass die Beleuchtung angenehmer für die Augen ist und das gesamte Gerät ein einheitlicheres und ansprechenderes Aussehen erhält.
 
-link:https://www.dropbox.com/s/m2ibksc6g6xjo3j/Abdekung.stl?dl=0[Abdekungen]
-
 link:../resources/3D-Modelle/Abdekung.stl[Abdekungen]
 
 
