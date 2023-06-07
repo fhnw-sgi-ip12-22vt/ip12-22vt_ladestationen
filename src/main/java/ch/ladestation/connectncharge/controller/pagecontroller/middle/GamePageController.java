@@ -50,13 +50,10 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     /**
      * initialize
      *
-     * @param location
-     * The location used to resolve relative paths for the root object, or
-     * {@code null} if the location is not known.
-     *
-     * @param resources
-     * The resources used to localize the root object, or {@code null} if
-     * the root object was not localized.
+     * @param location  The location used to resolve relative paths for the root object, or
+     *                  {@code null} if the location is not known.
+     * @param resources The resources used to localize the root object, or {@code null} if
+     *                  the root object was not localized.
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -70,6 +67,7 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
     public void setController(ApplicationController controller) {
         init(controller);
         this.controller = controller;
+        MyTimer.setController(controller);
     }
 
 
@@ -169,12 +167,6 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
 
     private void endGame() {
         MyTimer.stop();
-        saveEndTime();
-    }
-
-    private void saveEndTime() {
-        publicEndTime = timerLabel.getText().replaceAll("Zeit: ", "");
-        controller.setEndTime(publicEndTime);
     }
 
     @FXML

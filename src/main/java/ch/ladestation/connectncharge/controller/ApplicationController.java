@@ -89,10 +89,6 @@ public class ApplicationController extends ControllerBase<Game> {
                 setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
             }
         });
-
-        model.endTime.onChange((oldValue, newValue) -> {
-            System.out.println("model.endTime: " + model.endTime);
-        });
     }
 
     private void startIgnoringInputs() {
@@ -417,7 +413,8 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setEndTime(String endTime) {
-        setValue(model.endTime, endTime);
+        model.endTime.set(endTime);
+        System.out.println(model.endTime.get());
     }
 
     public void addHint(Hint hint) {
