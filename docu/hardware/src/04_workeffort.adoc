@@ -1,0 +1,90 @@
+[[section-glossary]]
+== Aufwandsschätzungen zu den Arbeitsschritte
+
+[cols="3,1" options="header"]
+|===
+|*Tätigkeit* | *Zeit*
+//Row 1
+|*3D Druck*
+| 
+//Row 2
+|3D Druck 32 Häuser (ca. 4 mal drucken) 
+|66h
+//Row 3
+|3D Druck 81 Kanten (ca. 7 mal drucken)
+|80h
+//Row 4
+|3D Druck 81 Abdekung (ca. 7 mal drucken)
+|80h    
+//Row 5
+|*Konstrukt zusammenbauen*
+|
+//Row 6
+|Fräsen
+|5h
+//Row 7
+|Konstrukt Zusammenbauen
+|7h
+//Row 8
+|*Montieren und Löten*
+|
+//Row 9
+|Buttons Montieren 
+|14h
+//Row 10
+|Buttons Löten 
+|14h
+//Row 11
+|Kanten Montieren
+|20h
+//Row 12
+|Led's Aufkleben
+|6h
+//Row 13
+|Led's Löten
+|30h
+//Row 14
+|Hardware Löten (Platiene, Chips & Kabel)
+|14h
+//Row 15
+|Abdeckungen Montieren (Kleben)
+|6h
+//Row 16
+|Häuser (zusammen Kleben) & Montieren
+|6h
+//Row 17
+|*Deployment*
+|
+//Row 18
+|Raspberry Pi Inbetriebnahme
+|4h
+//Row 19
+|Gestaltung
+|10h
+
+|===
+
+== Reparaturzeit
+[cols="3,1" options="header"]
+|===
+|*Tätigkeit* | *Zeit*
+//Row 1
+|*Button*
+| 
+//Row 2
+|Vorbereiten (Doku/Hardware_3.1Buttons)
+|20 min
+//Row 3
+|Ersetzten
+|5 min
+//Row 5
+|*Led*
+|
+//Row 6
+|Einzelnes Led ersetzen
+|5 min
+//Row 6
+|*Haus / Abdekung*	
+|1 min
+
+|===

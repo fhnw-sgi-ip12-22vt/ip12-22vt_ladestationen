@@ -9,18 +9,22 @@ image::images/pi4j-header.png[]
 :numbered:
 
 <<<<
-// 1. Anforderungen und Ziele
+// 1. Materialliste
 include::src/01_materials.adoc[]
 
 <<<<
-// 2. Anforderungen und Ziele
+// 2. Anleitung zum Holzkonstrukt
 include::src/02_boxmanual.adoc[]
 
 <<<<
-// 2. Anforderungen und Ziele
+// 3. Löten von den Komponenten
 include::src/03_loeten.adoc[]
 
 <<<<
-// 2. Anforderungen und Ziele
-include::src/04_glossary.adoc[]
+// 4. Aufwand zu den Arbeitsschritte
+include::src/04_workeffort.adoc[]
+
+<<<<
+// 5. Glossar
+include::src/05_glossary.adoc[]
 
