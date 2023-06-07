@@ -2,7 +2,7 @@
 FHNW Computer Science Student Project Semester 1&2
 
 # Connect 'n Charge
-<img src="connectncharge/src/main/resources/images/LogoConnectnCharge.png" alt="Connect 'n Charge Logo" width="50%" height="50%" title="Projekt Bild 1"> <br />
+<img src="assets/connectncharge_image.jpg" alt="Connect 'n Charge Logo" width="50%" height="50%" title="Projekt Bild 1"> <br />
 
 Connect 'n Charge ist ein strategisches Brettspiel, bei dem die Spieler dazu aufgefordert werden, Netzwerkverbindungen zu verknüpfen und dabei Ressourceneffizienz zu optimieren.
 Die Spieler übernehmen die Rolle des Managers einer idyllischen Feriensiedlung mit 30 Ferienhäusern, die dazu beitragen sollen, umweltfreundliche Mobilität zu fördern, indem 13 Häuser mit modernen E-Ladestationen ausgestattet werden.
