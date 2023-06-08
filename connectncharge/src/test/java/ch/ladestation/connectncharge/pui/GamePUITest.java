@@ -13,6 +13,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
+import java.util.concurrent.Semaphore;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -144,11 +145,19 @@ public class GamePUITest extends ComponentTest {
         controller.edgePressed(theEdge);
 
         controller.awaitCompletion();
-        pui.awaitCompletion();
+        var mutex = new Semaphore(1);
+        try {
+            mutex.acquire();
+            pui.runLater(v -> mutex.release());
 
-        inOrder.verify(mockLedStrip, times(numPixels)).setPixel(anyInt(), eq(theEdge.getColor()));
-        inOrder.verify(mockLedStrip).render();
-
+            mutex.acquire();
+            inOrder.verify(mockLedStrip, times(numPixels)).setPixel(anyInt(), eq(theEdge.getColor()));
+            inOrder.verify(mockLedStrip).render();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } finally {
+            mutex.release();
+        }
     }
 
     @ParameterizedTest
