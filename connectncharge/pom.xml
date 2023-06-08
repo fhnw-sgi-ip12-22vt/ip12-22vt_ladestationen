@@ -27,9 +27,6 @@
             <id>4216</id>
             <name>Marvin Vogel</name>
             <email>marvin.vogel@students.fhnw.ch</email>
-            <properties>
-                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/73106975/user-avatar</picUrl>
-            </properties>
         </developer>
         <developer>
             <roles>
@@ -39,9 +36,6 @@
             <id>4217</id>
             <name>Marius Gebhardt</name>
             <email>marius.gebhardt@students.fhnw.ch</email>
-            <properties>
-                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/73106972/user-avatar</picUrl>
-            </properties>
         </developer>
         <developer>
             <roles>
@@ -51,9 +45,6 @@
             <id>3178</id>
             <name>Shenia Scherer</name>
             <email>shenia.scherer@students.fhnw.ch</email>
-            <properties>
-                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/73105988/user-avatar</picUrl>
-            </properties>
         </developer>
         <developer>
             <roles>
@@ -63,9 +54,6 @@
             <id>4211</id>
             <name>Alexander Spiridonow</name>
             <email>alexander.spiridonow@students.fhnw.ch</email>
-            <properties>
-                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/73105990/user-avatar</picUrl>
-            </properties>
         </developer>
         <developer>
             <roles>
@@ -75,11 +63,6 @@
             <id>2181</id>
             <name>Gabriele Ferrali</name>
             <email>gabriele.ferrali@students.fhnw.ch</email>
-            <properties>
-                <picUrl>
-                    https://www.cs.technik.fhnw.ch/confluence20/download/thumbnails/73107778/Gabriele%20%282021_08_30%2016_18_54%20UTC%29.jpg?version=1&amp;modificationDate=1665229403492&amp;api=v2
-                </picUrl>
-            </properties>
         </developer>
         <developer>
             <roles>
@@ -89,9 +72,6 @@
             <id>4213</id>
             <name>Pascal Stich</name>
             <email>pascal.stich@students.fhnw.ch</email>
-            <properties>
-                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/thumbnails/73107778/Pb.jpg?version=1&amp;modificationDate=1664369737228&amp;api=v2</picUrl>
-            </properties>
         </developer>
         <developer>
             <roles>
@@ -100,17 +80,11 @@
             <id>4848</id>
             <name>Zeljko Grujic</name>
             <email>zeljko.grujic@students.fhnw.ch</email>
-            <properties>
-                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/86120155/user-avatar</picUrl>
-            </properties>
         </developer>
         <developer>
             <id>4208</id>
             <name>Patrick Hernandez</name>
             <email>patrick.hernandez@students.fhnw.ch</email>
-            <properties>
-                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/79986700/user-avatar</picUrl>
-            </properties>
         </developer>
     </developers>
 
