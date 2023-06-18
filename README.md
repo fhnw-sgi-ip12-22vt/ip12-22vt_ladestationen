@@ -1,5 +1,20 @@
 # IP12-ConnectnCharge
 
+This repo is now archived, all further changes are to be done on [GitHub](https://github.com/fhnw-sgi-ip12-22vt/ip12-22vt_ladestationen).
+
+The repo on GitHub is a fusion of this repository and the [docu repository](https://gitlab.fhnw.ch/ip12-22vt/ip12-22vt_ladestationen/docu), which is why it's a bit tricky to open it as a maven project in Intellij IDEA:
+
+1. Open the repository folder (parent folder of the docu and connectncharge fodlers)
+1. Quickly press shift twice
+1. In the popup window, search `Add Maven Projects`
+
+![search everywhere dialog](/uploads/2ebc3c0d8b57e19c5c0c7aa875094ac0/grafik.png)
+
+4. Select the pom.xml file located at `connectncharge/pom.xml`
+4. To test it, execute a maven goal like `package` in the maven sidebar on the right-hand-side. It should try to build the project.
+
+![maven sidebar](/uploads/59244eeda6168476c34cf8de8c745a37/grafik.png)
+
 For API-Documentation etcetera, visit
 [Project Pages](https://ip12-22vt.pages.fhnw.ch/ip12-22vt_ladestationen/ip12-connectncharge)
 
