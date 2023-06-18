@@ -148,6 +148,8 @@ public class GamePUITest extends ComponentTest {
         var mutex = new Semaphore(1);
         try {
             mutex.acquire();
+            controller.runLater(v -> mutex.release());
+            mutex.acquire();
             pui.runLater(v -> mutex.release());
 
             mutex.acquire();
