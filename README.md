@@ -11,6 +11,20 @@ Die Herausforderung liegt dabei in der optimalen Nutzung von Ressourcen und der 
 ![example workflow](https://github.com/fhnw-sgi-ip12-22vt/ip12-22vt_ladestationen/actions/workflows/maven.yml/badge.svg)
 Check out the latest [JavaDoc](https://fhnw-sgi-ip12-22vt.github.io/ip12-22vt_ladestationen/apidocs/ch.ladestation.connectncharge/module-summary.html) on our [Project Pages](https://fhnw-sgi-ip12-22vt.github.io/ip12-22vt_ladestationen/)
 
+## Setup in IntelliJ IDEA
+This repo on GitHub is a fusion of the code and docu repositories, which is why it's a bit tricky to open it as a maven project in Intellij IDEA:
+
+1. Open the repository folder (parent folder of the docu and connectncharge folders)
+1. Quickly press shift twice
+1. In the popup window, search `Add Maven Projects`
+
+![search everywhere dialog](https://github.com/fhnw-sgi-ip12-22vt/ip12-22vt_ladestationen/assets/113881019/82c0f9a0-8af2-41fb-ab82-1d394c805203)
+
+4. Select the folder containing the pom.xml file (`connectncharge/`)
+4. To test it, execute a maven goal like `package` in the maven sidebar on the right-hand-side. It should try to build the project.
+
+![maven sidebar](https://github.com/fhnw-sgi-ip12-22vt/ip12-22vt_ladestationen/assets/113881019/2c3d85c8-2c1d-4263-be22-4545bfd80a0f)
+
 ## Verwendete Hardware
 
 Die folgende Liste zeigt alle Hardware-Komponenten, die im "Connect 'n Charge" Spiel verwendet werden.
