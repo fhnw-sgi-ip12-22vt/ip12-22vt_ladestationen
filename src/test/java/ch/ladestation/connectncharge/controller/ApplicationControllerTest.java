@@ -153,10 +153,11 @@ class ApplicationControllerTest {
         for (int i = 1; i < sol.length; i++) {
             controller.edgePressed(sol[i]);
             almost[i - 1] = sol[i];
+            controller.awaitCompletion();
         }
         controller.awaitCompletion();
-        controller.awaitCompletion();
 
+        assertArrayEquals(almost, model.activatedEdges.getValues());
 
     }
 }

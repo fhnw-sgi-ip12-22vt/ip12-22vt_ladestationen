@@ -70,7 +70,11 @@ public class GamePageController implements ViewMixin<Game, ControllerBase<Game>>
         MyTimer.setController(controller);
     }
 
-
+    /**
+     * This method is getter for publicEndTime.
+     *
+     * @return publicEndTime
+     */
     public static String getPublicEndTime() {
         return publicEndTime;
     }

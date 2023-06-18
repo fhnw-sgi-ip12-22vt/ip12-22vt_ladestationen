@@ -12,6 +12,9 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 
+/**
+ * This class handles the stage change.
+ */
 public final class StageHandler {
 
     private static final String STAGE_TITLE = "Connect 'n Charge";
