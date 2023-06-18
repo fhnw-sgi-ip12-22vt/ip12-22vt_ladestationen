@@ -1,25 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.home.connectncharge</groupId>
+    <groupId>ch.ladestation.connectncharge</groupId>
     <artifactId>ConnectnCharge</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>ConnectnCharge</name>
+    <name>Connect-n-Charge</name>
+    <description>
+        The game ${project.name} was developed by a team of 8 students at the
+        University of Applied Sciences Northwestern Switzerland.
+        It was part of the IP12-Project 2022 / 2023.
+    </description>
+
+    <organization>
+        <name>FHNW | University of Applied Sciences Northwestern Switzerland</name>
+        <url>https://www.fhnw.ch/en/startseite</url>
+    </organization>
+    <developers>
+        <developer>
+            <roles>
+                <role>Usability Manager</role>
+                <role>Project Manager</role>
+            </roles>
+            <id>4216</id>
+            <name>Marvin Vogel</name>
+            <email>marvin.vogel@students.fhnw.ch</email>
+            <properties>
+                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/73106975/user-avatar</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <roles>
+                <role>Hardware Developer</role>
+                <role>Testing Manager</role>
+            </roles>
+            <id>4217</id>
+            <name>Marius Gebhardt</name>
+            <email>marius.gebhardt@students.fhnw.ch</email>
+            <properties>
+                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/73106972/user-avatar</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <roles>
+                <role>QA</role>
+                <role>Usability Manager</role>
+            </roles>
+            <id>3178</id>
+            <name>Shenia Scherer</name>
+            <email>shenia.scherer@students.fhnw.ch</email>
+            <properties>
+                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/73105988/user-avatar</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <roles>
+                <role>Software Architect</role>
+                <role>Requirements Engineer</role>
+            </roles>
+            <id>4211</id>
+            <name>Alexander Spiridonow</name>
+            <email>alexander.spiridonow@students.fhnw.ch</email>
+            <properties>
+                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/73105990/user-avatar</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <roles>
+                <role>Requirements Engineer</role>
+                <role>Software Developer</role>
+            </roles>
+            <id>2181</id>
+            <name>Gabriele Ferrali</name>
+            <email>gabriele.ferrali@students.fhnw.ch</email>
+            <properties>
+                <picUrl>
+                    https://www.cs.technik.fhnw.ch/confluence20/download/thumbnails/73107778/Gabriele%20%282021_08_30%2016_18_54%20UTC%29.jpg?version=1&amp;modificationDate=1665229403492&amp;api=v2
+                </picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <roles>
+                <role>Project Manager</role>
+                <role>Information Manager</role>
+            </roles>
+            <id>4213</id>
+            <name>Pascal Stich</name>
+            <email>pascal.stich@students.fhnw.ch</email>
+            <properties>
+                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/thumbnails/73107778/Pb.jpg?version=1&amp;modificationDate=1664369737228&amp;api=v2</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <roles>
+                <role>QA</role>
+            </roles>
+            <id>4848</id>
+            <name>Zeljko Grujic</name>
+            <email>zeljko.grujic@students.fhnw.ch</email>
+            <properties>
+                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/86120155/user-avatar</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <id>4208</id>
+            <name>Patrick Hernandez</name>
+            <email>patrick.hernandez@students.fhnw.ch</email>
+            <properties>
+                <picUrl>https://www.cs.technik.fhnw.ch/confluence20/download/attachments/79986700/user-avatar</picUrl>
+            </properties>
+        </developer>
+    </developers>
 
     <properties>
-        <launcher.class>com.home.connectncharge/ch.ladestation.connectncharge.AppStarter</launcher.class>
+        <launcher.class>ch.ladestation.connectncharge/${project.groupId}.AppStarter</launcher.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <junit.version>5.8.2</junit.version>
+        <junit.version>5.9.2</junit.version>
 
         <pi.username>pi</pi.username>
         <pi.password>Ladestation</pi.password>
-        <pi.ipnumber/>
+        <pi.ipnumber>10.175.31.132</pi.ipnumber>
         <pi.port>22</pi.port>
         <pi.deploydirectory>/home/pi/deploy</pi.deploydirectory>
+        <!--<pi.remote.jvmOptions>-jar ${pi.deploydirectory}/${project.build.finalName}.jar</pi.remote.jvmOptions>-->
         <pi.remote.jvmOptions/>
-
         <!-- If a mouse is attached to Pi use 'true' -->
         <pi.drm.enable.cursor>true</pi.drm.enable.cursor>
 
@@ -28,9 +134,10 @@
 
         <!-- Project Dependency Versions-->
         <javafx.version>17.0.2</javafx.version>
-        <pi4j.version>2.2.0</pi4j.version>
-        <slf4j.version>1.7.30</slf4j.version>
+        <pi4j.version>2.3.0</pi4j.version>
+        <slf4j.version>1.7.32</slf4j.version>
         <junit.version>5.9.0</junit.version>
+        <rpi-ws281x-java.version>2.0.0-SNAPSHOT</rpi-ws281x-java.version>
 
         <!-- Plugin Versions-->
         <javafx.plugin.version>0.0.8</javafx.plugin.version>
@@ -41,7 +148,7 @@
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <maven-dependency-plugin.version>3.2.0</maven-dependency-plugin.version>
         <maven-jar-plugin.version>3.2.1</maven-jar-plugin.version>
-        <maven-javadoc-plugin.version>3.3.1</maven-javadoc-plugin.version>
+        <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
         <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
 
@@ -67,7 +174,31 @@
 
         <!-- Checkstyle version -->
         <maven-checkstyle.version>3.2.1</maven-checkstyle.version>
+        <checkstyle.version>10.3.4</checkstyle.version>
+        <mockito-core.version>5.3.1</mockito-core.version>
+        <controlsfx.version>11.1.1</controlsfx.version>
+        <bootstrapfx-core.version>0.4.0</bootstrapfx-core.version>
+        <maven-shade-plugin.version>3.4.1</maven-shade-plugin.version>
+        <javafx-maven-plugin.version>0.0.8</javafx-maven-plugin.version>
+        <maven-checkstyle-plugin.version>3.2.1</maven-checkstyle-plugin.version>
+        <maven-project-info-reports-plugin.version>3.4.2</maven-project-info-reports-plugin.version>
+        <maven-site-plugin.version>4.0.0-M6</maven-site-plugin.version>
+        <maven-checkstyle-plugin.excludes>
+            **/module-info.java,**/jni/*.java
+        </maven-checkstyle-plugin.excludes>
+        <log4j-core.version>2.20.0</log4j-core.version>
+        <maven-javadoc-plugin.excludePackageNames>
+            com.github.mbelling.ws281x.jni,org.openjfx
+        </maven-javadoc-plugin.excludePackageNames>
     </properties>
+    <!-- local repo for the ws_28x library
+    <repositories>
+        <repository>
+            <id>project.local</id>
+            <name>project</name>
+            <url>file:${project.basedir}/repo</url>
+        </repository>
+    </repositories>-->
 
     <dependencies>
 
@@ -83,26 +214,19 @@
             <version>${javafx.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>
-            <version>11.1.1</version>
+            <version>${controlsfx.version}</version>
         </dependency>
         <dependency>
             <groupId>org.kordamp.bootstrapfx</groupId>
             <artifactId>bootstrapfx-core</artifactId>
-            <version>0.4.0</version>
-        </dependency>
-
-        <!-- slf4j -->
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>${slf4j.version}</version>
+            <version>${bootstrapfx-core.version}</version>
         </dependency>
 
         <!-- Pi4J  -->
@@ -112,6 +236,8 @@
             <artifactId>pi4j-core</artifactId>
             <version>${pi4j.version}</version>
         </dependency>
+
+
         <!-- Pi4J Raspberry Pi Platform -->
         <dependency>
             <groupId>com.pi4j</groupId>
@@ -137,6 +263,24 @@
             <!-- <scope>test</scope> -->
         </dependency>
 
+        <!-- include wrapped c library to interface LED-Strips-->
+        <!--<dependency>
+            <groupId>com.github.mbelling</groupId>
+            <artifactId>rpi-ws281x-java</artifactId>
+            <version>${rpi-ws281x-java.version}</version>
+        </dependency>-->
+        <!-- since shading the dependency with gradle seems impossible as of right now,
+        the transient dependency of the ws281x library is instead included here-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j-core.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j-core.version}</version>
+        </dependency>
         <!-- JUnit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -151,22 +295,30 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
             <groupId>com.puppycrawl.tools</groupId>
             <artifactId>checkstyle</artifactId>
-            <version>10.3.4</version>
+            <version>${checkstyle.version}</version>
         </dependency>
 
         <!-- Mockito -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>3.12.4</version>
+            <version>${mockito-core.version}</version>
             <scope>test</scope>
         </dependency>
 
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}-${project.version}</finalName>
         <plugins>
             <!-- JAVA COMPILER -->
             <plugin>
@@ -180,6 +332,43 @@
                     <verbose>false</verbose>
                 </configuration>
             </plugin>
+            <!-- to make the site lifecylce work-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+            </plugin>
+
+            <!-- shade conflicting dependencies
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>${maven-shade-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${basedir}/target/distribution/${project.build.finalName}.jar</outputFile>
+                            <transformers>
+                                <transformer
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>${project.groupId}.AppStarter</mainClass>
+                                </transformer>
+                            </transformers>
+                            <relocations>
+                                log4j causes conflicts
+                                <relocation>
+                                    <pattern>org.apache.logging.log4j</pattern>
+                                    <shadedPattern>shaded.org.apache.logging.log4j</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>-->
 
             <plugin>
                 <groupId>com.gluonhq</groupId>
@@ -252,25 +441,19 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>ch.ladestation.connectncharge.AppStarter</mainClass>
+                        </manifest>
+                    </archive>
                     <outputDirectory>${project.build.directory}/distribution</outputDirectory>
                 </configuration>
             </plugin>
 
-            <!-- Javadoc -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <configuration>
-                    <additionalOptions>
-                        <additionalOption>--module-path</additionalOption>
-                        <additionalOption>${project.build.directory}/distribution</additionalOption>
-                    </additionalOptions>
-                </configuration>
-            </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
-                <version>0.0.8</version>
+                <version>${javafx-maven-plugin.version}</version>
                 <executions>
                     <execution>
                         <!-- Default configuration for running with: mvn clean javafx:run -->
@@ -287,6 +470,7 @@
                     </execution>
                 </executions>
             </plugin>
+
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven-checkstyle.version}</version>
@@ -303,7 +487,7 @@
                     <configLocation>src/main/config/connectncharge_checks.xml</configLocation>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <violationSeverity>warning</violationSeverity>
-                    <excludes>**/module-info.java</excludes>
+                    <excludes>${maven-checkstyle-plugin.excludes}</excludes>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -356,13 +540,72 @@
     </build>
     <reporting>
         <plugins>
+
+            <!-- configure project info plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports-plugin.version}</version>
+                <configuration>
+                    <goal>index</goal>
+                    <customBundle>${project.basedir}/src/site/custom/index.properties</customBundle>
+                </configuration>
+            </plugin>
+
+            <!-- Javadoc -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <configuration>
+                    <additionalOptions>
+                        <additionalOption>-tag</additionalOption>
+                        <additionalOption>"implSpec:a:Implementation Requirements:"</additionalOption>
+                    </additionalOptions>
+                    <bottom>Copyright © 2023 Team Ladestation</bottom>
+                    <doctitle>${project.name}</doctitle>
+                    <excludePackageNames>${maven-javadoc-plugin.excludePackageNames}</excludePackageNames>
+                    <additionalDependencies>
+                        <!-- JavaFX  -->
+                        <dependency>
+                            <groupId>org.openjfx</groupId>
+                            <artifactId>javafx-controls</artifactId>
+                            <version>${javafx.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.openjfx</groupId>
+                            <artifactId>javafx-fxml</artifactId>
+                            <version>${javafx.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.controlsfx</groupId>
+                            <artifactId>controlsfx</artifactId>
+                            <version>${controlsfx.version}</version>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.kordamp.bootstrapfx</groupId>
+                            <artifactId>bootstrapfx-core</artifactId>
+                            <version>${bootstrapfx-core.version}</version>
+                        </dependency>
+                    </additionalDependencies>
+                </configuration>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>javadoc</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>3.2.1</version>
+                <version>${maven-checkstyle-plugin.version}</version>
                 <configuration>
                     <configLocation>src/main/config/connectncharge_checks.xml</configLocation>
                     <linkXRef>false</linkXRef>
+                    <excludes>${maven-checkstyle-plugin.excludes}</excludes>
                 </configuration>
                 <reportSets>
                     <reportSet>
@@ -392,21 +635,31 @@
                                 <configuration>
                                     <target>
                                         <!-- Ensure target directory exists on RaspPi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true"
+                                                 command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
 
                                         <!-- Transfer distribution folder to RaspPi via SCP -->
-                                        <scp trust="true" todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}" port="${pi.port}">
+                                        <scp trust="true"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
+                                             port="${pi.port}">
                                             <fileset dir="${project.build.directory}/distribution">
                                                 <exclude name="javafx*.jar"/>
-/>
+                                                />
                                             </fileset>
                                         </scp>
 
                                         <!-- Stop all running Java processes -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" suppresssystemerr="true" suppresssystemout="true" command="sudo killall -9 java"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true" failonerror="false"
+                                                 usepty="true" useSystemIn="true" suppresssystemerr="true"
+                                                 suppresssystemout="true" command="sudo killall -9 java"/>
 
                                         <!-- Run JFX application on Raspberry Pi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" command="sudo  java-kiosk  ${pi.remote.jvmOptions} -Xmx1G --module-path ${pi.deploydirectory} --module ${launcher.class} -Dmonocle.cursor.enabled=${pi.drm.enable.cursor}"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true" failonerror="false"
+                                                 usepty="true" useSystemIn="true"
+                                                 command="sudo  java-kiosk  ${pi.remote.jvmOptions} -Xmx1G --module-path ${pi.deploydirectory} --module ${launcher.class} -Dmonocle.cursor.enabled=${pi.drm.enable.cursor}"/>
                                     </target>
                                 </configuration>
                             </execution>
@@ -440,21 +693,31 @@
                                 <configuration>
                                     <target>
                                         <!-- Ensure target directory exists on RaspPi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true"
+                                                 command="mkdir --parents ${pi.deploydirectory}; rm -f ${pi.deploydirectory}/*"/>
 
                                         <!-- Transfer distribution folder to RaspPi via SCP -->
-                                        <scp trust="true" todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}" port="${pi.port}">
+                                        <scp trust="true"
+                                             todir="${pi.username}:${pi.password}@${pi.ipnumber}:${pi.deploydirectory}"
+                                             port="${pi.port}">
                                             <fileset dir="${project.build.directory}/distribution">
                                                 <exclude name="javafx*.jar"/>
-/>
+                                                />
                                             </fileset>
                                         </scp>
 
                                         <!-- Stop all running Java processes -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" suppresssystemerr="true" suppresssystemout="true" command="sudo killall -9 java"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true" failonerror="false"
+                                                 usepty="true" useSystemIn="true" suppresssystemerr="true"
+                                                 suppresssystemout="true" command="sudo killall -9 java"/>
 
                                         <!-- Run JFX application on Raspberry Pi -->
-                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}" password="${pi.password}" trust="true" failonerror="false" usepty="true" useSystemIn="true" command="DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority sudo -E java ${pi.remote.jvmOptions} --module-path /opt/javafx-sdk/lib:${pi.deploydirectory} --add-modules javafx.controls -Dglass.platform=gtk --module ${launcher.class}"/>
+                                        <sshexec host="${pi.ipnumber}" port="${pi.port}" username="${pi.username}"
+                                                 password="${pi.password}" trust="true" failonerror="false"
+                                                 usepty="true" useSystemIn="true"
+                                                 command="DISPLAY=:0 XAUTHORITY=/home/pi/.Xauthority sudo -E java ${pi.remote.jvmOptions} --module-path /opt/javafx-sdk/lib:${pi.deploydirectory} --add-modules javafx.controls -Dglass.platform=gtk --module ${launcher.class}"/>
                                     </target>
                                 </configuration>
                             </execution>
@@ -474,7 +737,7 @@
         <profile>
             <id>debug</id>
             <properties>
-                <pi.remote.jvmOptions> -agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
+                <pi.remote.jvmOptions>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005
                 </pi.remote.jvmOptions>
             </properties>
         </profile>

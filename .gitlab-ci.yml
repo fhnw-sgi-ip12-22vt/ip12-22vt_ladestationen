@@ -5,30 +5,37 @@ variables:
     --fail-at-end
     --show-version
     --no-transfer-progress
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
 
 image: maven:latest
 
 cache:
   paths:
-    - .m2/repository
+    - ".m2/repository/*"
 
 stages:
   - build
-  - test
+  - documentation
 
-build-job:
+test:
   stage: build
   script:
     - mvn $MAVEN_CLI_OPTS package
+  rules:
+    - when: always
   artifacts:
     paths:
-      - "target/*.jar"
+      - "target/distribution/*.jar"
     reports:
       junit: "target/surefire-reports/*.xml"
 
-test:
-  stage: test
+pages:
+  stage: documentation
   script:
-    - mvn test
-    # When the test files are available
-    #- mvn test -Dtest=ch.ladestation.connectncharge.controller.*,ch.ladestation.connectncharge.model.*
+    - mvn $MAVEN_CLI_OPTS package site
+    - mv target/site public
+  rules:
+    - when: always
+  artifacts:
+    paths:
+      - public
