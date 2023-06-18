@@ -10,7 +10,7 @@ The repo on GitHub is a fusion of this repository and the [docu repository](http
 
 ![search everywhere dialog](/uploads/2ebc3c0d8b57e19c5c0c7aa875094ac0/grafik.png)
 
-4. Select the pom.xml file located at `connectncharge/pom.xml`
+4. Select the folder containing the pom.xml file (`connectncharge/`)
 4. To test it, execute a maven goal like `package` in the maven sidebar on the right-hand-side. It should try to build the project.
 
 ![maven sidebar](/uploads/59244eeda6168476c34cf8de8c745a37/grafik.png)
