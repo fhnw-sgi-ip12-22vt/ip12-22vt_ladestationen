@@ -18,76 +18,6 @@
         <name>FHNW | University of Applied Sciences Northwestern Switzerland</name>
         <url>https://www.fhnw.ch/en/startseite</url>
     </organization>
-    <developers>
-        <developer>
-            <roles>
-                <role>Usability Manager</role>
-                <role>Project Manager</role>
-            </roles>
-            <id>4216</id>
-            <name>Marvin Vogel</name>
-            <email>marvin.vogel@students.fhnw.ch</email>
-        </developer>
-        <developer>
-            <roles>
-                <role>Hardware Developer</role>
-                <role>Testing Manager</role>
-            </roles>
-            <id>4217</id>
-            <name>Marius Gebhardt</name>
-            <email>marius.gebhardt@students.fhnw.ch</email>
-        </developer>
-        <developer>
-            <roles>
-                <role>QA</role>
-                <role>Usability Manager</role>
-            </roles>
-            <id>3178</id>
-            <name>Shenia Scherer</name>
-            <email>shenia.scherer@students.fhnw.ch</email>
-        </developer>
-        <developer>
-            <roles>
-                <role>Software Architect</role>
-                <role>Requirements Engineer</role>
-            </roles>
-            <id>4211</id>
-            <name>Alexander Spiridonow</name>
-            <email>alexander.spiridonow@students.fhnw.ch</email>
-        </developer>
-        <developer>
-            <roles>
-                <role>Requirements Engineer</role>
-                <role>Software Developer</role>
-            </roles>
-            <id>2181</id>
-            <name>Gabriele Ferrali</name>
-            <email>gabriele.ferrali@students.fhnw.ch</email>
-        </developer>
-        <developer>
-            <roles>
-                <role>Project Manager</role>
-                <role>Information Manager</role>
-            </roles>
-            <id>4213</id>
-            <name>Pascal Stich</name>
-            <email>pascal.stich@students.fhnw.ch</email>
-        </developer>
-        <developer>
-            <roles>
-                <role>QA</role>
-            </roles>
-            <id>4848</id>
-            <name>Zeljko Grujic</name>
-            <email>zeljko.grujic@students.fhnw.ch</email>
-        </developer>
-        <developer>
-            <id>4208</id>
-            <name>Patrick Hernandez</name>
-            <email>patrick.hernandez@students.fhnw.ch</email>
-        </developer>
-    </developers>
-
     <properties>
         <launcher.class>ch.ladestation.connectncharge/${project.groupId}.AppStarter</launcher.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -98,7 +28,7 @@
         <pi.ipnumber>10.175.31.132</pi.ipnumber>
         <pi.port>22</pi.port>
         <pi.deploydirectory>/home/pi/deploy</pi.deploydirectory>
-        <!--<pi.remote.jvmOptions>-jar ${pi.deploydirectory}/${project.build.finalName}.jar</pi.remote.jvmOptions>-->
+
         <pi.remote.jvmOptions/>
         <!-- If a mouse is attached to Pi use 'true' -->
         <pi.drm.enable.cursor>true</pi.drm.enable.cursor>
@@ -165,14 +95,6 @@
             com.github.mbelling.ws281x.jni,org.openjfx
         </maven-javadoc-plugin.excludePackageNames>
     </properties>
-    <!-- local repo for the ws_28x library
-    <repositories>
-        <repository>
-            <id>project.local</id>
-            <name>project</name>
-            <url>file:${project.basedir}/repo</url>
-        </repository>
-    </repositories>-->
 
     <dependencies>
 
@@ -237,14 +159,6 @@
             <!-- <scope>test</scope> -->
         </dependency>
 
-        <!-- include wrapped c library to interface LED-Strips-->
-        <!--<dependency>
-            <groupId>com.github.mbelling</groupId>
-            <artifactId>rpi-ws281x-java</artifactId>
-            <version>${rpi-ws281x-java.version}</version>
-        </dependency>-->
-        <!-- since shading the dependency with gradle seems impossible as of right now,
-        the transient dependency of the ws281x library is instead included here-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
@@ -312,37 +226,6 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven-site-plugin.version}</version>
             </plugin>
-
-            <!-- shade conflicting dependencies
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>${maven-shade-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                        <configuration>
-                            <outputFile>${basedir}/target/distribution/${project.build.finalName}.jar</outputFile>
-                            <transformers>
-                                <transformer
-                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>${project.groupId}.AppStarter</mainClass>
-                                </transformer>
-                            </transformers>
-                            <relocations>
-                                log4j causes conflicts
-                                <relocation>
-                                    <pattern>org.apache.logging.log4j</pattern>
-                                    <shadedPattern>shaded.org.apache.logging.log4j</shadedPattern>
-                                </relocation>
-                            </relocations>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
 
             <plugin>
                 <groupId>com.gluonhq</groupId>
