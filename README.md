@@ -4,7 +4,7 @@ This repo is now archived, all further changes are to be done on [GitHub](https:
 
 The repo on GitHub is a fusion of this repository and the [docu repository](https://gitlab.fhnw.ch/ip12-22vt/ip12-22vt_ladestationen/docu), which is why it's a bit tricky to open it as a maven project in Intellij IDEA:
 
-1. Open the repository folder (parent folder of the docu and connectncharge fodlers)
+1. Open the repository folder (parent folder of the docu and connectncharge folders)
 1. Quickly press shift twice
 1. In the popup window, search `Add Maven Projects`
 
