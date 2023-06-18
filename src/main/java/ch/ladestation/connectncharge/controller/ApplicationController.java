@@ -192,7 +192,7 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     /**
-     * This method loads all the levels from the text files in a Map<Integer, List<Object>>.
+     * This method loads all the levels from the text files in a {@code Map<Integer, List<Object>>}.
      */
     public void loadLevels() {
         try {
