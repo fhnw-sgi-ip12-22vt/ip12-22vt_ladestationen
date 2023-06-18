@@ -5,6 +5,7 @@ import ch.ladestation.connectncharge.model.game.gamelogic.Game;
 import ch.ladestation.connectncharge.model.game.gamelogic.Hint;
 import ch.ladestation.connectncharge.model.game.gamelogic.Node;
 import ch.ladestation.connectncharge.pui.GamePUI;
+import ch.ladestation.connectncharge.pui.Sounder;
 import ch.ladestation.connectncharge.services.file.TextFileEditor;
 import ch.ladestation.connectncharge.util.mvcbase.ControllerBase;
 import com.github.mbelling.ws281x.Color;
@@ -96,10 +97,6 @@ public class ApplicationController extends ControllerBase<Game> {
             } else {
                 setValue(model.activeHint, Hint.HINT_EMPTY_HINT);
             }
-        });
-
-        model.endTime.onChange((oldValue, newValue) -> {
-            System.out.println("model.endTime: " + model.endTime);
         });
     }
 
@@ -283,8 +280,10 @@ public class ApplicationController extends ControllerBase<Game> {
         if (edge != null) {
             if (!edge.isOn()) {
                 activateEdge(edge);
+                Sounder.playActivate();
             } else {
                 deactivateEdge(edge);
+                Sounder.playDeactivate();
             }
         }
     }
@@ -489,7 +488,8 @@ public class ApplicationController extends ControllerBase<Game> {
     }
 
     public void setEndTime(String endTime) {
-        setValue(model.endTime, endTime);
+        model.endTime.set(endTime);
+        System.out.println(model.endTime.get());
     }
 
     public void addHint(Hint hint) {
