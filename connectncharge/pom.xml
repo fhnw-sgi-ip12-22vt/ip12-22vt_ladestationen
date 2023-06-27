@@ -53,7 +53,6 @@
         <maven-dependency-plugin.version>3.2.0</maven-dependency-plugin.version>
         <maven-jar-plugin.version>3.2.1</maven-jar-plugin.version>
         <maven-javadoc-plugin.version>3.5.0</maven-javadoc-plugin.version>
-        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
         <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
 
         <!-- Maven Properties -->
@@ -93,6 +92,8 @@
         <maven-javadoc-plugin.excludePackageNames>
             com.github.mbelling.ws281x.jni,org.openjfx
         </maven-javadoc-plugin.excludePackageNames>
+        <puppycrawl-tools-checkstyle.version>10.3.4</puppycrawl-tools-checkstyle.version>
+        <maven-surefire-plugin.version>3.1.2</maven-surefire-plugin.version>
     </properties>
 
     <dependencies>
@@ -232,6 +233,12 @@
                 <artifactId>maven-site-plugin</artifactId>
                 <version>${maven-site-plugin.version}</version>
             </plugin>
+            <!-- testing -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+            </plugin>
 
             <plugin>
                 <groupId>com.gluonhq</groupId>
@@ -276,6 +283,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven-dependency-plugin.version}</version>
                 <executions>
                     <execution>
                         <id>copy-dependencies</id>
@@ -303,6 +311,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven-jar-plugin.version}</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -335,6 +344,7 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>${maven-checkstyle.version}</version>
                 <executions>
@@ -356,7 +366,7 @@
                     <dependency>
                         <groupId>com.puppycrawl.tools</groupId>
                         <artifactId>checkstyle</artifactId>
-                        <version>10.3.4</version>
+                        <version>${puppycrawl-tools-checkstyle.version}</version>
                     </dependency>
                 </dependencies>
             </plugin>
