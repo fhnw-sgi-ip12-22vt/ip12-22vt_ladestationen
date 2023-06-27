@@ -15,7 +15,6 @@ import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
@@ -23,7 +22,6 @@ import java.util.stream.Stream;
  */
 public class ApplicationController extends ControllerBase<Game> {
     private static final int MAX_LEVEL = 5;
-    private final Logger logger = Logger.getLogger(getClass().getName());
     public boolean firstBootup = true;
     private Map<Integer, List<Object>> levels;
     private int currentLevel = 1;

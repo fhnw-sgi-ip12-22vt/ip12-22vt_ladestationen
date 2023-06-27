@@ -39,7 +39,7 @@
         <!-- Project Dependency Versions-->
         <javafx.version>17.0.2</javafx.version>
         <pi4j.version>2.3.0</pi4j.version>
-        <slf4j.version>1.7.32</slf4j.version>
+        <slf4j.version>2.0.7</slf4j.version>
         <junit.version>5.9.0</junit.version>
         <rpi-ws281x-java.version>2.0.0-SNAPSHOT</rpi-ws281x-java.version>
 
@@ -90,7 +90,6 @@
         <maven-checkstyle-plugin.excludes>
             **/module-info.java,**/jni/*.java
         </maven-checkstyle-plugin.excludes>
-        <log4j-core.version>2.20.0</log4j-core.version>
         <maven-javadoc-plugin.excludePackageNames>
             com.github.mbelling.ws281x.jni,org.openjfx
         </maven-javadoc-plugin.excludePackageNames>
@@ -151,24 +150,31 @@
             <artifactId>pi4j-plugin-linuxfs</artifactId>
             <version>${pi4j.version}</version>
         </dependency>
-        <!-- Pi4J Mock Platform -->
+        <!-- Pi4J Mock Platform
+             Not scoped to just tests because it is also used when the app is run on a desktop environment-->
         <dependency>
             <groupId>com.pi4j</groupId>
             <artifactId>pi4j-plugin-mock</artifactId>
             <version>${pi4j.version}</version>
-            <!-- <scope>test</scope> -->
         </dependency>
 
+        <!--Logging: All logging is done with SLF4J, even in the absorbed mbelling
+            WS281x library (was manually transferred from pi4j). It is the conflicting logging
+            dependencies that caused a problem  at runtime and that's why the
+            jar is NOT used but instead the code is absorbed into this very project -->
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-core</artifactId>
-            <version>${log4j-core.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.logging.log4j</groupId>
-            <artifactId>log4j-api</artifactId>
-            <version>${log4j-core.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
+            <scope>test</scope>
         </dependency>
+
+
         <!-- JUnit -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>

@@ -16,19 +16,19 @@ import com.pi4j.io.gpio.digital.DigitalInput;
 import com.pi4j.io.gpio.digital.PullResistance;
 import com.pi4j.io.spi.Spi;
 import com.pi4j.io.spi.SpiBus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Logger;
 
 public class GamePUI extends PuiBase<Game, ApplicationController> {
 
     /**
      * Logger instance
      */
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private static final Logger LOG = LoggerFactory.getLogger(GamePUI.class);
     private final String hOUSEFLAG = "H";
-
     private List<MCP23S17> chips;
     private LedStrip ledStrip;
 
@@ -192,7 +192,7 @@ public class GamePUI extends PuiBase<Game, ApplicationController> {
     private void handleEdgePressed(Edge edge, ApplicationController controller) {
         controller.edgePressed(edge);
         //controller.updateScore();
-        logger.info("edge " + edge.getSegmentIndex() + " between " + edge.getFromNodeId() + " & "
+        LOG.info("edge " + edge.getSegmentIndex() + " between " + edge.getFromNodeId() + " & "
             + edge.getToNodeId()
             + " was pressed");
     }
