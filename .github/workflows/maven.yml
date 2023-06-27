@@ -41,7 +41,8 @@ jobs:
       uses: cicirello/jacoco-badge-generator@v2.9.0
       with:
         # The directory for storing badges, relative to the root of the repository.
-        badges-directory: target/site
+        badges-directory: connectncharge/target/site
+        jacoco-csv-file: connectncharge/target/site/jacoco/jacoco.csv
  
     - name: Upload GitHub Pages artifact
       uses: actions/upload-pages-artifact@v1.0.8
