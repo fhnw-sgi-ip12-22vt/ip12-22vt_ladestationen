@@ -26,11 +26,8 @@ import com.pi4j.plugin.mock.provider.pwm.MockPwmProvider;
 import com.pi4j.plugin.mock.provider.serial.MockSerialProvider;
 import com.pi4j.plugin.mock.provider.spi.MockSpi;
 import com.pi4j.plugin.mock.provider.spi.MockSpiProvider;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class ComponentTest extends Component {
-    protected final Logger LOG = LoggerFactory.getLogger(getClass().getName());
     protected Context pi4j;
 
     @SuppressWarnings("RedundantThrows")

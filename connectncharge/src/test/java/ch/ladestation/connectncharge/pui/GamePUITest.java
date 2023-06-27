@@ -133,7 +133,7 @@ public class GamePUITest extends ComponentTest {
         //test first and last edge
     void testModelToLEDStripBinding(int segmentIndex) {
         //given
-        LOG.debug("given testModelToLEDStripBinding(segmentIndex={})", segmentIndex);
+        log.debug("given testModelToLEDStripBinding(segmentIndex={})", segmentIndex);
         var model = new Game();
         var controller = new ApplicationController(model);
         controller.setGameStarted(true);
@@ -143,9 +143,9 @@ public class GamePUITest extends ComponentTest {
 
         var theEdge = (Edge) pui.lookUpSegmentIdToSegment(segmentIndex);
         var numPixels = theEdge.getEndIndex() - theEdge.getStartIndex() + 1;
-        LOG.debug("when controller.edgePressed(theEdge={});",segmentIndex);
+        log.debug("when controller.edgePressed(theEdge={});", segmentIndex);
         controller.edgePressed(theEdge);
-        LOG.debug("controller.awaitCompletion()");
+        log.debug("controller.awaitCompletion()");
         controller.awaitCompletion();
         var mutex = new Semaphore(1);
         try {
@@ -153,9 +153,9 @@ public class GamePUITest extends ComponentTest {
             controller.runLater(v -> mutex.release());
             mutex.acquire();
             pui.runLater(v -> mutex.release());
-            LOG.debug("final acquire() in testModelToLEDStripBinding(segmentIndex={})", segmentIndex);
+            log.debug("final acquire() in testModelToLEDStripBinding(segmentIndex={})", segmentIndex);
             mutex.acquire();
-            LOG.debug("try and verify in testModelToLEDStripBinding(segmentIndex={})", segmentIndex);
+            log.debug("try and verify in testModelToLEDStripBinding(segmentIndex={})", segmentIndex);
             inOrder.verify(mockLedStrip, times(numPixels)).setPixel(anyInt(), eq(theEdge.getColor()));
             inOrder.verify(mockLedStrip).render();
         } catch (InterruptedException e) {
