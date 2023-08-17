@@ -156,6 +156,7 @@ public class GamePUITest extends ComponentTest {
             log.debug("final acquire() in testModelToLEDStripBinding(segmentIndex={})", segmentIndex);
             mutex.acquire();
             log.debug("try and verify in testModelToLEDStripBinding(segmentIndex={})", segmentIndex);
+
             inOrder.verify(mockLedStrip, times(numPixels)).setPixel(anyInt(), eq(theEdge.getColor()));
             inOrder.verify(mockLedStrip).render();
         } catch (InterruptedException e) {
